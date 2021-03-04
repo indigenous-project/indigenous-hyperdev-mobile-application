@@ -10,7 +10,6 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import LoginScreen from './src/screens/authentication/LoginScreen';
 import AuthStack from './src/screens/authentication/AuthStack';
 
 const Stack = createStackNavigator();

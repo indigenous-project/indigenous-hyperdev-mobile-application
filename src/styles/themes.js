@@ -1,5 +1,5 @@
-import * as colors from './colors'
-import * as typography from './typography'
+import * as colors from './colors';
+import * as typography from './typography';
 
 export const light = {
   primaryColor: colors.primary800,
@@ -15,7 +15,7 @@ export const light = {
     ...typography.bodyText,
     color: colors.gray700,
   },
-}
+};
 export const dark = {
   primaryColor: colors.gray800,
   accentColor: colors.primary800,
@@ -30,4 +30,4 @@ export const dark = {
     ...typography.bodyText,
     color: colors.gray200,
   },
-}
+};
