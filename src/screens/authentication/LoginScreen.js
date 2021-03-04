@@ -7,6 +7,14 @@ import {Text, StyleSheet} from 'react-native';
 
 //function return
 function LoginScreen(props) {
+  fetch(
+    'http://ec2co-ecsel-18j9bbvvtigir-1002785149.us-east-2.elb.amazonaws.com/',
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data.data.healthStatus))
+    .catch(console.log)
+    .finally(console.log);
+
   return (
     <SafeAreaView
       style={styleSheet.safeArea}
