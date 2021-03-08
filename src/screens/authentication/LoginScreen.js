@@ -3,23 +3,42 @@
 // import packages
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
+import {useState} from 'react';
+import {useEffect} from 'react';
+
+import {
+  Container,
+  Header,
+  Button,
+  Text,
+  Body,
+  Form,
+  Item as FormItem,
+  Input,
+  Label,
+  Title,
+} from 'native-base';
 
 //function return
 function LoginScreen(props) {
-  fetch(
-    'http://ec2co-ecsel-18j9bbvvtigir-1002785149.us-east-2.elb.amazonaws.com/',
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data.data.healthStatus))
-    .catch(console.log)
-    .finally(console.log);
+  const [user, setUser] = useState(null);
+
+  //testing userCurrent function()
+  useEffect(() => {
+    userCurrent(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDQ1ODlhMjBkZDlmYTAwMDdjMTU4ZjUiLCJpYXQiOjE2MTUyMzg5NzR9.fabETMm9MQFrA8YRVhTmqkxuAGyXqu-tHB8L_uMfMGc',
+    )
+      .then(setUser)
+      .catch((err) => console.log(err.errors[0].description));
+  }, []);
 
   return (
     <SafeAreaView
       style={styleSheet.safeArea}
       edges={['right', 'bottom', 'left']}>
-      <Text>Login screen</Text>
+      <Text>{JSON.stringify(user)}</Text>
     </SafeAreaView>
   );
 }
