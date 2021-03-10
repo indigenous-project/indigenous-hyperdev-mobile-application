@@ -11,6 +11,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthStack from './src/screens/authentication/AuthStack';
+import BottomTabScreen from './src/screens/BottomTabScreen';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -19,8 +20,8 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Auth"
-            component={AuthStack}
+            name="BottomTab"
+            component={BottomTabScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
