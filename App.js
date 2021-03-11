@@ -10,8 +10,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import AuthStack from './src/screens/authentication/AuthStack';
-import BottomTabScreen from './src/screens/BottomTabScreen';
+import DrawerRoute from './src/screens/sidenavbar/DrawerRoute';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -20,8 +19,8 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="BottomTab"
-            component={BottomTabScreen}
+            name="DrawerRoute"
+            component={DrawerRoute}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
