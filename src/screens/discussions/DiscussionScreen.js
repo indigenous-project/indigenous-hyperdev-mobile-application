@@ -11,7 +11,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 function DiscussionScreen(props) {
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'bottom', 'left']}>
-      <FocusedStatusBar barStyle="dark-content" />
+      <FocusedStatusBar barStyle="light-content" />
       <Text>Discussion Screen</Text>
     </SafeAreaView>
   );
