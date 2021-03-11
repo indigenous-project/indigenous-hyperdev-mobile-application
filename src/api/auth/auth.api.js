@@ -107,7 +107,7 @@ export const userChangePassword = async ({oldPassword, newPassword}, token) => {
   return response.json();
 };
 
-// User forgot password: need email, receive an email to reset password
+// User forgot password: need email, return reset token
 export const userForgotPassword = async ({email}) => {
   const url = `${environment_variable.BASE_API}/auth/users/forgotpassword`;
   const response = await fetch(url, {
