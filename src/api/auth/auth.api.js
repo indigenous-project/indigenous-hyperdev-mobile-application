@@ -86,7 +86,7 @@ export const userLogout = async (token) => {
   return response.json();
 };
 
-// User change password: need old and new password as paramenters
+// User change password: need oldPassword and newPassword as paramenters
 export const userChangePassword = async ({oldPassword, newPassword}, token) => {
   const url = `${environment_variable.BASE_API}/auth/users/managepassword`;
   const response = await fetch(url, {
@@ -128,10 +128,29 @@ export const userForgotPassword = async ({email}) => {
 };
 
 // User confirm resetpassword
-export const userResetPassword = async () => {
-  const url = `${environment_variable.BASE_API}/auth/users/forgotpassword`;
+export const userVerifyResetToken = async (token) => {
+  const url = `${environment_variable.BASE_API}/auth/users/resetpassword/${token}`;
   const response = await fetch(url, {
     method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  // handle errors
+  if (!response.ok) {
+    return response.json().then((json) => {
+      throw json;
+    });
+  }
+  return response.json();
+};
+
+// User confirm resetpassword: need new password as paramenter
+export const userResetPassword = async (body, token) => {
+  const url = `${environment_variable.BASE_API}/auth/users/resetpassword/${token}`;
+  const response = await fetch(url, {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
