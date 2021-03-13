@@ -12,13 +12,13 @@ const theme = themes.light;
 const Organizations = createStackNavigator();
 
 //function return
-function OrganizationsStack(props) {
+function OrganizationsStack({navigation}) {
   return (
     <Organizations.Navigator
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader />, // implement hambuger menu on the left of the header
+        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
       }}>
       <Organizations.Screen
         name="Organizations"
