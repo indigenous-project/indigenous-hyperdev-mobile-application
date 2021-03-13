@@ -54,6 +54,15 @@ function HomeScreen(props) {
           </View>
         </View>
 
+        <View style={styles.container}>
+          <Text style={styles.heading}>
+            Latest Update
+          </Text>
+          <View style={styles.latestUpdate}>
+            <UpdateCard title="Title of Update" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"></UpdateCard>
+          </View>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -103,5 +112,47 @@ const styles = StyleSheet.create({
     width: 200,
     height: 100,
     marginBottom: 10
+  },
+  latestUpdate: {
+    borderRadius: 10,
+    marginHorizontal: 5,
+    marginVertical: 10,
+    borderStyle: 'solid',
+    borderWidth: 0.1,
+    shadowOffset: { width: 3, height: 6 },
+    shadowColor: colors.gray900,
+    backgroundColor: colors.white,
+    shadowOpacity: 0.2,
+  },
+  updateCard: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  updateTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    textAlign: "center",
+    color: "red",
+    textTransform: "uppercase",
+    paddingTop: 10,
+  },
+  updateDescription: {
+    fontSize: 16,
+    lineHeight: 25,
+    padding: 10,
+  },
+  buttonContainer: {
+    marginBottom: 10,
+    backgroundColor: colors.primary400,
+    minWidth: "50%",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
+  buttonText: {
+    fontSize: 14,
+    color: colors.white,
+    alignSelf: "center",
   },
 })
