@@ -47,6 +47,18 @@ function HomeScreen(props) {
     );
   }
 
+  //card to display category button
+  const CategoryButton = (props) => {
+    return (
+      <View>
+        <TouchableOpacity style={styles.categoryButton}>
+          <Text style={styles.categoryIcon}>{props.icon}</Text>
+        </TouchableOpacity>
+        <Text style={styles.categoryName}>{props.name}</Text>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <ScrollView
@@ -76,6 +88,16 @@ function HomeScreen(props) {
           </View>
         </View>
 
+        <View style={styles.container}>
+          <Text style={styles.heading}>
+            Popular Service Category
+          </Text>
+          <View style={styles.popularServices}>
+            <CategoryButton icon="A" name="A category"></CategoryButton>
+            <CategoryButton icon="B" name="B category"></CategoryButton>
+            <CategoryButton icon="C" name="C category"></CategoryButton>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -168,4 +190,5 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
   },
+
 })
