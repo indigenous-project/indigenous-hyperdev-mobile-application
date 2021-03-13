@@ -25,7 +25,7 @@ function HomeScreen(props) {
   //card to display upcoming events
   const EventCard = (props) => {
     return (
-      <View style={styles.card}>
+      <View style={styles.eventCard}>
         <Image style={styles.image} source={require('../../testImages/demoPic.png')} />
         <Text style={styles.cardTitle}>{props.name}</Text>
         <Text style={styles.cardSubTitle}>{props.date}</Text>
@@ -98,6 +98,7 @@ function HomeScreen(props) {
             <CategoryButton icon="C" name="C category"></CategoryButton>
           </View>
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -106,6 +107,7 @@ function HomeScreen(props) {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  //container style
   container: {
     padding: 10,
     backgroundColor: colors.white,
@@ -118,10 +120,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16
   },
+
+  //styling for upcoming event
   upcomingEvent: {
     flexDirection: "row",
   },
-  card: {
+  eventCard: {
     margin: 10,
     shadowOffset: { width: 3, height: 6 },
     shadowColor: colors.gray900,
@@ -148,6 +152,8 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 10
   },
+
+  //styling for latest update
   latestUpdate: {
     borderRadius: 10,
     marginHorizontal: 5,
@@ -190,31 +196,33 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
   },
+
+  //styling for popular service categories
   popularServices: {
     width: "100%",
     justifyContent: 'space-around',
     flexDirection: "row",
     marginTop: 10,
-    backgroundColor: 'white'
+    backgroundColor: colors.white
   },
   categoryButton: {
-    width: 85,
-    height: 85,
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     shadowOffset: { width: 3, height: 6 },
-    shadowColor: 'black',
+    shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
-    backgroundColor: '#F2EEED',
+    backgroundColor: colors.primary50,
   },
   categoryIcon: {
-    color: "#6F1818",
+    color: colors.primary900,
     fontSize: 40,
   },
   categoryName: {
-    color: "#6F1818",
-    fontWeight: "500",
+    color: colors.primary900,
+    fontWeight: "600",
     alignSelf: "center",
     marginTop: 10,
     fontSize: 14
