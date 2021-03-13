@@ -49,7 +49,7 @@ function DiscussionScreen(props) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'bottom', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <View style={styles.container}>
