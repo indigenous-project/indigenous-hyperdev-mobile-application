@@ -190,5 +190,33 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
   },
-
+  popularServices: {
+    width: "100%",
+    justifyContent: 'space-around',
+    flexDirection: "row",
+    marginTop: 10,
+    backgroundColor: 'white'
+  },
+  categoryButton: {
+    width: 85,
+    height: 85,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: { width: 3, height: 6 },
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    borderRadius: 100,
+    backgroundColor: '#F2EEED',
+  },
+  categoryIcon: {
+    color: "#6F1818",
+    fontSize: 40,
+  },
+  categoryName: {
+    color: "#6F1818",
+    fontWeight: "500",
+    alignSelf: "center",
+    marginTop: 10,
+    fontSize: 14
+  }
 })
