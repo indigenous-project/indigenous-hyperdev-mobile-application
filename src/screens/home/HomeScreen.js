@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     padding: 10,
   },
+  //button styling
   buttonContainer: {
     marginBottom: 10,
     backgroundColor: colors.primary400,
