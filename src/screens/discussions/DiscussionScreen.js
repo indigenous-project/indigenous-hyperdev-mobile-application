@@ -6,7 +6,14 @@ import React from 'react';
 import { Text, StyleSheet, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
+import SwitchSelector from 'react-native-switch-selector';
 import { colors, themes } from '../../styles';
+
+const options = [
+  { label: 'Recent', value: 'Recent' },
+  { label: 'Most Discussed', value: 'Most Discussed' },
+  { label: 'My Discussions', value: 'My Discussions' }
+];
 
 //function return
 function DiscussionScreen(props) {
@@ -18,6 +25,17 @@ function DiscussionScreen(props) {
       <View style={styles.container}>
         <Text style={styles.createNewButton}>Create New Discussion</Text>
       </View>
+
+      <SwitchSelector
+        style={{
+          paddingHorizontal: 10,
+        }}
+        textColor={colors.primary900}
+        fontSize={14}
+        buttonColor={colors.primary500}
+        options={options}
+        initial={0}
+        onPress={value => console.log(`${value}`)} />
 
     </SafeAreaView>
   );
