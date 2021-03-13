@@ -9,6 +9,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import SwitchSelector from 'react-native-switch-selector';
 import { colors, themes } from '../../styles';
 
+//switch-selector options
 const options = [
   { label: 'Recent', value: 'Recent' },
   { label: 'Most Discussed', value: 'Most Discussed' },
@@ -18,6 +19,35 @@ const options = [
 //function return
 function DiscussionScreen(props) {
   const theme = themes.light;
+
+  //custome chips for displaying categories
+  const Chips = (props) => {
+    return (
+      <View style={styles.chip}>
+        <Text style={styles.chipText}>{props.name}</Text>
+      </View>
+    )
+  }
+
+  //card to display Discussion
+  const DiscussionCard = (props) => {
+    return (
+      <View style={styles.discussionCard}>
+        <Text style={styles.cardTitle}>{props.title}</Text>
+        <Text style={styles.cardDetail}>{props.nameAndDate}</Text>
+        <View style={styles.chipContainer}>
+          <Chips name="Category 1"></Chips>
+          <Chips name="Category 2"></Chips>
+        </View>
+        <Text style={styles.cardSubTitle}>{props.description}</Text>
+        <View style={styles.actionContainer}>
+          <Text>Replies</Text>
+          <Text>Save</Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'bottom', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -36,6 +66,14 @@ function DiscussionScreen(props) {
         options={options}
         initial={0}
         onPress={value => console.log(`${value}`)} />
+
+      <ScrollView
+        horizontal={false}>
+        <DiscussionCard
+          title="Discussion Title"
+          nameAndDate="User Name and Date posted"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et" ></DiscussionCard>
+      </ScrollView>
 
     </SafeAreaView>
   );
@@ -59,7 +97,59 @@ const styles = StyleSheet.create({
     padding: 3,
     fontWeight: "500",
     fontSize: 16,
-    color: "#6F6F6F",
+    color: colors.gray700,
     width: "100%",
-  }
+  },
+
+  //Discussion Card styles
+  discussionCard: {
+    minHeight: "25%",
+    padding: 15,
+    backgroundColor: colors.white,
+    alignItems: 'flex-start',
+    marginHorizontal: 10,
+    marginTop: 10,
+    borderRadius: 10
+  },
+  cardTitle: {
+    fontSize: 16,
+    color: colors.primary900,
+    fontWeight: "700",
+    paddingBottom: 8,
+  },
+  cardSubTitle: {
+    fontSize: 14,
+    lineHeight: 25,
+    paddingBottom: 8
+  },
+  cardDetail: {
+    fontWeight: "300",
+    paddingBottom: 8
+  },
+
+  //chips styling
+  chipContainer: {
+    flexDirection: "row"
+  },
+  chip: {
+    borderColor: colors.primary500,
+    borderRadius: 50,
+    marginRight: 10,
+    marginBottom: 8,
+    borderWidth: 2
+  },
+  chipText: {
+    fontSize: 13,
+    padding: 5,
+    color: colors.primary900,
+    fontWeight: "600"
+  },
+
+  //Actions styling (Relies and Save)
+  actionContainer: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    width: "90%",
+    marginHorizontal: 10
+  },
 })
