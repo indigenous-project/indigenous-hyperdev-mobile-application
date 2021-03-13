@@ -12,13 +12,13 @@ const theme = themes.light;
 const News = createStackNavigator();
 
 //function return
-function NewsStack(props) {
+function NewsStack({navigation}) {
   return (
     <News.Navigator
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader />, // implement hambuger menu on the left of the header
+        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
       }}>
       <News.Screen name="News" component={NewsScreen} />
     </News.Navigator>
