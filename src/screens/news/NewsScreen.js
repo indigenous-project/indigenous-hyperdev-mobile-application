@@ -40,8 +40,22 @@ function NewsScreen(props) {
     );
   }
 
+  //card to display News
+  const NewsCard = (props) => {
+    return (
+      <View style={styles.newsCard}>
+        <View style={styles.newsContent}>
+          <Text style={styles.cardTitle}>{props.title}</Text>
+          <Text style={styles.cardDetail}>{props.date}</Text>
+          <Text style={styles.cardSubTitle}>{props.details}</Text>
+        </View>
+        <Image style={styles.image} source={require('../../testImages/demoPic.png')} />
+      </View>
+    );
+  }
+
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'bottom', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <ScrollView
@@ -76,6 +90,14 @@ function NewsScreen(props) {
           <SurveyCard surveyText="Aboriginal Peoples Survey Concepts and Methods"></SurveyCard>
         </View>
 
+        <View style={styles.container}>
+          <NewsCard
+            title="North Bay expands its Education Opportunities for"
+            date="Feb 10, 2021"
+            details="North Bay Indigenous Friendship Center provides"
+          ></NewsCard>
+        </View>
+
       </ScrollView>
 
     </SafeAreaView>
@@ -104,11 +126,11 @@ const styles = StyleSheet.create({
     width: "95%",
     marginRight: 10
   },
+
+  //job card styles
   jobNews: {
     flexDirection: "row",
   },
-
-  //job card styles
   JobCard: {
     margin: 10,
     padding: 10,
@@ -121,18 +143,18 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: "700",
-    paddingBottom: 10,
+    paddingBottom: 5,
     color: colors.primary900,
     fontSize: 18
   },
   cardSubTitle: {
     fontWeight: "500",
-    paddingBottom: 10,
+    paddingBottom: 5,
     fontSize: 16
   },
   cardDetail: {
     fontWeight: "300",
-    paddingBottom: 10,
+    paddingBottom: 5,
     fontSize: 16
   },
 
@@ -180,4 +202,19 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
   },
+
+  //News card style
+
+  newsCard: {
+    flexDirection: 'row',
+    height: 130,
+    marginHorizontal: 10,
+    width: "93%",
+    backgroundColor: colors.white,
+  },
+  newsContent: {
+    display: "flex",
+    justifyContent: "center",
+    width: "70%",
+  }
 })
