@@ -34,6 +34,19 @@ function HomeScreen(props) {
     );
   }
 
+  //card to display Latest Update (e.g. COVID-19)
+  const UpdateCard = (props) => {
+    return (
+      <View style={styles.updateCard}>
+        <Text style={styles.updateTitle}>{props.title}</Text>
+        <Text style={styles.updateDescription}>{props.description}</Text>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Read More</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <ScrollView
