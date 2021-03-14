@@ -185,16 +185,22 @@ function OrganizationScreen(props) {
 }
 const styles = StyleSheet.create({
   safeArea: {flex: spacing.hairline},
+
+  // Chips Style
   chipsView: {flexDirection: 'row', padding: spacing.sectionPadding},
   chips: {
     backgroundColor: themes.light.inverseTextColor,
   },
+
+  // Custom Switch Selectors Style
   switch: {
     width: '50%',
     justifyContent: 'center',
     marginLeft: '30%',
     marginBottom: spacing.smaller,
   },
+
+  //Card Style
   cardsView: {
     marginLeft: spacing.smaller,
     marginRight: spacing.smaller,
@@ -207,7 +213,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-
     elevation: 7,
   },
   cardImage: {height: 100, flex: 1, borderTopLeftRadius: 12},
