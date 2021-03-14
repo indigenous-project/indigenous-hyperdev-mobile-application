@@ -21,7 +21,7 @@ import {
 } from 'native-base';
 
 //function return
-function LoginScreen(props) {
+function LoginScreen({navigation}) {
   // declaring a variable for themes
   const theme = themes.light;
   const [user, setUser] = useState(null);
