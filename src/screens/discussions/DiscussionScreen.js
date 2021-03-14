@@ -3,17 +3,17 @@
 // import packages
 import React from 'react';
 
-import { Text, StyleSheet, View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Text, StyleSheet, View, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import SwitchSelector from 'react-native-switch-selector';
-import { colors, themes } from '../../styles';
+import {colors, themes} from '../../styles';
 
 //switch-selector options
 const options = [
-  { label: 'Recent', value: 'Recent' },
-  { label: 'Most Discussed', value: 'Most Discussed' },
-  { label: 'My Discussions', value: 'My Discussions' }
+  {label: 'Recent', value: 'Recent'},
+  {label: 'Most Discussed', value: 'Most Discussed'},
+  {label: 'My Discussions', value: 'My Discussions'},
 ];
 
 //function return
@@ -26,8 +26,8 @@ function DiscussionScreen(props) {
       <View style={styles.chip}>
         <Text style={styles.chipText}>{props.name}</Text>
       </View>
-    )
-  }
+    );
+  };
 
   //card to display Discussion
   const DiscussionCard = (props) => {
@@ -45,11 +45,11 @@ function DiscussionScreen(props) {
           <Text>Save</Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <View style={styles.container}>
@@ -65,16 +65,15 @@ function DiscussionScreen(props) {
         buttonColor={colors.primary500}
         options={options}
         initial={0}
-        onPress={value => console.log(`${value}`)} />
+        onPress={(value) => console.log(`${value}`)}
+      />
 
-      <ScrollView
-        horizontal={false}>
+      <ScrollView horizontal={false}>
         <DiscussionCard
           title="Discussion Title"
           nameAndDate="User Name and Date posted"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et" ></DiscussionCard>
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et"></DiscussionCard>
       </ScrollView>
-
     </SafeAreaView>
   );
 }
@@ -88,68 +87,68 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'flex-start',
     margin: 10,
-    borderRadius: 50
+    borderRadius: 50,
   },
 
   //create New Discussion style
   createNewButton: {
     minHeight: 25,
     padding: 3,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: 16,
     color: colors.gray700,
-    width: "100%",
+    width: '100%',
   },
 
   //Discussion Card styles
   discussionCard: {
-    minHeight: "25%",
+    minHeight: '25%',
     padding: 15,
     backgroundColor: colors.white,
     alignItems: 'flex-start',
     marginHorizontal: 10,
     marginTop: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   cardTitle: {
     fontSize: 16,
     color: colors.primary900,
-    fontWeight: "700",
+    fontWeight: '700',
     paddingBottom: 8,
   },
   cardSubTitle: {
     fontSize: 14,
     lineHeight: 25,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   cardDetail: {
-    fontWeight: "300",
-    paddingBottom: 8
+    fontWeight: '300',
+    paddingBottom: 8,
   },
 
   //chips styling
   chipContainer: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   chip: {
     borderColor: colors.primary500,
     borderRadius: 50,
     marginRight: 10,
     marginBottom: 8,
-    borderWidth: 2
+    borderWidth: 2,
   },
   chipText: {
     fontSize: 13,
     padding: 5,
     color: colors.primary900,
-    fontWeight: "600"
+    fontWeight: '600',
   },
 
   //Actions styling (Relies and Save)
   actionContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    width: "90%",
-    marginHorizontal: 10
+    width: '90%',
+    marginHorizontal: 10,
   },
-})
+});
