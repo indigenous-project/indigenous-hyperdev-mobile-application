@@ -6,8 +6,11 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { categoriesGetList } from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import { View, ScrollView, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors, themes } from '../../styles'
+import EventCard from '../../components/EventCard';
+import UpdateCard from '../../components/UpdateCard';
+import CategoryButton from '../../components/CategoryButton';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors, themes, typography, spacing } from '../../styles'
 
 //function return
 function HomeScreen(props) {
@@ -21,43 +24,6 @@ function HomeScreen(props) {
       .then(setCategories)
       .catch(console.log);
   }, []);
-
-  //card to display upcoming events
-  const EventCard = (props) => {
-    return (
-      <View style={styles.eventCard}>
-        <Image style={styles.image} source={require('../../testImages/demoPic.png')} />
-        <Text style={styles.cardTitle}>{props.name}</Text>
-        <Text style={styles.cardSubTitle}>{props.date}</Text>
-        <Text style={styles.cardDetail}>{props.status}</Text>
-      </View>
-    );
-  }
-
-  //card to display Latest Update (e.g. COVID-19)
-  const UpdateCard = (props) => {
-    return (
-      <View style={styles.updateCard}>
-        <Text style={styles.updateTitle}>{props.title}</Text>
-        <Text style={styles.updateDescription}>{props.description}</Text>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Read More</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  //card to display category button
-  const CategoryButton = (props) => {
-    return (
-      <View>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text style={styles.categoryIcon}>{props.icon}</Text>
-        </TouchableOpacity>
-        <Text style={styles.categoryName}>{props.name}</Text>
-      </View>
-    )
-  }
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
@@ -104,98 +70,35 @@ function HomeScreen(props) {
   );
 }
 
-export default HomeScreen;
-
 const styles = StyleSheet.create({
   //container style
   container: {
-    padding: 10,
-    backgroundColor: colors.white,
     alignItems: 'flex-start',
-    marginTop: 10
+    padding: spacing.small,
+    backgroundColor: colors.white,
+    marginTop: spacing.small
   },
   heading: {
     color: colors.primary900,
-    paddingLeft: 10,
-    fontWeight: "700",
-    fontSize: 16
+    paddingLeft: spacing.small,
+    fontWeight: typography.fwBold,
+    fontSize: typography.fs3
   },
 
   //styling for upcoming event
   upcomingEvent: {
     flexDirection: "row",
   },
-  eventCard: {
-    margin: 10,
-    shadowOffset: { width: 3, height: 6 },
-    shadowColor: colors.gray900,
-    backgroundColor: colors.white,
-    height: "90%",
-    shadowOpacity: 0.2,
-  },
-  cardTitle: {
-    fontWeight: "700",
-    paddingBottom: 8
-  },
-  cardSubTitle: {
-    fontWeight: "500",
-    paddingBottom: 8
-  },
-  cardDetail: {
-    fontWeight: "300",
-    paddingBottom: 8
-  },
-  image: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    width: 200,
-    height: 100,
-    marginBottom: 10
-  },
 
   //styling for latest update
   latestUpdate: {
-    borderRadius: 10,
-    marginHorizontal: 5,
-    marginVertical: 10,
-    borderStyle: 'solid',
-    borderWidth: 0.1,
-    shadowOffset: { width: 3, height: 6 },
-    shadowColor: colors.gray900,
+    borderRadius: spacing.small,
+    marginHorizontal: spacing.smallest,
+    marginVertical: spacing.small,
     backgroundColor: colors.white,
+    shadowColor: colors.gray900,
+    shadowOffset: { width: 3, height: 6 },
     shadowOpacity: 0.2,
-  },
-  updateCard: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  updateTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    textAlign: "center",
-    color: "red",
-    textTransform: "uppercase",
-    paddingTop: 10,
-  },
-  updateDescription: {
-    fontSize: 16,
-    lineHeight: 25,
-    padding: 10,
-  },
-  //button styling
-  buttonContainer: {
-    marginBottom: 10,
-    backgroundColor: colors.primary400,
-    minWidth: "50%",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12
-  },
-  buttonText: {
-    fontSize: 14,
-    color: colors.white,
-    alignSelf: "center",
   },
 
   //styling for popular service categories
@@ -203,29 +106,9 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: 'space-around',
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: spacing.small,
     backgroundColor: colors.white
   },
-  categoryButton: {
-    width: 80,
-    height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOffset: { width: 3, height: 6 },
-    shadowColor: colors.gray900,
-    shadowOpacity: 0.2,
-    borderRadius: 100,
-    backgroundColor: colors.primary50,
-  },
-  categoryIcon: {
-    color: colors.primary900,
-    fontSize: 40,
-  },
-  categoryName: {
-    color: colors.primary900,
-    fontWeight: "600",
-    alignSelf: "center",
-    marginTop: 10,
-    fontSize: 14
-  }
 })
+
+export default HomeScreen;
