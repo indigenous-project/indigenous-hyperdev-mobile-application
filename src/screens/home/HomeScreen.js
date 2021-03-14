@@ -9,7 +9,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
 import CategoryButton from '../../components/CategoryButton';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { colors, themes, typography, spacing } from '../../styles'
 
 //function return
