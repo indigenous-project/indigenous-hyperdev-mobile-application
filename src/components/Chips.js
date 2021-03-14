@@ -14,9 +14,6 @@ export default function EventCard(props) {
 const styles = StyleSheet.create({
 
     //chips styling
-    chipContainer: {
-        flexDirection: "row"
-    },
     chip: {
         borderRadius: 50,
         borderWidth: 2,

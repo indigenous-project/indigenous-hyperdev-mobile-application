@@ -34,7 +34,7 @@ function DiscussionScreen(props) {
           paddingHorizontal: 10,
         }}
         textColor={colors.primary900}
-        fontSize={14}
+        fontSize={typography.fs2}
         buttonColor={colors.primary500}
         options={options}
         initial={0}
