@@ -9,7 +9,7 @@ export const primary400 = '#b66856';
 export const primary300 = '#bd7b65';
 export const primary200 = '#c49174';
 export const primary100 = '#cda589';
-export const primary50 = '#d3b199';
+export const primary50 = '#f2eeed';
 
 export const gray900 = '#111827';
 export const gray800 = '#1F2937';
