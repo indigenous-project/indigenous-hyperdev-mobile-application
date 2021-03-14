@@ -1,4 +1,3 @@
 // Environment variables list
 
-export const BASE_API =
-  'http://ec2co-ecsel-18j9bbvvtigir-1002785149.us-east-2.elb.amazonaws.com'; // DNS of server API
+export const BASE_API = 'http://3.97.85.123:3030'; // DNS of server API
