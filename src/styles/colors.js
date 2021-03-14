@@ -1,4 +1,5 @@
 export const white = '#ffffff';
+export const shadowcolor = '#000';
 
 export const primary900 = '#721511';
 export const primary800 = '#931c16';

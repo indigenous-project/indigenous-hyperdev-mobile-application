@@ -1,5 +1,4 @@
 import * as colors from './colors';
-import * as spacing from './spacing';
 
 /* Define base scales */
 export const fs1 = 12;
