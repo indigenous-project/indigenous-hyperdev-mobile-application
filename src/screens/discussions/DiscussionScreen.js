@@ -9,8 +9,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import DiscussionCard from '../../components/DiscussionCard';
 import SwitchSelector from 'react-native-switch-selector';
 
-import { colors, themes, typography, spacing } from '../../styles'
-
+import {colors, themes, typography, spacing} from '../../styles';
 
 //switch-selector options
 const options = [
@@ -64,18 +63,15 @@ const styles = StyleSheet.create({
     padding: spacing.small,
     backgroundColor: colors.white,
     margin: spacing.small,
-
   },
 
   //create New Discussion style
   createNewButton: {
-
     height: 25,
-    width: "100%",
+    width: '100%',
     padding: spacing.smallest,
     fontWeight: typography.fwMedium,
     fontSize: typography.sf3,
     color: colors.gray700,
-
   },
 });
