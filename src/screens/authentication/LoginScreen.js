@@ -8,6 +8,7 @@ import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import {themes, colors, typography} from '../../styles';
+import {useIsFocused} from '@react-navigation/native';
 
 import {
   Container,
@@ -28,20 +29,27 @@ import {useSecureStorage} from '../../hooks/useSecureStorage';
 function LoginScreen({navigation}) {
   // declaring a variable for themes
   const theme = themes.light;
+
   // set up useState
   const [userName, setUsername] = useAsyncStorage('userName', '');
   const [token, setToken] = useSecureStorage('userToken', '');
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState(userName);
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   //define passwordRef to autofil password
   const passwordInputRef = createRef();
 
   useEffect(() => {
-    if (userName) setUserEmail(userName); // if userName exist , then autofil user name field
-    if (token) navigation.replace('DrawerRoute'); // if login already navigate to home page
-  }, [token, userName, navigation]);
+    if (token) navigation.replace('DrawerRoute'); //  if login already navigate to home page
+  }, [token, navigation]);
+
+  useEffect(() => {
+    if (userName) {
+      setUserEmail(userName); // if userName exist , then autofil user name field
+    }
+  }, [userName]);
 
   //function handle tap submit button
   const signIn = async (email, password) => {
