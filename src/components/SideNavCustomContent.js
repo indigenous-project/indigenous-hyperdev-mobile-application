@@ -3,17 +3,38 @@
 // import packages
 import React from 'react';
 
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {userLogout} from '../api/auth/auth.api';
+import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
+import Loader from './Loader';
+import {useState} from 'react/cjs/react.development';
+import {deleteItemAsync} from 'expo-secure-store';
+import {useSecureStorage} from '../hooks/useSecureStorage';
 
 //function return
 function SideNavCustomContent(props) {
+  const [token, setToken] = useSecureStorage('userToken', null);
+  const [loading, setLoading] = useState(false);
+
+  // Function handle when tap logout
+  const handleLogout = () => {
+    setLoading(true); // show Loader
+    userLogout(token) // call API
+      .then((response) => {
+        props.navigation.toggleDrawer();
+        setLoading(false); // hide Loader
+        if (response.data.logout) {
+          // check if logout successfull
+          deleteItemAsync('userToken'); // remove token from storage when logout
+          //removeAsyncStorage('userName');
+          props.navigation.replace('Auth'); // navaigate to authentication screen
+        }
+      })
+      .catch();
+  };
   return (
     <DrawerContentScrollView {...props}>
+      <Loader loading={loading} />
       <DrawerItem
         label="Home"
         onPress={() => props.navigation.navigate('BottomTabScreen')}
@@ -38,10 +59,7 @@ function SideNavCustomContent(props) {
         label="Saved Items"
         onPress={() => props.navigation.navigate('SavedItemsScreen')}
       />
-      <DrawerItem
-        label="Log out"
-        onPress={() => props.navigation.navigate('')}
-      />
+      <DrawerItem label="Log out" onPress={handleLogout} />
     </DrawerContentScrollView>
   );
 }
