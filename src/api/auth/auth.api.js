@@ -75,7 +75,7 @@ export const userLogout = async (token) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(''),
+    body: JSON.stringify({token: token}),
   });
   // handle errors
   if (!response.ok) {
