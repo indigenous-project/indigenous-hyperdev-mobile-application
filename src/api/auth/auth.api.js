@@ -6,7 +6,7 @@ import * as environment_variable from '../environment_variable';
 // Fetch API register a new user
 export const userSignUp = async (body) => {
   const url = `${environment_variable.BASE_API}/auth/users/signup`;
-  body.isAdmin = false; // set user role is not admin
+  body.isAdmin = 'false'; // set user role is not admin
   const response = await fetch(url, {
     method: 'POST',
     headers: {
