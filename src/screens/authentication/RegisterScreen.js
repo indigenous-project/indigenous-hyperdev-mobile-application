@@ -97,17 +97,14 @@ function RegisterScreen({navigation}) {
           console.log(response);
           if (response.data) {
             setUserName(userEmail);
+            setLoading(false);
+            setIsRegistraionSuccess(true);
+            navigation.navigate('Login');
           }
-        })
-        .finally(() => {
-          setLoading(false);
-          setIsRegistraionSuccess(true);
-          navigation.navigate('Login');
         })
         .catch((err) => {
           setLoading(false);
           for (let key in err.errors[0]) {
-            console.log(key);
             if (key === 'message' || key === 'description' || key === 'title') {
               Alert.alert('Registration', err.errors[0][key]);
               break;
@@ -141,7 +138,11 @@ function RegisterScreen({navigation}) {
           </Item>
           <Item floatingLabel>
             <Label>Age</Label>
-            <Input value={userAge} onChangeText={setUserAge} />
+            <Input
+              value={userAge}
+              onChangeText={setUserAge}
+              keyboardType="numeric"
+            />
           </Item>
           <Item floatingLabel>
             <Label>Gender</Label>
