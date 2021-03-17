@@ -53,7 +53,7 @@ function LoginScreen({navigation}) {
           //console.log(response.data.email);
           setLoading(false); // hide loader
           setUsername(response.data.email);
-          navigation.replace('DrawerRoute');
+          navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
         .catch((err) => {
           console.log(err);
@@ -63,7 +63,6 @@ function LoginScreen({navigation}) {
           Alert.alert('User authentication', err.errors[0].description);
         });
     }
-    //  if login already navigate to home page
   }, [token]);
 
   useEffect(() => {
@@ -136,7 +135,10 @@ function LoginScreen({navigation}) {
             />
           </Item>
         </Form>
-        <Button style={styles.forgotPasswordButton} transparent>
+        <Button
+          style={styles.forgotPasswordButton}
+          transparent
+          onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={{color: theme.baseTextColor}}>Forget Password ? </Text>
         </Button>
         <Button
@@ -157,7 +159,7 @@ function LoginScreen({navigation}) {
         <Button
           transparent
           onPress={() => {
-            navigation.navigate('BottomTabScreen');
+            navigation.navigate('DrawerRoute');
           }}>
           <Text>Skips this page</Text>
         </Button>
