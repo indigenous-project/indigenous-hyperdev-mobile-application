@@ -15,7 +15,7 @@ import {
   Header,
 } from 'native-base';
 
-function Forgotpassword() {
+function ForgotPassword() {
   const theme = themes.light;
 
   return (
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     top: '50%',
     marginLeft: '20%',
     backgroundColor: themes.light.primaryColor,
-    color: '#000',
     width: '60%',
     height: '5%',
   },
@@ -75,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Forgotpassword;
+export default ForgotPassword;
