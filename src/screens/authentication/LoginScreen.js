@@ -131,7 +131,7 @@ function LoginScreen({navigation}) {
           }}>
           <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
         </Button>
-        <Button
+        <Button 
           transparent
           onPress={() => {
             navigation.navigate('BottomTabScreen');
