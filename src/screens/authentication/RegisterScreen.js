@@ -3,7 +3,14 @@
 // import packages
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, StyleSheet, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
 import {useState} from 'react';
 import {useEffect} from 'react';
@@ -28,6 +35,7 @@ import {
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
+import {createRef} from 'react/cjs/react.production.min';
 
 //function return
 function RegisterScreen({navigation}) {
@@ -48,6 +56,16 @@ function RegisterScreen({navigation}) {
   const [userAge, setUserAge] = useState('');
   const [userGender, setUserGender] = useState('');
   const [loading, setLoading] = useState(false);
+
+  //createRef
+  const emailInputRef = createRef();
+  const ageInputRef = createRef();
+  const genderInputRef = createRef();
+  const lastNameInputRef = createRef();
+  const firstNameInputRef = createRef();
+  const passwordInputRef = createRef();
+  const passwordConfirmInputRef = createRef();
+
   useEffect(() => {}, [userName]);
 
   const handleRegister = () => {
@@ -86,7 +104,8 @@ function RegisterScreen({navigation}) {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: userEmail.trim(),
-
+      gender: userGender.trim(),
+      age: userAge.trim(),
       type: 'Indigenous',
     };
     if (passwordConfirm.trim() == userPassword.trim()) {
@@ -96,17 +115,14 @@ function RegisterScreen({navigation}) {
           console.log(response);
           if (response.data) {
             setUserName(userEmail);
+            setLoading(false);
+            setIsRegistraionSuccess(true);
+            navigation.navigate('Login');
           }
-        })
-        .finally(() => {
-          setLoading(false);
-          setIsRegistraionSuccess(true);
-          navigation.navigate('Login');
         })
         .catch((err) => {
           setLoading(false);
           for (let key in err.errors[0]) {
-            console.log(key);
             if (key === 'message' || key === 'description' || key === 'title') {
               Alert.alert('Registration', err.errors[0][key]);
               break;
@@ -126,76 +142,138 @@ function RegisterScreen({navigation}) {
         message="Registration Successful!"
       />
       <Loader loading={loading} />
+
+      <Text style={styles.welcome}>Welcome!</Text>
+      <Text style={styles.signUpText}>Sign Up to get Started.</Text>
       <ScrollView>
-        <Text style={styles.welcome}>Welcome!</Text>
-        <Text style={styles.signUpText}>Sign Up to get Started.</Text>
-        <Form>
-          <Item floatingLabel>
-            <Label>First Name</Label>
-            <Input value={firstName} onChangeText={setfirstName} />
-          </Item>
-          <Item floatingLabel>
-            <Label>Last Name</Label>
-            <Input value={lastName} onChangeText={setLastName} />
-          </Item>
-          <Item floatingLabel>
-            <Label>Age</Label>
-            <Input value={userAge} onChangeText={setUserAge} />
-          </Item>
-          <Item floatingLabel>
-            <Label>Gender</Label>
-            <Input value={userGender} onChangeText={setUserGender} />
-          </Item>
-          <View style={styles.checkboxView}>
-            <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={styles.radio}
-            />
-            <Text style={styles.label}>Is Indigeneous</Text>
-          </View>
-          <Item floatingLabel>
-            <Label>Email</Label>
-            <Input
-              value={userEmail}
-              onChangeText={setUserEmail}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              blurOnSubmit={false}
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>Password</Label>
-            <Input
-              value={userPassword}
-              onChangeText={setUserPassword}
-              secureTextEntry={true}
-              blurOnSubmit={false}
-              keyboardType="default"
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>Confirm Password</Label>
-            <Input value={passwordConfirm} onChangeText={setPasswordConfirm} />
-          </Item>
-        </Form>
-        <Button style={styles.signUpButton} block onPress={handleRegister}>
-          <Text style={styles.signUpButtonText}>Sign Up</Text>
-        </Button>
-        <Button
-          style={styles.loginTextButton}
-          transparent
-          onPress={() => {
-            navigation.navigate('loginScreen');
-          }}>
-          <Text style={styles.loginText}>Already have an account? Log in</Text>
-        </Button>
-        <Button
-          transparent
-          onPress={() => {
-            navigation.navigate('TabScreen');
-          }}></Button>
+        <KeyboardAvoidingView enabled>
+          <Form>
+            <Item floatingLabel>
+              <Label>First Name</Label>
+              <Input
+                value={firstName}
+                onChangeText={setfirstName}
+                autoCapitalize="sentences"
+                returnKeyType="next"
+                ref={firstNameInputRef}
+                onSubmitEditing={() =>
+                  lastNameInputRef.current && lastNameInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Last Name</Label>
+              <Input
+                value={lastName}
+                onChangeText={setLastName}
+                autoCapitalize="sentences"
+                returnKeyType="next"
+                ref={lastNameInputRef}
+                onSubmitEditing={() =>
+                  ageInputRef.current && ageInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Age</Label>
+              <Input
+                value={userAge}
+                onChangeText={setUserAge}
+                keyboardType="numeric"
+                returnKeyType="next"
+                ref={ageInputRef}
+                onSubmitEditing={() =>
+                  genderInputRef.current && genderInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Gender</Label>
+              <Input
+                value={userGender}
+                onChangeText={setUserGender}
+                returnKeyType="next"
+                ref={genderInputRef}
+                onSubmitEditing={() =>
+                  emailInputRef.current && emailInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </Item>
+            <View style={styles.checkboxView}>
+              <CheckBox
+                value={isSelected}
+                onValueChange={setSelection}
+                style={styles.radio}
+              />
+              <Text style={styles.label}>Is Indigeneous</Text>
+            </View>
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input
+                value={userEmail}
+                onChangeText={setUserEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                ref={emailInputRef}
+                blurOnSubmit={false}
+                onSubmitEditing={() =>
+                  passwordInputRef.current && passwordInputRef.current.focus()
+                }
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Password</Label>
+              <Input
+                value={userPassword}
+                onChangeText={setUserPassword}
+                secureTextEntry={true}
+                blurOnSubmit={false}
+                keyboardType="default"
+                returnKeyType="next"
+                ref={passwordInputRef}
+                onSubmitEditing={() =>
+                  passwordConfirmInputRef.current &&
+                  passwordConfirmInputRef.current.focus()
+                }
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Confirm Password</Label>
+              <Input
+                value={passwordConfirm}
+                onChangeText={setPasswordConfirm}
+                onSubmitEditing={Keyboard.dismiss}
+                ref={passwordConfirmInputRef}
+                returnKeyType="next"
+                blurOnSubmit={false}
+                secureTextEntry={true}
+              />
+            </Item>
+          </Form>
+          <Button style={styles.signUpButton} block onPress={handleRegister}>
+            <Text style={styles.signUpButtonText}>Sign Up</Text>
+          </Button>
+          <Button
+            style={styles.loginTextButton}
+            transparent
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
+            <Text style={styles.loginText}>
+              Already have an account? Log in
+            </Text>
+          </Button>
+          <Button
+            transparent
+            onPress={() => {
+              navigation.navigate('TabScreen');
+            }}></Button>
+        </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -213,6 +291,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: typography.fs5,
     marginTop: '2%',
+    marginBottom: '5%',
     fontWeight: typography.fwNormal,
     marginLeft: '6%',
   },

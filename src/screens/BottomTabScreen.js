@@ -70,7 +70,7 @@ function BottomTabScreen(props) {
         options={{
           tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
-              name="office-building"
+              name="home-city-outline"
               size={size}
               color={color}
             />
