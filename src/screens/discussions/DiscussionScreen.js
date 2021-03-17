@@ -8,8 +8,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import DiscussionCard from '../../components/DiscussionCard';
 import SwitchSelector from 'react-native-switch-selector';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, themes, typography, spacing} from '../../styles';
+import {useDiscussion} from '../../contexts/discussionContext';
 
 //switch-selector options
 const options = [
@@ -21,13 +22,20 @@ const options = [
 //function return
 function DiscussionScreen(props) {
   const theme = themes.light;
+  const [discussions] = useDiscussion([]);
+  console.log(discussions);
 
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <View style={styles.container}>
-        <Text style={styles.createNewButton}>Create New Discussion</Text>
+        <MaterialCommunityIcons
+          name="square-edit-outline"
+          size={22}
+          style={{textAlignVertical: 'center'}}
+        />
+        <Text style={styles.createNewButton}>Create a new discussion</Text>
       </View>
 
       <SwitchSelector
@@ -43,10 +51,18 @@ function DiscussionScreen(props) {
       />
 
       <ScrollView horizontal={false}>
-        <DiscussionCard
-          title="Discussion Title"
-          nameAndDate="User Name and Date posted"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et"></DiscussionCard>
+        {discussions
+          ? discussions.map((discussion) => (
+              <DiscussionCard
+                key={discussion._id}
+                title={discussion.title}
+                nameAndDate={`${discussion.owner.firstName} ${discussion.owner.lastName} ${discussion.createdAt}`}
+                description={discussion.description}
+                categories={discussion.categories}
+                replies={discussion.replies}
+              />
+            ))
+          : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -58,11 +74,12 @@ const styles = StyleSheet.create({
   //container style
   container: {
     alignItems: 'flex-start',
-
+    flexDirection: 'row',
     borderRadius: 50,
     padding: spacing.small,
     backgroundColor: colors.white,
     margin: spacing.small,
+    textAlignVertical: 'center',
   },
 
   //create New Discussion style
@@ -72,6 +89,6 @@ const styles = StyleSheet.create({
     padding: spacing.smallest,
     fontWeight: typography.fwMedium,
     fontSize: typography.sf3,
-    color: colors.gray700,
+    color: colors.gray500,
   },
 });

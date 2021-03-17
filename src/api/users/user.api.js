@@ -20,5 +20,6 @@ export const userEdit = async (userId, body) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

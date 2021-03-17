@@ -52,7 +52,7 @@ function LoginScreen({navigation}) {
         .then((response) => {
           //console.log(response.data.email);
           setLoading(false); // hide loader
-          setUsername(response.data.email);
+          setUsername(response.email);
           navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
         .catch((err) => {
@@ -88,7 +88,7 @@ function LoginScreen({navigation}) {
       password: password,
     })
       .then((response) => {
-        verifyUser(response.data.token);
+        verifyUser(response.token);
       })
       .catch((err) => {
         setLoading(false); // hide loader
