@@ -20,7 +20,8 @@ export const serviceGetList = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a single  service: need token and serviceId
@@ -41,5 +42,6 @@ export const serviceGetDetail = async (token, serviceId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

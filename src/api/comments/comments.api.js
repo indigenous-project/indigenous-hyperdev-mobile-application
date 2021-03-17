@@ -22,7 +22,8 @@ export const commentsAdd = async (token, {text}, {id, type}) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Delete a comment by user: need center/ Services id , type of comment: posts/ center, and text as content
@@ -44,5 +45,6 @@ export const commentsDelete = async (token, commentId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

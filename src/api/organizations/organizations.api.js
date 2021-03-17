@@ -20,7 +20,8 @@ export const organizationGetList = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a single  organization: need token and organizationId
@@ -41,7 +42,8 @@ export const organizationGetDetail = async (token, organizationId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // /Update a review to organization: need token, reviews: [{score: 0}]) and organizationId
@@ -63,5 +65,6 @@ export const organizationReview = async (token, {reviews}, organizationId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

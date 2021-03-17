@@ -21,7 +21,8 @@ export const questionGetDetail = async (token, questionId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // User participate to a poll
@@ -43,5 +44,6 @@ export const questionParticipate = async (token, {questionId, answerId}) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

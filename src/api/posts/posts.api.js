@@ -20,7 +20,8 @@ export const postGetList = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a single  post: need token and serviceId
@@ -41,7 +42,8 @@ export const postGetDetail = async (token, postId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Dislike a post: token and postId
@@ -63,7 +65,8 @@ export const postDislike = async (token, postId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Like a post: token and postId
@@ -85,7 +88,8 @@ export const postLike = async (token, postId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // count number of sharing a post: token and postId
@@ -107,5 +111,6 @@ export const postShare = async (token, postId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
