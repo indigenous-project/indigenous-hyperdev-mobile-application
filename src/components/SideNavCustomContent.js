@@ -10,6 +10,7 @@ import Loader from './Loader';
 import {useState} from 'react/cjs/react.development';
 import {deleteItemAsync} from 'expo-secure-store';
 import {useSecureStorage} from '../hooks/useSecureStorage';
+import {Alert} from 'react-native';
 
 //function return
 function SideNavCustomContent(props) {
@@ -30,7 +31,10 @@ function SideNavCustomContent(props) {
           props.navigation.replace('Auth'); // navaigate to authentication screen
         }
       })
-      .catch();
+      .catch((err) => {
+        setLoading(false); // hide Loader
+        Alert.alert(err.errors[0].description);
+      });
   };
   return (
     <DrawerContentScrollView {...props}>
