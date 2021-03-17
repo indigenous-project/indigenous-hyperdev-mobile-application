@@ -86,7 +86,8 @@ function RegisterScreen({navigation}) {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: userEmail.trim(),
-
+      gender: userGender.trim(),
+      age: userAge.trim(),
       type: 'Indigenous',
     };
     if (passwordConfirm.trim() == userPassword.trim()) {
