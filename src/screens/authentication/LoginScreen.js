@@ -24,6 +24,7 @@ import {createRef} from 'react';
 import Loader from '../../components/Loader';
 import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
+import {deleteItemAsync} from 'expo-secure-store';
 
 //function return
 function LoginScreen({navigation}) {
@@ -34,6 +35,7 @@ function LoginScreen({navigation}) {
   const [userName, setUsername] = useAsyncStorage('userName', '');
   const [token, setToken] = useSecureStorage('userToken', '');
   const [userEmail, setUserEmail] = useState(userName);
+  //const [currentUser, setCurrentUser] = useState(userName);
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
@@ -42,8 +44,27 @@ function LoginScreen({navigation}) {
   const passwordInputRef = createRef();
 
   useEffect(() => {
-    if (token) navigation.replace('DrawerRoute'); //  if login already navigate to home page
-  }, [token, navigation]);
+    console.log(token);
+
+    if (token) {
+      setLoading(true);
+      userCurrent(token)
+        .then((response) => {
+          //console.log(response.data.email);
+          setLoading(false); // hide loader
+          setUsername(response.data.email);
+          navigation.replace('DrawerRoute');
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false); // hide loader
+          //removeAsyncStorage('userName');
+          deleteItemAsync('userToken'); // remove token from storage when logout
+          Alert.alert('User authentication', err.errors[0].description);
+        });
+    }
+    //  if login already navigate to home page
+  }, [token]);
 
   useEffect(() => {
     if (userName) {
@@ -68,14 +89,16 @@ function LoginScreen({navigation}) {
       password: password,
     })
       .then((response) => {
-        setLoading(false); // hide loader
-        setToken(response.data.token); // save token
-        setUsername(userEmail); // save user email
+        verifyUser(response.data.token);
       })
       .catch((err) => {
         setLoading(false); // hide loader
         Alert.alert('User authentication', err.errors[0].description); // show error
       });
+  };
+
+  const verifyUser = (myToken) => {
+    setToken(myToken);
   };
 
   return (
@@ -131,7 +154,7 @@ function LoginScreen({navigation}) {
           }}>
           <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
         </Button>
-        <Button 
+        <Button
           transparent
           onPress={() => {
             navigation.navigate('BottomTabScreen');
