@@ -15,7 +15,7 @@ function DiscussionProvider(props) {
       discussionGetList(token)
         .then(setDiscussions)
         .catch((err) => Alert.alert(err.errors[0]));
-  }, [token]);
+  }, [discussions]);
   return <DiscussionContext.Provider value={[discussions]} {...props} />;
 }
 
