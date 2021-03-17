@@ -113,7 +113,7 @@ function RegisterScreen({navigation}) {
       userSignUp(data)
         .then((response) => {
           console.log(response);
-          if (response.data) {
+          if (response) {
             setUserName(userEmail);
             setLoading(false);
             setIsRegistraionSuccess(true);
