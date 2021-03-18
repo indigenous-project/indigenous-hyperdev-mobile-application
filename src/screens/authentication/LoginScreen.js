@@ -7,7 +7,7 @@ import {View, StyleSheet, Alert, Keyboard} from 'react-native';
 import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
 import {useState} from 'react';
 import {useEffect} from 'react';
-import {themes, colors, typography} from '../../styles';
+import {themes, colors, spacing, typography} from '../../styles';
 import {useIsFocused} from '@react-navigation/native';
 
 import {
@@ -49,13 +49,13 @@ function LoginScreen({navigation}) {
     if (token) {
       setLoading(true);
       userCurrent(token)
-        .then((response) => {
+        .then(response => {
           //console.log(response.data.email);
           setLoading(false); // hide loader
           setUsername(response.data.email);
           navigation.replace('DrawerRoute');
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           setLoading(false); // hide loader
           //removeAsyncStorage('userName');
@@ -88,16 +88,16 @@ function LoginScreen({navigation}) {
       email: email,
       password: password,
     })
-      .then((response) => {
+      .then(response => {
         verifyUser(response.data.token);
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false); // hide loader
         Alert.alert('User authentication', err.errors[0].description); // show error
       });
   };
 
-  const verifyUser = (myToken) => {
+  const verifyUser = myToken => {
     setToken(myToken);
   };
 
@@ -106,12 +106,12 @@ function LoginScreen({navigation}) {
       <Loader loading={loading} />
       <View>
         <Text style={styles.welcome}>Welcome!</Text>
-        <Text style={styles.loginTextToStart}>Log in to get Started.</Text>
+        <Text style={styles.loginTextToStart}>Log in to get started.</Text>
         {/* using forms for login */}
         <Form>
-          <Item floatingLabel>
-            <Label>Email</Label>
+          <Item style={styles.item} regular> 
             <Input
+             placeholder=" Email"
               autoCapitalize="none"
               keyboardType="email-address"
               returnKeyType="next"
@@ -123,9 +123,9 @@ function LoginScreen({navigation}) {
               }
             />
           </Item>
-          <Item floatingLabel>
-            <Label>Password</Label>
+          <Item style={styles.item} regular>
             <Input
+            placeholder=" Password"
               value={userPassword}
               onChangeText={setUserPassword}
               secureTextEntry={true}
@@ -136,15 +136,20 @@ function LoginScreen({navigation}) {
             />
           </Item>
         </Form>
-        <Button style={styles.forgotPasswordButton} transparent>
-          <Text style={{color: theme.baseTextColor}}>Forget Password ? </Text>
+        <Button
+          style={styles.forgotPasswordButton}
+          onPress={() => {
+            navigation.navigate('Forgot Password');
+          }}
+          transparent>
+          <Text style={{fontWeight: typography.fwMedium, fontSize: typography.fs3}}>Forgot Password ? </Text>
         </Button>
         <Button
           title="Sign in"
           onPress={() => signIn(userEmail, userPassword)}
           style={styles.loginButton}
           block>
-          <Text style={styles.loginText}>LOG IN</Text>
+          <Text style={styles.loginText}>Log In</Text>
         </Button>
         <Button
           style={styles.signUpBottom}
@@ -159,7 +164,7 @@ function LoginScreen({navigation}) {
           onPress={() => {
             navigation.navigate('BottomTabScreen');
           }}>
-          <Text>Skips this page</Text>
+          <Text style={styles.skipText} >Skip For Now</Text>
         </Button>
       </View>
     </SafeAreaView>
@@ -169,10 +174,14 @@ function LoginScreen({navigation}) {
 // Stylesheet for the Log in
 const styles = StyleSheet.create({
   loginButton: {
-    margin: '10%',
+    width: '65%',
     marginTop: '5%',
-    backgroundColor: themes.light.primaryColor,
+    marginLeft: '15%',
+    marginBottom: '5%',
+    height: '6%',
+    backgroundColor: colors.primary700,
     color: '#000',
+    borderRadius: spacing.smaller,
   },
 
   safeArea: {
@@ -182,16 +191,19 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   welcome: {
-    fontSize: typography.fs8,
-    marginTop: '10%',
-    fontWeight: typography.fwSemiBold,
+    fontSize: typography.fs6,
+    marginTop: '20%',
+    fontWeight: typography.fwBold,
     marginLeft: '5%',
+    color: colors.primary900,
   },
   loginTextToStart: {
-    fontSize: typography.fs5,
+    fontSize: typography.fs4,
     marginTop: '2%',
     fontWeight: typography.fwNormal,
     marginLeft: '6%',
+    color: colors.primary900,
+    marginBottom: '5%'
   },
   forgotPasswordButton: {
     marginLeft: '55%',
@@ -207,9 +219,21 @@ const styles = StyleSheet.create({
     color: '#FFFF',
   },
   signUpText: {
-    color: '#000',
-    fontWeight: typography.fwSemiBold,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
   },
+  item: {
+    borderRadius: spacing.smaller,
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    backgroundColor: colors.gray100,
+  },
+  skipText: {
+    fontWeight: typography.fwBold,
+    color: colors.primary900,
+    marginLeft: '30%',
+  }
 });
 
 export default LoginScreen;
