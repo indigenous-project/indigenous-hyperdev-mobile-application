@@ -7,7 +7,7 @@ import {useSecureStorage} from '../hooks/useSecureStorage';
 const DiscussionContext = React.createContext();
 
 function DiscussionProvider(props) {
-  const [discussions, setDiscussions] = useState([]);
+  const [discussions, setDiscussions] = useState(null);
   const [token, setToken] = useSecureStorage('userToken', '');
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function DiscussionProvider(props) {
       discussionGetList(token)
         .then(setDiscussions)
         .catch((err) => Alert.alert(err.errors[0]));
-  }, [discussions]);
+  }, [token, props.isFocused]);
   return <DiscussionContext.Provider value={[discussions]} {...props} />;
 }
 
