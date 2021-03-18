@@ -1,31 +1,53 @@
 //BottomTabScreen.js
 
-import React from 'react';
+import React, {useRef} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// Javascript
+import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 import HomeStack from './home/HomeStack';
 import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
 import ServicesStack from './services/ServicesStack';
 import OrganizationsStack from './organizations/OrganizationsStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {themes} from '../styles';
+import {colors, themes} from '../styles';
+import {View, StyleSheet, Animated} from 'react-native';
 
 const theme = themes.light;
 
-const Tab = createBottomTabNavigator();
+//const Tab = createBottomTabNavigator();
+const Tab = AnimatedTabBarNavigator();
+
 function BottomTabScreen(props) {
+  // fadeAnim will be used as the value for opacity. Initial Value: 0
+
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: theme.primaryColor,
+        activeTintColor: colors.white,
         inactiveTintColor: theme.subduedTextColor,
+      }}
+      appearance={{
+        activeTabBackgrounds: [
+          colors.primary300,
+          colors.primary300,
+          colors.primary300,
+          colors.primary300,
+          colors.primary300,
+        ],
       }}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons name="home" size={size} color={color} />
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name="home"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
@@ -35,6 +57,7 @@ function BottomTabScreen(props) {
         options={{
           tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
+              style={styles.icon}
               name="card-bulleted-outline"
               size={size}
               color={color}
@@ -48,7 +71,8 @@ function BottomTabScreen(props) {
         options={{
           tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
-              name="newspaper"
+              style={styles.icon}
+              name="newspaper-variant-outline"
               size={size}
               color={color}
             />
@@ -60,7 +84,12 @@ function BottomTabScreen(props) {
         component={ServicesStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons name="calendar" size={size} color={color} />
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name="calendar-outline"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
@@ -70,6 +99,7 @@ function BottomTabScreen(props) {
         options={{
           tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
+              style={styles.icon}
               name="home-city-outline"
               size={size}
               color={color}
@@ -82,3 +112,25 @@ function BottomTabScreen(props) {
 }
 
 export default BottomTabScreen;
+const styles = StyleSheet.create({
+  //container style
+  tabBarFocused: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    borderTopWidth: 2,
+    borderTopColor: theme.primaryColor,
+    paddingHorizontal: 15,
+  },
+  tabBar: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    borderTopWidth: 2,
+    paddingHorizontal: 15,
+    borderTopColor: 'white',
+  },
+  icon: {
+    marginVertical: 5,
+  },
+});

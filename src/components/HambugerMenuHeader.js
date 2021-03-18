@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {typography} from '../styles';
 
 const HambugerMenuHeader = (props) => {
   const toggleDrawer = () => {
@@ -9,12 +11,11 @@ const HambugerMenuHeader = (props) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={toggleDrawer}>
-        <Image
-          source={{
-            uri:
-              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-          }}
-          style={{width: 25, height: 25, marginLeft: 5}}
+        <MaterialCommunityIcons
+          name="menu"
+          size={typography.fs7}
+          color="white"
+          style={{marginLeft: 5}}
         />
       </TouchableOpacity>
     </View>
