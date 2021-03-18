@@ -22,7 +22,8 @@ export const discussionAdd = async (token, body) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a single discussion by user: need token and discussionId
@@ -43,7 +44,8 @@ export const discussionGetDetail = async (token, discussionId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a single discussion by user: need token and discussionId
@@ -64,7 +66,8 @@ export const discussionGetList = async (token, body) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Edit a discussion by user: need token and discussionId
@@ -86,5 +89,6 @@ export const discussionEdit = async (token, body, discussionId) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

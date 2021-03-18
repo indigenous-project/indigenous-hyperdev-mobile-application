@@ -24,7 +24,7 @@ function SideNavCustomContent(props) {
       .then((response) => {
         props.navigation.toggleDrawer();
         setLoading(false); // hide Loader
-        if (response.data.logout) {
+        if (response.logout) {
           // check if logout successfull
           deleteItemAsync('userToken'); // remove token from storage when logout
           //removeAsyncStorage('userName');

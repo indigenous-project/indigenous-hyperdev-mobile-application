@@ -52,8 +52,8 @@ function LoginScreen({navigation}) {
         .then(response => {
           //console.log(response.data.email);
           setLoading(false); // hide loader
-          setUsername(response.data.email);
-          navigation.replace('DrawerRoute');
+          setUsername(response.email);
+          navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
         .catch(err => {
           console.log(err);
@@ -63,7 +63,6 @@ function LoginScreen({navigation}) {
           Alert.alert('User authentication', err.errors[0].description);
         });
     }
-    //  if login already navigate to home page
   }, [token]);
 
   useEffect(() => {
@@ -88,8 +87,8 @@ function LoginScreen({navigation}) {
       email: email,
       password: password,
     })
-      .then(response => {
-        verifyUser(response.data.token);
+      .then((response) => {
+        verifyUser(response.token);
       })
       .catch(err => {
         setLoading(false); // hide loader
@@ -143,6 +142,7 @@ function LoginScreen({navigation}) {
           }}
           transparent>
           <Text style={{fontWeight: typography.fwMedium, fontSize: typography.fs3}}>Forgot Password ? </Text>
+
         </Button>
         <Button
           title="Sign in"
@@ -162,7 +162,7 @@ function LoginScreen({navigation}) {
         <Button
           transparent
           onPress={() => {
-            navigation.navigate('BottomTabScreen');
+            navigation.navigate('DrawerRoute');
           }}>
           <Text style={styles.skipText} >Skip For Now</Text>
         </Button>
