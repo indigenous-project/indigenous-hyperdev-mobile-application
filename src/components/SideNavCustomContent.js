@@ -10,7 +10,7 @@ import Loader from './Loader';
 import { useState } from 'react/cjs/react.development';
 import { deleteItemAsync } from 'expo-secure-store';
 import { useSecureStorage } from '../hooks/useSecureStorage';
-import { Alert, Image, View, Text } from 'react-native';
+import { Alert, Image, View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../styles';
 
 //function return
@@ -38,80 +38,123 @@ function SideNavCustomContent(props) {
       });
   };
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView contentContainerStyle={{ paddingTop: 0, }}
+      {...props}>
       <Loader loading={loading} />
       <View
-        style={{
-          backgroundColor: colors.primary400,
-          height: 100,
-          alignItems: 'center',
-          paddingLeft: spacing.large,
-          flexDirection: 'row'
-        }}
+        style={styles.drawerHeaderContainer}
       >
-        <Image
-          style={{ width: 50, height: 50, backgroundColor: 'white', borderRadius: 100, marginRight: 10 }}
-          source={require('../testImages/userIcon.png')} />
-        <View>
-          <Text style={{ color: 'white', fontSize: typography.fs3, fontWeight: typography.fwBold, marginBottom: spacing.smaller }}>FirstName LastName</Text>
-          <Text style={{ color: 'white', fontSize: typography.fs2 }}>Edit Profile</Text>
+        <View style={styles.drawerHeaderContent}>
+          <Image
+            style={styles.headerIcon}
+            source={require('../testImages/userIcon.png')} />
+          <View>
+            <Text style={styles.headerTitle}>FirstName LastName</Text>
+            <Text style={styles.headerButton}>Edit Profile</Text>
+          </View>
         </View>
       </View>
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="Font Size"
         onPress={() => props.navigation.navigate('FontSizeScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/fontSizeIcon.png')} />}
       />
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="About us"
         onPress={() => props.navigation.navigate('AboutScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/aboutIcon.png')} />}
       />
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="Indigenous People"
         onPress={() => props.navigation.navigate('IndigenousPeopleScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/indigenousIcon.png')} />}
       />
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="Ask Question"
         onPress={() => props.navigation.navigate('AskQuestionScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/askQueIcon.png')} />}
       />
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="Discussion Desclaimer"
         onPress={() => props.navigation.navigate('SavedItemsScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/infoIcon.png')} />}
       />
-      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+      <DrawerItem style={styles.drawerItem}
         label="Log out" onPress={handleLogout}
-        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
+        labelStyle={styles.labelStyle}
         icon={() =>
           <Image
-            style={{ width: 30, height: 30 }}
+            style={styles.image}
             source={require('../testImages/logoutIcon.png')} />}
       />
     </DrawerContentScrollView>
   );
 }
+const styles = StyleSheet.create({
+
+  //job card styles
+  drawerHeaderContainer: {
+    backgroundColor: colors.primary400,
+    height: 130,
+    paddingTop: spacing.largest
+  },
+  drawerHeaderContent: {
+    flexDirection: 'row',
+    marginTop: spacing.larger,
+    alignItems: 'center',
+    paddingLeft: spacing.large,
+  },
+  headerIcon: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'white',
+    borderRadius: 100,
+    marginRight: spacing.base
+  },
+  headerTitle: {
+    color: 'white',
+    fontSize: typography.fs3,
+    fontWeight: typography.fwBold,
+    marginBottom: spacing.smaller
+  },
+  headerButton: {
+    color: 'white',
+    fontSize: typography.fs2
+  },
+
+  drawerItem: {
+    borderBottomColor: colors.gray900,
+    borderBottomWidth: 0.2,
+    width: '100%'
+  },
+  labelStyle: {
+    color: colors.gray900,
+    fontWeight: typography.fwMedium
+  },
+  image: {
+    width: 30,
+    height: 30
+  }
+})
 
 export default SideNavCustomContent;
