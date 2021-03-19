@@ -1,12 +1,14 @@
 //ServiceScreen module
 
 // import packages
-import {Container, Card, CardItem, Body, View} from 'native-base';
+import {Container} from 'native-base';
 import React from 'react';
 import {ScrollView, Text, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import {themes, spacing, colors, typography} from '../../styles';
+import Circles from '../../components/Circles';
+import ServicesCard from '../../components/ServicesCard';
+import {themes, spacing, typography} from '../../styles';
 
 //function return
 function ServiceScreen(props) {
@@ -21,90 +23,58 @@ function ServiceScreen(props) {
           <Text style={styles.seeAll}>See All(12)</Text>
         </Container>
 
+        {/* group1 */}
         <Container style={styles.groupOfCatergories}>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
+          <Circles categoryName="Culture" />
+          <Circles categoryName="Government/Legal" />
+          <Circles categoryName="Mental Health/ Addiction" />
         </Container>
 
-        <Container style={styles.groupOfCatergories}>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
-          <Container style={styles.circleTextContainer}>
-            <View style={styles.circle} />
-            <Text style={styles.text}>Category1</Text>
-          </Container>
+        {/* group2 */}
+        <Container style={styles.groupOfCatergories2}>
+          <Circles categoryName="Community" />
+          <Circles categoryName="Employment & Housing" />
+          <Circles categoryName="Emergency" />
         </Container>
 
         {/* last opened template */}
-        <Container style={styles.textCardContainer}>
-          <Text style={styles.lastOpened}>Last Opened</Text>
-          <Card style={styles.cardsContainer}>
-            <CardItem style={styles.cardBorder}>
-              <Body>
-                <Text style={styles.cardText}>Title</Text>
-                <Text style={styles.cardText}>Name</Text>
-                <Text style={styles.cardText}>Description</Text>
-              </Body>
-            </CardItem>
-          </Card>
-
-          <Card style={styles.cardsContainer}>
-            <CardItem style={styles.cardBorder}>
-              <Body>
-                <Text style={styles.cardText}>Title</Text>
-                <Text style={styles.cardText}>Name</Text>
-                <Text style={styles.cardText}>Description</Text>
-              </Body>
-            </CardItem>
-          </Card>
+        <Container style={styles.lastOpenedTextCardContainer}>
+          <Text style={styles.services}>Last Opened</Text>
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
         </Container>
 
         {/* saved Services template */}
         <Container>
-          <Text style={styles.lastOpened}>Saved Services</Text>
-          <Card style={styles.cardsContainer}>
-            <CardItem style={styles.cardBorder}>
-              <Body>
-                <Text style={styles.cardText}>Title</Text>
-                <Text style={styles.cardText}>Name</Text>
-                <Text style={styles.cardText}>Description</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Card style={styles.cardsContainer}>
-            <CardItem style={styles.cardBorder}>
-              <Body>
-                <Text style={styles.cardText}>Title</Text>
-                <Text style={styles.cardText}>Name</Text>
-                <Text style={styles.cardText}>Description</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Card style={styles.cardsContainer}>
-            <CardItem style={styles.cardBorder}>
-              <Body>
-                <Text style={styles.cardText}>Title</Text>
-                <Text style={styles.cardText}>Name</Text>
-                <Text style={styles.cardText}>Description</Text>
-              </Body>
-            </CardItem>
-          </Card>
+          <Text style={styles.services}>Saved Services</Text>
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
+          <ServicesCard
+            title="A place to Gather"
+            name="Donny Sutherlan"
+            description="A place to Gather (Enjamonjading) Worker"
+          />
         </Container>
       </ScrollView>
     </SafeAreaView>
@@ -117,68 +87,39 @@ const styles = StyleSheet.create({
   serviceCategoryContainer: {
     flex: spacing.hairline,
     flexDirection: 'row',
-    height: 50,
+    height: 60,
   },
   serviceByCategory: {
     color: themes.light.primaryColor,
     fontWeight: typography.fwBold,
+    fontSize: typography.fs3,
     marginTop: spacing.largest,
     marginLeft: spacing.large,
   },
   seeAll: {
-    marginTop: spacing.largest,
-    marginLeft: 150,
+    marginTop: 34,
+    marginLeft: 100,
     color: themes.light.subduedTextColor,
   },
-  groupOfCatergories: {flexDirection: 'row', paddingLeft: '5%', height: 160},
-  circleTextContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: 160,
+  groupOfCatergories: {flexDirection: 'row', height: 90},
+  groupOfCatergories2: {
+    flexDirection: 'row',
+    marginVertical: 100,
+    height: spacing.none,
   },
-  circle: {
-    width: 80,
-    height: 80,
-    borderRadius: 100 / 2,
-    backgroundColor: colors.gray100,
-    shadowColor: colors.shadowcolor,
-    shadowOffset: {
-      width: spacing.none,
-      height: spacing.smallest,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    padding: '7%',
-    marginBottom: spacing.base,
-  },
-  text: {paddingLeft: spacing.smaller},
 
   //last opened style
-  textCardContainer: {height: 300},
-  lastOpened: {
+  lastOpenedTextCardContainer: {
+    marginVertical: 200,
+    marginTop: 150,
+    height: 300,
+  },
+  services: {
     color: themes.light.primaryColor,
+    fontSize: typography.fs3,
     fontWeight: typography.fwBold,
-    marginTop: spacing.largest,
-    marginLeft: spacing.large,
-  },
-  cardsContainer: {
-    borderRadius: spacing.small,
-    shadowColor: colors.shadowcolor,
-    shadowOffset: {
-      width: spacing.none,
-      height: spacing.smallest,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    marginLeft: spacing.large,
-    marginRight: spacing.large,
     marginTop: spacing.base,
+    marginLeft: spacing.large,
   },
-  cardBorder: {
-    borderRadius: spacing.small,
-  },
-  cardText: {marginTop: spacing.smaller, marginLeft: spacing.smallest},
 });
 export default ServiceScreen;
