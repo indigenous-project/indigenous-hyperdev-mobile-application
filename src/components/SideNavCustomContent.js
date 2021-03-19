@@ -41,9 +41,7 @@ function SideNavCustomContent(props) {
     <DrawerContentScrollView contentContainerStyle={{ paddingTop: 0, }}
       {...props}>
       <Loader loading={loading} />
-      <View
-        style={styles.drawerHeaderContainer}
-      >
+      <View style={styles.drawerHeaderContainer} >
         <View style={styles.drawerHeaderContent}>
           <Image
             style={styles.headerIcon}
@@ -112,7 +110,7 @@ function SideNavCustomContent(props) {
 }
 const styles = StyleSheet.create({
 
-  //job card styles
+  //drawer header styles
   drawerHeaderContainer: {
     backgroundColor: colors.primary400,
     height: 130,
@@ -142,6 +140,7 @@ const styles = StyleSheet.create({
     fontSize: typography.fs2
   },
 
+  //drawer items styles
   drawerItem: {
     borderBottomColor: colors.gray900,
     borderBottomWidth: 0.2,
