@@ -3,14 +3,18 @@
 // import packages
 import React from 'react';
 
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {userLogout} from '../api/auth/auth.api';
-import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { userLogout } from '../api/auth/auth.api';
+import { removeAsyncStorage, useAsyncStorage } from '../hooks/useAsyncStorage';
 import Loader from './Loader';
-import {useState} from 'react/cjs/react.development';
-import {deleteItemAsync} from 'expo-secure-store';
-import {useSecureStorage} from '../hooks/useSecureStorage';
-import {Alert} from 'react-native';
+import { useState } from 'react/cjs/react.development';
+import { deleteItemAsync } from 'expo-secure-store';
+import { useSecureStorage } from '../hooks/useSecureStorage';
+import { Alert, Image } from 'react-native';
+import { colors } from '../styles';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { color } from 'react-native-reanimated';
+import { fwBold, fwMedium } from '../styles/typography';
 
 //function return
 function SideNavCustomContent(props) {
@@ -39,31 +43,64 @@ function SideNavCustomContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <Loader loading={loading} />
-      <DrawerItem
-        label="Home"
+      <DrawerItem style={{ backgroundColor: colors.primary400, height: '20%', width: '100%' }}
+        label='Name User Edit Profile'
         onPress={() => props.navigation.navigate('BottomTabScreen')}
+        labelStyle={{ color: colors.white, fontWeight: fwMedium }}
       />
-      <DrawerItem
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Font Size"
         onPress={() => props.navigation.navigate('FontSizeScreen')}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/fontSizeIcon.png')} />}
       />
-      <DrawerItem
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="About us"
         onPress={() => props.navigation.navigate('AboutScreen')}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/aboutIcon.png')} />}
       />
-      <DrawerItem
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Indigenous People"
         onPress={() => props.navigation.navigate('IndigenousPeopleScreen')}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/indigenousIcon.png')} />}
       />
-      <DrawerItem
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Ask Question"
         onPress={() => props.navigation.navigate('AskQuestionScreen')}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/askQueIcon.png')} />}
       />
-      <DrawerItem
-        label="Saved Items"
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+        label="Discussion Desclaimer"
         onPress={() => props.navigation.navigate('SavedItemsScreen')}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/infoIcon.png')} />}
       />
-      <DrawerItem label="Log out" onPress={handleLogout} />
+      <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
+        label="Log out" onPress={handleLogout}
+        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        icon={() =>
+          <Image
+            style={{ width: 30, height: 30 }}
+            source={require('../testImages/logoutIcon.png')} />}
+      />
     </DrawerContentScrollView>
   );
 }
