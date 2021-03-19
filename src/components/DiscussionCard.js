@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {colors, typography, spacing} from '../styles';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors, typography, spacing } from '../styles';
 import Chips from '../components/Chips';
 
 //card to display Discussion
@@ -12,8 +12,8 @@ export default function EventCard(props) {
       <View style={styles.chipContainer}>
         {props.categories
           ? props.categories.map((category) => (
-              <Chips key={category._id} name={category.name} />
-            ))
+            <Chips key={category._id} name={category.name} />
+          ))
           : null}
       </View>
       <Text style={styles.cardSubTitle}>{props.description}</Text>
@@ -28,12 +28,11 @@ export default function EventCard(props) {
 const styles = StyleSheet.create({
   //Discussion Card styles
   discussionCard: {
-    minHeight: '25%',
+    minHeight: '20%',
     alignItems: 'flex-start',
     padding: spacing.base,
     backgroundColor: colors.white,
-    marginHorizontal: spacing.small,
-    marginTop: spacing.small,
+    marginBottom: spacing.small,
     borderRadius: spacing.small,
   },
   cardTitle: {
