@@ -4,9 +4,12 @@
 import React from 'react';
 import {Card, CardItem, Text, Body, Right} from 'native-base';
 import {Image, StyleSheet} from 'react-native';
-import {colors, spacing, themes} from '../styles';
+import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationsCard = (props) => {
+  console.log(props.name);
+  console.log('ahi');
+
   return (
     <Card style={styles.cardsView}>
       <CardItem cardBody style={styles.border}>
@@ -45,18 +48,18 @@ const styles = StyleSheet.create({
     marginBottom: spacing.smaller,
     borderRadius: spacing.small,
   },
-  border: {borderRadius: 16},
+  border: {borderRadius: typography.fs3},
   cardImage: {
     height: 100,
-    flex: 1,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    flex: spacing.hairline,
+    borderTopLeftRadius: typography.fs3,
+    borderTopRightRadius: typography.fs3,
   },
   typeAndLocationPosition: {marginTop: 31},
   name: {
     width: 500,
     color: themes.light.primaryColor,
-    fontWeight: 'bold',
+    fontWeight: typography.fwMedium,
     marginBottom: spacing.small,
   },
   rating: {alignSelf: 'flex-start', marginBottom: spacing.smaller},
