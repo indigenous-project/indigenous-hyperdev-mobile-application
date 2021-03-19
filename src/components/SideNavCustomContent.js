@@ -10,11 +10,8 @@ import Loader from './Loader';
 import { useState } from 'react/cjs/react.development';
 import { deleteItemAsync } from 'expo-secure-store';
 import { useSecureStorage } from '../hooks/useSecureStorage';
-import { Alert, Image } from 'react-native';
-import { colors } from '../styles';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { color } from 'react-native-reanimated';
-import { fwBold, fwMedium } from '../styles/typography';
+import { Alert, Image, View, Text } from 'react-native';
+import { colors, spacing, typography } from '../styles';
 
 //function return
 function SideNavCustomContent(props) {
@@ -43,15 +40,27 @@ function SideNavCustomContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <Loader loading={loading} />
-      <DrawerItem style={{ backgroundColor: colors.primary400, height: '20%', width: '100%' }}
-        label='Name User Edit Profile'
-        onPress={() => props.navigation.navigate('BottomTabScreen')}
-        labelStyle={{ color: colors.white, fontWeight: fwMedium }}
-      />
+      <View
+        style={{
+          backgroundColor: colors.primary400,
+          height: 100,
+          alignItems: 'center',
+          paddingLeft: spacing.large,
+          flexDirection: 'row'
+        }}
+      >
+        <Image
+          style={{ width: 50, height: 50, backgroundColor: 'white', borderRadius: 100, marginRight: 10 }}
+          source={require('../testImages/userIcon.png')} />
+        <View>
+          <Text style={{ color: 'white', fontSize: typography.fs3, fontWeight: typography.fwBold, marginBottom: spacing.smaller }}>FirstName LastName</Text>
+          <Text style={{ color: 'white', fontSize: typography.fs2 }}>Edit Profile</Text>
+        </View>
+      </View>
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Font Size"
         onPress={() => props.navigation.navigate('FontSizeScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
@@ -60,7 +69,7 @@ function SideNavCustomContent(props) {
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="About us"
         onPress={() => props.navigation.navigate('AboutScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
@@ -69,7 +78,7 @@ function SideNavCustomContent(props) {
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Indigenous People"
         onPress={() => props.navigation.navigate('IndigenousPeopleScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
@@ -78,7 +87,7 @@ function SideNavCustomContent(props) {
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Ask Question"
         onPress={() => props.navigation.navigate('AskQuestionScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
@@ -87,7 +96,7 @@ function SideNavCustomContent(props) {
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Discussion Desclaimer"
         onPress={() => props.navigation.navigate('SavedItemsScreen')}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
@@ -95,7 +104,7 @@ function SideNavCustomContent(props) {
       />
       <DrawerItem style={{ borderBottomColor: colors.gray900, borderBottomWidth: 0.2, width: '100%' }}
         label="Log out" onPress={handleLogout}
-        labelStyle={{ color: colors.gray900, fontWeight: fwMedium }}
+        labelStyle={{ color: colors.gray900, fontWeight: typography.fwMedium }}
         icon={() =>
           <Image
             style={{ width: 30, height: 30 }}
