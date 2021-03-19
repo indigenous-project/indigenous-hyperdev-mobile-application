@@ -10,7 +10,7 @@ import NewsStack from './news/NewsStack';
 import ServicesStack from './services/ServicesStack';
 import OrganizationsStack from './organizations/OrganizationsStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {colors, themes} from '../styles';
+import {colors, themes, typography} from '../styles';
 import {View, StyleSheet, Animated} from 'react-native';
 
 const theme = themes.light;
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'white',
   },
   icon: {
-    marginVertical: 5,
+    marginVertical: 0,
+    fontSize: typography.fs6,
   },
 });

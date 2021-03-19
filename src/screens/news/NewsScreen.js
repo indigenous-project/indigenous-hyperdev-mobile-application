@@ -3,24 +3,23 @@
 // import packages
 import React from 'react';
 
-import { View, ScrollView, Text, StyleSheet } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {View, ScrollView, Text, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import JobCard from '../../components/JobCard';
 import SurveyCard from '../../components/SurveyCard';
 import NewsCard from '../../components/NewsCard';
-import { colors, spacing, themes, typography } from '../../styles';
+import {colors, spacing, themes, typography} from '../../styles';
 
 //function return
 function NewsScreen(props) {
   const theme = themes.light;
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
-      <ScrollView
-        horizontal={false}>
+      <ScrollView horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
@@ -37,8 +36,7 @@ function NewsScreen(props) {
                 title="Job Title"
                 posting="Job Posting"
                 type="Job Type"
-                salary="Job Salary"
-              ></JobCard>
+                salary="Job Salary"></JobCard>
             </ScrollView>
           </View>
         </View>
@@ -55,12 +53,9 @@ function NewsScreen(props) {
           <NewsCard
             title="North Bay expands its Education Opportunities for"
             date="Feb 10, 2021"
-            details="North Bay Indigenous Friendship Center provides"
-          ></NewsCard>
+            details="North Bay Indigenous Friendship Center provides"></NewsCard>
         </View>
-
       </ScrollView>
-
     </SafeAreaView>
   );
 }
@@ -73,23 +68,23 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: spacing.small,
     backgroundColor: colors.white,
-    marginTop: spacing.small
+    marginTop: spacing.small,
   },
   heading: {
     color: colors.primary900,
     paddingLeft: spacing.small,
     fontWeight: typography.fwBold,
-    fontSize: typography.fs3
+    fontSize: typography.fs3,
   },
   containerHeading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: "95%",
-    marginRight: spacing.small
+    width: '95%',
+    marginRight: spacing.small,
   },
 
   //job card styles
   jobNews: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
-})
+});
