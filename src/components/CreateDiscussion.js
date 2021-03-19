@@ -1,0 +1,132 @@
+//Create Discussion module
+
+// import packages
+import React, { useEffect, useState } from 'react';
+
+import { Text, StyleSheet, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { colors, themes, typography, spacing } from '../styles';
+import { useSecureStorage } from '../hooks/useSecureStorage';
+
+//function return
+function CreateDiscussion(props) {
+    const theme = themes.light;
+    const [token, setToken] = useSecureStorage('userToken', '');
+    const [discussions, setDiscussions] = useState(null);
+
+    return (
+        <View style={styles.baseModal}>
+            <ScrollView>
+                <View >
+                    <View style={styles.discussionTopic}>
+                        <Text style={styles.cardTitle}>Discussion Topic</Text>
+                        <TextInput style={styles.titleInput} placeholder='Give Your post a name' />
+                    </View>
+                    <View style={styles.discussionDescription}>
+                        <Text style={styles.cardTitle}>Discription</Text>
+                        <TextInput style={styles.descriptionInput} multiline={true} placeholder='Type the Post body here' />
+                    </View>
+                    <View style={styles.discussionCategory}>
+                        <Text style={styles.cardTitle}>Category (Optional)</Text>
+                        <TextInput style={styles.categoryDopdown} placeholder='None Selected' />
+                    </View>
+                </View>
+            </ScrollView>
+            <View style={styles.buttonsGroup}>
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Post</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+export default CreateDiscussion;
+
+const styles = StyleSheet.create({
+    baseModal: {
+        height: 700,
+        paddingTop: spacing.small
+    },
+
+    //styling for discussion Topic container 
+    discussionTopic: {
+        height: '18%',
+        alignItems: 'flex-start',
+        padding: spacing.base,
+        backgroundColor: colors.white,
+        marginBottom: spacing.small,
+    },
+
+    cardTitle: {
+        fontSize: typography.fs3,
+        color: colors.primary900,
+        fontWeight: typography.fwBold,
+        paddingBottom: spacing.smaller,
+    },
+    titleInput: {
+        borderBottomColor: colors.gray900,
+        borderBottomWidth: 0.2,
+        width: '100%',
+        height: 40,
+        paddingHorizontal: spacing.hairline
+    },
+
+    //styling for discussion Description container 
+    discussionDescription: {
+        height: '60%',
+        alignItems: 'flex-start',
+        padding: spacing.base,
+        backgroundColor: colors.white,
+        marginBottom: spacing.small,
+    },
+    descriptionInput: {
+        width: '100%',
+        height: 300,
+        paddingHorizontal: spacing.hairline,
+        lineHeight: typography.lh4,
+    },
+
+    //styling for choosing categories container
+    discussionCategory: {
+        height: '18%',
+        alignItems: 'flex-start',
+        padding: spacing.base,
+        backgroundColor: colors.white,
+        marginBottom: spacing.small,
+    },
+    categoryDopdown: {
+        borderColor: colors.gray900,
+        borderWidth: 0.2,
+        width: '100%',
+        height: 40,
+        marginTop: spacing.smallest,
+        padding: spacing.small,
+        borderRadius: 5
+    },
+
+    //styling for bottom buttons group
+    buttonsGroup: {
+        flexDirection: 'row',
+        width: "100%",
+        backgroundColor: colors.white,
+        justifyContent: 'space-around',
+        paddingHorizontal: spacing.base,
+        paddingTop: spacing.base
+    },
+    buttonContainer: {
+        width: "40%",
+        borderRadius: 10,
+        marginBottom: spacing.small,
+        backgroundColor: colors.primary500,
+        paddingVertical: spacing.small,
+        paddingHorizontal: spacing.small
+    },
+    buttonText: {
+        alignSelf: "center",
+        fontSize: typography.fs2,
+        color: colors.white,
+    },
+});

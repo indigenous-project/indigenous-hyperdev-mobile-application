@@ -6,7 +6,7 @@ import * as environment_variable from '../environment_variable';
 // Fetch API register a new user
 export const userSignUp = async (body) => {
   const url = `${environment_variable.BASE_API}/auth/users/signup`;
-  body.isAdmin = false; // set user role is not admin
+  body.isAdmin = 'false'; // set user role is not admin
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -21,7 +21,8 @@ export const userSignUp = async (body) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Fetch a token after user login successfully: email & password
@@ -41,7 +42,8 @@ export const userSignIn = async (body) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get a current log-in user: need token
@@ -62,7 +64,8 @@ export const userCurrent = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Logout user
@@ -75,7 +78,7 @@ export const userLogout = async (token) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(''),
+    body: JSON.stringify({token: token}),
   });
   // handle errors
   if (!response.ok) {
@@ -83,7 +86,8 @@ export const userLogout = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // User change password: need oldPassword and newPassword as paramenters
@@ -104,7 +108,8 @@ export const userChangePassword = async ({oldPassword, newPassword}, token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // User forgot password: need email, return reset token
@@ -124,7 +129,8 @@ export const userForgotPassword = async ({email}) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // User confirm resetpassword
@@ -143,7 +149,8 @@ export const userVerifyResetToken = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // User confirm resetpassword: need new password as paramenter
@@ -162,5 +169,6 @@ export const userResetPassword = async (body, token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
