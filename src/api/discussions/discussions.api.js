@@ -49,7 +49,7 @@ export const discussionGetDetail = async (token, discussionId) => {
 };
 
 // Get a single discussion by user: need token and discussionId
-export const discussionGetList = async (token, body) => {
+export const discussionGetList = async (token) => {
   const url = `${environment_variable.BASE_API}/api/discussions/list`;
   const response = await fetch(url, {
     method: 'GET',
