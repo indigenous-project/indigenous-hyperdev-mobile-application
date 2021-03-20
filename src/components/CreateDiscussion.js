@@ -128,5 +128,6 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: typography.fs2,
         color: colors.white,
+        fontWeight: typography.fwBold
     },
 });

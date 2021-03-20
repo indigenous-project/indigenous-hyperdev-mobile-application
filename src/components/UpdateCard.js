@@ -49,5 +49,6 @@ const styles = StyleSheet.create({
         fontSize: typography.fs2,
         color: colors.white,
         alignSelf: "center",
+        fontWeight: typography.fwBold
     },
 })
