@@ -24,6 +24,9 @@ function CreateDiscussion(props) {
                     <View style={styles.discussionDescription}>
                         <Text style={styles.cardTitle}>Discription</Text>
                         <TextInput style={styles.descriptionInput} multiline={true} placeholder='Type the Post body here' />
+                        <TouchableOpacity style={styles.imageButton}>
+                            <Text style={styles.imageButtonText}>Attach Picture</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.discussionCategory}>
                         <Text style={styles.cardTitle}>Category (Optional)</Text>
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
     },
     descriptionInput: {
         width: '100%',
-        height: 300,
+        height: 280,
         paddingHorizontal: spacing.hairline,
         lineHeight: typography.lh4,
     },
@@ -129,5 +132,21 @@ const styles = StyleSheet.create({
         fontSize: typography.fs2,
         color: colors.white,
         fontWeight: typography.fwBold
+    },
+
+    imageButton: {
+        width: "40%",
+        borderRadius: 10,
+        marginBottom: spacing.small,
+        alignSelf: 'flex-end',
+        backgroundColor: colors.primary50,
+        paddingVertical: spacing.small,
+        paddingHorizontal: spacing.small
+    },
+    imageButtonText: {
+        alignSelf: "center",
+        fontSize: typography.fs2,
+        color: colors.primary900,
+        fontWeight: typography.fwNormal
     },
 });

@@ -28,7 +28,6 @@ export default function EventCard(props) {
 const styles = StyleSheet.create({
   //Discussion Card styles
   discussionCard: {
-    minHeight: '20%',
     alignItems: 'flex-start',
     padding: spacing.base,
     backgroundColor: colors.white,
