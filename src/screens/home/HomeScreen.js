@@ -11,7 +11,6 @@ import UpdateCard from '../../components/UpdateCard';
 import CategoryButton from '../../components/CategoryButton';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, themes, typography, spacing } from '../../styles';
-import { Button } from 'native-base';
 
 //function return
 function HomeScreen({ navigation }) {
@@ -38,7 +37,7 @@ function HomeScreen({ navigation }) {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity onPress={() => navigation.navigate('Event Detail')}>
+              <TouchableOpacity onPress={() => navigation.push('Event Detail')}>
                 <EventCard
                   name="Event 1"
                   date="Event Date"

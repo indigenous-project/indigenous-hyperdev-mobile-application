@@ -16,28 +16,24 @@ function EventDetail(navigate) {
 
     return (
         <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
-            <ScrollView horizontal={false}>
-                <FocusedStatusBar barStyle="light-content" />
-                {/* <Text>{JSON.stringify(categories)}</Text> */}
-
-                <ScrollView>
-                    <Image style={styles.image} source={require('../../testImages/demoPic.png')} />
-                    <EventInfo />
-                    <View style={styles.container}>
-                        <Text style={styles.description}>SAVE THE DATE!
-                        Minweyaang Round Dance at Nbisiing High
-                        School on Saturday Feb 20, 2021.
-                        Pipe & Feast Ceremony 3:00 – 5:00pm
-                        Round Dance 6:00pm
-                        **Remember to bring your water bottles
+            <FocusedStatusBar barStyle="light-content" />
+            <ScrollView>
+                <Image style={styles.image} source={require('../../testImages/demoPic.png')} />
+                <EventInfo />
+                <View style={styles.container}>
+                    <Text style={styles.description}>SAVE THE DATE!
+                    Minweyaang Round Dance at Nbisiing High
+                    School on Saturday Feb 20, 2021.
+                    Pipe & Feast Ceremony 3:00 – 5:00pm
+                    Round Dance 6:00pm
+                    **Remember to bring your water bottles
                         and Feast bundles/kit**</Text>
-                    </View>
+                </View>
 
-                    <View style={styles.container}>
-                        <Text style={styles.heading}>Hosts</Text>
-                        <EventHost name='Organization Name' type='Organization type' />
-                    </View>
-                </ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.heading}>Hosts</Text>
+                    <EventHost name='Organization Name' type='Organization type' />
+                </View>
             </ScrollView>
             <View style={styles.buttonsGroup}>
                 <TouchableOpacity style={styles.buttonContainer}>
