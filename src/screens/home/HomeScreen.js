@@ -1,19 +1,20 @@
 //HomeScreen module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {categoriesGetList} from '../../api/categories/categories.api';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { categoriesGetList } from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
 import CategoryButton from '../../components/CategoryButton';
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
-import {colors, themes, typography, spacing} from '../../styles';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors, themes, typography, spacing } from '../../styles';
+import { Button } from 'native-base';
 
 //function return
-function HomeScreen(props) {
+function HomeScreen({ navigation }) {
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
 
@@ -26,7 +27,7 @@ function HomeScreen(props) {
   // }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <ScrollView horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
@@ -37,10 +38,12 @@ function HomeScreen(props) {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <EventCard
-                name="Event 1"
-                date="Event Date"
-                status="Event status"></EventCard>
+              <TouchableOpacity onPress={() => navigation.navigate('Event Detail')}>
+                <EventCard
+                  name="Event 1"
+                  date="Event Date"
+                  status="Event status" />
+              </TouchableOpacity>
             </ScrollView>
           </View>
         </View>
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
     shadowOpacity: 0.2,
   },
 

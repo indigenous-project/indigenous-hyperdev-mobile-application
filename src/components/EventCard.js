@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         shadowOffset: { width: 3, height: 6 },
         shadowColor: colors.gray900,
-        height: '90%',
         shadowOpacity: 0.2,
     },
     cardTitle: {
