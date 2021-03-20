@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../styles';
+import {View, Text, StyleSheet} from 'react-native';
+import {colors, typography, spacing} from '../styles';
 import Chips from '../components/Chips';
 
 //card to display Discussion
@@ -12,8 +12,8 @@ export default function EventCard(props) {
       <View style={styles.chipContainer}>
         {props.categories
           ? props.categories.map((category) => (
-            <Chips key={category._id} name={category.name} />
-          ))
+              <Chips key={category._id} name={category.name} />
+            ))
           : null}
       </View>
       <Text style={styles.cardSubTitle}>{props.description}</Text>
