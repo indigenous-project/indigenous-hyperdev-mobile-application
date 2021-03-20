@@ -1,27 +1,38 @@
-//NewsScreen module
-
-// import packages
 import React from 'react';
-
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FocusedStatusBar from '../../components/FocusedStatusBar';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {themes, colors, spacing, typography} from '../../styles';
+import SearchBar from '../../components/SearchBar';
 import JobCard from '../../components/JobCard';
-import SurveyCard from '../../components/SurveyCard';
 import NewsCard from '../../components/NewsCard';
-import {colors, spacing, themes, typography} from '../../styles';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
+import ServicesProgramCard from '../../components/ServicesProgramCard';
 
-//function return
-function NewsScreen(props) {
-  const theme = themes.light;
-
+function SearchResult(props) {
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+      <View
+        style={{
+         width: '100%',
+          borderRadius: spacing.small,
+        }}>
+        <SearchBar placeholder="Employment" />
+      </View>
       <FocusedStatusBar barStyle="light-content" />
 
       <ScrollView horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
+
+        <View style={{paddingTop: spacing.small}}>
+          <ServicesProgramCard
+            category="Services And Programs"
+            title="Title"
+            name="Name"
+            description="Description"
+          />
+          <FocusedStatusBar barStyle="light-content" />
+        </View>
 
         <View style={styles.container}>
           <View style={styles.containerHeading}>
@@ -40,15 +51,6 @@ function NewsScreen(props) {
             </ScrollView>
           </View>
         </View>
-
-        <View style={styles.container}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.heading}>New Survey</Text>
-            <Text>See All</Text>
-          </View>
-          <SurveyCard surveyText="Aboriginal Peoples Survey Concepts and Methods"></SurveyCard>
-        </View>
-
         <View style={styles.container}>
           <NewsCard
             title="North Bay expands its Education Opportunities for"
@@ -60,7 +62,7 @@ function NewsScreen(props) {
   );
 }
 
-export default NewsScreen;
+export default SearchResult;
 
 const styles = StyleSheet.create({
   //container style
