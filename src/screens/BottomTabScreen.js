@@ -1,9 +1,9 @@
 //BottomTabScreen.js
 
-import React, {useRef} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, { useRef } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Javascript
-import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
+import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import HomeStack from './home/HomeStack';
 import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
@@ -13,12 +13,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {colors, themes, typography} from '../styles';
 import {View, StyleSheet, Animated} from 'react-native';
 
+
 const theme = themes.light;
 
 //const Tab = createBottomTabNavigator();
 const Tab = AnimatedTabBarNavigator();
 
-function BottomTabScreen(props) {
+function BottomTabScreen(props, navigation) {
   // fadeAnim will be used as the value for opacity. Initial Value: 0
 
   return (
@@ -41,7 +42,7 @@ function BottomTabScreen(props) {
         name="Home"
         component={HomeStack}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+          tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               style={styles.icon}
               name="home"
@@ -49,13 +50,14 @@ function BottomTabScreen(props) {
               color={color}
             />
           ),
+          // tabBarVisible: !props.route.state?.routes[0]?.state?.index
         }}
       />
       <Tab.Screen
         name="Discussions"
         component={DiscussionsStack}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+          tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               style={styles.icon}
               name="card-bulleted-outline"
@@ -69,7 +71,7 @@ function BottomTabScreen(props) {
         name="News"
         component={NewsStack}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+          tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               style={styles.icon}
               name="newspaper-variant-outline"
@@ -83,7 +85,7 @@ function BottomTabScreen(props) {
         name="Services"
         component={ServicesStack}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+          tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               style={styles.icon}
               name="calendar-outline"
@@ -97,7 +99,7 @@ function BottomTabScreen(props) {
         name="Organizations"
         component={OrganizationsStack}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+          tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               style={styles.icon}
               name="home-city-outline"

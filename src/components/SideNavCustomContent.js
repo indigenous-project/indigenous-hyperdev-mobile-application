@@ -90,7 +90,7 @@ function SideNavCustomContent(props) {
       />
       <DrawerItem style={styles.drawerItem}
         label="Discussion Desclaimer"
-        onPress={() => props.navigation.navigate('SavedItemsScreen')}
+        onPress={() => props.navigation.navigate('DisclaimerScreen')}
         labelStyle={styles.labelStyle}
         icon={() =>
           <Image

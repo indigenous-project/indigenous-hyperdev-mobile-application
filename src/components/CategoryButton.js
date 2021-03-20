@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, typography, spacing } from '../styles'
 
-//card to display upcoming events
+//card to display category button
 export default function CategoryButton(props) {
     return (
         <View>
