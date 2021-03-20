@@ -60,6 +60,18 @@ function SideNavCustomContent(props) {
       </View>
       <DrawerItem
         style={styles.drawerItem}
+        label="Home"
+        onPress={() => props.navigation.navigate('Home')}
+        labelStyle={styles.labelStyle}
+        icon={() => (
+          <Image
+            style={styles.image}
+            source={require('../testImages/priceIcon.png')}
+          />
+        )}
+      />
+      <DrawerItem
+        style={styles.drawerItem}
         label="Font Size"
         onPress={() => props.navigation.navigate('FontSizeScreen')}
         labelStyle={styles.labelStyle}
