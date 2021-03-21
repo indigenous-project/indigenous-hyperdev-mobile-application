@@ -13,8 +13,8 @@ export const messageAdd = async (token, {text}) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify({text}),
     },
+    body: JSON.stringify({text}),
   });
   // handle errors
   if (!response.ok) {
@@ -22,7 +22,8 @@ export const messageAdd = async (token, {text}) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };
 
 // Get all messages: need token, {senderId, receiverId}
@@ -43,5 +44,6 @@ export const messageGetList = async (token, {senderId, receiverId}) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

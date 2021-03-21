@@ -56,8 +56,8 @@ export const postDislike = async (token, postId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify(''),
     },
+    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {
@@ -79,8 +79,8 @@ export const postLike = async (token, postId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify(''),
     },
+    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {
@@ -102,8 +102,8 @@ export const postShare = async (token, postId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify(''),
     },
+    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {

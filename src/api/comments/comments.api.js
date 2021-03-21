@@ -36,8 +36,8 @@ export const commentsDelete = async (token, commentId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify({isDelete: true}),
     },
+    body: JSON.stringify({isDelete: true}),
   });
   // handle errors
   if (!response.ok) {

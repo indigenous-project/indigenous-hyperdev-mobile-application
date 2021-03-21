@@ -5,6 +5,7 @@ import * as environment_variable from '../environment_variable';
 
 // Add a discussion by user: need token and body(title, [categoriesId], description)
 export const discussionAdd = async (token, body) => {
+  console.log(body);
   const url = `${environment_variable.BASE_API}/api/discussions/add`;
   const response = await fetch(url, {
     method: 'POST',
@@ -13,8 +14,8 @@ export const discussionAdd = async (token, body) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify(body),
     },
+    body: JSON.stringify(body),
   });
   // handle errors
   if (!response.ok) {
@@ -49,7 +50,7 @@ export const discussionGetDetail = async (token, discussionId) => {
 };
 
 // Get a single discussion by user: need token and discussionId
-export const discussionGetList = async (token, body) => {
+export const discussionGetList = async (token) => {
   const url = `${environment_variable.BASE_API}/api/discussions/list`;
   const response = await fetch(url, {
     method: 'GET',

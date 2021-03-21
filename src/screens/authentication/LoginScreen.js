@@ -49,14 +49,13 @@ function LoginScreen({navigation}) {
     if (token) {
       setLoading(true);
       userCurrent(token)
-        .then(response => {
+        .then((response) => {
           //console.log(response.data.email);
           setLoading(false); // hide loader
           setUsername(response.email);
           navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
           setLoading(false); // hide loader
           //removeAsyncStorage('userName');
           deleteItemAsync('userToken'); // remove token from storage when logout
@@ -88,16 +87,12 @@ function LoginScreen({navigation}) {
       password: password,
     })
       .then((response) => {
-        verifyUser(response.token);
+        setToken(response.token);
       })
-      .catch(err => {
+      .catch((err) => {
         setLoading(false); // hide loader
         Alert.alert('User authentication', err.errors[0].description); // show error
       });
-  };
-
-  const verifyUser = myToken => {
-    setToken(myToken);
   };
 
   return (
@@ -108,9 +103,9 @@ function LoginScreen({navigation}) {
         <Text style={styles.loginTextToStart}>Log in to get started.</Text>
         {/* using forms for login */}
         <Form>
-          <Item style={styles.item} regular> 
+          <Item style={styles.item} regular>
             <Input
-             placeholder=" Email"
+              placeholder=" Email"
               autoCapitalize="none"
               keyboardType="email-address"
               returnKeyType="next"
@@ -124,7 +119,7 @@ function LoginScreen({navigation}) {
           </Item>
           <Item style={styles.item} regular>
             <Input
-            placeholder=" Password"
+              placeholder=" Password"
               value={userPassword}
               onChangeText={setUserPassword}
               secureTextEntry={true}
@@ -141,8 +136,10 @@ function LoginScreen({navigation}) {
             navigation.navigate('Forgot Password');
           }}
           transparent>
-          <Text style={{fontWeight: typography.fwMedium, fontSize: typography.fs3}}>Forgot Password ? </Text>
-
+          <Text
+            style={{fontWeight: typography.fwMedium, fontSize: typography.fs3}}>
+            Forgot Password ?{' '}
+          </Text>
         </Button>
         <Button
           title="Sign in"
@@ -164,7 +161,7 @@ function LoginScreen({navigation}) {
           onPress={() => {
             navigation.navigate('DrawerRoute');
           }}>
-          <Text style={styles.skipText} >Skip For Now</Text>
+          <Text style={styles.skipText}>Skip For Now</Text>
         </Button>
       </View>
     </SafeAreaView>
@@ -203,7 +200,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwNormal,
     marginLeft: '6%',
     color: colors.primary900,
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
   forgotPasswordButton: {
     marginLeft: '55%',
@@ -233,7 +230,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwBold,
     color: colors.primary900,
     marginLeft: '30%',
-  }
+  },
 });
 
 export default LoginScreen;

@@ -1,25 +1,35 @@
 //DiscussionScreen module
 
 // import packages
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
-import { Text, StyleSheet, View, ScrollView, RefreshControl, Modal, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  RefreshControl,
+  Modal,
+  Pressable,
+  Alert,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import DiscussionCard from '../../components/DiscussionCard';
 import CreateDiscussion from '../../components/CreateDiscussion';
 import SwitchSelector from 'react-native-switch-selector';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 
-import { discussionGetList } from '../../api/discussions/discussions.api';
-import { useSecureStorage } from '../../hooks/useSecureStorage';
+import {discussionGetList} from '../../api/discussions/discussions.api';
+import {useSecureStorage} from '../../hooks/useSecureStorage';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 
 //switch-selector options
 const options = [
-  { label: 'Recent', value: 'Recent' },
-  { label: 'Most Discussed', value: 'Most Discussed' },
-  { label: 'My Discussions', value: 'My Discussions' },
+  {label: 'Recent', value: 'Recent'},
+  {label: 'Most Discussed', value: 'Most Discussed'},
+  {label: 'My Discussions', value: 'My Discussions'},
 ];
 
 //function return
@@ -30,24 +40,16 @@ function DiscussionScreen(props) {
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
-
-  useEffect(() => {
-    discussionGetList(token)
-      .then((response) => {
-        setDiscussions(response);
-        sortDate(response);
-      })
-      .catch((err) => { });
-  }, [token, reloadData]);
-
   const [modalVisible, setModalVisible] = useState(false);
+  const [stateSelector, setStateSelector] = useState('Recent');
+  const [currentUser] = useCurrentUser();
 
-  // function format date Jan 30th, 2021
+  // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-    const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
 
     return `${month} ${day}, ${year}`;
   };
@@ -57,6 +59,31 @@ function DiscussionScreen(props) {
     const array = data.sort((item1, item2) => {
       return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
     });
+
+    setFilterDiscussion(array); // set Filter discussion
+  };
+
+  // sort the discussion list by most replies
+  const sortMostDiscussed = (data) => {
+    const array = data.sort((item1, item2) => {
+      return (
+        parseInt(item2.replies.length, [10]) -
+        parseInt(item1.replies.length, [10])
+      );
+    });
+
+    setFilterDiscussion(array); // set Filter discussion
+  };
+
+  // sort the discussion list by most replies
+  const sortMyDiscussion = (data) => {
+    const array = data
+      .sort((item1, item2) => {
+        return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
+      })
+      .filter((item) => {
+        return item.owner.email === currentUser.email;
+      });
     setFilterDiscussion(array); // set Filter discussion
   };
 
@@ -72,18 +99,41 @@ function DiscussionScreen(props) {
     wait(1000).then(() => setRefreshing(false)); // hide refresh indicator
   }, [reloadData]);
 
+  // useEffect load discussion list
+  useEffect(() => {
+    if (token)
+      discussionGetList(token)
+        .then((response) => {
+          setDiscussions(response);
+          //sortDate(response);
+        })
+        .catch((err) => {
+          Alert.alert(err.errors[0].title, err.errors[0].description);
+        });
+  }, [token, reloadData]);
+
+  // useEffect use for filter selector
+  useEffect(() => {
+    if (discussions) {
+      stateSelector === 'Recent'
+        ? sortDate(discussions)
+        : stateSelector === 'Most Discussed'
+        ? sortMostDiscussed(discussions)
+        : sortMyDiscussion(discussions);
+    }
+  }, [stateSelector]);
+
+  // RETURN COMPONENTS
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
-      <Pressable
-        style={styles.container}
-        onPress={() => setModalVisible(true)}
-      >
+      <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
         <MaterialCommunityIcons
           name="square-edit-outline"
           size={22}
-          style={{ textAlignVertical: 'center' }}
+          style={{textAlignVertical: 'center'}}
+          color={theme.subduedTextColor}
         />
         <Text style={styles.createNewButton}>Create a new discussion</Text>
       </Pressable>
@@ -93,10 +143,9 @@ function DiscussionScreen(props) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
-        }}
-      >
+        }}>
         <View style={styles.modalView}>
           <View style={styles.modalTitle}>
             <Text style={styles.modalTitleText}>Create New Discussion</Text>
@@ -106,7 +155,7 @@ function DiscussionScreen(props) {
               <Text style={styles.buttonText}>x</Text>
             </Pressable>
           </View>
-          <CreateDiscussion />
+          <CreateDiscussion posted={(value) => setModalVisible(value)} />
         </View>
       </Modal>
 
@@ -122,7 +171,21 @@ function DiscussionScreen(props) {
         onPress={(value) => {
           switch (value) {
             case 'Recent':
-              sortDate(discussions);
+              // sortDate(discussions);
+              console.log(value);
+              // sortDate(discussions);
+              setStateSelector(value);
+              break;
+            case 'Most Discussed':
+              console.log(value);
+              // sortMostDiscussed(discussions);
+              setStateSelector(value);
+              break;
+            case 'My Discussions':
+              console.log(value);
+              //sortMyDiscussion(discussions);
+              setStateSelector(value);
+              break;
           }
         }}
       />
@@ -137,20 +200,21 @@ function DiscussionScreen(props) {
             />
           }
           horizontal={false}
-          contentInset={{ bottom: 150 }}
-          contentInsetAdjustmentBehavior="automatic">
+          style={styles.scrollView}
+          contentContainerStyle={styles.contentContainer}>
           {filterDiscussion
             ? filterDiscussion.map((discussion) => (
-              <DiscussionCard
-                key={discussion._id}
-                title={discussion.title}
-                nameAndDate={`${discussion.owner.firstName} ${discussion.owner.lastName
-                  } Posed ${formatDate(discussion.createdAt)}`}
-                description={discussion.description}
-                categories={discussion.categories}
-                replies={discussion.replies}
-              />
-            ))
+                <DiscussionCard
+                  key={discussion._id}
+                  title={discussion.title}
+                  nameAndDate={`${discussion.owner.firstName} ${
+                    discussion.owner.lastName
+                  } Posted ${formatDate(discussion.createdAt)}`}
+                  description={discussion.description}
+                  categories={discussion.categories}
+                  replies={discussion.replies}
+                />
+              ))
             : null}
         </ScrollView>
       </View>
@@ -179,6 +243,13 @@ const styles = StyleSheet.create({
     margin: spacing.small,
     textAlignVertical: 'center',
   },
+
+  contentContainer: {
+    maxHeight: '100%',
+    paddingBottom: 50,
+  },
+  scrollView: {},
+
   //create New Discussion style
   createNewButton: {
     height: 25,
@@ -196,11 +267,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   modalTitle: {
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     backgroundColor: colors.white,
     paddingVertical: spacing.base,
     paddingHorizontal: spacing.base,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
   },
@@ -214,7 +285,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
@@ -223,6 +294,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.primary900,
     fontSize: 20,
-    fontWeight: typography.fwMedium
+    fontWeight: typography.fwMedium,
   },
 });
