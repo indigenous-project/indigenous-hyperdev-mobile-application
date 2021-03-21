@@ -1,18 +1,16 @@
 //BottomTabScreen.js
 
-import React, {useRef} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from 'react';
 // Javascript
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 import HomeStack from './home/HomeStack';
 import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
 import ServicesStack from './services/ServicesStack';
-import OrganizationsStack from './organizations/OrganizationsStack';
-import OrganizationDetailScreen from './organizations/OrganizationDetailScreen';
+import OrganizationStack from './organizations/OrganizationsStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, themes, typography} from '../styles';
-import {View, StyleSheet, Animated} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const theme = themes.light;
 
@@ -97,7 +95,7 @@ function BottomTabScreen(props, navigation) {
       />
       <Tab.Screen
         name="Organizations"
-        component={OrganizationDetailScreen}
+        component={OrganizationStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
