@@ -13,8 +13,8 @@ export const repliesAdd = async (token, {text}, discussionId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify({text}),
     },
+    body: JSON.stringify({text}),
   });
   // handle errors
   if (!response.ok) {

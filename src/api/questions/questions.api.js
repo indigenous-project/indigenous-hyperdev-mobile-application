@@ -35,8 +35,8 @@ export const questionParticipate = async (token, {questionId, answerId}) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify({questionId, answerId}),
     },
+    body: JSON.stringify({questionId, answerId}),
   });
   // handle errors
   if (!response.ok) {

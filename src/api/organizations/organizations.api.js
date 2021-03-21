@@ -56,8 +56,8 @@ export const organizationReview = async (token, {reviews}, organizationId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify({reviews}),
     },
+    body: JSON.stringify({reviews}),
   });
   // handle errors
   if (!response.ok) {
