@@ -59,6 +59,7 @@ function DiscussionScreen(props) {
     const array = data.sort((item1, item2) => {
       return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
     });
+
     setFilterDiscussion(array); // set Filter discussion
   };
 
@@ -66,9 +67,11 @@ function DiscussionScreen(props) {
   const sortMostDiscussed = (data) => {
     const array = data.sort((item1, item2) => {
       return (
-        Date.parse(item2.replies.length) - Date.parse(item1.replies.length)
+        parseInt(item2.replies.length, [10]) -
+        parseInt(item1.replies.length, [10])
       );
     });
+
     setFilterDiscussion(array); // set Filter discussion
   };
 
@@ -102,7 +105,7 @@ function DiscussionScreen(props) {
       discussionGetList(token)
         .then((response) => {
           setDiscussions(response);
-          sortDate(response);
+          //sortDate(response);
         })
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
@@ -120,6 +123,7 @@ function DiscussionScreen(props) {
     }
   }, [stateSelector]);
 
+  // RETURN COMPONENTS
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -151,7 +155,7 @@ function DiscussionScreen(props) {
               <Text style={styles.buttonText}>x</Text>
             </Pressable>
           </View>
-          <CreateDiscussion />
+          <CreateDiscussion posted={(value) => setModalVisible(value)} />
         </View>
       </Modal>
 
@@ -168,11 +172,20 @@ function DiscussionScreen(props) {
           switch (value) {
             case 'Recent':
               // sortDate(discussions);
+              console.log(value);
+              // sortDate(discussions);
               setStateSelector(value);
+              break;
             case 'Most Discussed':
+              console.log(value);
+              // sortMostDiscussed(discussions);
               setStateSelector(value);
+              break;
             case 'My Discussions':
+              console.log(value);
+              //sortMyDiscussion(discussions);
               setStateSelector(value);
+              break;
           }
         }}
       />
@@ -187,8 +200,8 @@ function DiscussionScreen(props) {
             />
           }
           horizontal={false}
-          contentInset={{bottom: 150}}
-          contentInsetAdjustmentBehavior="automatic">
+          style={styles.scrollView}
+          contentContainerStyle={styles.contentContainer}>
           {filterDiscussion
             ? filterDiscussion.map((discussion) => (
                 <DiscussionCard
@@ -230,6 +243,13 @@ const styles = StyleSheet.create({
     margin: spacing.small,
     textAlignVertical: 'center',
   },
+
+  contentContainer: {
+    maxHeight: '100%',
+    paddingBottom: 50,
+  },
+  scrollView: {},
+
   //create New Discussion style
   createNewButton: {
     height: 25,
