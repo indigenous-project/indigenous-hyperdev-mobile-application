@@ -85,6 +85,9 @@ function CreateDiscussion(props) {
               value={discussionDescription}
               onChangeText={setDiscussionDescription}
             />
+          <TouchableOpacity style={styles.imageButton}>
+                            <Text style={styles.imageButtonText}>Attach Picture</Text>
+          </TouchableOpacity>
           </View>
           <View style={styles.discussionCategory}>
             <Text style={styles.cardTitle}>Category (Optional)</Text>
@@ -93,6 +96,7 @@ function CreateDiscussion(props) {
               placeholder="None Selected"
             />
           </View>
+
         </View>
       </ScrollView>
       <View style={styles.buttonsGroup}>
@@ -140,20 +144,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.hairline,
   },
 
-  //styling for discussion Description container
-  discussionDescription: {
-    height: '60%',
-    alignItems: 'flex-start',
-    padding: spacing.base,
-    backgroundColor: colors.white,
-    marginBottom: spacing.small,
-  },
-  descriptionInput: {
-    width: '100%',
-    height: 300,
-    paddingHorizontal: spacing.hairline,
-    lineHeight: typography.lh4,
-  },
+
+    //styling for discussion Description container 
+    discussionDescription: {
+        height: '60%',
+        alignItems: 'flex-start',
+        padding: spacing.base,
+        backgroundColor: colors.white,
+        marginBottom: spacing.small,
+    },
+    descriptionInput: {
+        width: '100%',
+        height: 280,
+        paddingHorizontal: spacing.hairline,
+        lineHeight: typography.lh4,
+    },
+
+
 
   //styling for choosing categories container
   discussionCategory: {
@@ -173,27 +180,44 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  //styling for bottom buttons group
-  buttonsGroup: {
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: colors.white,
-    justifyContent: 'space-around',
-    paddingHorizontal: spacing.base,
-    paddingTop: spacing.base,
-  },
-  buttonContainer: {
-    width: '40%',
-    borderRadius: 10,
-    marginBottom: spacing.small,
-    backgroundColor: colors.primary500,
-    paddingVertical: spacing.small,
-    paddingHorizontal: spacing.small,
-  },
-  buttonText: {
-    alignSelf: 'center',
-    fontSize: typography.fs2,
-    color: colors.white,
-    fontWeight: typography.fwBold,
-  },
+    //styling for bottom buttons group
+    buttonsGroup: {
+        flexDirection: 'row',
+        width: "100%",
+        backgroundColor: colors.white,
+        justifyContent: 'space-around',
+        paddingHorizontal: spacing.base,
+        paddingTop: spacing.base
+    },
+    buttonContainer: {
+        width: "40%",
+        borderRadius: 10,
+        marginBottom: spacing.small,
+        backgroundColor: colors.primary500,
+        paddingVertical: spacing.small,
+        paddingHorizontal: spacing.small
+    },
+    buttonText: {
+        alignSelf: "center",
+        fontSize: typography.fs2,
+        color: colors.white,
+        fontWeight: typography.fwBold
+    },
+
+    imageButton: {
+        width: "40%",
+        borderRadius: 10,
+        marginBottom: spacing.small,
+        alignSelf: 'flex-end',
+        backgroundColor: colors.primary50,
+        paddingVertical: spacing.small,
+        paddingHorizontal: spacing.small
+    },
+    imageButtonText: {
+        alignSelf: "center",
+        fontSize: typography.fs2,
+        color: colors.primary900,
+        fontWeight: typography.fwNormal
+    },
+
 });
