@@ -1,19 +1,52 @@
 //OrganizationScreen module
 
 // import packages
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import {colors, spacing} from '../../styles';
+import {spacing, themes, typography} from '../../styles';
 import OrganizationChips from '../../components/OrganizationChips';
-import SwitchSelectors from '../../components/SwitchSelectors';
-import OrganizationsCard from '../../components/OrganizationsCard';
-import MapViews from '../../components/MapViews';
 import OrganizationListViews from '../../components/OrganizationListViews';
+import {View} from 'native-base';
+import SwitchSelector from 'react-native-switch-selector';
 
 //function return
 function OrganizationScreen(props) {
+  const [stateSelector, setStateSelector] = useState('listView');
+  console.log(stateSelector);
+
+  const viewOptions = [
+    {
+      label: 'List',
+      value: 'listView',
+    },
+    {label: 'Map', value: 'mapView'},
+  ];
+
+  const selectedView = (value) => {
+    switch (value) {
+      case 'listView':
+        // list view of the orgnizations;
+        setStateSelector(value);
+        return value;
+
+      case 'mapView':
+        // map view of the orgnizations;
+        setStateSelector(value);
+        return value;
+    }
+  };
+
+  const data = {
+    name: 'North Bay Medical Care',
+    rating: '5.0',
+    link: 'nbmedicalcare.com',
+    location: '5240Lakeshor Dr',
+    type: 'Walk in Clinic',
+    image:
+      'https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80',
+  };
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -28,18 +61,25 @@ function OrganizationScreen(props) {
       </ScrollView>
 
       {/* Custom Switch Selectors */}
-      <SwitchSelectors />
+      <View style={styles.switchView}>
+        <SwitchSelector
+          style={styles.switch}
+          options={viewOptions}
+          initial={0}
+          textColor={themes.light.primaryColor}
+          bold={true}
+          borderRadius={10}
+          animationDuration={200}
+          height={27}
+          selectedColor={themes.light.inverseTextColor}
+          buttonColor={themes.light.primaryColor}
+          onPress={selectedView}
+        />
+      </View>
 
       {/* List Views */}
 
-      <OrganizationListViews
-        name="North Bay Medical Care"
-        rating="5.0"
-        link="nbmedicalcare.com"
-        location="5240Lakeshor Dr"
-        type="Walk in Clinic"
-        image="https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80"
-      />
+      <OrganizationListViews listofData={data} />
 
       {/* Map View */}
 
@@ -54,5 +94,13 @@ function OrganizationScreen(props) {
 
 const styles = StyleSheet.create({
   safeArea: {flex: spacing.hairline},
+  // Custom Switch Selectors Style
+  switchView: {alignSelf: 'center'},
+  switch: {
+    width: '50%',
+    height: typography.lh8,
+    marginTop: spacing.large,
+    marginBottom: spacing.smallest,
+  },
 });
 export default OrganizationScreen;

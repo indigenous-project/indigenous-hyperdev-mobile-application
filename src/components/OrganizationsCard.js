@@ -2,14 +2,11 @@
 
 // import packages
 import React from 'react';
-import {Card, CardItem, Text, Body, Right} from 'native-base';
+import {Card, CardItem, Text, Body, Right, Button} from 'native-base';
 import {Image, StyleSheet} from 'react-native';
 import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationsCard = (props) => {
-  console.log(props.name);
-  console.log('ahi');
-
   return (
     <Card style={styles.cardsView}>
       <CardItem cardBody style={styles.border}>
