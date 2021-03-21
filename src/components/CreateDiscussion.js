@@ -10,18 +10,61 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {colors, themes, typography, spacing} from '../styles';
 import {useSecureStorage} from '../hooks/useSecureStorage';
+import {discussionAdd} from '../api/discussions/discussions.api';
+import {useCurrentUser} from '../contexts/currentUserContext';
+import Loader from './Loader';
+import MessageModal from './MessageModal';
 
 //function return
 function CreateDiscussion(props) {
   const theme = themes.light;
-  const [token, setToken] = useSecureStorage('userToken', '');
+  //const [token, setToken] = useSecureStorage('userToken', '');
+  const [discussionTitle, setDiscussionTitle] = useState('');
+  const [discussionDescription, setDiscussionDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [currentUser, token] = useCurrentUser();
   const [discussions, setDiscussions] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showing, setShowing] = useState(false);
+
+  // function handle when user tap Post discsussion button
+  const handlePostDiscussion = () => {
+    // prevent empty input
+    !discussionTitle
+      ? Alert.alert('Create New Discussion', 'Please fill the topic')
+      : !discussionDescription
+      ? Alert.alert('Create New Discussion', 'Please fill the description')
+      : null;
+
+    // get data body
+    const data = {
+      title: discussionTitle,
+      description: discussionDescription,
+    };
+
+    setLoading(true);
+    discussionAdd(token, data)
+      .then((response) => {
+        setLoading(false);
+        setShowing(true);
+        setTimeout(() => {
+          props.posted(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        setLoading(false);
+        Alert.alert(err.errors[0].title, err.errors[0].description);
+      });
+  };
 
   return (
     <View style={styles.baseModal}>
+      <Loader loading={loading} />
+      <MessageModal showing={showing} message="Discussion Posted" />
       <ScrollView>
         <View>
           <View style={styles.discussionTopic}>
@@ -29,6 +72,8 @@ function CreateDiscussion(props) {
             <TextInput
               style={styles.titleInput}
               placeholder="Give Your post a name"
+              value={discussionTitle}
+              onChangeText={setDiscussionTitle}
             />
           </View>
           <View style={styles.discussionDescription}>
@@ -37,6 +82,8 @@ function CreateDiscussion(props) {
               style={styles.descriptionInput}
               multiline={true}
               placeholder="Type the Post body here"
+              value={discussionDescription}
+              onChangeText={setDiscussionDescription}
             />
           </View>
           <View style={styles.discussionCategory}>
@@ -52,7 +99,9 @@ function CreateDiscussion(props) {
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => handlePostDiscussion()}>
           <Text style={styles.buttonText}>Post</Text>
         </TouchableOpacity>
       </View>
