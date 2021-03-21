@@ -199,9 +199,7 @@ function DiscussionScreen(props) {
               tintColor={colors.primary900}
             />
           }
-          horizontal={false}
-          style={styles.scrollView}
-          contentContainerStyle={styles.contentContainer}>
+          horizontal={false}>
           {filterDiscussion
             ? filterDiscussion.map((discussion) => (
                 <DiscussionCard
