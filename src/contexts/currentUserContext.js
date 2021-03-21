@@ -16,7 +16,9 @@ function CurrentUserProvider(props) {
         .then(setCurrentUser)
         .catch((err) => Alert.alert(err.errors[0]));
   }, [token]);
-  return <CurrentUserContext.Provider value={[currentUser]} {...props} />;
+  return (
+    <CurrentUserContext.Provider value={[currentUser, token]} {...props} />
+  );
 }
 
 function useCurrentUser() {
