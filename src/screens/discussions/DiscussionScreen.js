@@ -27,9 +27,9 @@ import {useCurrentUser} from '../../contexts/currentUserContext';
 
 //switch-selector options
 const options = [
-  {label: 'Recent', value: 'Recent'},
-  {label: 'Most Discussed', value: 'Most Discussed'},
-  {label: 'My Discussions', value: 'My Discussions'},
+  {label: 'Recent', value: 1},
+  {label: 'Most Discussed', value: 2},
+  {label: 'My Discussions', value: 3},
 ];
 
 //function return
@@ -41,7 +41,7 @@ function DiscussionScreen(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
   const [modalVisible, setModalVisible] = useState(false);
-  const [stateSelector, setStateSelector] = useState('Recent');
+  const [stateSelector, setStateSelector] = useState(1);
   const [currentUser] = useCurrentUser();
 
   // function format date: Example Jan 30th, 2021
@@ -56,21 +56,22 @@ function DiscussionScreen(props) {
 
   // sort the discussion list by updated Date
   const sortDate = (data) => {
-    const array = data.sort((item1, item2) => {
-      return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
-    });
+    let array = data.sort(
+      (item1, item2) =>
+        parseInt(Date.parse(item2.updatedAt), [10]) -
+        parseInt(Date.parse(item1.updatedAt), [10]),
+    );
 
     setFilterDiscussion(array); // set Filter discussion
   };
 
   // sort the discussion list by most replies
   const sortMostDiscussed = (data) => {
-    const array = data.sort((item1, item2) => {
-      return (
+    let array = data.sort(
+      (item1, item2) =>
         parseInt(item2.replies.length, [10]) -
-        parseInt(item1.replies.length, [10])
-      );
-    });
+        parseInt(item1.replies.length, [10]),
+    );
 
     setFilterDiscussion(array); // set Filter discussion
   };
@@ -105,21 +106,28 @@ function DiscussionScreen(props) {
       discussionGetList(token)
         .then((response) => {
           setDiscussions(response);
-          //sortDate(response);
         })
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
-  }, [token, reloadData]);
+  }, [token, reloadData, filterDiscussion]);
 
-  // useEffect use for filter selector
   useEffect(() => {
     if (discussions) {
-      stateSelector === 'Recent'
-        ? sortDate(discussions)
-        : stateSelector === 'Most Discussed'
-        ? sortMostDiscussed(discussions)
-        : sortMyDiscussion(discussions);
+      switch (stateSelector) {
+        case 1:
+          //setFilterDiscussion(null);
+          sortDate(discussions);
+          break;
+        case 2:
+          //setFilterDiscussion(null);
+          sortMostDiscussed(discussions);
+          break;
+        case 3:
+          //setFilterDiscussion(null);
+          sortMyDiscussion(discussions);
+          break;
+      }
     }
   }, [stateSelector]);
 
@@ -170,21 +178,17 @@ function DiscussionScreen(props) {
         initial={0}
         onPress={(value) => {
           switch (value) {
-            case 'Recent':
+            case 1:
+              setStateSelector(1);
               // sortDate(discussions);
-              console.log(value);
-              // sortDate(discussions);
-              setStateSelector(value);
               break;
-            case 'Most Discussed':
-              console.log(value);
-              // sortMostDiscussed(discussions);
-              setStateSelector(value);
+            case 2:
+              setStateSelector(2);
+              //sortMostDiscussed(discussions);
               break;
-            case 'My Discussions':
-              console.log(value);
-              //sortMyDiscussion(discussions);
-              setStateSelector(value);
+            case 3:
+              setStateSelector(3);
+              // sortMyDiscussion(discussions);
               break;
           }
         }}
