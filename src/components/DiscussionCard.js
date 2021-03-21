@@ -18,7 +18,7 @@ export default function EventCard(props) {
       </View>
       <Text style={styles.cardSubTitle}>{props.description}</Text>
       <View style={styles.actionContainer}>
-        <Text>{`${props.categories.length - 1} Replies`}</Text>
+        <Text>{`${props.replies.length} Replies`}</Text>
         <Text>Save</Text>
       </View>
     </View>
