@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary50,
   },
   categoryIcon: {
-    color: colors.primary900,
     height: 40,
     width: 40,
     borderRadius: 40 / 2,
