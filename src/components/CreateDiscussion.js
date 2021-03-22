@@ -1,7 +1,7 @@
 //Create Discussion module
 
 // import packages
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Text,
@@ -12,19 +12,25 @@ import {
   TouchableOpacity,
   Alert,
   TouchableHighlight,
-  Image,
+  Modal,
   Keyboard,
+  Pressable
 } from 'react-native';
 
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {colors, themes, typography, spacing} from '../styles';
-import {discussionAdd} from '../api/discussions/discussions.api';
-import {useCurrentUser} from '../contexts/currentUserContext';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { colors, themes, typography, spacing } from '../styles';
+import { discussionAdd } from '../api/discussions/discussions.api';
+import { useCurrentUser } from '../contexts/currentUserContext';
 import Loader from './Loader';
 import MessageModal from './MessageModal';
+
+import { Chip } from 'react-native-paper';
+import CategoriesList from '../components/CategoriesList';
+import { mediaAddImage } from '../api/medias/media.api';
+
 import {s3Storage} from '../api/aws/s3Strorage';
-import {Chip} from 'react-native-paper';
-import {mediaAddImage} from '../api/medias/media.api';
+
+
 
 //function return
 function CreateDiscussion(props) {
@@ -32,6 +38,7 @@ function CreateDiscussion(props) {
   //const [token, setToken] = useSecureStorage('userToken', '');
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [discussionDescription, setDiscussionDescription] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const [category, setCategory] = useState('');
   const [currentUser, token] = useCurrentUser();
   const [discussions, setDiscussions] = useState(null);
@@ -45,8 +52,8 @@ function CreateDiscussion(props) {
     !discussionTitle
       ? Alert.alert('Create New Discussion', 'Please fill the topic')
       : !discussionDescription
-      ? Alert.alert('Create New Discussion', 'Please fill the description')
-      : null;
+        ? Alert.alert('Create New Discussion', 'Please fill the description')
+        : null;
 
     setLoading(true); // enable loader
 
@@ -180,7 +187,7 @@ function CreateDiscussion(props) {
                 onClose={() => setImageInfo(null)}>
                 <Text
                   numberOfLines={1}
-                  style={{flex: 1, textDecorationLine: 'underline'}}>
+                  style={{ flex: 1, textDecorationLine: 'underline' }}>
                   {imageInfo.fileName}
                 </Text>
               </Chip>
@@ -188,10 +195,7 @@ function CreateDiscussion(props) {
           </View>
           <View style={styles.discussionCategory}>
             <Text style={styles.cardTitle}>Category (Optional)</Text>
-            <TextInput
-              style={styles.categoryDopdown}
-              placeholder="None Selected"
-            />
+            <Text onPress={() => setModalVisible(true)} style={styles.categoryDopdown}>None Selected</Text>
           </View>
         </View>
       </ScrollView>
@@ -205,6 +209,26 @@ function CreateDiscussion(props) {
           <Text style={styles.buttonText}>Post</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.modalView}>
+          <View style={styles.modalTitle}>
+            <Text style={styles.modalTitleText}>Categories</Text>
+            <Pressable
+              style={styles.closeButton}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.closeButtonText}>x</Text>
+            </Pressable>
+          </View>
+          <CategoriesList />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -277,8 +301,47 @@ const styles = StyleSheet.create({
     marginTop: spacing.smallest,
     padding: spacing.small,
     borderRadius: 5,
-  },
+    color: colors.gray300
 
+  },
+  //styling for modal container
+  modalView: {
+    marginTop: 50,
+    backgroundColor: colors.primary50,
+    borderRadius: 20,
+  },
+  modalTitle: {
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    paddingVertical: spacing.base,
+    paddingHorizontal: spacing.base,
+    flexDirection: 'row',
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    borderBottomColor: colors.gray400,
+    borderBottomWidth: 0.2
+  },
+  modalTitleText: {
+    fontSize: typography.fs3,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
+    paddingTop: spacing.smallest,
+  },
+  closeButton: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+    borderRadius: 100,
+    backgroundColor: colors.primary50,
+  },
+  closeButtonText: {
+    color: colors.primary900,
+    fontSize: 20,
+    fontWeight: typography.fwMedium,
+  },
   //styling for bottom buttons group
   buttonsGroup: {
     flexDirection: 'row',
