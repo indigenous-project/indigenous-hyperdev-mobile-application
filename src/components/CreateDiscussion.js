@@ -38,7 +38,7 @@ function CreateDiscussion(props) {
   const [discussions, setDiscussions] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showing, setShowing] = useState(false);
-  const [imageInfo, setImageInfo] = useState('');
+  const [imageInfo, setImageInfo] = useState(null);
 
   // function handle when user tap Post discsussion button
   const handlePostDiscussion = () => {
@@ -51,7 +51,7 @@ function CreateDiscussion(props) {
 
     setLoading(true); // enable loader
 
-    if (imageInfo)
+    if (imageInfo) {
       s3Storage(imageInfo.base64) // store image in S3 aws: base64
         .then((response) => {
           // return a imageData object
@@ -88,6 +88,9 @@ function CreateDiscussion(props) {
           console.log(err);
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
+    } else {
+      setLoading(false);
+    }
   };
 
   // function access to Photo Library
