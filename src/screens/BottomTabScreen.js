@@ -1,6 +1,8 @@
 //BottomTabScreen.js
 
-import React from 'react';
+import React, {useRef} from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 // Javascript
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 import HomeStack from './home/HomeStack';
