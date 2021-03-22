@@ -122,7 +122,9 @@ function DiscussionScreen(props) {
       discussionGetList(token)
         .then((response) => {
           setDiscussions(response);
-          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+          stateSelector === null || stateSelector === 1
+            ? setStateSelector(1)
+            : null; // set initial stateSelector = 1
         })
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
