@@ -21,11 +21,17 @@ export default async function s3Storage(fileContent) {
       Body: imageBody,
       ACL: 'public-read-write',
     };
-    s3.upload(params, async function (err, data) {
-      if (err) {
-        Alert.alert('Upload image Failed');
-      }
-      console.log('File uploaded successfully.', data);
+
+    const s3UploadPromise = new Promise((resolve, reject) => {
+      s3.upload(params, async function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          console.log('File uploaded successfully.', data);
+          resolve(data);
+        }
+      });
     });
+    return s3UploadPromise;
   }
 }
