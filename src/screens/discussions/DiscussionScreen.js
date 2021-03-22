@@ -129,7 +129,7 @@ function DiscussionScreen(props) {
           break;
       }
     }
-  }, [stateSelector]);
+  }, [stateSelector, discussions]);
 
   // RETURN COMPONENTS
   return (
