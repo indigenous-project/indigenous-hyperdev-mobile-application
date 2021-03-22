@@ -16,28 +16,29 @@ import {StyleSheet} from 'react-native';
 
 const theme = themes.light;
 
-//const Tab = createBottomTabNavigator();
-const Tab = AnimatedTabBarNavigator();
+const Tab = createBottomTabNavigator();
+//const Tab = AnimatedTabBarNavigator();
 
-function BottomTabScreen(props, navigation) {
+function BottomTabScreen(props) {
   // fadeAnim will be used as the value for opacity. Initial Value: 0
 
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: colors.white,
+        activeTintColor: colors.primary900,
         inactiveTintColor: theme.subduedTextColor,
       }}
-      appearance={{
-        activeTabBackgrounds: [
-          colors.primary300,
-          colors.primary300,
-          colors.primary300,
-          colors.primary300,
-          colors.primary300,
-        ],
-      }}>
+      // appearance={{
+      //   activeTabBackgrounds: [
+      //     colors.primary300,
+      //     colors.primary300,
+      //     colors.primary300,
+      //     colors.primary300,
+      //     colors.primary300,
+      //   ],
+      // }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeStack}
@@ -65,6 +66,7 @@ function BottomTabScreen(props, navigation) {
               color={color}
             />
           ),
+          tabStyle: styles.tabBarFocused,
         }}
       />
       <Tab.Screen
@@ -117,9 +119,9 @@ export default BottomTabScreen;
 const styles = StyleSheet.create({
   //container style
   tabBarFocused: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
+    // position: 'absolute',
+    // top: 0,
+    // bottom: 0,
     borderTopWidth: 2,
     borderTopColor: theme.primaryColor,
     paddingHorizontal: 15,
