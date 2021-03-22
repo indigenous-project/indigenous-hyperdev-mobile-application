@@ -16,28 +16,27 @@ import {useCurrentUser} from '../contexts/currentUserContext';
 
 //function return
 function SideNavCustomContent(props) {
-  const [token, setToken] = useSecureStorage('userToken', null);
   const [loading, setLoading] = useState(false);
 
-  const [currentUser] = useCurrentUser();
+  const [currentUser, token] = useCurrentUser();
   // Function handle when tap logout
   const handleLogout = () => {
     setLoading(true); // show Loader
-    userLogout(token) // call API
-      .then((response) => {
-        props.navigation.toggleDrawer();
-        setLoading(false); // hide Loader
-        if (response.logout) {
-          // check if logout successfull
-          deleteItemAsync('userToken'); // remove token from storage when logout
-          //removeAsyncStorage('userName');
-          props.navigation.replace('Auth'); // navaigate to authentication screen
-        }
-      })
-      .catch((err) => {
-        setLoading(false); // hide Loader
-        Alert.alert(err.errors[0].description);
-      });
+    if (currentUser)
+      userLogout(token) // call API
+        .then((response) => {
+          props.navigation.toggleDrawer();
+          setLoading(false); // hide Loader
+          if (response.logout) {
+            // check if logout successfull
+            deleteItemAsync('userToken'); // remove token from storage when logout
+            props.navigation.replace('Auth'); // navaigate to authentication screen
+          }
+        })
+        .catch((err) => {
+          setLoading(false); // hide Loader
+          Alert.alert(err.errors[0].description);
+        });
   };
   return (
     <DrawerContentScrollView contentContainerStyle={{paddingTop: 0}} {...props}>
