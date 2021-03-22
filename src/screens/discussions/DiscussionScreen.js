@@ -35,8 +35,6 @@ const options = [
 //function return
 function DiscussionScreen(props) {
   const theme = themes.light;
-
-  const [discussions, setDiscussions] = useState(null);
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
@@ -94,42 +92,39 @@ function DiscussionScreen(props) {
   };
 
   //handle on refresh
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = () => {
     setRefreshing(true); // enable refresh indicator
     setReloadData(!reloadData); // change the reloadData to re-render new Discussion
-    wait(1000).then(() => setRefreshing(false)); // hide refresh indicator
-  }, [reloadData]);
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
+  };
 
-  useEffect(() => {
-    if (discussions) {
-      switch (stateSelector) {
-        case 1:
-          sortDate(discussions);
-          break;
-        case 2:
-          sortMostDiscussed(discussions);
-          break;
-        case 3:
-          sortMyDiscussion(discussions);
-          break;
-      }
-    }
-  }, [stateSelector]);
-
-  // useEffect load discussion list
+  // useEffect load  new discussion list
   useEffect(() => {
     if (token)
       discussionGetList(token)
         .then((response) => {
-          setDiscussions(response);
-          stateSelector === null || stateSelector === 1
-            ? setStateSelector(1)
-            : null; // set initial stateSelector = 1
+          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+          if (response) {
+            switch (
+              stateSelector // checking state of Selector
+            ) {
+              case 1:
+                sortDate(response); // filter by date
+                break;
+              case 2:
+                sortMostDiscussed(response); // filter by mostdiscussed
+                break;
+              case 3:
+                sortMyDiscussion(response); // filter by my discussion
+                break;
+            }
+          }
         })
+
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
-  }, [token, reloadData, filterDiscussion]);
+  }, [token, reloadData, stateSelector]);
 
   // RETURN COMPONENTS
   return (
@@ -163,7 +158,12 @@ function DiscussionScreen(props) {
               <Text style={styles.buttonText}>x</Text>
             </Pressable>
           </View>
-          <CreateDiscussion posted={(value) => setModalVisible(value)} />
+          <CreateDiscussion
+            posted={(value) => {
+              setModalVisible(value);
+              setReloadData(!reloadData);
+            }}
+          />
         </View>
       </Modal>
 
@@ -180,15 +180,15 @@ function DiscussionScreen(props) {
           switch (value) {
             case 1:
               setStateSelector(1);
-              // sortDate(discussions);
+
               break;
             case 2:
               setStateSelector(2);
-              //sortMostDiscussed(discussions);
+
               break;
             case 3:
               setStateSelector(3);
-              // sortMyDiscussion(discussions);
+
               break;
           }
         }}
@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     backgroundColor: colors.primary50,
     borderRadius: 20,
+    height: '100%',
   },
   modalTitle: {
     justifyContent: 'space-between',
