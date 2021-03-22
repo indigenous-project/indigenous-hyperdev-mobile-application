@@ -1,32 +1,30 @@
 //HomeScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { categoriesGetList } from '../../api/categories/categories.api';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {categoriesGetList} from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
 import CategoryButton from '../../components/CategoryButton';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors, themes, typography, spacing } from '../../styles';
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import {colors, themes, typography, spacing} from '../../styles';
 
 //function return
-function HomeScreen({ navigation }) {
+function HomeScreen({navigation}) {
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
 
-  // useEffect(() => {
-  //   categoriesGetList(
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDQ3YzY4NDkwZTc4MjAwMDdmZjg2ZTEiLCJpYXQiOjE2MTUzMTY2Mjh9.AOe0KoE5MRZN1xw2hMEI3Tq28QPeASkc8BAugpHEChc',
-  //   )
-  //     .then(setCategories)
-  //     .catch(console.log);
-  // }, []);
-
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <ScrollView horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
@@ -41,7 +39,8 @@ function HomeScreen({ navigation }) {
                 <EventCard
                   name="Event 1"
                   date="Event Date"
-                  status="Event status" />
+                  status="Event status"
+                />
               </TouchableOpacity>
             </ScrollView>
           </View>
@@ -59,9 +58,18 @@ function HomeScreen({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.heading}>Popular Service Category</Text>
           <View style={styles.popularServices}>
-            <CategoryButton icon="A" name="A category"></CategoryButton>
-            <CategoryButton icon="B" name="B category"></CategoryButton>
-            <CategoryButton icon="C" name="C category"></CategoryButton>
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
+              name="Culture"
+            />
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
+              name="Government/ Legal"
+            />
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
+              name="Mental Health/ Addiction"
+            />
           </View>
         </View>
       </ScrollView>
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
     shadowOpacity: 0.2,
   },
 
