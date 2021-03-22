@@ -35,14 +35,14 @@ const options = [
 //function return
 function DiscussionScreen(props) {
   const theme = themes.light;
-  const [token, setToken] = useSecureStorage('userToken', '');
+
   const [discussions, setDiscussions] = useState(null);
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
   const [modalVisible, setModalVisible] = useState(false);
-  const [stateSelector, setStateSelector] = useState(1);
-  const [currentUser] = useCurrentUser();
+  const [stateSelector, setStateSelector] = useState(null);
+  const [currentUser, token] = useCurrentUser();
 
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
@@ -100,36 +100,34 @@ function DiscussionScreen(props) {
     wait(1000).then(() => setRefreshing(false)); // hide refresh indicator
   }, [reloadData]);
 
+  useEffect(() => {
+    if (discussions) {
+      switch (stateSelector) {
+        case 1:
+          sortDate(discussions);
+          break;
+        case 2:
+          sortMostDiscussed(discussions);
+          break;
+        case 3:
+          sortMyDiscussion(discussions);
+          break;
+      }
+    }
+  }, [stateSelector]);
+
   // useEffect load discussion list
   useEffect(() => {
     if (token)
       discussionGetList(token)
         .then((response) => {
           setDiscussions(response);
+          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
         })
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
   }, [token, reloadData, filterDiscussion]);
-
-  useEffect(() => {
-    if (discussions) {
-      switch (stateSelector) {
-        case 1:
-          //setFilterDiscussion(null);
-          sortDate(discussions);
-          break;
-        case 2:
-          //setFilterDiscussion(null);
-          sortMostDiscussed(discussions);
-          break;
-        case 3:
-          //setFilterDiscussion(null);
-          sortMyDiscussion(discussions);
-          break;
-      }
-    }
-  }, [stateSelector, discussions]);
 
   // RETURN COMPONENTS
   return (
