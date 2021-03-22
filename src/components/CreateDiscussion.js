@@ -22,9 +22,8 @@ import {discussionAdd} from '../api/discussions/discussions.api';
 import {useCurrentUser} from '../contexts/currentUserContext';
 import Loader from './Loader';
 import MessageModal from './MessageModal';
-import s3Storage from '../api/aws/s3Strorage';
+import {s3Storage} from '../api/aws/s3Strorage';
 import {Chip} from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {mediaAddImage} from '../api/medias/media.api';
 
 //function return
@@ -89,7 +88,23 @@ function CreateDiscussion(props) {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
     } else {
-      setLoading(false);
+      const discussionObject = {
+        title: discussionTitle.trim(),
+        description: discussionDescription.trim(),
+      };
+      discussionAdd(token, discussionObject)
+        .then((response) => {
+          setLoading(false); // hide loader
+          setShowing(true); // show Message
+          setTimeout(() => {
+            props.posted(false); // hide modal
+          }, 1500);
+        })
+        .catch((err) => {
+          setLoading(false); // hide loader
+          console.log(err);
+          Alert.alert(err.errors[0].title, err.errors[0].description);
+        });
     }
   };
 
