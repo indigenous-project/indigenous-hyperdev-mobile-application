@@ -97,17 +97,6 @@ function CreateDiscussion(props) {
     <View style={styles.baseModal}>
       <Loader loading={loading} />
       <MessageModal showing={showing} message="Discussion Posted" />
-      {/* <Image
-        style={{height: 100}}
-        source={
-          1
-            ? {
-                uri:
-                  'https://indigenous-images.s3.amazonaws.com/abbuseIcon.png',
-              }
-            : require('../testImages/demoPic.png')
-        }
-      /> */}
       <ScrollView>
         <View>
           <View style={styles.discussionTopic}>
