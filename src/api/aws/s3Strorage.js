@@ -1,8 +1,7 @@
 // API for store an image in S3
 
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk/dist/aws-sdk-react-native');
 import Base64Binary from 'base64-arraybuffer';
-import {Alert} from 'react-native';
 const ID = 'AKIAWBK3UNFZVVF7OF4B';
 const SECRET = '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';
 const BUCKET_NAME = 'indigenous-images';
@@ -11,7 +10,7 @@ const s3 = new AWS.S3({
   secretAccessKey: SECRET,
 });
 
-export default async function s3Storage(fileContent) {
+export async function s3Storage(fileContent) {
   const imageBody = await Base64Binary.decode(fileContent);
   if (imageBody) {
     const params = {
@@ -21,7 +20,6 @@ export default async function s3Storage(fileContent) {
       Body: imageBody,
       ACL: 'public-read-write',
     };
-
     const s3UploadPromise = new Promise((resolve, reject) => {
       s3.upload(params, async function (err, data) {
         if (err) {
