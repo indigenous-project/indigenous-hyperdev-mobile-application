@@ -9,28 +9,36 @@ export default function OrganizationListViews(props) {
   return (
     <ScrollView style={styles.scrollView}>
       <OrganizationsCard
-        name={props.name}
-        rating={props.rating}
-        link={props.link}
+        name={props.listofData.name}
+        rating={props.listofData.rating}
+        link={props.listofData.link}
         location={props.location}
-        type={props.type}
-        image={props.image}
+        type={props.listofData.type}
+        image={props.listofData.image}
       />
       <OrganizationsCard
-        name={props.name}
-        rating={props.rating}
-        link={props.link}
+        name={props.listofData.name}
+        rating={props.listofData.rating}
+        link={props.listofData.link}
         location={props.location}
-        type={props.type}
-        image={props.image}
+        type={props.listofData.type}
+        image={props.listofData.image}
       />
       <OrganizationsCard
-        name={props.name}
-        rating={props.rating}
-        link={props.link}
+        name={props.listofData.name}
+        rating={props.listofData.rating}
+        link={props.listofData.link}
         location={props.location}
-        type={props.type}
-        image={props.image}
+        type={props.listofData.type}
+        image={props.listofData.image}
+      />
+      <OrganizationsCard
+        name={props.listofData.name}
+        rating={props.listofData.rating}
+        link={props.listofData.link}
+        location={props.location}
+        type={props.listofData.type}
+        image={props.listofData.image}
       />
     </ScrollView>
   );
