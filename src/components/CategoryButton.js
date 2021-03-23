@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {colors, typography, spacing} from '../styles';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { colors, typography, spacing } from '../styles';
 
 //card to display category button
 export default function CategoryButton(props) {
@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
     backgroundColor: colors.primary50,
   },
   categoryIcon: {
-    height: 40,
-    width: 40,
+    height: 60,
+    width: 60,
     borderRadius: 40 / 2,
   },
   categoryName: {

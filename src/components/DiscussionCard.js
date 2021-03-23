@@ -1,6 +1,8 @@
 import React from 'react';
+
 import {View, Text, StyleSheet} from 'react-native';
 import {colors, typography, spacing, themes} from '../styles';
+
 import Chips from '../components/Chips';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -10,13 +12,11 @@ export default function EventCard(props) {
     <View style={styles.discussionCard}>
       <Text style={styles.cardTitle}>{props.title}</Text>
       <Text style={styles.cardDetail}>{props.nameAndDate}</Text>
-      <View style={styles.chipContainer}>
-        {props.categories
-          ? props.categories.map((category) => (
-              <Chips key={category._id} name={category.name} />
-            ))
-          : null}
-      </View>
+      {props.categories
+        ? props.categories.map((category) => (
+          <Chips key={category._id} name={category.name} />
+        ))
+        : null}
       <Text style={styles.cardSubTitle}>{props.description}</Text>
       <View style={styles.actionContainer}>
         <Text>
@@ -56,11 +56,6 @@ const styles = StyleSheet.create({
   cardDetail: {
     fontWeight: typography.fwLight,
     paddingBottom: spacing.smaller,
-  },
-
-  //chips styling
-  chipContainer: {
-    flexDirection: 'row',
   },
 
   //Actions styling (Replies and Save)
