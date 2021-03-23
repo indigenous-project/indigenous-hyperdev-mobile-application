@@ -1,7 +1,7 @@
 //DiscussionScreen module
 
 // import packages
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   Text,
@@ -12,29 +12,29 @@ import {
   Modal,
   Pressable,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import DiscussionCard from '../../components/DiscussionCard';
 import CreateDiscussion from '../../components/CreateDiscussion';
 import SwitchSelector from 'react-native-switch-selector';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 
-import { discussionGetList } from '../../api/discussions/discussions.api';
-import { useSecureStorage } from '../../hooks/useSecureStorage';
-import { useCurrentUser } from '../../contexts/currentUserContext';
+import {discussionGetList} from '../../api/discussions/discussions.api';
+import {useSecureStorage} from '../../hooks/useSecureStorage';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 
 //switch-selector options
 const options = [
-  { label: 'Recent', value: 1 },
-  { label: 'Most Discussed', value: 2 },
-  { label: 'My Discussions', value: 3 },
+  {label: 'Recent', value: 1},
+  {label: 'Most Discussed', value: 2},
+  {label: 'My Discussions', value: 3},
 ];
 
 //function return
-function DiscussionScreen({ navigation }) {
+function DiscussionScreen({navigation}) {
   const theme = themes.light;
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -46,9 +46,9 @@ function DiscussionScreen({ navigation }) {
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-    const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
 
     return `${month} ${day}, ${year}`;
   };
@@ -138,14 +138,14 @@ function DiscussionScreen({ navigation }) {
 
   // RETURN COMPONENTS
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
         <MaterialCommunityIcons
           name="square-edit-outline"
           size={22}
-          style={{ textAlignVertical: 'center' }}
+          style={{textAlignVertical: 'center'}}
           color={theme.subduedTextColor}
         />
         <Text style={styles.createNewButton}>Create a new discussion</Text>
@@ -217,18 +217,20 @@ function DiscussionScreen({ navigation }) {
           horizontal={false}>
           {filterDiscussion
             ? filterDiscussion.map((discussion) => (
-              <TouchableOpacity onPress={() => navigation.navigate('Discussion Detail')}>
-                <DiscussionCard
-                  key={discussion._id}
-                  title={discussion.title}
-                  nameAndDate={`${discussion.owner.firstName} ${discussion.owner.lastName
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Discussion Detail')}
+                  key={discussion._id}>
+                  <DiscussionCard
+                    title={discussion.title}
+                    nameAndDate={`${discussion.owner.firstName} ${
+                      discussion.owner.lastName
                     } Posted ${formatDate(discussion.createdAt)}`}
-                  description={discussion.description}
-                  categories={discussion.categories}
-                  replies={discussion.replies}
-                />
-              </TouchableOpacity>
-            ))
+                    description={discussion.description}
+                    categories={discussion.categories}
+                    replies={discussion.replies}
+                  />
+                </TouchableOpacity>
+              ))
             : null}
         </ScrollView>
       </View>
@@ -300,7 +302,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
