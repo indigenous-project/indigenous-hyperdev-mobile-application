@@ -12,7 +12,7 @@ import ServicesStack from './services/ServicesStack';
 import OrganizationStack from './organizations/OrganizationsStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, themes, typography} from '../styles';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Button} from 'react-native';
 
 const theme = themes.light;
 
@@ -26,7 +26,7 @@ function BottomTabScreen(props) {
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: colors.primary900,
+        activeTintColor: theme.primaryColor,
         inactiveTintColor: theme.subduedTextColor,
       }}
       // appearance={{
