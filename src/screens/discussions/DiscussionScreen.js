@@ -65,11 +65,17 @@ function DiscussionScreen(props) {
 
   // sort the discussion list by most replies
   const sortMostDiscussed = (data) => {
-    let array = data.sort(
-      (item1, item2) =>
-        parseInt(item2.replies.length, [10]) -
-        parseInt(item1.replies.length, [10]),
-    );
+    let array = data
+      .sort(
+        (item1, item2) =>
+          parseInt(Date.parse(item2.updatedAt), [10]) -
+          parseInt(Date.parse(item1.updatedAt), [10]),
+      )
+      .sort(
+        (item1, item2) =>
+          parseInt(item2.replies.length, [10]) -
+          parseInt(item1.replies.length, [10]),
+      );
 
     setFilterDiscussion(array); // set Filter discussion
   };
@@ -78,7 +84,10 @@ function DiscussionScreen(props) {
   const sortMyDiscussion = (data) => {
     const array = data
       .sort((item1, item2) => {
-        return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
+        return (
+          parseInt(Date.parse(item2.updatedAt), [10]) -
+          parseInt(Date.parse(item1.updatedAt), [10])
+        );
       })
       .filter((item) => {
         return item.owner.email === currentUser.email;
@@ -163,6 +172,7 @@ function DiscussionScreen(props) {
               setModalVisible(value);
               setReloadData(!reloadData);
             }}
+            visibleModal={setModalVisible}
           />
         </View>
       </Modal>
