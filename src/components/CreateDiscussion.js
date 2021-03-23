@@ -1,7 +1,7 @@
 //Create Discussion module
 
 // import packages
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   Text,
@@ -14,23 +14,21 @@ import {
   TouchableHighlight,
   Modal,
   Keyboard,
-  Pressable
+  Pressable,
 } from 'react-native';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { colors, themes, typography, spacing } from '../styles';
-import { discussionAdd } from '../api/discussions/discussions.api';
-import { useCurrentUser } from '../contexts/currentUserContext';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {colors, themes, typography, spacing} from '../styles';
+import {discussionAdd} from '../api/discussions/discussions.api';
+import {useCurrentUser} from '../contexts/currentUserContext';
 import Loader from './Loader';
 import MessageModal from './MessageModal';
 
-import { Chip } from 'react-native-paper';
+import {Chip} from 'react-native-paper';
 import CategoriesList from '../components/CategoriesList';
-import { mediaAddImage } from '../api/medias/media.api';
+import {mediaAddImage} from '../api/medias/media.api';
 
 import {s3Storage} from '../api/aws/s3Strorage';
-
-
 
 //function return
 function CreateDiscussion(props) {
@@ -39,9 +37,9 @@ function CreateDiscussion(props) {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [discussionDescription, setDiscussionDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState(null);
   const [currentUser, token] = useCurrentUser();
-  const [discussions, setDiscussions] = useState(null);
+
   const [loading, setLoading] = useState(false);
   const [showing, setShowing] = useState(false);
   const [imageInfo, setImageInfo] = useState(null);
@@ -52,8 +50,8 @@ function CreateDiscussion(props) {
     !discussionTitle
       ? Alert.alert('Create New Discussion', 'Please fill the topic')
       : !discussionDescription
-        ? Alert.alert('Create New Discussion', 'Please fill the description')
-        : null;
+      ? Alert.alert('Create New Discussion', 'Please fill the description')
+      : null;
 
     setLoading(true); // enable loader
 
@@ -77,6 +75,7 @@ function CreateDiscussion(props) {
             title: discussionTitle.trim(),
             description: discussionDescription.trim(),
             medias: [media._id],
+            categories: category ? [category.id] : null,
           };
         })
         .then((discussionData) => {
@@ -98,6 +97,7 @@ function CreateDiscussion(props) {
       const discussionObject = {
         title: discussionTitle.trim(),
         description: discussionDescription.trim(),
+        categories: category ? [category.id] : null,
       };
       discussionAdd(token, discussionObject)
         .then((response) => {
@@ -187,7 +187,7 @@ function CreateDiscussion(props) {
                 onClose={() => setImageInfo(null)}>
                 <Text
                   numberOfLines={1}
-                  style={{ flex: 1, textDecorationLine: 'underline' }}>
+                  style={{flex: 1, textDecorationLine: 'underline'}}>
                   {imageInfo.fileName}
                 </Text>
               </Chip>
@@ -195,12 +195,20 @@ function CreateDiscussion(props) {
           </View>
           <View style={styles.discussionCategory}>
             <Text style={styles.cardTitle}>Category (Optional)</Text>
-            <Text onPress={() => setModalVisible(true)} style={styles.categoryDopdown}>None Selected</Text>
+            <Text
+              onPress={() => setModalVisible(true)}
+              style={
+                category ? styles.categoryDopdownSelect : styles.categoryDopdown
+              }>
+              {category ? category.name : 'None Selected '}
+            </Text>
           </View>
         </View>
       </ScrollView>
       <View style={styles.buttonsGroup}>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => props.visibleModal(false)}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -226,7 +234,10 @@ function CreateDiscussion(props) {
               <Text style={styles.closeButtonText}>x</Text>
             </Pressable>
           </View>
-          <CategoriesList />
+          <CategoriesList
+            selected={setCategory}
+            visibleModal={setModalVisible}
+          />
         </View>
       </Modal>
     </View>
@@ -301,8 +312,17 @@ const styles = StyleSheet.create({
     marginTop: spacing.smallest,
     padding: spacing.small,
     borderRadius: 5,
-    color: colors.gray300
-
+    color: colors.gray300,
+  },
+  categoryDopdownSelect: {
+    borderColor: colors.gray900,
+    borderWidth: 0.2,
+    width: '100%',
+    height: 40,
+    marginTop: spacing.smallest,
+    padding: spacing.small,
+    borderRadius: 5,
+    color: colors.gray800,
   },
   //styling for modal container
   modalView: {
@@ -319,7 +339,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     borderBottomColor: colors.gray400,
-    borderBottomWidth: 0.2
+    borderBottomWidth: 0.2,
   },
   modalTitleText: {
     fontSize: typography.fs3,
@@ -331,7 +351,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
