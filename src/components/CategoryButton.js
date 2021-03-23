@@ -6,7 +6,12 @@ import {colors, typography, spacing} from '../styles';
 export default function CategoryButton(props) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.categoryButton}>
+      <TouchableOpacity
+        style={styles.categoryButton}
+        onPress={() => {
+          props.selected(props.category);
+          props.visibleModal(false);
+        }}>
         <Image
           style={styles.categoryIcon}
           source={{
