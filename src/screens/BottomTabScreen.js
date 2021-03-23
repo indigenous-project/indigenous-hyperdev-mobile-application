@@ -2,9 +2,7 @@
 
 import React, {useRef} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
 // Javascript
-import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 import HomeStack from './home/HomeStack';
 import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
