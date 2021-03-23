@@ -65,7 +65,7 @@ function SideNavCustomContent(props) {
         icon={() => (
           <Image
             style={styles.image}
-            source={require('../testImages/priceIcon.png')}
+            source={require('../testImages/homeIcon.png')}
           />
         )}
       />
