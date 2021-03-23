@@ -36,8 +36,6 @@ const options = [
 //function return
 function DiscussionScreen({ navigation }) {
   const theme = themes.light;
-
-  const [discussions, setDiscussions] = useState(null);
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
@@ -68,11 +66,17 @@ function DiscussionScreen({ navigation }) {
 
   // sort the discussion list by most replies
   const sortMostDiscussed = (data) => {
-    let array = data.sort(
-      (item1, item2) =>
-        parseInt(item2.replies.length, [10]) -
-        parseInt(item1.replies.length, [10]),
-    );
+    let array = data
+      .sort(
+        (item1, item2) =>
+          parseInt(Date.parse(item2.updatedAt), [10]) -
+          parseInt(Date.parse(item1.updatedAt), [10]),
+      )
+      .sort(
+        (item1, item2) =>
+          parseInt(item2.replies.length, [10]) -
+          parseInt(item1.replies.length, [10]),
+      );
 
     setFilterDiscussion(array); // set Filter discussion
   };
@@ -81,7 +85,10 @@ function DiscussionScreen({ navigation }) {
   const sortMyDiscussion = (data) => {
     const array = data
       .sort((item1, item2) => {
-        return Date.parse(item2.updatedAt) - Date.parse(item1.updatedAt);
+        return (
+          parseInt(Date.parse(item2.updatedAt), [10]) -
+          parseInt(Date.parse(item1.updatedAt), [10])
+        );
       })
       .filter((item) => {
         return item.owner.email === currentUser.email;
@@ -95,40 +102,39 @@ function DiscussionScreen({ navigation }) {
   };
 
   //handle on refresh
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = () => {
     setRefreshing(true); // enable refresh indicator
     setReloadData(!reloadData); // change the reloadData to re-render new Discussion
-    wait(1000).then(() => setRefreshing(false)); // hide refresh indicator
-  }, [reloadData]);
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
+  };
 
-  useEffect(() => {
-    if (discussions) {
-      switch (stateSelector) {
-        case 1:
-          sortDate(discussions);
-          break;
-        case 2:
-          sortMostDiscussed(discussions);
-          break;
-        case 3:
-          sortMyDiscussion(discussions);
-          break;
-      }
-    }
-  }, [stateSelector]);
-
-  // useEffect load discussion list
+  // useEffect load  new discussion list
   useEffect(() => {
     if (token)
       discussionGetList(token)
         .then((response) => {
-          setDiscussions(response);
           stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+          if (response) {
+            switch (
+              stateSelector // checking state of Selector
+            ) {
+              case 1:
+                sortDate(response); // filter by date
+                break;
+              case 2:
+                sortMostDiscussed(response); // filter by mostdiscussed
+                break;
+              case 3:
+                sortMyDiscussion(response); // filter by my discussion
+                break;
+            }
+          }
         })
+
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
-  }, [token, reloadData, filterDiscussion]);
+  }, [token, reloadData, stateSelector]);
 
   // RETURN COMPONENTS
   return (
@@ -162,7 +168,13 @@ function DiscussionScreen({ navigation }) {
               <Text style={styles.buttonText}>x</Text>
             </Pressable>
           </View>
-          <CreateDiscussion posted={(value) => setModalVisible(value)} />
+          <CreateDiscussion
+            posted={(value) => {
+              setModalVisible(value);
+              setReloadData(!reloadData);
+            }}
+            visibleModal={setModalVisible}
+          />
         </View>
       </Modal>
 
@@ -179,15 +191,15 @@ function DiscussionScreen({ navigation }) {
           switch (value) {
             case 1:
               setStateSelector(1);
-              // sortDate(discussions);
+
               break;
             case 2:
               setStateSelector(2);
-              //sortMostDiscussed(discussions);
+
               break;
             case 3:
               setStateSelector(3);
-              // sortMyDiscussion(discussions);
+
               break;
           }
         }}
@@ -267,6 +279,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     backgroundColor: colors.primary50,
     borderRadius: 20,
+    height: '100%',
   },
   modalTitle: {
     justifyContent: 'space-between',

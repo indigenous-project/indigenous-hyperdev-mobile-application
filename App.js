@@ -14,6 +14,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import DrawerRoute from './src/screens/sidenavbar/DrawerRoute';
 import AuthStack from './src/screens/authentication/AuthStack';
 
+import SearchStack from './src/screens/search/SearchStack';
+
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -29,6 +31,11 @@ const App = () => {
           <Stack.Screen
             name="DrawerRoute"
             component={DrawerRoute}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SearchStack"
+            component={SearchStack}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
