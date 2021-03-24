@@ -6,7 +6,18 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 
-import { View, ScrollView, Image, StyleSheet, Text, TouchableOpacity, Modal, Pressable, TextInput, Button } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  TextInput,
+  Button,
+} from 'react-native';
 
 import Chips from '../../components/Chips';
 import ReplyCard from '../../components/ReplyCard';
@@ -17,6 +28,8 @@ import {colors, themes, typography, spacing} from '../../styles';
 function DiscussionDetail({navigate, route}) {
   const theme = themes.light;
   const discussion = route.params.discussion;
+
+  const [modalVisible, setModalVisible] = useState(false);
   console.log(discussion.replies);
 
   // function format date: Example Jan 30th, 2021
@@ -68,41 +81,50 @@ function DiscussionDetail({navigate, route}) {
         </View>
       </ScrollView>
       <View style={styles.buttonsGroup}>
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Text onPress={() => setModalVisible(true)} style={styles.buttonText}>Reply to this Discussion</Text>
-                </TouchableOpacity>
-            </View>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text onPress={() => setModalVisible(true)} style={styles.buttonText}>
+            Reply to this Discussion
+          </Text>
+        </TouchableOpacity>
+      </View>
 
-            <Modal
-                animationType='fade'
-                transparent
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                    setModalVisible(!modalVisible);
-                }}>
-                <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', height: '100%' }}>
-                    <View style={styles.modalView}>
-                        <View style={styles.modalTitle}>
-                            <Text style={styles.modalTitleText}>Reply</Text>
-                            <Pressable
-                                style={styles.closeButton}
-                                onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles.closeButtonText}>x</Text>
-                            </Pressable>
-                        </View>
-                        <View style={{ height: 100 }}>
-                            <TextInput style={styles.modalInput} multiline={true} placeholder="Type here..."
-                            />
-                        </View>
-                        <TouchableOpacity style={styles.modalButtonContainer}>
-                            <Text style={styles.buttonText} onPress={() => setModalVisible(!modalVisible)}>Add Reply</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-        </SafeAreaView >
-    );
+      <Modal
+        animationType="fade"
+        transparent
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={{backgroundColor: 'rgba(0,0,0,0.5)', height: '100%'}}>
+          <View style={styles.modalView}>
+            <View style={styles.modalTitle}>
+              <Text style={styles.modalTitleText}>Reply</Text>
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.closeButtonText}>x</Text>
+              </Pressable>
+            </View>
+            <View style={{height: 100}}>
+              <TextInput
+                style={styles.modalInput}
+                multiline={true}
+                placeholder="Type here..."
+              />
+            </View>
+            <TouchableOpacity style={styles.modalButtonContainer}>
+              <Text
+                style={styles.buttonText}
+                onPress={() => setModalVisible(!modalVisible)}>
+                Add Reply
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -156,60 +178,60 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: typography.fwBold,
   },
-//styling for modal container
-    modalView: {
-        marginVertical: '50%',
-        marginHorizontal: '10%',
-        backgroundColor: colors.white,
-        borderRadius: 20,
-    },
-    modalTitle: {
-        justifyContent: 'space-between',
-        backgroundColor: colors.white,
-        paddingVertical: spacing.base,
-        paddingHorizontal: spacing.base,
-        flexDirection: 'row',
-        borderTopEndRadius: 20,
-        borderTopStartRadius: 20,
-    },
-    modalTitleText: {
-        fontSize: typography.fs3,
-        color: colors.primary900,
-        fontWeight: typography.fwBold,
-        paddingTop: spacing.smallest,
-    },
-    closeButton: {
-        width: 25,
-        height: 25,
-        alignItems: 'center',
-        shadowOffset: { width: 3, height: 3 },
-        shadowColor: colors.gray900,
-        shadowOpacity: 0.2,
-        borderRadius: 100,
-        backgroundColor: colors.primary50,
-    },
-    closeButtonText: {
-        color: colors.primary900,
-        fontSize: 20,
-        fontWeight: typography.fwMedium,
-    },
-    modalInput: {
-        borderRadius: 10,
-        fontSize: typography.fs3,
-        padding: spacing.base,
-        marginHorizontal: spacing.small,
-        lineHeight: typography.lh3,
-        backgroundColor: colors.primary50,
-        height: '95%'
-    },
-    modalButtonContainer: {
-        borderRadius: 10,
-        marginVertical: spacing.small,
-        width: '40%',
-        alignSelf: 'center',
-        backgroundColor: colors.primary500,
-        paddingVertical: spacing.small,
-    }
+  //styling for modal container
+  modalView: {
+    marginVertical: '50%',
+    marginHorizontal: '10%',
+    backgroundColor: colors.white,
+    borderRadius: 20,
+  },
+  modalTitle: {
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    paddingVertical: spacing.base,
+    paddingHorizontal: spacing.base,
+    flexDirection: 'row',
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+  },
+  modalTitleText: {
+    fontSize: typography.fs3,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
+    paddingTop: spacing.smallest,
+  },
+  closeButton: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    shadowOffset: {width: 3, height: 3},
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+    borderRadius: 100,
+    backgroundColor: colors.primary50,
+  },
+  closeButtonText: {
+    color: colors.primary900,
+    fontSize: 20,
+    fontWeight: typography.fwMedium,
+  },
+  modalInput: {
+    borderRadius: 10,
+    fontSize: typography.fs3,
+    padding: spacing.base,
+    marginHorizontal: spacing.small,
+    lineHeight: typography.lh3,
+    backgroundColor: colors.primary50,
+    height: '95%',
+  },
+  modalButtonContainer: {
+    borderRadius: 10,
+    marginVertical: spacing.small,
+    width: '40%',
+    alignSelf: 'center',
+    backgroundColor: colors.primary500,
+    paddingVertical: spacing.small,
+  },
 });
 
 export default DiscussionDetail;
