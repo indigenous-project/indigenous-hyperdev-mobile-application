@@ -21,5 +21,6 @@ export const categoriesGetList = async (token) => {
       throw json;
     });
   }
-  return response.json();
+  const {data} = await response.json();
+  return data;
 };

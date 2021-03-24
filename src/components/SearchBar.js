@@ -1,29 +1,35 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import { spacing, } from '../styles';
+import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import {colors, spacing, themes} from '../styles';
 
-import {Header, Item, Input, Icon,} from 'native-base';
+import {Header, Item, Input, Icon, Left, Button, Right} from 'native-base';
 
 const SearchBar = (props) => {
-    return (
-        <View>
-        <Header searchBar regular>
-          <Item
-            style={{
-              height: '60%',
-              marginLeft: '5%',
-              borderRadius: spacing.small,
-            }}>
-            <Icon name="ios-search" />
-            <Input placeholder={props.placeholder} />
-          </Item>
-        </Header>
-      </View>
-    )
-}
+  return (
+    <Header
+      searchBar
+      iosBarStyle="light-content"
+      style={{backgroundColor: themes.light.primaryColor}}>
+      <Left style={{maxWidth: '10%'}}>
+        <Button
+          transparent
+          onPress={() => {
+            props.navigation.goBack();
+          }}>
+          <Icon
+            name="chevron-back-outline"
+            style={{color: themes.light.inverseTextColor}}
+          />
+        </Button>
+      </Left>
+      <Item rounded backgroundColor={colors.gray100}>
+        <Icon name="ios-search" />
+        <Input placeholder="Search" />
+      </Item>
+    </Header>
+  );
+};
 
-export default SearchBar
+export default SearchBar;
 
-const styles = StyleSheet.create({})
-
-
+const styles = StyleSheet.create({});

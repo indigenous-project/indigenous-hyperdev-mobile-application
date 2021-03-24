@@ -1,17 +1,17 @@
 PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - EXConstants (9.3.5):
+  - EXConstants (10.1.1):
     - UMConstantsInterface
     - UMCore
-  - EXFileSystem (9.3.0):
+  - EXFileSystem (11.0.0):
     - UMCore
     - UMFileSystemInterface
-  - EXImageLoader (1.3.0):
+  - EXImageLoader (2.1.1):
     - React-Core
     - UMCore
     - UMImageLoaderInterface
-  - EXPermissions (10.0.0):
+  - EXPermissions (12.0.0):
     - UMCore
     - UMPermissionsInterface
   - EXSecureStore (10.0.0):
@@ -218,13 +218,13 @@ PODS:
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
   - React-jsinspector (0.64.0)
-  - react-native-cameraroll (4.0.2):
+  - react-native-cameraroll (4.0.4):
     - React-Core
   - react-native-image-picker (3.3.2):
     - React-Core
   - react-native-maps (0.27.1):
     - React
-  - react-native-safe-area-context (3.1.9):
+  - react-native-safe-area-context (3.2.0):
     - React-Core
   - React-perflogger (0.64.0)
   - React-RCTActionSheet (0.64.0):
@@ -298,29 +298,34 @@ PODS:
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNReanimated (1.13.2):
+  - RNReanimated (1.13.3):
     - React-Core
   - RNScreens (2.18.1):
     - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
-  - UMAppLoader (1.4.0)
-  - UMBarCodeScannerInterface (5.4.0)
-  - UMCameraInterface (5.4.0)
-  - UMConstantsInterface (5.4.0)
-  - UMCore (6.0.0)
-  - UMFaceDetectorInterface (5.4.0)
-  - UMFileSystemInterface (5.4.0)
-  - UMFontInterface (5.4.0)
-  - UMImageLoaderInterface (5.4.0)
-  - UMPermissionsInterface (5.4.0):
+  - UMAppLoader (2.1.0)
+  - UMBarCodeScannerInterface (6.1.0):
     - UMCore
-  - UMReactNativeAdapter (5.7.0):
+  - UMCameraInterface (6.1.0):
+    - UMCore
+  - UMConstantsInterface (6.1.0):
+    - UMCore
+  - UMCore (7.1.0)
+  - UMFaceDetectorInterface (6.1.0)
+  - UMFileSystemInterface (6.1.0)
+  - UMFontInterface (6.1.0)
+  - UMImageLoaderInterface (6.1.0)
+  - UMPermissionsInterface (6.1.0):
+    - UMCore
+  - UMReactNativeAdapter (6.2.0):
     - React-Core
     - UMCore
     - UMFontInterface
-  - UMSensorsInterface (5.4.0)
-  - UMTaskManagerInterface (5.4.0)
+  - UMSensorsInterface (6.1.0):
+    - UMCore
+  - UMTaskManagerInterface (6.1.0):
+    - UMCore
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -507,13 +512,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXConstants: 5874c3bf65601ce96049412e6e5f43d198c1cdaf
-  EXFileSystem: 7c4397042d9a3ae47e6c53c0ce0229d4b4204851
-  EXImageLoader: b9f8ac1b2d9bcf9d929a6daf487c70b8425ea7d4
-  EXPermissions: 55cadfd11547c07a5390ba7eea63bd998a71018d
+  EXConstants: d912a27157b11d68129981d6399bec115cb806f6
+  EXFileSystem: 3f6e97acddad508c73c26e4300d1fbcc3c9886da
+  EXImageLoader: 1ad8b491fd0f3200b57b37ecb1801abeb6549926
+  EXPermissions: 694e23c048c816d15feef795f81b5443c6487be5
   EXSecureStore: cc8fb86f59005b4dd696491347544c88bc698c2c
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: a58faf9e1bd23d8c48fd5ffe4ddc92b3e16e94f5
+  FBReactNativeSpec: 5e0585976fcab5d14b994c745d106a6c97947a17
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 2f8cb5b7533219bf4218a045f92768129cf7050a
@@ -526,10 +531,10 @@ SPEC CHECKSUMS:
   React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
-  react-native-cameraroll: 717193a0427fd0db78d3f10385a008fcc102213c
+  react-native-cameraroll: 7c6c7ca84844f93b3dac9a87670bbad6541684ec
   react-native-image-picker: 5b2f1ea1f9230b131abbfb8a4aa1eb209aba9ed9
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
-  react-native-safe-area-context: 86612d2c9a9e94e288319262d10b5f93f0b395f5
+  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
   React-RCTAnimation: 3f96f21a497ae7dabf4d2f150ee43f906aaf516f
@@ -546,24 +551,24 @@ SPEC CHECKSUMS:
   RNCCheckbox: 500919ac122273ea8eef93dae01431091968c14a
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
+  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
-  UMAppLoader: 515d02d30e29cf05bbe58f77c59f896840cc5895
-  UMBarCodeScannerInterface: 77a5bebdc21106979a363bb057c4fbb46aacc171
-  UMCameraInterface: 123f7ebc3f6d0915afd369f7133bf29231ed418b
-  UMConstantsInterface: e4358999ee6aeb248ba9584a6fbb409ae3ac36f8
-  UMCore: 171e3e5b94edec38519947a3831436b27bb4afdd
-  UMFaceDetectorInterface: f743f95c143144d69cb1efc8681d9b3515df2080
-  UMFileSystemInterface: c87240844f0337bff174cedc80282b62a5298095
-  UMFontInterface: 60ea8ac3aec17845ffeb4bd9ddd02f7f23049b7e
-  UMImageLoaderInterface: 8fdbaf4f610d6e0e1a9286db78e05294db950581
-  UMPermissionsInterface: ea27d84c8e1f70426ac04cdc93369b214b7fe1a1
-  UMReactNativeAdapter: c2a83677e340b1448d7dfa6412377dd8bbf62c2c
-  UMSensorsInterface: d7e32791c7d4e0fa9ae3e76698624f90494b7bd9
-  UMTaskManagerInterface: eee33176282a16e6348aabcbe89ebd363e69f9cb
+  UMAppLoader: aae896b81e3fcaa6528992e2e19ec8db38c2cedd
+  UMBarCodeScannerInterface: 96a01d81ff0c7febbfefc2d7396db9e7462d8c68
+  UMCameraInterface: 8ad433fdadca22703ebeb614d42b814092d38d69
+  UMConstantsInterface: 55c79ca258a3ede70480fed85e3843899cd47ea3
+  UMCore: 0da048c9753abcea0042258e6ad0fed77811f7e1
+  UMFaceDetectorInterface: 4db950a25e785796a237bcebb8fff05078c4fb61
+  UMFileSystemInterface: 4a92ee36e6c2757833031718f8496690fa931280
+  UMFontInterface: 81a951117d03f57aa636fba3992adefd0191f200
+  UMImageLoaderInterface: 5cd09b41630dc8aef7619fabc497c01c0f6b715c
+  UMPermissionsInterface: 4351145563e703c521fe2299e08227bc3584b94a
+  UMReactNativeAdapter: 6f882c5581595613f71f7135a2aa19131458a2bb
+  UMSensorsInterface: 50439b47826e716a514cbd7384aebe9ab4fde5f4
+  UMTaskManagerInterface: 482155764886069beb1bc7fcf6036f12e4ad0751
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 19b6d8903a18d5d7b32be785526d3e676f1810af
+PODFILE CHECKSUM: 1320b1b9f0f9494b2cfb97606bb034477354e5b3
 
 COCOAPODS: 1.10.1
