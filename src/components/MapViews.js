@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
   safeArea: {flex: spacing.hairline},
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    top: 110,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

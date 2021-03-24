@@ -8,6 +8,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {spacing, themes, typography} from '../../styles';
 import OrganizationChips from '../../components/OrganizationChips';
 import OrganizationListViews from '../../components/OrganizationListViews';
+import MapViews from '../../components/MapViews';
 import {View} from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 
@@ -63,7 +64,6 @@ function OrganizationScreen(props) {
       {/* Custom Switch Selectors */}
       <View style={styles.switchView}>
         <SwitchSelector
-          style={styles.switch}
           options={viewOptions}
           initial={0}
           textColor={themes.light.primaryColor}
@@ -77,17 +77,17 @@ function OrganizationScreen(props) {
         />
       </View>
 
-      {/* List Views */}
-
-      <OrganizationListViews listofData={data} />
-
-      {/* Map View */}
-
-      {/* <MapViews
-        latitude={45.35611}
-        longitude={-75.757248}
-        description="My Location"
-      /> */}
+      {stateSelector == 'listView' ? (
+        // List View
+        <OrganizationListViews listofData={data} />
+      ) : stateSelector == 'mapView' ? (
+        //  Map View 
+        <MapViews
+          latitude={45.35611}
+          longitude={-75.757248}
+          description="My Location"
+        />
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -95,12 +95,11 @@ function OrganizationScreen(props) {
 const styles = StyleSheet.create({
   safeArea: {flex: spacing.hairline},
   // Custom Switch Selectors Style
-  switchView: {alignSelf: 'center'},
-  switch: {
+  switchView: {
     width: '50%',
-    height: typography.lh8,
-    marginTop: spacing.large,
-    marginBottom: spacing.smallest,
+    alignSelf: 'center',
+    position: 'absolute',
+    marginTop: 60,
   },
 });
 export default OrganizationScreen;
