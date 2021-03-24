@@ -14,6 +14,7 @@ import {useIsFocused} from '@react-navigation/native';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
 import DisclaimerScreen from '../sidenavbar/DisclaimerScreen';
+import {useEffect} from 'react/cjs/react.development';
 
 const theme = themes.light;
 const Discussion = createStackNavigator();
@@ -25,6 +26,9 @@ function DiscussionsStack({navigation, route}) {
   const isRead = route.params ? route.params.isRead : false;
   // console.log(readDisclaimer);
   //removeAsyncStorage('isRead');
+
+  useEffect(() => {}, [isRead]);
+
   return (
     <Discussion.Navigator
       screenOptions={{
