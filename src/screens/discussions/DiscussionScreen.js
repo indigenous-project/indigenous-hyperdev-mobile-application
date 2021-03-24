@@ -25,6 +25,7 @@ import {colors, themes, typography, spacing} from '../../styles';
 import {discussionGetList} from '../../api/discussions/discussions.api';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {useCurrentUser} from '../../contexts/currentUserContext';
+import {useIsFocused} from '@react-navigation/core';
 
 //switch-selector options
 const options = [
@@ -36,6 +37,7 @@ const options = [
 //function return
 function DiscussionScreen({navigation}) {
   const theme = themes.light;
+  const isFocused = useIsFocused();
   const [filterDiscussion, setFilterDiscussion] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
@@ -110,31 +112,30 @@ function DiscussionScreen({navigation}) {
 
   // useEffect load  new discussion list
   useEffect(() => {
-    if (token)
-      discussionGetList(token)
-        .then((response) => {
-          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
-          if (response) {
-            switch (
-              stateSelector // checking state of Selector
-            ) {
-              case 1:
-                sortDate(response); // filter by date
-                break;
-              case 2:
-                sortMostDiscussed(response); // filter by mostdiscussed
-                break;
-              case 3:
-                sortMyDiscussion(response); // filter by my discussion
-                break;
-            }
+    discussionGetList(token)
+      .then((response) => {
+        stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+        if (response) {
+          switch (
+            stateSelector // checking state of Selector
+          ) {
+            case 1:
+              sortDate(response); // filter by date
+              break;
+            case 2:
+              sortMostDiscussed(response); // filter by mostdiscussed
+              break;
+            case 3:
+              sortMyDiscussion(response); // filter by my discussion
+              break;
           }
-        })
+        }
+      })
 
-        .catch((err) => {
-          Alert.alert(err.errors[0].title, err.errors[0].description);
-        });
-  }, [token, reloadData, stateSelector]);
+      .catch((err) => {
+        Alert.alert(err.errors[0].title, err.errors[0].description);
+      });
+  }, [token, reloadData, stateSelector, isFocused]);
 
   // RETURN COMPONENTS
   return (
@@ -220,7 +221,8 @@ function DiscussionScreen({navigation}) {
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('Discussion Detail', {
-                      discussion: discussion,
+                      discussionId: discussion._id,
+                      token: token,
                     })
                   }
                   key={discussion._id}>

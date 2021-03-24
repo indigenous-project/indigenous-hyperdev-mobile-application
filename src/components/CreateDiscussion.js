@@ -75,7 +75,7 @@ function CreateDiscussion(props) {
             title: discussionTitle.trim(),
             description: discussionDescription.trim(),
             medias: [media._id],
-            categories: category ? [category.id] : null,
+            categories: category ? [category.id] : [],
           };
         })
         .then((discussionData) => {
@@ -97,7 +97,7 @@ function CreateDiscussion(props) {
       const discussionObject = {
         title: discussionTitle.trim(),
         description: discussionDescription.trim(),
-        categories: category ? [category.id] : null,
+        categories: category ? [category.id] : [],
       };
       discussionAdd(token, discussionObject)
         .then((response) => {

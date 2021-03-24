@@ -17,20 +17,26 @@ import {
   Pressable,
   TextInput,
   Button,
+  Alert,
 } from 'react-native';
 
 import Chips from '../../components/Chips';
 import ReplyCard from '../../components/ReplyCard';
 import {colors, themes, typography, spacing} from '../../styles';
+import {discussionGetDetail} from '../../api/discussions/discussions.api';
+import {repliesAdd} from '../../api/replies/replies.api';
 
 //function return
 
 function DiscussionDetail({navigate, route}) {
   const theme = themes.light;
-  const discussion = route.params.discussion;
+  const [discussion, setDiscussion] = useState(null);
+  const [replyInput, setReplyInput] = useState(null);
+  const discussionId = route.params.discussionId;
+
+  const token = route.params.token;
 
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(discussion.replies);
 
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
@@ -41,6 +47,25 @@ function DiscussionDetail({navigate, route}) {
 
     return `${month} ${day}, ${year}`;
   };
+  // useEffect to get discussion detail
+  useEffect(() => {
+    discussionGetDetail(token, discussionId)
+      .then(setDiscussion)
+      .catch((err) =>
+        Alert.alert(err.errors[0].title, err.errors[0].description),
+      );
+  }, [token, discussionId, modalVisible]);
+
+  //method handle user tap on Add Reply button
+  const handleAddReplyButton = () => {
+    if (replyInput && discussionId)
+      repliesAdd(token, {text: replyInput.trim()}, discussionId)
+        .then(() => {
+          setModalVisible(!modalVisible);
+        })
+        .catch((err) => console.log(err));
+  };
+
   if (!discussion) return null;
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
@@ -111,14 +136,14 @@ function DiscussionDetail({navigate, route}) {
                 style={styles.modalInput}
                 multiline={true}
                 placeholder="Type here..."
+                onChangeText={setReplyInput}
+                value={replyInput}
               />
             </View>
-            <TouchableOpacity style={styles.modalButtonContainer}>
-              <Text
-                style={styles.buttonText}
-                onPress={() => setModalVisible(!modalVisible)}>
-                Add Reply
-              </Text>
+            <TouchableOpacity
+              style={styles.modalButtonContainer}
+              onPress={() => handleAddReplyButton()}>
+              <Text style={styles.buttonText}>Add Reply</Text>
             </TouchableOpacity>
           </View>
         </View>
