@@ -218,7 +218,11 @@ function DiscussionScreen({navigation}) {
           {filterDiscussion
             ? filterDiscussion.map((discussion) => (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Discussion Detail')}
+                  onPress={() =>
+                    navigation.navigate('Discussion Detail', {
+                      discussion: discussion,
+                    })
+                  }
                   key={discussion._id}>
                   <DiscussionCard
                     title={discussion.title}
