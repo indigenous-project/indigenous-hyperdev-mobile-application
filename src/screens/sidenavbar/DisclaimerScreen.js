@@ -19,7 +19,16 @@ import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 function DisclaimerScreen(props) {
   const theme = themes.light;
   const [readDisclaimer, setReadDisclaimer] = useAsyncStorage('isRead', false);
+  const [buttonState, setButtonState] = useState(true);
 
+  //function handle when scroll view go bottom
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: colors.white}}
@@ -31,6 +40,7 @@ function DisclaimerScreen(props) {
           shadowOpacity: 0.2,
           backgroundColor: colors.white,
           shadowOffset: {width: 3, height: 6},
+          justifyContent: 'center',
         }}>
         <Text style={styles.heading}>Discussion Disclaimer & Privacy</Text>
       </View>
@@ -39,7 +49,13 @@ function DisclaimerScreen(props) {
           How Discussions work and what you should know.
         </Text>
       </View>
-      <ScrollView>
+      <ScrollView
+        onScroll={({nativeEvent}) => {
+          if (isCloseToBottom(nativeEvent)) {
+            setButtonState(false);
+          }
+        }}
+        scrollEventThrottle={400}>
         <View>
           <Text style={styles.description}>
             The opinions expressed on these discussion boards are the views of
@@ -81,12 +97,16 @@ function DisclaimerScreen(props) {
       </ScrollView>
       <View style={styles.bottomButton}>
         <TouchableOpacity
-          style={styles.buttonContainer}
+          disabled={buttonState}
+          style={
+            buttonState ? styles.disableButtonContainer : styles.buttonContainer
+          }
           onPress={() => {
             props.navigation.navigate('Discussions', {
               isRead: readDisclaimer,
             });
             setReadDisclaimer(true);
+            setButtonState(true);
           }}>
           <Text style={styles.buttonText}>Done</Text>
         </TouchableOpacity>
@@ -101,6 +121,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.base,
     fontWeight: typography.fwBold,
     fontSize: typography.fs4,
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   title: {
     color: colors.primary900,
@@ -128,6 +150,14 @@ const styles = StyleSheet.create({
     width: '50%',
     marginBottom: spacing.small,
     backgroundColor: colors.primary400,
+    borderRadius: spacing.small,
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
+  },
+  disableButtonContainer: {
+    width: '50%',
+    marginBottom: spacing.small,
+    backgroundColor: colors.gray300,
     borderRadius: spacing.small,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
