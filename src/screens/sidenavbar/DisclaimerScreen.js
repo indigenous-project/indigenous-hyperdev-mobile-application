@@ -29,6 +29,15 @@ function DisclaimerScreen(props) {
       contentSize.height - paddingToBottom
     );
   };
+
+  useEffect(() => {
+    if (readDisclaimer)
+      props.navigation.navigate('Discussions', {
+        isRead: readDisclaimer,
+      });
+    setButtonState(true);
+  }, [props.navigation, readDisclaimer]);
+
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: colors.white}}
@@ -102,11 +111,7 @@ function DisclaimerScreen(props) {
             buttonState ? styles.disableButtonContainer : styles.buttonContainer
           }
           onPress={() => {
-            props.navigation.navigate('Discussions', {
-              isRead: readDisclaimer,
-            });
             setReadDisclaimer(true);
-            setButtonState(true);
           }}>
           <Text style={styles.buttonText}>Done</Text>
         </TouchableOpacity>
