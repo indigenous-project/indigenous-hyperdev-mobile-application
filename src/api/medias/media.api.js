@@ -1,7 +1,7 @@
 // media.api.js module
 // Fetching route discussions
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Add a media by user: need token and body(path, extension, type)
 export const mediaAddImage = async (token, body) => {

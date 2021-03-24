@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 #Others
-/src/api/environment_variable.js
+environment_variable.js

@@ -3,7 +3,7 @@
 
 // events.api.js module
 // Fetching route events
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a list of all events: need token
 export const eventGetList = async (token) => {

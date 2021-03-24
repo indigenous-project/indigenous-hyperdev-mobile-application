@@ -1,7 +1,7 @@
 // replies.api.js module
 // Fetching route replies
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Post a reply to a discussion thread: need token, body(text) and discussionId
 export const repliesAdd = async (token, {text}, discussionId) => {

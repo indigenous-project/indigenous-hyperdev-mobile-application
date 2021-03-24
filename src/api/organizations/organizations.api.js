@@ -1,6 +1,6 @@
 // organizations.api.js module
 // Fetching route organizations
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a list of all organizations: need token
 export const organizationGetList = async (token) => {

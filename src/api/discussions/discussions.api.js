@@ -1,7 +1,7 @@
 // discussions.api.js module
 // Fetching route discussions
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Add a discussion by user: need token and body(title, [categoriesId], description)
 export const discussionAdd = async (token, body) => {

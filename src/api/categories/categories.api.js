@@ -1,7 +1,7 @@
 // categories.api.js module
 // Fetching route categories
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a list of all categories: need token
 export const categoriesGetList = async (token) => {
