@@ -15,17 +15,77 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  RefreshControl,
+  Alert,
 } from 'react-native';
 import {colors, themes, typography, spacing} from '../../styles';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {eventGetList} from '../../api/events/events.api';
+// End import region
 
 //function return
 function HomeScreen({navigation}) {
+  // State and useState region
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
+  const [events, setEvents] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadData, setReloadData] = useState(false);
+  const [currentUser, token] = useCurrentUser();
+  //End useState region
 
+  //Methods Region
+  // wait time for refresh
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  //handle on refresh
+  const onRefresh = () => {
+    setRefreshing(true); // enable refresh indicator
+    setReloadData(!reloadData); // change the reloadData to re-render new Discussion
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
+  };
+
+  // function format date: Example Jan 30th, 2021
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
+    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
+      date,
+    );
+
+    return `${weekday.toUpperCase()}, ${month} ${day}, ${year}`;
+  };
+
+  //End Methods region
+
+  //useEffectRegion
+  useEffect(() => {
+    if (token)
+      eventGetList(token)
+        .then(setEvents)
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
+  }, [token, reloadData]);
+  // End useEffect Region
+
+  console.log(events);
+  // Render element
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
-      <ScrollView horizontal={false}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary900}
+          />
+        }
+        horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
@@ -35,13 +95,20 @@ function HomeScreen({navigation}) {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity onPress={() => navigation.push('Event Detail')}>
-                <EventCard
-                  name="Event 1"
-                  date="Event Date"
-                  status="Event status"
-                />
-              </TouchableOpacity>
+              {events
+                ? events.map((event) => (
+                    <TouchableOpacity
+                      key={event._id}
+                      onPress={() => navigation.push('Event Detail')}>
+                      <EventCard
+                        image={event.medias[0].path}
+                        name={event.title}
+                        date={formatDate(event.date)}
+                        status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
+                      />
+                    </TouchableOpacity>
+                  ))
+                : null}
             </ScrollView>
           </View>
         </View>
