@@ -19,7 +19,7 @@
     "@react-navigation/drawer": "^5.12.4",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
-    "aws-sdk": "^2.868.0",
+    "aws-sdk": "^2.870.0",
     "base64-arraybuffer": "^0.2.0",
     "expo-secure-store": "^10.0.0",
     "expo-status-bar": "^1.0.3",
@@ -32,7 +32,6 @@
     "react-native-maps": "0.27.1",
     "react-native-material-chip": "^1.0.2",
     "react-native-paper": "^4.7.2",
-    "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.18.1",
     "react-native-switch-selector": "^2.1.4",
@@ -47,8 +46,8 @@
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1",
-    "react-native-reanimated": "^1.13.2"
+    "react-native-reanimated": "^2.0.1",
+    "react-test-renderer": "16.13.1"
   },
   "jest": {
     "preset": "react-native"
