@@ -73,7 +73,6 @@ function HomeScreen({navigation}) {
   }, [token, reloadData]);
   // End useEffect Region
 
-  console.log(events);
   // Render element
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
