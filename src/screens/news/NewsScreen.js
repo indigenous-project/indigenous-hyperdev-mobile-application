@@ -30,22 +30,22 @@ function NewsScreen({navigation}) {
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
         <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate('Life Long Care Repost')}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.heading}>Job News</Text>
-            <Text>See All</Text>
-          </View>
-          <View style={styles.jobNews}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              <JobCard
-                title="Job Title"
-                posting="Job Posting"
-                type="Job Type"
-                salary="Job Salary"></JobCard>
-            </ScrollView>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Job Detail')}>
+            <View style={styles.containerHeading}>
+              <Text style={styles.heading}>Job News</Text>
+              <Text>See All</Text>
+            </View>
+            <View style={styles.jobNews}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                <JobCard
+                  title="Job Title"
+                  posting="Job Posting"
+                  type="Job Type"
+                  salary="Job Salary"></JobCard>
+              </ScrollView>
+            </View>
           </TouchableOpacity>
         </View>
 
