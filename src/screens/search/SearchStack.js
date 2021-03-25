@@ -16,7 +16,7 @@ const Search = createStackNavigator();
 //function return
 function SearchStack({navigation}) {
   return (
-    <Search.Navigator>
+    <Search.Navigator initialRouteName="SearchScreen">
       <Search.Screen
         name="SearchScreen"
         component={SearchScreen}

@@ -22,7 +22,8 @@ function NewsStack({navigation}) {
         headerTintColor: theme.inverseTextColor, // text color
         headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
-      }}>
+      }}
+      initialRouteName="News">
       <News.Screen name="News" component={NewsScreen} />
     </News.Navigator>
   );
