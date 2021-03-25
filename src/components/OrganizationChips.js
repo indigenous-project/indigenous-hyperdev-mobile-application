@@ -8,7 +8,6 @@ import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationChips = (props) => {
   const {chipPressed} = props;
-  console.log(props);
   //To change the style after selection
   const [selected, setSelected] = useState(false);
   const [textColor, setTextColor] = useState();

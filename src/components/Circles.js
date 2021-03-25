@@ -4,7 +4,7 @@
 import {Container, View} from 'native-base';
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {spacing, colors} from '../styles';
+import {spacing, colors, themes} from '../styles';
 const Circles = (props) => {
   return (
     <Container style={styles.circleTextContainer}>
@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
   circleTextContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 10,
-    height: 200,
+    paddingTop: 10,
+    height: 150,
   },
   circle: {
     width: 90,
     height: 90,
     borderRadius: 100 / 2,
-    backgroundColor: '#F2EEED',
+    backgroundColor: themes.light.bodyBackgroundColor,
     shadowColor: colors.shadowcolor,
     shadowOffset: {
       width: spacing.none,
