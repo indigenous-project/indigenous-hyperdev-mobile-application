@@ -21,7 +21,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Auth">
           <Stack.Screen
             name="Auth"
             component={AuthStack}

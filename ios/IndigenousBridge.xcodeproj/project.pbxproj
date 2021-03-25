@@ -12,17 +12,17 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		18F36CFD2533135577F4BB12 /* libPods-IndigenousBridge-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9245009C6F72A0FDEEF41910 /* libPods-IndigenousBridge-tvOS.a */; };
+		21429745171D4151AE6A77D3 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D4EF498BD384979A835A3D2 /* Roboto.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* IndigenousBridgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IndigenousBridgeTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		86F4E26D326C4FA384C22ABB /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4DBB4A770CF4232AE4B91C7 /* rubicon-icon-font.ttf */; };
 		8B7061360494711A89EBA50F /* libPods-IndigenousBridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF08CE3E2EBB03812F4384A4 /* libPods-IndigenousBridge.a */; };
 		8E2CB6783FE29F0E9E79F4FC /* libPods-IndigenousBridge-IndigenousBridgeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0BAF5CB7D43D6BD9901E628 /* libPods-IndigenousBridge-IndigenousBridgeTests.a */; };
-		D871A6E7D18B553CC9C401BF /* libPods-IndigenousBridge-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F843D32E51EDA6182FB8D7 /* libPods-IndigenousBridge-tvOSTests.a */; };
 		9441E161531E415A9B46A68A /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E156508B04C34A0FA4681C8B /* Roboto_medium.ttf */; };
-		21429745171D4151AE6A77D3 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D4EF498BD384979A835A3D2 /* Roboto.ttf */; };
-		86F4E26D326C4FA384C22ABB /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4DBB4A770CF4232AE4B91C7 /* rubicon-icon-font.ttf */; };
+		D871A6E7D18B553CC9C401BF /* libPods-IndigenousBridge-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F843D32E51EDA6182FB8D7 /* libPods-IndigenousBridge-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +56,7 @@
 		2D02E47B1E0B4A5D006451C7 /* IndigenousBridge-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IndigenousBridge-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* IndigenousBridge-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IndigenousBridge-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		496C8ABB065EA090AAE6378C /* Pods-IndigenousBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge.release.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge/Pods-IndigenousBridge.release.xcconfig"; sourceTree = "<group>"; };
+		5D4EF498BD384979A835A3D2 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		5DC357F4909FDCF876A6EA76 /* Pods-IndigenousBridge-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-tvOS/Pods-IndigenousBridge-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7097B6348B5D880B3374E871 /* Pods-IndigenousBridge-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-tvOS.release.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-tvOS/Pods-IndigenousBridge-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		7AC6AD1D0480835A0FDBB616 /* Pods-IndigenousBridge-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-tvOSTests/Pods-IndigenousBridge-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -65,14 +66,13 @@
 		AF7473A2B5771E65EF4C5F4B /* Pods-IndigenousBridge-IndigenousBridgeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-IndigenousBridgeTests.debug.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-IndigenousBridgeTests/Pods-IndigenousBridge-IndigenousBridgeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0BAF5CB7D43D6BD9901E628 /* libPods-IndigenousBridge-IndigenousBridgeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IndigenousBridge-IndigenousBridgeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF08CE3E2EBB03812F4384A4 /* libPods-IndigenousBridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IndigenousBridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4DBB4A770CF4232AE4B91C7 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		D91C304862ED9E80243A7D7B /* Pods-IndigenousBridge-IndigenousBridgeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-IndigenousBridgeTests.release.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-IndigenousBridgeTests/Pods-IndigenousBridge-IndigenousBridgeTests.release.xcconfig"; sourceTree = "<group>"; };
+		E156508B04C34A0FA4681C8B /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F1599FC44466E603174DB5DA /* Pods-IndigenousBridge-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge-tvOSTests/Pods-IndigenousBridge-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		F59AC6BD80581862B8F5383B /* Pods-IndigenousBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IndigenousBridge.debug.xcconfig"; path = "Target Support Files/Pods-IndigenousBridge/Pods-IndigenousBridge.debug.xcconfig"; sourceTree = "<group>"; };
-		E156508B04C34A0FA4681C8B /* Roboto_medium.ttf */ = {isa = PBXFileReference; name = "Roboto_medium.ttf"; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5D4EF498BD384979A835A3D2 /* Roboto.ttf */ = {isa = PBXFileReference; name = "Roboto.ttf"; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C4DBB4A770CF4232AE4B91C7 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +205,7 @@
 			sourceTree = "<group>";
 		};
 		B86810C514F547A98A5662A5 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				E156508B04C34A0FA4681C8B /* Roboto_medium.ttf */,
 				5D4EF498BD384979A835A3D2 /* Roboto.ttf */,
@@ -213,7 +213,6 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -747,7 +746,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V94L67MHG8;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = IndigenousBridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

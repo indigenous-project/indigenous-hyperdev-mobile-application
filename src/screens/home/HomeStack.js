@@ -24,7 +24,8 @@ function HomeStack({navigation}) {
         headerTintColor: theme.inverseTextColor, // text color
         headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
-      }}>
+      }}
+      initialRouteName="Indigenous Bridge">
       <Home.Screen name="Indigenous Bridge" component={HomeScreen} />
       <Home.Screen name="Event Detail" component={EventDetail} />
     </Home.Navigator>

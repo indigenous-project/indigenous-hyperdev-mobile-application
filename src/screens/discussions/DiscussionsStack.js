@@ -35,7 +35,8 @@ function DiscussionsStack({navigation, route}) {
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
-      }}>
+      }}
+      initialRouteName="Discussions">
       {isRead ? (
         <Discussion.Screen
           name="Discussions"
