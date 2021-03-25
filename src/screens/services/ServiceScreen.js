@@ -3,7 +3,14 @@
 // import packages
 import {Container, View} from 'native-base';
 import React, {useState} from 'react';
-import {ScrollView, Text, StyleSheet, Modal, Pressable} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  Modal,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import Circles from '../../components/Circles';
@@ -12,7 +19,7 @@ import {themes, spacing, typography, colors} from '../../styles';
 import CategoriesList from '../../components/CategoriesList';
 
 //function return
-function ServiceScreen(props) {
+function ServiceScreen({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [category, setCategory] = useState(null);
   return (
@@ -31,6 +38,7 @@ function ServiceScreen(props) {
         {/* group1 */}
         <View style={styles.groupOfCatergories}>
           <Circles categoryName="Culture" />
+
           <Circles categoryName="Government/Legal" />
           <Circles categoryName="Mental Health/ Addiction" />
         </View>
@@ -38,7 +46,10 @@ function ServiceScreen(props) {
         {/* group2 */}
         <View style={styles.groupOfCatergories}>
           <Circles categoryName="Community" />
-          <Circles categoryName="Employment & Housing" />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Employment and Housing')}>
+            <Circles categoryName="Employment & Housing" />
+          </TouchableOpacity>
           <Circles categoryName="Emergency" />
         </View>
 
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     flex: spacing.hairline,
     flexDirection: 'row',
     height: 60,
-    backgroundColor:themes.light.inverseTextColor
+    backgroundColor: themes.light.inverseTextColor,
   },
   serviceByCategory: {
     color: themes.light.primaryColor,
@@ -152,9 +163,9 @@ const styles = StyleSheet.create({
     marginVertical: spacing.base,
     marginTop: spacing.base,
     height: 280,
-    backgroundColor:themes.light.inverseTextColor
+    backgroundColor: themes.light.inverseTextColor,
   },
-  savedServicesTextCardView:{backgroundColor:themes.light.inverseTextColor},
+  savedServicesTextCardView: {backgroundColor: themes.light.inverseTextColor},
   services: {
     color: themes.light.primaryColor,
     fontSize: typography.fs3,

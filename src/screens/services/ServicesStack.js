@@ -8,6 +8,7 @@ import ServiceScreen from './ServiceScreen';
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
+import ServiceCategoryScreen from './ServiceCategoryScreen';
 
 const theme = themes.light;
 const Services = createStackNavigator();
@@ -23,6 +24,17 @@ function ServicesStack({navigation}) {
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}>
       <Services.Screen name="Services" component={ServiceScreen} />
+
+      <Services.Screen
+        name="Employment and Housing"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
     </Services.Navigator>
   );
 }
