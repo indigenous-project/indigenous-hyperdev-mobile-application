@@ -2,7 +2,7 @@
 
 // import packages
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   StyleSheet,
@@ -10,12 +10,13 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
+
 } from 'react-native';
-import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-import {useState} from 'react';
-import {useEffect} from 'react';
+import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import CheckBox from '@react-native-community/checkbox';
-import {themes, colors, typography} from '../../styles';
+import { themes, colors, typography, spacing } from '../../styles';
 
 import {
   Container,
@@ -32,13 +33,14 @@ import {
   Right,
   Left,
 } from 'native-base';
+import { RadioButton } from 'react-native-paper'
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
-import {useAsyncStorage} from '../../hooks/useAsyncStorage';
-import {createRef} from 'react/cjs/react.production.min';
+import { useAsyncStorage } from '../../hooks/useAsyncStorage';
+import { createRef } from 'react/cjs/react.production.min';
 
 //function return
-function RegisterScreen({navigation}) {
+function RegisterScreen({ navigation }) {
   // declaring a variable for themes
   const theme = themes.light;
   // using use state for the checkbox isIndigenous
@@ -56,6 +58,7 @@ function RegisterScreen({navigation}) {
   const [userAge, setUserAge] = useState('');
   const [userGender, setUserGender] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userType, setUserType] = useState('');
 
   //createRef
   const emailInputRef = createRef();
@@ -66,7 +69,7 @@ function RegisterScreen({navigation}) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => {}, [userName]);
+  useEffect(() => { }, [userName]);
 
   const handleRegister = () => {
     if (!firstName) {
@@ -90,15 +93,6 @@ function RegisterScreen({navigation}) {
       Alert.alert('Registration', 'Please confirm password');
       return;
     }
-    if (!userAge) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
-
-    if (!userGender) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
     setLoading(true);
     const data = {
       firstName: firstName.trim(),
@@ -106,7 +100,7 @@ function RegisterScreen({navigation}) {
       email: userEmail.trim(),
       gender: userGender.trim(),
       age: userAge.trim(),
-      type: 'Indigenous',
+      type: userType.trim(),
     };
     if (passwordConfirm.trim() == userPassword.trim()) {
       data.password = userPassword.trim();
@@ -136,190 +130,226 @@ function RegisterScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
-      <MessageModal
-        showing={isRegistraionSuccess}
-        message="Registration Successful!"
-      />
-      <Loader loading={loading} />
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+      <View style={styles.container}>
+        <MessageModal
+          showing={isRegistraionSuccess}
+          message="Registration Successful!"
+        />
+        <Loader loading={loading} />
+        <ScrollView>
+          <Text style={styles.welcome}>Join the Community</Text>
+          <Text style={styles.signUpText}>Get full access today</Text>
 
-      <Text style={styles.welcome}>Welcome!</Text>
-      <Text style={styles.signUpText}>Sign Up to get Started.</Text>
-      <ScrollView>
-        <KeyboardAvoidingView enabled>
-          <Form>
-            <Item floatingLabel>
-              <Label>First Name</Label>
-              <Input
-                value={firstName}
-                onChangeText={setfirstName}
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                ref={firstNameInputRef}
-                onSubmitEditing={() =>
-                  lastNameInputRef.current && lastNameInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Last Name</Label>
-              <Input
-                value={lastName}
-                onChangeText={setLastName}
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                ref={lastNameInputRef}
-                onSubmitEditing={() =>
-                  ageInputRef.current && ageInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Age</Label>
-              <Input
-                value={userAge}
-                onChangeText={setUserAge}
-                keyboardType="numeric"
-                returnKeyType="next"
-                ref={ageInputRef}
-                onSubmitEditing={() =>
-                  genderInputRef.current && genderInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Gender</Label>
-              <Input
-                value={userGender}
-                onChangeText={setUserGender}
-                returnKeyType="next"
-                ref={genderInputRef}
-                onSubmitEditing={() =>
-                  emailInputRef.current && emailInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <View style={styles.checkboxView}>
-              <CheckBox
-                value={isSelected}
-                onValueChange={setSelection}
-                style={styles.radio}
-              />
-              <Text style={styles.label}>Is Indigeneous</Text>
-            </View>
-            <Item floatingLabel>
-              <Label>Email</Label>
-              <Input
-                value={userEmail}
-                onChangeText={setUserEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                ref={emailInputRef}
-                blurOnSubmit={false}
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Password</Label>
-              <Input
-                value={userPassword}
-                onChangeText={setUserPassword}
-                secureTextEntry={true}
-                blurOnSubmit={false}
-                keyboardType="default"
-                returnKeyType="next"
-                ref={passwordInputRef}
-                onSubmitEditing={() =>
-                  passwordConfirmInputRef.current &&
-                  passwordConfirmInputRef.current.focus()
-                }
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Confirm Password</Label>
-              <Input
-                value={passwordConfirm}
-                onChangeText={setPasswordConfirm}
-                onSubmitEditing={Keyboard.dismiss}
-                ref={passwordConfirmInputRef}
-                returnKeyType="next"
-                blurOnSubmit={false}
-                secureTextEntry={true}
-              />
-            </Item>
-          </Form>
-          <Button style={styles.signUpButton} block onPress={handleRegister}>
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
-          </Button>
-          <Button
-            style={styles.loginTextButton}
-            transparent
-            onPress={() => {
-              navigation.navigate('Login');
-            }}>
-            <Text style={styles.loginText}>
-              Already have an account? Log in
+          <KeyboardAvoidingView enabled>
+            <Form>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>First Name</Label>
+                  <Input
+                    value={firstName}
+                    onChangeText={setfirstName}
+                    autoCapitalize="sentences"
+                    returnKeyType="next"
+                    ref={firstNameInputRef}
+                    onSubmitEditing={() =>
+                      lastNameInputRef.current && lastNameInputRef.current.focus()
+                    }
+                    blurOnSubmit={false}
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Last Name</Label>
+                  <Input
+                    value={lastName}
+                    onChangeText={setLastName}
+                    autoCapitalize="sentences"
+                    returnKeyType="next"
+                    ref={lastNameInputRef}
+                    onSubmitEditing={() =>
+                      ageInputRef.current && ageInputRef.current.focus()
+                    }
+                    blurOnSubmit={false}
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Email</Label>
+                  <Input
+                    value={userEmail}
+                    onChangeText={setUserEmail}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    returnKeyType="next"
+                    ref={emailInputRef}
+                    blurOnSubmit={false}
+                    onSubmitEditing={() =>
+                      passwordInputRef.current && passwordInputRef.current.focus()
+                    }
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Password</Label>
+                  <Input
+                    value={userPassword}
+                    onChangeText={setUserPassword}
+                    secureTextEntry={true}
+                    blurOnSubmit={false}
+                    keyboardType="default"
+                    returnKeyType="next"
+                    ref={passwordInputRef}
+                    onSubmitEditing={() =>
+                      passwordConfirmInputRef.current &&
+                      passwordConfirmInputRef.current.focus()
+                    }
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Confirm Password</Label>
+                  <Input
+                    value={passwordConfirm}
+                    onChangeText={setPasswordConfirm}
+                    onSubmitEditing={Keyboard.dismiss}
+                    ref={passwordConfirmInputRef}
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    secureTextEntry={true}
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Age (Optional)</Label>
+                  <Input
+                    value={userAge}
+                    onChangeText={setUserAge}
+                    keyboardType="numeric"
+                    returnKeyType="next"
+                    ref={ageInputRef}
+                    onSubmitEditing={() =>
+                      genderInputRef.current && genderInputRef.current.focus()
+                    }
+                    blurOnSubmit={false}
+                  />
+                </Item>
+              </View>
+              <View style={styles.inputField}>
+                <Item floatingLabel>
+                  <Label>Gender (Optional)</Label>
+                  <Input
+                    value={userGender}
+                    onChangeText={setUserGender}
+                    returnKeyType="next"
+                    ref={genderInputRef}
+                    onSubmitEditing={() =>
+                      emailInputRef.current && emailInputRef.current.focus()
+                    }
+                    blurOnSubmit={false}
+                  />
+                </Item>
+              </View>
+              <View style={styles.radioButtonGroup}>
+                <RadioButton.Group onValueChange={newValue => setUserType(newValue)} value={userType}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginRight: spacing.smallest }}>
+                      <View style={{ borderColor: colors.gray700, borderWidth: 0.5, height: 35, width: 35, borderRadius: 100 }} >
+                        <RadioButton value="Indigenous" />
+                      </View>
+                      <Text style={{ alignSelf: 'center', marginLeft: spacing.smallest }}>Indigenous</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginRight: spacing.smallest }}>
+                      <View style={{ borderColor: colors.gray700, borderWidth: 0.5, height: 35, width: 35, borderRadius: 100 }} >
+                        <RadioButton value="Inuit" />
+                      </View>
+                      <Text style={{ alignSelf: 'center', marginLeft: spacing.smallest }}>Inuit</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginRight: spacing.smallest }}>
+                      <View style={{ borderColor: colors.gray700, borderWidth: 0.5, height: 35, width: 35, borderRadius: 100 }} >
+                        <RadioButton value="Métis" />
+                      </View>
+                      <Text style={{ alignSelf: 'center', marginLeft: spacing.smallest }}>Métis</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginRight: spacing.smallest }}>
+                      <View style={{ borderColor: colors.gray700, borderWidth: 0.5, height: 35, width: 35, borderRadius: 100 }} >
+                        <RadioButton value="None" />
+                      </View>
+                      <Text style={{ alignSelf: 'center', marginLeft: spacing.smallest }}>None</Text>
+                    </View>
+                  </View>
+                </RadioButton.Group>
+              </View>
+            </Form>
+            <Button style={styles.signUpButton} block onPress={handleRegister}>
+              <Text style={styles.signUpButtonText}>Sign Up</Text>
+            </Button>
+            <Button
+              style={styles.loginTextButton}
+              transparent
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              <Text style={styles.loginText}>
+                Already have an account? Log in
             </Text>
-          </Button>
-          <Button
-            transparent
-            onPress={() => {
-              navigation.navigate('TabScreen');
-            }}></Button>
-        </KeyboardAvoidingView>
-      </ScrollView>
+            </Button>
+            <Button
+              transparent
+              onPress={() => {
+                navigation.navigate('TabScreen');
+              }}></Button>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
 
 // stylesheet for the signUp screen
 const styles = StyleSheet.create({
-  signUpButton: {
-    margin: '10%',
-    marginTop: '5%',
-    backgroundColor: themes.light.primaryColor,
-    color: '#000',
+  container: {
+    backgroundColor: colors.white,
+    paddingHorizontal: spacing.base
   },
-
+  signUpButton: {
+    width: '60%',
+    alignSelf: 'center',
+    backgroundColor: colors.primary500,
+    color: colors.white,
+  },
   signUpText: {
     fontSize: typography.fs5,
-    marginTop: '2%',
-    marginBottom: '5%',
+    marginVertical: spacing.small,
     fontWeight: typography.fwNormal,
-    marginLeft: '6%',
-  },
-
-  checkboxView: {
-    flexDirection: 'row',
-    marginTop: '10%',
-    marginLeft: '3%',
-  },
-
-  safeArea: {
-    flex: 1,
-  },
-  container: {
-    padding: 10,
+    color: colors.primary900
   },
   welcome: {
-    fontSize: typography.fs8,
-    marginTop: '10%',
+    fontSize: typography.fs7,
+    marginTop: spacing.largest,
     fontWeight: typography.fwSemiBold,
-    marginLeft: '5%',
+    color: colors.primary900
   },
-  radio: {
-    alignSelf: 'center',
+  inputField: {
+    borderWidth: 0.2,
+    // backgroundColor: colors.white,
+    // shadowColor: colors.gray900,
+    // shadowOffset: { width: 3, height: 6 },
+    // shadowOpacity: 0.2,
+    marginVertical: spacing.smallest,
+    borderRadius: spacing.small,
+    paddingRight: spacing.small,
+    // paddingTop: -5,
+    paddingBottom: spacing.smallest
   },
-  label: {
-    margin: 8,
-    color: colors.gray600,
+  radioButtonGroup: {
+    marginTop: spacing.small,
+    marginBottom: spacing.largest,
   },
   signUpButtonText: {
     color: colors.white,
@@ -328,10 +358,10 @@ const styles = StyleSheet.create({
   loginTextButton: {
     margin: '14%',
     marginTop: '0%',
-    color: '#000',
+    color: colors.white,
   },
   loginText: {
-    color: '#000',
+    color: colors.gray900,
     fontWeight: typography.fwSemiBold,
   },
 });
