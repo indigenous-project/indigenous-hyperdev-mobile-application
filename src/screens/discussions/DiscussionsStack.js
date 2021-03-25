@@ -24,10 +24,10 @@ function DiscussionsStack({navigation, route}) {
   const isFocused = useIsFocused();
 
   const isRead = route.params ? route.params.isRead : false;
-  // console.log(readDisclaimer);
+
   //removeAsyncStorage('isRead');
 
-  useEffect(() => {}, [isRead]);
+  useEffect(() => {}, [isRead, isFocused]);
 
   return (
     <Discussion.Navigator
