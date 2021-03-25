@@ -3,7 +3,14 @@
 // import packages
 import {Container, View} from 'native-base';
 import React, {useState} from 'react';
-import {ScrollView, Text, StyleSheet, Modal, Pressable} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  Modal,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import Circles from '../../components/Circles';
@@ -12,7 +19,7 @@ import {themes, spacing, typography, colors} from '../../styles';
 import CategoriesList from '../../components/CategoriesList';
 
 //function return
-function ServiceScreen(props) {
+function ServiceScreen({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [category, setCategory] = useState(null);
   return (
@@ -30,16 +37,37 @@ function ServiceScreen(props) {
 
         {/* group1 */}
         <View style={styles.groupOfCatergories}>
-          <Circles categoryName="Culture" />
-          <Circles categoryName="Government/Legal" />
-          <Circles categoryName="Mental Health/ Addiction" />
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Culture')}>
+            <Circles categoryName="Culture" />
+          </Pressable>
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Government/Legal')}>
+            <Circles categoryName="Government/Legal" />
+          </Pressable>
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Mental Health/ Addiction')}>
+            <Circles categoryName="Mental Health/ Addiction" />
+          </Pressable>
         </View>
 
         {/* group2 */}
         <View style={styles.groupOfCatergories}>
-          <Circles categoryName="Community" />
-          <Circles categoryName="Employment & Housing" />
-          <Circles categoryName="Emergency" />
+          <Pressable style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Community')}>
+            <Circles categoryName="Community" />
+          </Pressable>
+          <Pressable style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Employment and Housing')}>
+            <Circles categoryName="Employment & Housing" />
+          </Pressable>
+          <Pressable style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Emergency')}>
+            <Circles categoryName="Emergency" />
+          </Pressable>
         </View>
 
         {/* last opened template */}
@@ -131,7 +159,7 @@ const styles = StyleSheet.create({
     flex: spacing.hairline,
     flexDirection: 'row',
     height: 60,
-    backgroundColor:themes.light.inverseTextColor
+    backgroundColor: themes.light.inverseTextColor,
   },
   serviceByCategory: {
     color: themes.light.primaryColor,
@@ -145,6 +173,7 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     color: themes.light.subduedTextColor,
   },
+  pressablebutton: {width: 130},
   groupOfCatergories: {flexDirection: 'row'},
 
   //last opened style
@@ -152,9 +181,9 @@ const styles = StyleSheet.create({
     marginVertical: spacing.base,
     marginTop: spacing.base,
     height: 280,
-    backgroundColor:themes.light.inverseTextColor
+    backgroundColor: themes.light.inverseTextColor,
   },
-  savedServicesTextCardView:{backgroundColor:themes.light.inverseTextColor},
+  savedServicesTextCardView: {backgroundColor: themes.light.inverseTextColor},
   services: {
     color: themes.light.primaryColor,
     fontSize: typography.fs3,

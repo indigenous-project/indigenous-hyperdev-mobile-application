@@ -8,6 +8,7 @@ import ServiceScreen from './ServiceScreen';
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
+import ServiceCategoryScreen from './ServiceCategoryScreen';
 
 const theme = themes.light;
 const Services = createStackNavigator();
@@ -24,6 +25,67 @@ function ServicesStack({navigation}) {
       }}
       initialRouteName="Services">
       <Services.Screen name="Services" component={ServiceScreen} />
+
+      <Services.Screen
+        name="Culture"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Government/Legal"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Mental Health/ Addiction"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Community"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Employment and Housing"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Emergency"
+        component={ServiceCategoryScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
     </Services.Navigator>
   );
 }

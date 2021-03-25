@@ -22,60 +22,24 @@ import {ScrollView} from 'react-native-gesture-handler';
 function NewsDetailScreen(navigate) {
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
-       <FocusedStatusBar barStyle="light-content" />
+      <FocusedStatusBar barStyle="light-content" />
       <ScrollView>
-        {/* <Container  > */}
-        {/* <Header /> */}
-        <View
-          style={{
-            backgroundColor: colors.white,
-            paddingHorizontal: spacing.base,
-          }}>
-          {/* <Content> */}
-          <View style={styles.container}>
-            {/* <CardItem> */}
-
-            {/* <Body> */}
-            <Text
-              style={{
-                color: colors.primary900,
-                marginTop: spacing.base,
-                fontWeight: typography.fwBold,
-                fontSize: typography.fs3,
-              }}>
+        <View style={styles.headerStyle}>
+          <View>
+            <Text style={styles.title}>
               North Bay expands its Education Opportunities for school kids
             </Text>
-            <Text
-              style={{
-                fontSize: typography.fs3,
-                marginBottom: spacing.small,
-                fontWeight: typography.fwLight,
-                color: colors.gray900,
-              }}>
-              Posted Feb 10, 2021
-            </Text>
-            {/* </Body> */}
+            <Text style={styles.date}>Posted Feb 10, 2021</Text>
 
-            {/* </CardItem> */}
-            {/* <CardItem> */}
-            {/* <Body> */}
             <Image
               source={{
                 uri:
                   'https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80',
               }}
-              style={{height: 150, width: 340, flex: 1}}
+              style={styles.image}
             />
-            {/* </Body> */}
-            {/* </CardItem> */}
           </View>
-          {/* <Card style={styles.descriptionContainer}> */}
-          <Text
-            style={{
-              fontSize: typography.fs3,
-              lineHeight: typography.lh3,
-              paddingVertical: spacing.small,
-            }}>
+          <Text style={styles.description}>
             There will be two rounds of judging. The purpose of the first round
             will be to select finalists who will be presenting live to a panel
             of industry and senior Algonquin College judges. All submitted
@@ -93,13 +57,9 @@ function NewsDetailScreen(navigate) {
             the live showcase on Friday, December 11th, an alternate team will
             be selected.
           </Text>
-          {/* </Card> */}
-          {/* </Content> */}
-          {/* </Container> */}
         </View>
       </ScrollView>
-      <View
-        style={{backgroundColor: colors.white, }}>
+      <View style={{backgroundColor: colors.white}}>
         <Button title="Ask Question" style={styles.loginButton} block>
           <Text style={styles.loginText}>Ask Question</Text>
         </Button>
@@ -109,18 +69,37 @@ function NewsDetailScreen(navigate) {
 }
 
 const styles = StyleSheet.create({
-  //container style
-  container: {
-    // alignItems: 'flex-start',
-    // padding: spacing.small,
-    // backgroundColor: colors.white,
-    // marginTop: spacing.small,
+  headerStyle: {
+    backgroundColor: colors.white,
+    paddingHorizontal: spacing.base,
+    marginTop: spacing.small,
+  },
+  title: {
+    color: colors.primary900,
+    marginTop: spacing.base,
+    fontWeight: typography.fwBold,
+    fontSize: typography.fs3,
+  },
+  date: {
+    fontSize: typography.fs3,
+    marginBottom: spacing.small,
+    fontWeight: typography.fwLight,
+    color: colors.gray900,
+  },
+  description: {
+    fontSize: typography.fs3,
+    lineHeight: typography.lh3,
+    paddingVertical: spacing.small,
+  },
+  image: {
+    height: 150,
+    width: 340,
+    flex: 1,
   },
   loginButton: {
     width: '65%',
     marginTop: '5%',
     marginLeft: '15%',
-    // height: '20%',
     backgroundColor: colors.primary500,
     color: '#000',
     borderRadius: spacing.smaller,
