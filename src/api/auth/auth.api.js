@@ -1,7 +1,7 @@
 // This is Fetching API for authentification
 // auth.api.js
 
-import * as environment_variable from '../../../environment_variable.js';
+import * as environment_variable from '../../../environment_variable';
 
 // Fetch API register a new user
 export const userSignUp = async (body) => {

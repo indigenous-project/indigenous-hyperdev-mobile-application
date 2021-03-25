@@ -44,4 +44,4 @@ export default function OrganizationListViews(props) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({scrollView: {marginTop: 50}});

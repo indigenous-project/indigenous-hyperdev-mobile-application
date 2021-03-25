@@ -1,7 +1,7 @@
 // comments.api.js module
 // Fetching route comments
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable';
 
 // Add a comment by user: need center/ Services id , type of comment: posts/ center, and text as content
 export const commentsAdd = async (token, {text}, {id, type}) => {

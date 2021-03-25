@@ -1,6 +1,6 @@
 // user.api.js
 
-import * as environment_variable from '../environment_variable.js';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Edit user detail
 export const userEdit = async (userId, body) => {

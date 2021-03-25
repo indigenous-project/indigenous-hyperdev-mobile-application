@@ -4,11 +4,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Chip} from 'react-native-paper';
-import {spacing, themes, typography} from '../styles';
+import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationChips = (props) => {
   const {chipPressed} = props;
-
   //To change the style after selection
   const [selected, setSelected] = useState(false);
   const [textColor, setTextColor] = useState();
@@ -16,7 +15,7 @@ const OrganizationChips = (props) => {
 
   useEffect(() => {
     if (selected) {
-      setTextColor(themes.light.inverseTextColor);
+      setTextColor(colors.white);
       setStyle({
         backgroundColor: themes.light.primaryColor,
       });
@@ -59,11 +58,7 @@ const styles = StyleSheet.create({
     marginLeft: spacing.large,
     marginTop: spacing.small,
     marginBottom: spacing.small,
-  },
-  chips: {
-    backgroundColor: themes.light.inverseTextColor,
-    borderColor: themes.light.primaryColor,
-    borderWidth: 1,
+    marginVertical: 1,
   },
   textStyle: {fontSize: typography.fs2, fontWeight: typography.fwMedium},
 });
