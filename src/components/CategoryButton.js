@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderRadius: 40 / 2,
   },
   categoryName: {
-    color: colors.primary900,
+    color: colors.gray900,
     fontWeight: '600',
     alignSelf: 'center',
     marginTop: spacing.small,

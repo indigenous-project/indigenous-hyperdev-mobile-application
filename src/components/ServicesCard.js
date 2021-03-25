@@ -1,17 +1,17 @@
 //ServiceCard module
 
 // import packages
-import {Card, CardItem, Body} from 'native-base';
+import { Card, CardItem, Body } from 'native-base';
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
-import {spacing, colors, themes} from '../styles';
+import { Text, StyleSheet } from 'react-native';
+import { spacing, colors, themes, typography } from '../styles';
 
 const ServicesCard = (props) => {
   return (
     <Card style={styles.cardsContainer}>
       <CardItem style={styles.cardBorder}>
         <Body>
-          <Text style={styles.cardText}>{props.title}</Text>
+          <Text style={styles.cardTitle}>{props.title}</Text>
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.cardText}>-{props.description}</Text>
         </Body>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
       width: spacing.none,
       height: spacing.smallest,
     },
-    shadowOpacity: 0.29,
+    shadowOpacity: 0.2,
     shadowRadius: 4.65,
     elevation: 7,
     marginLeft: spacing.large,
@@ -41,7 +41,15 @@ const styles = StyleSheet.create({
   cardBorder: {
     borderRadius: spacing.small,
   },
-  cardText: {marginTop: spacing.smaller, marginLeft: spacing.smallest},
+  cardTitle: {
+    marginTop: spacing.smaller,
+    marginLeft: spacing.smallest,
+    fontWeight: typography.fwSemiBold
+  },
+  cardText: {
+    marginTop: spacing.smaller,
+    marginLeft: spacing.smallest,
+  },
   name: {
     marginTop: spacing.smaller,
     marginLeft: spacing.smallest,

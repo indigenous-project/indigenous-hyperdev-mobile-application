@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.5,
     borderRadius: 100,
     backgroundColor: colors.primary50,
   },
