@@ -37,6 +37,7 @@
     "react-native-screens": "^2.18.1",
     "react-native-switch-selector": "^2.1.4",
     "react-native-unimodules": "^0.13.0",
+    "react-native-unordered-list": "^1.0.4",
     "react-native-vector-icons": "^8.1.0"
   },
   "devDependencies": {

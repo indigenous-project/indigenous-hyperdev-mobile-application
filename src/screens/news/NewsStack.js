@@ -6,6 +6,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import NewsScreen from './NewsScreen';
 import NewsDetailScreen from './NewsDetailScreen';
+import JobDetailScreen from './JobDetailScreen'
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
@@ -26,6 +27,16 @@ function NewsStack({navigation}) {
       <News.Screen
         name="News Article"
         component={NewsDetailScreen}
+        options={{
+          headerRight: false,
+          headerLeft: false,
+          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerTintColor: theme.primaryColor,
+        }}
+      />
+      <News.Screen
+        name="Life Long Care Repost"
+        component={JobDetailScreen}
         options={{
           headerRight: false,
           headerLeft: false,
