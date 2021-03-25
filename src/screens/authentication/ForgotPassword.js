@@ -14,12 +14,14 @@ import {
   Text,
   Header,
 } from 'native-base';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 function ForgotPassword() {
   const theme = themes.light;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
+      <FocusedStatusBar barStyle="light-content" />
       <Text style={styles.infoText}>
         Please enter the email you used at the time of registration to get the
         password reset instructions
