@@ -37,20 +37,37 @@ function ServiceScreen({navigation}) {
 
         {/* group1 */}
         <View style={styles.groupOfCatergories}>
-          <Circles categoryName="Culture" />
-
-          <Circles categoryName="Government/Legal" />
-          <Circles categoryName="Mental Health/ Addiction" />
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Culture')}>
+            <Circles categoryName="Culture" />
+          </Pressable>
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Government/Legal')}>
+            <Circles categoryName="Government/Legal" />
+          </Pressable>
+          <Pressable
+            style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Mental Health/ Addiction')}>
+            <Circles categoryName="Mental Health/ Addiction" />
+          </Pressable>
         </View>
 
         {/* group2 */}
         <View style={styles.groupOfCatergories}>
-          <Circles categoryName="Community" />
-          <TouchableOpacity
+          <Pressable style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Community')}>
+            <Circles categoryName="Community" />
+          </Pressable>
+          <Pressable style={styles.pressablebutton}
             onPress={() => navigation.navigate('Employment and Housing')}>
             <Circles categoryName="Employment & Housing" />
-          </TouchableOpacity>
-          <Circles categoryName="Emergency" />
+          </Pressable>
+          <Pressable style={styles.pressablebutton}
+            onPress={() => navigation.navigate('Emergency')}>
+            <Circles categoryName="Emergency" />
+          </Pressable>
         </View>
 
         {/* last opened template */}
@@ -156,6 +173,7 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     color: themes.light.subduedTextColor,
   },
+  pressablebutton: {width: 130},
   groupOfCatergories: {flexDirection: 'row'},
 
   //last opened style
