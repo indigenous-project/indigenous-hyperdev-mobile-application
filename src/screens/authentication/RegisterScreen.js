@@ -356,8 +356,8 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwSemiBold,
   },
   loginTextButton: {
-    margin: '14%',
-    marginTop: '0%',
+    marginTop: spacing.large,
+    alignSelf: 'center',
     color: colors.white,
   },
   loginText: {
