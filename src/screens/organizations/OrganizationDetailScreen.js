@@ -65,6 +65,7 @@ const OrganizationDetailScreen = () => {
 export default OrganizationDetailScreen;
 
 const styles = StyleSheet.create({
+  //styling on call and get direction button
   buttonsView: {
     flexDirection: 'row',
     backgroundColor: colors.white,
