@@ -1,8 +1,8 @@
 //LoginScreen module
 
 // import packages
-import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {createRef, useState, useEffect} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   View,
   StyleSheet,
@@ -10,11 +10,9 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
-
 } from 'react-native';
-import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
+
 import CheckBox from '@react-native-community/checkbox';
 
 import {themes, colors, typography, spacing} from '../../styles';
@@ -36,20 +34,20 @@ import {
   Right,
   Left,
 } from 'native-base';
-import { RadioButton } from 'react-native-paper'
+import {RadioButton} from 'react-native-paper';
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
 
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
-import {createRef} from 'react/cjs/react.production.min';
+
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 //function return
-function RegisterScreen({ navigation }) {
+function RegisterScreen({navigation}) {
   // declaring a variable for themes
   const theme = themes.light;
-  // using use state for the checkbox isIndigenous
-  const [isSelected, setSelection] = useState(false);
+
   //use state for showing message modal registration
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   //use state store username email
@@ -63,11 +61,7 @@ function RegisterScreen({ navigation }) {
   const [userAge, setUserAge] = useState('');
   const [userGender, setUserGender] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const [selectedValue, setSelectedValue] = useState(undefined);
-  const [gender, setGender] = useState('Gender');
   const [userType, setUserType] = useState('');
-
 
   //createRef
   const emailInputRef = createRef();
@@ -78,7 +72,7 @@ function RegisterScreen({ navigation }) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => { }, [userName]);
+  useEffect(() => {}, [userName]);
 
   const handleRegister = () => {
     if (!firstName) {
@@ -114,16 +108,16 @@ function RegisterScreen({ navigation }) {
     if (passwordConfirm.trim() == userPassword.trim()) {
       data.password = userPassword.trim();
       userSignUp(data)
-        .then(response => {
+        .then((response) => {
           console.log(response);
-          if (response.data) {
+          if (response) {
             setUserName(userEmail);
             setLoading(false);
             setIsRegistraionSuccess(true);
             navigation.navigate('Login');
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setLoading(false);
           for (let key in err.errors[0]) {
             if (key === 'message' || key === 'description' || key === 'title') {
@@ -140,6 +134,7 @@ function RegisterScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+      <FocusedStatusBar barStyle="light-content" />
       <MessageModal
         showing={isRegistraionSuccess}
         message="Registration Successful!"
@@ -277,33 +272,133 @@ function RegisterScreen({ navigation }) {
               ]}
               placeholder="Gender"
               containerStyle={styles.genderItem}
-              style={{backgroundColor: colors.gray100, borderTopLeftRadius: 10, borderTopRightRadius: 10,
-                borderBottomLeftRadius: 10, borderBottomRightRadius: 10,}}
-                labelStyle ={{color:themes.light.baseTextColor, fontSize:typography.fs}}
+              style={{
+                backgroundColor: colors.gray100,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
+              labelStyle={{
+                color: themes.light.baseTextColor,
+                fontSize: typography.fs,
+              }}
               itemStyle={{
                 justifyContent: 'flex-start',
               }}
               dropDownStyle={{backgroundColor: colors.gray100}}
-              onChangeItem={items => console.log(items.value)}
+              onChangeItem={(item) => setUserGender(item.value)}
             />
-            <View style={styles.checkboxView}>
-              <CheckBox
-                value={isSelected}
-                onValueChange={setSelection}
-                style={styles.radio}
-              />
-              <Text style={styles.label}>Is Indigeneous</Text>
+            <View style={styles.radioButtonGroup}>
+              <RadioButton.Group
+                onValueChange={(newValue) => setUserType(newValue)}
+                value={userType}>
+                <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Indigenous" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Indigenous
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Inuit" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Inuit
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Métis" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Métis
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="None" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      None
+                    </Text>
+                  </View>
+                </View>
+              </RadioButton.Group>
             </View>
           </Form>
           <Button style={styles.signUpButton} block onPress={handleRegister}>
             <Text style={styles.signUpButtonText}>Sign Up</Text>
           </Button>
-          
-            <Text style={styles.loginText}>
-              By Continuing, You Agree To Accept Our Privacy Policy & Terms of
-              Service.
-            </Text>
-        
+
+          <Text style={styles.loginText}>
+            By Continuing, You Agree To Accept Our Privacy Policy & Terms of
+            Service.
+          </Text>
+
           <Button
             transparent
             onPress={() => {
@@ -319,7 +414,7 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingHorizontal: spacing.base
+    paddingHorizontal: spacing.base,
   },
   signUpButton: {
     width: '70%',
@@ -329,7 +424,6 @@ const styles = StyleSheet.create({
     marginRight: '20%',
     backgroundColor: colors.primary500,
     borderRadius: spacing.smaller,
-
   },
   signUpText: {
     fontSize: typography.fs5,
@@ -349,8 +443,12 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
-  container: {
-    padding: 10,
+  radioButtonGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: spacing.largest,
+    marginBottom: spacing.small,
   },
   welcome: {
     fontSize: typography.fs6,
@@ -369,11 +467,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.small,
     paddingRight: spacing.small,
     // paddingTop: -5,
-    paddingBottom: spacing.smallest
-  },
-  radioButtonGroup: {
-    marginTop: spacing.small,
-    marginBottom: spacing.largest,
+    paddingBottom: spacing.smallest,
   },
   signUpButtonText: {
     color: colors.white,
@@ -384,10 +478,10 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwNormal,
     lineHeight: typography.lh2,
     fontSize: typography.fs2,
-    alignSelf:"center",
-    textAlign:"center",
-    marginTop:"5%",
-    marginHorizontal:"15%"
+    alignSelf: 'center',
+    textAlign: 'center',
+    marginTop: '5%',
+    marginHorizontal: '15%',
   },
   item: {
     borderRadius: spacing.smaller,
@@ -410,8 +504,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
     backgroundColor: colors.gray100,
-    height:50,
-
+    height: 50,
   },
 });
 
