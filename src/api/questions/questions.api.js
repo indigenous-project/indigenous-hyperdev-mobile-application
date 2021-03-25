@@ -1,7 +1,7 @@
 // questions.api.js module
 // Fetching route questions
 
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a detail of a question: need token, and questionId
 export const questionGetDetail = async (token, questionId) => {

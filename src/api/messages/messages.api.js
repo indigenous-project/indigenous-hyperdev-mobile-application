@@ -1,7 +1,6 @@
 // messages.api.js module
 // Fetching route messages
-
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a detail of a question: need token, text of message as body
 export const messageAdd = async (token, {text}) => {

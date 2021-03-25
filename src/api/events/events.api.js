@@ -1,34 +1,13 @@
-// discussions.api.js module
-// Fetching route discussions
+// events api module
+// Fetch event api
 
-import * as environment_variable from '../../../environment_variable';
+// events.api.js module
+// Fetching route events
+import * as environment_variable from '../../../environment_variable.js';
 
-// Add a discussion by user: need token and body(title, [categoriesId], description)
-export const discussionAdd = async (token, body) => {
-  const url = `${environment_variable.BASE_API}/api/discussions/add`;
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
-  // handle errors
-  if (!response.ok) {
-    return response.json().then((json) => {
-      throw json;
-    });
-  }
-  const {data} = await response.json();
-  return data;
-};
-
-// Get a single discussion by user: need token and discussionId
-export const discussionGetDetail = async (token, discussionId) => {
-  const url = `${environment_variable.BASE_API}/api/discussions/detail/${discussionId}`;
+// Get a list of all events: need token
+export const eventGetList = async (token) => {
+  const url = `${environment_variable.BASE_API}/api/events/list`;
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors',
@@ -48,9 +27,9 @@ export const discussionGetDetail = async (token, discussionId) => {
   return data;
 };
 
-// Get a single discussion by user: need token and discussionId
-export const discussionGetList = async (token) => {
-  const url = `${environment_variable.BASE_API}/api/discussions/list`;
+// Get a single  event: need token and eventId
+export const eventGetDetail = async (token, eventId) => {
+  const url = `${environment_variable.BASE_API}/api/events/detail/${eventId}`;
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors',
@@ -70,9 +49,9 @@ export const discussionGetList = async (token) => {
   return data;
 };
 
-// Edit a discussion by user: need token and discussionId
-export const discussionEdit = async (token, body, discussionId) => {
-  const url = `${environment_variable.BASE_API}/api/discussions/edit/${discussionId}`;
+// increase interested count
+export const eventInterested = async (token, eventId) => {
+  const url = `${environment_variable.BASE_API}/api/events/interested/${eventId}`;
   const response = await fetch(url, {
     method: 'PATCH',
     mode: 'cors',
@@ -80,8 +59,54 @@ export const discussionEdit = async (token, body, discussionId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      body: JSON.stringify(body),
     },
+    body: JSON.stringify(''),
+  });
+  // handle errors
+  if (!response.ok) {
+    return response.json().then((json) => {
+      throw json;
+    });
+  }
+  const {data} = await response.json();
+  return data;
+};
+
+// increase goingcount
+export const eventGoing = async (token, eventId) => {
+  const url = `${environment_variable.BASE_API}/api/events/going/${eventId}`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(''),
+  });
+  // handle errors
+  if (!response.ok) {
+    return response.json().then((json) => {
+      throw json;
+    });
+  }
+  const {data} = await response.json();
+  return data;
+};
+
+// increase goingcount
+export const eventShare = async (token, eventId) => {
+  const url = `${environment_variable.BASE_API}/api/events/share/${eventId}`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {

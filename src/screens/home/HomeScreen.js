@@ -1,33 +1,90 @@
 //HomeScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { categoriesGetList } from '../../api/categories/categories.api';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {categoriesGetList} from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
 import CategoryButton from '../../components/CategoryButton';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors, themes, typography, spacing } from '../../styles';
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  RefreshControl,
+  Alert,
+} from 'react-native';
+import {colors, themes, typography, spacing} from '../../styles';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {eventGetList} from '../../api/events/events.api';
+// End import region
 
 //function return
-function HomeScreen({ navigation }) {
+function HomeScreen({navigation}) {
+  // State and useState region
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
+  const [events, setEvents] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadData, setReloadData] = useState(false);
+  const [currentUser, token] = useCurrentUser();
+  //End useState region
 
-  // useEffect(() => {
-  //   categoriesGetList(
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDQ3YzY4NDkwZTc4MjAwMDdmZjg2ZTEiLCJpYXQiOjE2MTUzMTY2Mjh9.AOe0KoE5MRZN1xw2hMEI3Tq28QPeASkc8BAugpHEChc',
-  //   )
-  //     .then(setCategories)
-  //     .catch(console.log);
-  // }, []);
+  //Methods Region
+  // wait time for refresh
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
 
+  //handle on refresh
+  const onRefresh = () => {
+    setRefreshing(true); // enable refresh indicator
+    setReloadData(!reloadData); // change the reloadData to re-render new Discussion
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
+  };
+
+  // function format date: Example Jan 30th, 2021
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
+    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
+      date,
+    );
+
+    return `${weekday.toUpperCase()}, ${month} ${day}, ${year}`;
+  };
+
+  //End Methods region
+
+  //useEffectRegion
+  useEffect(() => {
+    if (token)
+      eventGetList(token)
+        .then(setEvents)
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
+  }, [token, reloadData]);
+  // End useEffect Region
+
+  // Render element
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
-      <ScrollView horizontal={false}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary900}
+          />
+        }
+        horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
@@ -37,12 +94,20 @@ function HomeScreen({ navigation }) {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity onPress={() => navigation.push('Event Detail')}>
-                <EventCard
-                  name="Event 1"
-                  date="Event Date"
-                  status="Event status" />
-              </TouchableOpacity>
+              {events
+                ? events.map((event) => (
+                    <TouchableOpacity
+                      key={event._id}
+                      onPress={() => navigation.push('Event Detail')}>
+                      <EventCard
+                        image={event.medias[0].path}
+                        name={event.title}
+                        date={formatDate(event.date)}
+                        status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
+                      />
+                    </TouchableOpacity>
+                  ))
+                : null}
             </ScrollView>
           </View>
         </View>
@@ -59,9 +124,18 @@ function HomeScreen({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.heading}>Popular Service Category</Text>
           <View style={styles.popularServices}>
-            <CategoryButton icon="A" name="A category"></CategoryButton>
-            <CategoryButton icon="B" name="B category"></CategoryButton>
-            <CategoryButton icon="C" name="C category"></CategoryButton>
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
+              name="Culture"
+            />
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
+              name="Government/ Legal"
+            />
+            <CategoryButton
+              icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
+              name="Mental Health/ Addiction"
+            />
           </View>
         </View>
       </ScrollView>
@@ -96,7 +170,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
     shadowOpacity: 0.2,
   },
 

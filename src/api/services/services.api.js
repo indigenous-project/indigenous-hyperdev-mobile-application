@@ -1,6 +1,6 @@
 // services.api.js module
 // Fetching route services
-import * as environment_variable from '../environment_variable';
+import * as environment_variable from '../../../environment_variable.js';
 
 // Get a list of all services: need token
 export const serviceGetList = async (token) => {

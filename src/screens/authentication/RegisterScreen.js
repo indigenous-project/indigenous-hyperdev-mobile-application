@@ -2,7 +2,7 @@
 
 // import packages
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   StyleSheet,
@@ -10,14 +10,17 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
+
 } from 'react-native';
-import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-import {useState} from 'react';
-import {useEffect} from 'react';
+import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import CheckBox from '@react-native-community/checkbox';
+
 import {themes, colors, typography, spacing} from '../../styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
+
 import {
   Container,
   Content,
@@ -33,14 +36,16 @@ import {
   Right,
   Left,
 } from 'native-base';
+import { RadioButton } from 'react-native-paper'
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
+
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 import {createRef} from 'react/cjs/react.production.min';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 //function return
-function RegisterScreen({navigation}) {
+function RegisterScreen({ navigation }) {
   // declaring a variable for themes
   const theme = themes.light;
   // using use state for the checkbox isIndigenous
@@ -58,8 +63,11 @@ function RegisterScreen({navigation}) {
   const [userAge, setUserAge] = useState('');
   const [userGender, setUserGender] = useState('');
   const [loading, setLoading] = useState(false);
+
   const [selectedValue, setSelectedValue] = useState(undefined);
   const [gender, setGender] = useState('Gender');
+  const [userType, setUserType] = useState('');
+
 
   //createRef
   const emailInputRef = createRef();
@@ -70,7 +78,7 @@ function RegisterScreen({navigation}) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => {}, [userName]);
+  useEffect(() => { }, [userName]);
 
   const handleRegister = () => {
     if (!firstName) {
@@ -94,15 +102,6 @@ function RegisterScreen({navigation}) {
       Alert.alert('Registration', 'Please confirm password');
       return;
     }
-    if (!userAge) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
-
-    if (!userGender) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
     setLoading(true);
     const data = {
       firstName: firstName.trim(),
@@ -110,7 +109,7 @@ function RegisterScreen({navigation}) {
       email: userEmail.trim(),
       gender: userGender.trim(),
       age: userAge.trim(),
-      type: 'Indigenous',
+      type: userType.trim(),
     };
     if (passwordConfirm.trim() == userPassword.trim()) {
       data.password = userPassword.trim();
@@ -318,6 +317,10 @@ function RegisterScreen({navigation}) {
 
 // stylesheet for the signUp screen
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.white,
+    paddingHorizontal: spacing.base
+  },
   signUpButton: {
     width: '70%',
     height: '6%',
@@ -326,8 +329,8 @@ const styles = StyleSheet.create({
     marginRight: '20%',
     backgroundColor: colors.primary500,
     borderRadius: spacing.smaller,
-  },
 
+  },
   signUpText: {
     fontSize: typography.fs5,
     marginTop: '2%',
@@ -356,18 +359,26 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     color: colors.primary900,
   },
-  radio: {
-    alignSelf: 'center',
+  inputField: {
+    borderWidth: 0.2,
+    // backgroundColor: colors.white,
+    // shadowColor: colors.gray900,
+    // shadowOffset: { width: 3, height: 6 },
+    // shadowOpacity: 0.2,
+    marginVertical: spacing.smallest,
+    borderRadius: spacing.small,
+    paddingRight: spacing.small,
+    // paddingTop: -5,
+    paddingBottom: spacing.smallest
   },
-  label: {
-    margin: 8,
-    color: colors.gray600,
+  radioButtonGroup: {
+    marginTop: spacing.small,
+    marginBottom: spacing.largest,
   },
   signUpButtonText: {
     color: colors.white,
     fontWeight: typography.fwSemiBold,
   },
-
   loginText: {
     color: themes.light.primaryColor,
     fontWeight: typography.fwNormal,
@@ -400,6 +411,7 @@ const styles = StyleSheet.create({
     marginRight: '5%',
     backgroundColor: colors.gray100,
     height:50,
+
   },
 });
 
