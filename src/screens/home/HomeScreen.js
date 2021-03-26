@@ -21,6 +21,7 @@ import {
 import {colors, themes, typography, spacing} from '../../styles';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {eventGetList} from '../../api/events/events.api';
+import {latestUpdateGet} from '../../api/latestUpdate/latestUpdate.api';
 // End import region
 
 //function return
@@ -28,6 +29,7 @@ function HomeScreen({navigation}) {
   // State and useState region
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
+  const [latestUpdate, setLatestUpdate] = useState(null);
   const [events, setEvents] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(false);
@@ -64,6 +66,7 @@ function HomeScreen({navigation}) {
 
   //useEffectRegion
   useEffect(() => {
+    // fetching events
     if (token)
       eventGetList(token)
         .then(setEvents)
@@ -71,6 +74,16 @@ function HomeScreen({navigation}) {
           Alert.alert(err.errors[0].title, err.errors[0].description),
         );
   }, [token, reloadData]);
+
+  useEffect(() => {
+    if (token)
+      latestUpdateGet(token)
+        .then(setLatestUpdate)
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
+  }, [token, reloadData]);
+
   // End useEffect Region
 
   // Render element
@@ -98,7 +111,9 @@ function HomeScreen({navigation}) {
                 ? events.map((event) => (
                     <TouchableOpacity
                       key={event._id}
-                      onPress={() => navigation.push('Event Detail')}>
+                      onPress={() =>
+                        navigation.navigate('EventDetail', {eventId: event._id})
+                      }>
                       <EventCard
                         image={event.medias[0].path}
                         name={event.title}
@@ -115,9 +130,12 @@ function HomeScreen({navigation}) {
         <View style={styles.container}>
           <Text style={styles.heading}>Latest Update</Text>
           <View style={styles.latestUpdate}>
-            <UpdateCard
-              title="Title of Update"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"></UpdateCard>
+            {latestUpdate ? (
+              <UpdateCard
+                title={latestUpdate.title}
+                description={latestUpdate.description}
+              />
+            ) : null}
           </View>
         </View>
 
@@ -172,6 +190,7 @@ const styles = StyleSheet.create({
     shadowColor: colors.gray900,
     shadowOffset: {width: 3, height: 6},
     shadowOpacity: 0.2,
+    width: '100%',
   },
 
   //styling for popular service categories

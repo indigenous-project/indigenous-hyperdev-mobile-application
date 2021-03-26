@@ -86,7 +86,7 @@ function CreateDiscussion(props) {
           setShowing(true); // show Message
           setTimeout(() => {
             props.posted(false); // hide modal
-          }, 1500);
+          }, 5000);
         })
         .catch((err) => {
           setLoading(false); // hide loader
@@ -148,7 +148,10 @@ function CreateDiscussion(props) {
   return (
     <View style={styles.baseModal}>
       <Loader loading={loading} />
-      <MessageModal showing={showing} message="Discussion Posted" />
+      <MessageModal
+        showing={showing}
+        message="Discussion Created. Your discussion will be shown after admin approve it."
+      />
       <ScrollView>
         <View>
           <View style={styles.discussionTopic}>

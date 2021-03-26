@@ -24,10 +24,10 @@ function DiscussionsStack({navigation, route}) {
   const isFocused = useIsFocused();
 
   const isRead = route.params ? route.params.isRead : false;
-  // console.log(readDisclaimer);
+
   //removeAsyncStorage('isRead');
 
-  useEffect(() => {}, [isRead]);
+  useEffect(() => {}, [isRead, isFocused]);
 
   return (
     <Discussion.Navigator
@@ -35,7 +35,8 @@ function DiscussionsStack({navigation, route}) {
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
-      }}>
+      }}
+      initialRouteName="Discussions">
       {isRead ? (
         <Discussion.Screen
           name="Discussions"

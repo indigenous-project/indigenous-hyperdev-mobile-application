@@ -18,10 +18,19 @@ function AuthStack(props) {
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor},
         headerTintColor: theme.inverseTextColor,
-      }}>
-      <Auth.Screen name="Login" component={LoginScreen} />
+      }}
+      initialRouteName="Login">
+      <Auth.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
       <Auth.Screen name="Register" component={RegisterScreen} />
-      <Auth.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Auth.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{title: 'Forgot Password'}}
+      />
     </Auth.Navigator>
   );
 }

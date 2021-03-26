@@ -12,6 +12,7 @@ import AskQuestionScreen from './AskQuestionScreen';
 // import SavedItemsScreen from './SavedItemsScreen';
 import {CurrentUserProvider} from '../../contexts/currentUserContext';
 import DisclaimerScreen from './DisclaimerScreen';
+import DisclaimerReviewScreen from './DisclaimerReviewScreen';
 import {CategoriesGeneralProvider} from '../../contexts/categoriesGeneralContext';
 
 const Drawer = createDrawerNavigator();
@@ -25,7 +26,8 @@ const DrawerRoute = () => {
           drawerPosition="left"
           backBehavior="history"
           drawerType="front"
-          hideStatusBar={true}>
+          hideStatusBar={true}
+          initialRouteName="Home">
           <Drawer.Screen
             options={{drawerLabel: 'Home'}}
             name="BottomTabScreen"
@@ -42,6 +44,10 @@ const DrawerRoute = () => {
             component={AskQuestionScreen}
           />
           <Drawer.Screen name="DisclaimerScreen" component={DisclaimerScreen} />
+          <Drawer.Screen
+            name="DisclaimerReviewScreen"
+            component={DisclaimerReviewScreen}
+          />
         </Drawer.Navigator>
       </CategoriesGeneralProvider>
     </CurrentUserProvider>

@@ -3,7 +3,13 @@
 // import packages
 import React from 'react';
 
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import JobCard from '../../components/JobCard';
@@ -12,7 +18,7 @@ import NewsCard from '../../components/NewsCard';
 import {colors, spacing, themes, typography} from '../../styles';
 
 //function return
-function NewsScreen(props) {
+function NewsScreen({navigation}) {
   const theme = themes.light;
 
   return (
@@ -24,21 +30,23 @@ function NewsScreen(props) {
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
         <View style={styles.container}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.heading}>Job News</Text>
-            <Text>See All</Text>
-          </View>
-          <View style={styles.jobNews}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              <JobCard
-                title="Job Title"
-                posting="Job Posting"
-                type="Job Type"
-                salary="Job Salary"></JobCard>
-            </ScrollView>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Job Detail')}>
+            <View style={styles.containerHeading}>
+              <Text style={styles.heading}>Job News</Text>
+              <Text>See All</Text>
+            </View>
+            <View style={styles.jobNews}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                <JobCard
+                  title="Job Title"
+                  posting="Job Posting"
+                  type="Job Type"
+                  salary="Job Salary"></JobCard>
+              </ScrollView>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.container}>
@@ -50,10 +58,12 @@ function NewsScreen(props) {
         </View>
 
         <View style={styles.container}>
-          <NewsCard
-            title="North Bay expands its Education Opportunities for"
-            date="Feb 10, 2021"
-            details="North Bay Indigenous Friendship Center provides"></NewsCard>
+          <TouchableOpacity onPress={() => navigation.navigate('News Article')}>
+            <NewsCard
+              title="North Bay expands it's Education Opportunities for"
+              date="Feb 10, 2021"
+              details="North Bay Indigenous Friendship Center provides"></NewsCard>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

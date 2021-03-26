@@ -133,7 +133,7 @@ function LoginScreen({navigation}) {
         <Button
           style={styles.forgotPasswordButton}
           onPress={() => {
-            navigation.navigate('Forgot Password');
+            navigation.navigate('ForgotPassword');
           }}
           transparent>
           <Text

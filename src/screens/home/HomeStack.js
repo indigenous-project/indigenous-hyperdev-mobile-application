@@ -22,11 +22,21 @@ function HomeStack({navigation}) {
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
-        headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
-      }}>
-      <Home.Screen name="Indigenous Bridge" component={HomeScreen} />
-      <Home.Screen name="Event Detail" component={EventDetail} />
+      }}
+      initialRouteName="Indigenous Bridge">
+      <Home.Screen
+        name="Indigenous Bridge"
+        component={HomeScreen}
+        options={{
+          headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
+          headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
+        }}
+      />
+      <Home.Screen
+        name="EventDetail"
+        component={EventDetail}
+        options={{title: 'Event Detail'}}
+      />
     </Home.Navigator>
   );
 }

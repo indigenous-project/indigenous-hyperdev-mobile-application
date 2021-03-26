@@ -17,6 +17,7 @@ import {useCurrentUser} from '../contexts/currentUserContext';
 //function return
 function SideNavCustomContent(props) {
   const [loading, setLoading] = useState(false);
+  const [isRead, setIsRead] = useAsyncStorage('isRead');
 
   const [currentUser, token] = useCurrentUser();
   // Function handle when tap logout
@@ -120,7 +121,11 @@ function SideNavCustomContent(props) {
       <DrawerItem
         style={styles.drawerItem}
         label="Discussion Desclaimer"
-        onPress={() => props.navigation.navigate('DisclaimerScreen')}
+        onPress={() =>
+          !isRead
+            ? props.navigation.navigate('DisclaimerScreen')
+            : props.navigation.navigate('DisclaimerReviewScreen')
+        }
         labelStyle={styles.labelStyle}
         icon={() => (
           <Image

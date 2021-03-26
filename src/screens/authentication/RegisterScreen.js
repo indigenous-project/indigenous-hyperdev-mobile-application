@@ -1,7 +1,7 @@
 //LoginScreen module
 
 // import packages
-import React from 'react';
+import React, {createRef, useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   View,
@@ -12,10 +12,12 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-import {useState} from 'react';
-import {useEffect} from 'react';
+
 import CheckBox from '@react-native-community/checkbox';
-import {themes, colors, typography} from '../../styles';
+
+import {themes, colors, typography, spacing} from '../../styles';
+import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/Feather';
 
 import {
   Container,
@@ -32,17 +34,20 @@ import {
   Right,
   Left,
 } from 'native-base';
+import {RadioButton} from 'react-native-paper';
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
+
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
-import {createRef} from 'react/cjs/react.production.min';
+
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 //function return
 function RegisterScreen({navigation}) {
   // declaring a variable for themes
   const theme = themes.light;
-  // using use state for the checkbox isIndigenous
-  const [isSelected, setSelection] = useState(false);
+
   //use state for showing message modal registration
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   //use state store username email
@@ -56,6 +61,7 @@ function RegisterScreen({navigation}) {
   const [userAge, setUserAge] = useState('');
   const [userGender, setUserGender] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userType, setUserType] = useState('');
 
   //createRef
   const emailInputRef = createRef();
@@ -90,15 +96,6 @@ function RegisterScreen({navigation}) {
       Alert.alert('Registration', 'Please confirm password');
       return;
     }
-    if (!userAge) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
-
-    if (!userGender) {
-      Alert.alert('Registration', 'Please fill Age');
-      return;
-    }
     setLoading(true);
     const data = {
       firstName: firstName.trim(),
@@ -106,7 +103,7 @@ function RegisterScreen({navigation}) {
       email: userEmail.trim(),
       gender: userGender.trim(),
       age: userAge.trim(),
-      type: 'Indigenous',
+      type: userType.trim(),
     };
     if (passwordConfirm.trim() == userPassword.trim()) {
       data.password = userPassword.trim();
@@ -137,83 +134,72 @@ function RegisterScreen({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+      <FocusedStatusBar barStyle="light-content" />
       <MessageModal
         showing={isRegistraionSuccess}
         message="Registration Successful!"
       />
       <Loader loading={loading} />
-
-      <Text style={styles.welcome}>Welcome!</Text>
-      <Text style={styles.signUpText}>Sign Up to get Started.</Text>
       <ScrollView>
+        <Text style={styles.welcome}>Join The Community</Text>
+        <Text style={styles.signUpText}>Get full access today</Text>
+        <Text style={styles.allFields}>All Fields are Mandatory</Text>
+
         <KeyboardAvoidingView enabled>
           <Form>
-            <Item floatingLabel>
-              <Label>First Name</Label>
-              <Input
-                value={firstName}
-                onChangeText={setfirstName}
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                ref={firstNameInputRef}
-                onSubmitEditing={() =>
-                  lastNameInputRef.current && lastNameInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Last Name</Label>
-              <Input
-                value={lastName}
-                onChangeText={setLastName}
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                ref={lastNameInputRef}
-                onSubmitEditing={() =>
-                  ageInputRef.current && ageInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Age</Label>
-              <Input
-                value={userAge}
-                onChangeText={setUserAge}
-                keyboardType="numeric"
-                returnKeyType="next"
-                ref={ageInputRef}
-                onSubmitEditing={() =>
-                  genderInputRef.current && genderInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Gender</Label>
-              <Input
-                value={userGender}
-                onChangeText={setUserGender}
-                returnKeyType="next"
-                ref={genderInputRef}
-                onSubmitEditing={() =>
-                  emailInputRef.current && emailInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <View style={styles.checkboxView}>
-              <CheckBox
-                value={isSelected}
-                onValueChange={setSelection}
-                style={styles.radio}
-              />
-              <Text style={styles.label}>Is Indigeneous</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Item
+                style={{
+                  flex: 1,
+                  borderRadius: spacing.smaller,
+                  height: '70%',
+                  marginLeft: '5%',
+                  marginTop: '5%',
+                }}
+                regular>
+                <Input
+                  style={{justifyContent: 'flex-start'}}
+                  placeholder=" First Name"
+                  value={firstName}
+                  onChangeText={setfirstName}
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  ref={firstNameInputRef}
+                  onSubmitEditing={() =>
+                    lastNameInputRef.current && lastNameInputRef.current.focus()
+                  }
+                  blurOnSubmit={false}
+                />
+              </Item>
+              <Item
+                style={{
+                  flex: 1,
+                  borderRadius: spacing.smaller,
+                  height: '70%',
+                  marginLeft: '5%',
+                  marginTop: '5%',
+                  marginRight: '5%',
+                }}
+                regular>
+                <Input
+                  style={{justifyContent: 'flex-end'}}
+                  placeholder=" Last Name"
+                  value={lastName}
+                  onChangeText={setLastName}
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  ref={lastNameInputRef}
+                  onSubmitEditing={() =>
+                    ageInputRef.current && ageInputRef.current.focus()
+                  }
+                  blurOnSubmit={false}
+                />
+              </Item>
             </View>
-            <Item floatingLabel>
-              <Label>Email</Label>
+
+            <Item style={styles.item} regular>
               <Input
+                placeholder=" Email"
                 value={userEmail}
                 onChangeText={setUserEmail}
                 autoCapitalize="none"
@@ -226,9 +212,9 @@ function RegisterScreen({navigation}) {
                 }
               />
             </Item>
-            <Item floatingLabel>
-              <Label>Password</Label>
+            <Item style={styles.item} regular>
               <Input
+                placeholder=" Password"
                 value={userPassword}
                 onChangeText={setUserPassword}
                 secureTextEntry={true}
@@ -242,9 +228,9 @@ function RegisterScreen({navigation}) {
                 }
               />
             </Item>
-            <Item floatingLabel>
-              <Label>Confirm Password</Label>
+            <Item style={styles.item} regular>
               <Input
+                placeholder=" Confirm Password"
                 value={passwordConfirm}
                 onChangeText={setPasswordConfirm}
                 onSubmitEditing={Keyboard.dismiss}
@@ -254,20 +240,165 @@ function RegisterScreen({navigation}) {
                 secureTextEntry={true}
               />
             </Item>
+
+            <Item style={styles.item} regular>
+              <Input
+                placeholder=" Age"
+                value={userAge}
+                onChangeText={setUserAge}
+                keyboardType="numeric"
+                returnKeyType="next"
+                ref={ageInputRef}
+                onSubmitEditing={() =>
+                  genderInputRef.current && genderInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </Item>
+            <DropDownPicker
+              items={[
+                {
+                  label: 'Male',
+                  value: 'Male',
+                },
+                {
+                  label: 'Female',
+                  value: 'Female',
+                },
+                {
+                  label: 'Other',
+                  value: 'Other',
+                },
+              ]}
+              placeholder="Gender"
+              containerStyle={styles.genderItem}
+              style={{
+                backgroundColor: colors.gray100,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
+              labelStyle={{
+                color: themes.light.baseTextColor,
+                fontSize: typography.fs,
+              }}
+              itemStyle={{
+                justifyContent: 'flex-start',
+              }}
+              dropDownStyle={{backgroundColor: colors.gray100}}
+              onChangeItem={(item) => setUserGender(item.value)}
+            />
+            <View style={styles.radioButtonGroup}>
+              <RadioButton.Group
+                onValueChange={(newValue) => setUserType(newValue)}
+                value={userType}>
+                <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Indigenous" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Indigenous
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Inuit" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Inuit
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="Métis" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      Métis
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: spacing.smallest,
+                    }}>
+                    <View
+                      style={{
+                        borderColor: colors.gray700,
+                        borderWidth: 0.5,
+                        height: 35,
+                        width: 35,
+                        borderRadius: 100,
+                      }}>
+                      <RadioButton value="None" />
+                    </View>
+                    <Text
+                      style={{
+                        alignSelf: 'center',
+                        marginLeft: spacing.smallest,
+                      }}>
+                      None
+                    </Text>
+                  </View>
+                </View>
+              </RadioButton.Group>
+            </View>
           </Form>
           <Button style={styles.signUpButton} block onPress={handleRegister}>
             <Text style={styles.signUpButtonText}>Sign Up</Text>
           </Button>
-          <Button
-            style={styles.loginTextButton}
-            transparent
-            onPress={() => {
-              navigation.navigate('Login');
-            }}>
-            <Text style={styles.loginText}>
-              Already have an account? Log in
-            </Text>
-          </Button>
+
+          <Text style={styles.loginText}>
+            By Continuing, You Agree To Accept Our Privacy Policy & Terms of
+            Service.
+          </Text>
+
           <Button
             transparent
             onPress={() => {
@@ -281,58 +412,99 @@ function RegisterScreen({navigation}) {
 
 // stylesheet for the signUp screen
 const styles = StyleSheet.create({
-  signUpButton: {
-    margin: '10%',
-    marginTop: '5%',
-    backgroundColor: themes.light.primaryColor,
-    color: '#000',
+  container: {
+    backgroundColor: colors.white,
+    paddingHorizontal: spacing.base,
   },
-
+  signUpButton: {
+    width: '70%',
+    height: '6%',
+    marginTop: '15%',
+    marginLeft: '15%',
+    marginRight: '20%',
+    backgroundColor: colors.primary500,
+    borderRadius: spacing.smaller,
+  },
   signUpText: {
     fontSize: typography.fs5,
     marginTop: '2%',
-    marginBottom: '5%',
+    marginBottom: '3%',
     fontWeight: typography.fwNormal,
-    marginLeft: '6%',
+    marginLeft: '5%',
+    color: colors.primary900,
   },
 
   checkboxView: {
     flexDirection: 'row',
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '3%',
   },
 
   safeArea: {
     flex: 1,
   },
-  container: {
-    padding: 10,
+  radioButtonGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: spacing.largest,
+    marginBottom: spacing.small,
   },
   welcome: {
-    fontSize: typography.fs8,
+    fontSize: typography.fs6,
     marginTop: '10%',
-    fontWeight: typography.fwSemiBold,
+    fontWeight: typography.fwBold,
     marginLeft: '5%',
+    color: colors.primary900,
   },
-  radio: {
-    alignSelf: 'center',
-  },
-  label: {
-    margin: 8,
-    color: colors.gray600,
+  inputField: {
+    borderWidth: 0.2,
+    // backgroundColor: colors.white,
+    // shadowColor: colors.gray900,
+    // shadowOffset: { width: 3, height: 6 },
+    // shadowOpacity: 0.2,
+    marginVertical: spacing.smallest,
+    borderRadius: spacing.small,
+    paddingRight: spacing.small,
+    // paddingTop: -5,
+    paddingBottom: spacing.smallest,
   },
   signUpButtonText: {
     color: colors.white,
     fontWeight: typography.fwSemiBold,
   },
-  loginTextButton: {
-    margin: '14%',
-    marginTop: '0%',
-    color: '#000',
-  },
   loginText: {
-    color: '#000',
-    fontWeight: typography.fwSemiBold,
+    color: themes.light.primaryColor,
+    fontWeight: typography.fwNormal,
+    lineHeight: typography.lh2,
+    fontSize: typography.fs2,
+    alignSelf: 'center',
+    textAlign: 'center',
+    marginTop: '5%',
+    marginHorizontal: '15%',
+  },
+  item: {
+    borderRadius: spacing.smaller,
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    backgroundColor: colors.gray100,
+    // marginBottom:100
+  },
+  allFields: {
+    fontSize: typography.fs2,
+    marginTop: '1%',
+    fontWeight: typography.fwBold,
+    marginLeft: '5%',
+    color: 'crimson',
+  },
+  genderItem: {
+    borderRadius: spacing.smaller,
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    backgroundColor: colors.gray100,
+    height: 50,
   },
 });
 
