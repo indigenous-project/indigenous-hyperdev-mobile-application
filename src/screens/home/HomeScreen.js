@@ -111,7 +111,9 @@ function HomeScreen({navigation}) {
                 ? events.map((event) => (
                     <TouchableOpacity
                       key={event._id}
-                      onPress={() => navigation.push('Event Detail')}>
+                      onPress={() =>
+                        navigation.navigate('EventDetail', {eventId: event._id})
+                      }>
                       <EventCard
                         image={event.medias[0].path}
                         name={event.title}
