@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { colors, typography, spacing } from '../styles';
 
 //card to display category button
-export default function CategoryButton(props) {
+export default function ServicesCategoryButton(props) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <View
         style={styles.categoryButton}
         onPress={() => {
           props.selected(props.category);
@@ -18,7 +18,7 @@ export default function CategoryButton(props) {
             uri: props.icon,
           }}
         />
-      </TouchableOpacity>
+      </View>
       <Text style={styles.categoryName}>{props.name}</Text>
     </View>
   );
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: 100,
+    marginBottom: spacing.base
   },
 
   categoryButton: {

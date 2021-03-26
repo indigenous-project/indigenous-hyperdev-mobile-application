@@ -7047,6 +7047,13 @@
     "prop-types" "^15.5.8"
     "tween-functions" "^1.0.1"
 
+"react-native-dropdown-picker@^4.0.2":
+  "integrity" "sha512-x6OZ5YNzFc5PEwWFDYQBBxYq6qvCnc8NPX9d9UsXpaLizTSXLT0kWLsUzsJOMm6SVsUxWY7FOAyXsB4JUSyKdQ=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-4.0.2.tgz"
+  "version" "4.0.2"
+  dependencies:
+    "react-native-vector-icons" "^7.0.0"
+
 "react-native-easy-grid@0.2.2":
   "integrity" "sha512-MlYrNIldnEMKn6TVatQN1P64GoVlwGIuz+8ncdfJ0Wq/xtzUkQwlil8Uksyp7MhKfENE09MQnGNcba6Mx3oSAA=="
   "resolved" "https://registry.npmjs.org/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz"
@@ -7151,6 +7158,11 @@
     "unimodules-permissions-interface" "~6.1.0"
     "unimodules-sensors-interface" "~6.1.0"
     "unimodules-task-manager-interface" "~6.1.0"
+
+"react-native-unordered-list@^1.0.4":
+  "integrity" "sha512-fLQxuE0xVeqxNiJMWIU1owpshZUJHmvgUF0z50qVjKZ8O8e9jiHPdr7us3SVghWYNws0qd/InGJCsz3VrNBu5w=="
+  "resolved" "https://registry.npmjs.org/react-native-unordered-list/-/react-native-unordered-list-1.0.4.tgz"
+  "version" "1.0.4"
 
 "react-native-vector-icons@^7.0.0":
   "integrity" "sha512-V2a1zJ4i+kS8O4j183gIwX14St9AxxXabxwYpFBgRhvr2NDXyFcjHDEAgrOYYlt2W57e20aN1tBDU/I+wn9WtQ=="

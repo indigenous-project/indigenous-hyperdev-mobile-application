@@ -1,6 +1,7 @@
 // API for store an image in S3
 
-const AWS = require('aws-sdk/dist/aws-sdk-react-native');
+// const AWS = require('aws-sdk/dist/aws-sdk-react-native');
+import AWS from 'aws-sdk';
 import Base64Binary from 'base64-arraybuffer';
 const ID = 'AKIAWBK3UNFZVVF7OF4B';
 const SECRET = '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';
