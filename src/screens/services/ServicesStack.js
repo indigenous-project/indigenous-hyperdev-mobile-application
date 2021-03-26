@@ -20,18 +20,24 @@ function ServicesStack({navigation}) {
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
-      initialRouteName="Services">
-      <Services.Screen name="Services" component={ServiceScreen} />
+       initialRouteName="Services">
+      <Services.Screen
+        name="Services"
+        component={ServiceScreen}
+        options={{
+          headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />,
+        }}
+      />
+
 
       <Services.Screen
         name="Culture"
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
@@ -41,7 +47,7 @@ function ServicesStack({navigation}) {
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
@@ -51,7 +57,7 @@ function ServicesStack({navigation}) {
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
@@ -61,7 +67,7 @@ function ServicesStack({navigation}) {
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
@@ -71,7 +77,7 @@ function ServicesStack({navigation}) {
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
@@ -81,7 +87,7 @@ function ServicesStack({navigation}) {
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          headerBackTitleVisible:false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
