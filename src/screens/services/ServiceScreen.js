@@ -10,6 +10,7 @@ import {
   Modal,
   Pressable,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -56,15 +57,18 @@ function ServiceScreen({navigation}) {
 
         {/* group2 */}
         <View style={styles.groupOfCatergories}>
-          <Pressable style={styles.pressablebutton}
+          <Pressable
+            style={styles.pressablebutton}
             onPress={() => navigation.navigate('Community')}>
             <Circles categoryName="Community" />
           </Pressable>
-          <Pressable style={styles.pressablebutton}
+          <Pressable
+            style={styles.pressablebutton}
             onPress={() => navigation.navigate('Employment and Housing')}>
             <Circles categoryName="Employment & Housing" />
           </Pressable>
-          <Pressable style={styles.pressablebutton}
+          <Pressable
+            style={styles.pressablebutton}
             onPress={() => navigation.navigate('Emergency')}>
             <Circles categoryName="Emergency" />
           </Pressable>
