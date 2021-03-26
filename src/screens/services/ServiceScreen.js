@@ -15,12 +15,16 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
+import { useCurrentUser } from '../../contexts/currentUserContext';
 import CategoriesList from '../../components/CategoriesList';
 
 //function return
 function ServiceScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [category, setCategory] = useState(null);
+  const [currentUser, token] = useCurrentUser();
+
+
   return (
     <SafeAreaView edges={['right', 'left']}>
       <ScrollView >
@@ -37,8 +41,11 @@ function ServiceScreen({ navigation }) {
 
           {/* group1 */}
           <View style={styles.groupOfCatergories}>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs')}>
+            <Pressable name="Culture"
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Culture",
+                token: token
+              })}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
                 name="Culture"
@@ -69,7 +76,11 @@ function ServiceScreen({ navigation }) {
                 name="Community" />
             </Pressable>
             <Pressable
-              onPress={() => navigation.navigate('Services and Programs')}>
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Employment & Housing",
+                token: token
+              })}
+            >
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/employmentIcon.png"
                 name="Employment & Housing" />

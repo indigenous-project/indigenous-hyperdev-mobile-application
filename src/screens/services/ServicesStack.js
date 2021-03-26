@@ -20,18 +20,24 @@ function ServicesStack({ navigation }) {
       screenOptions={{
         headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
+        // headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
       initialRouteName="Services">
-      <Services.Screen name="Services" component={ServiceScreen} />
+      <Services.Screen
+        options={{
+          headerLeft: () => (
+            <HambugerMenuHeader navigationProps={navigation} />
+          ),
+        }}
+        name="Services" component={ServiceScreen} />
 
       <Services.Screen
         name="Services and Programs"
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
+          title: false,
           headerStyle: { backgroundColor: themes.light.inverseTextColor },
           headerTintColor: themes.light.primaryColor,
         }}
