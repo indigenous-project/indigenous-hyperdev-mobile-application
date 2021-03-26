@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, Linking} from 'react-native';
 import {diffTime, formatDate, formatDateByTime} from '../modules/date.format';
-import {roundToTwo} from '../modules/roundToTwo';
 import {colors, typography, spacing} from '../styles';
 
 //card to display host for events
