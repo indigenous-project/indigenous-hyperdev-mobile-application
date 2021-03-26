@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   baseModal: {
-    height: 700,
+    height: "85%",
     paddingTop: spacing.small,
   },
 
@@ -402,6 +402,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: typography.fs2,
     color: colors.primary900,
-    fontWeight: typography.fwNormal,
+    fontWeight: typography.fwMedium,
   },
 });

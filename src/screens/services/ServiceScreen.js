@@ -1,10 +1,10 @@
 //ServiceScreen module
 
 // import packages
-import { Container, View } from 'native-base';
 import React, { useState } from 'react';
 import {
   ScrollView,
+  View,
   Text,
   StyleSheet,
   Modal,
