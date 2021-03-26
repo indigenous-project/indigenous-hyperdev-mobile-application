@@ -38,7 +38,8 @@
     "react-native-switch-selector": "^2.1.4",
     "react-native-unimodules": "^0.13.0",
     "react-native-unordered-list": "^1.0.4",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
