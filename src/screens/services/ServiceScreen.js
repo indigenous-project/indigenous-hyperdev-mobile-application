@@ -9,6 +9,8 @@ import {
   StyleSheet,
   Modal,
   Pressable,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';

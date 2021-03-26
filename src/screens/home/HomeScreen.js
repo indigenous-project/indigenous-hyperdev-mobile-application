@@ -109,17 +109,20 @@ function HomeScreen({ navigation }) {
               showsHorizontalScrollIndicator={false}>
               {events
                 ? events.map((event) => (
-                  <TouchableOpacity
-                    key={event._id}
-                    onPress={() => navigation.push('Event Detail')}>
-                    <EventCard
-                      image={event.medias[0].path}
-                      name={event.title}
-                      date={formatDate(event.date)}
-                      status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
-                    />
-                  </TouchableOpacity>
-                ))
+
+                    <TouchableOpacity
+                      key={event._id}
+                      onPress={() =>
+                        navigation.navigate('EventDetail', {eventId: event._id})
+                      }>
+                      <EventCard
+                        image={event.medias[0].path}
+                        name={event.title}
+                        date={formatDate(event.date)}
+                        status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
+                      />
+                    </TouchableOpacity>
+                  ))
                 : null}
             </ScrollView>
           </View>
