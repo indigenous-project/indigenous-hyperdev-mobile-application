@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: 120,
+    width: 100,
   },
 
   categoryButton: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 40 / 2,
   },
   categoryName: {
-    color: colors.primary900,
+    color: colors.gray900,
     fontWeight: '600',
     alignSelf: 'center',
     marginTop: spacing.small,

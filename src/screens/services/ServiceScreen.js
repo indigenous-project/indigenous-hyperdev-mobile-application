@@ -1,8 +1,8 @@
 //ServiceScreen module
 
 // import packages
-import {Container, View} from 'native-base';
-import React, {useState} from 'react';
+import { Container, View } from 'native-base';
+import React, { useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -11,68 +11,83 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import Circles from '../../components/Circles';
+import CategoryButton from '../../components/CategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import {themes, spacing, typography, colors} from '../../styles';
+import { themes, spacing, typography, colors } from '../../styles';
 import CategoriesList from '../../components/CategoriesList';
 
 //function return
-function ServiceScreen({navigation}) {
+function ServiceScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [category, setCategory] = useState(null);
   return (
-    <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
-      <ScrollView>
+    <SafeAreaView edges={['right', 'left']}>
+      <ScrollView >
         <FocusedStatusBar barStyle="light-content" />
 
         {/* Services by category template */}
-        <View style={styles.serviceCategoryContainer}>
-          <Text style={styles.serviceByCategory}>Services by Category</Text>
-          <Text onPress={() => setModalVisible(true)} style={styles.seeAll}>
-            See All(12)
+        <View style={styles.container}>
+          <View style={styles.titleBlock}>
+            <Text style={styles.heading}>Services by Category</Text>
+            <Text onPress={() => setModalVisible(true)} >
+              See All(12)
           </Text>
-        </View>
+          </View>
 
-        {/* group1 */}
-        <View style={styles.groupOfCatergories}>
-          <Pressable
-            style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Culture')}>
-            <Circles categoryName="Culture" />
-          </Pressable>
-          <Pressable
-            style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Government/Legal')}>
-            <Circles categoryName="Government/Legal" />
-          </Pressable>
-          <Pressable
-            style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Mental Health/ Addiction')}>
-            <Circles categoryName="Mental Health/ Addiction" />
-          </Pressable>
-        </View>
+          {/* group1 */}
+          <View style={styles.groupOfCatergories}>
+            <Pressable
 
-        {/* group2 */}
-        <View style={styles.groupOfCatergories}>
-          <Pressable style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Community')}>
-            <Circles categoryName="Community" />
-          </Pressable>
-          <Pressable style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Employment and Housing')}>
-            <Circles categoryName="Employment & Housing" />
-          </Pressable>
-          <Pressable style={styles.pressablebutton}
-            onPress={() => navigation.navigate('Emergency')}>
-            <Circles categoryName="Emergency" />
-          </Pressable>
+              onPress={() => navigation.navigate('Culture')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
+                name="Culture"
+              />
+            </Pressable>
+            <Pressable
+
+              onPress={() => navigation.navigate('Government/Legal')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
+                name="Government/Legal" />
+            </Pressable>
+            <Pressable
+
+              onPress={() => navigation.navigate('Mental Health/ Addiction')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
+                name="Mental Health/ Addiction" />
+            </Pressable>
+          </View>
+
+          {/* group2 */}
+          <View style={styles.groupOfCatergories}>
+            <Pressable
+              onPress={() => navigation.navigate('Community')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/communityIcon.png"
+                name="Community" />
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.navigate('Employment and Housing')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/employmentIcon.png"
+                name="Employment & Housing" />
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.navigate('Emergency')}>
+              <CategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/emergencyIcon.png"
+                name="Emergency" />
+            </Pressable>
+          </View>
         </View>
 
         {/* last opened template */}
-        <View style={styles.lastOpenedTextCardView}>
-          <Text style={styles.services}>Last Opened</Text>
+        <View style={styles.container}>
+          <Text style={styles.heading}>Last Opened</Text>
           <ServicesCard
             title="A place to Gather"
             name="Donny Sutherlan"
@@ -86,33 +101,8 @@ function ServiceScreen({navigation}) {
         </View>
 
         {/* saved Services template */}
-        <View style={styles.savedServicesTextCardView}>
-          <Text style={styles.services}>Saved Services</Text>
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
+        <View style={styles.container}>
+          <Text style={styles.heading}>Saved Services</Text>
           <ServicesCard
             title="A place to Gather"
             name="Donny Sutherlan"
@@ -152,44 +142,30 @@ function ServiceScreen({navigation}) {
   );
 }
 const styles = StyleSheet.create({
-  safeArea: {flex: 1},
 
   // Services by category styles
-  serviceCategoryContainer: {
-    flex: spacing.hairline,
-    flexDirection: 'row',
-    height: 60,
-    backgroundColor: themes.light.inverseTextColor,
+  container: {
+    padding: spacing.base,
+    backgroundColor: colors.white,
+    marginBottom: spacing.small,
   },
-  serviceByCategory: {
-    color: themes.light.primaryColor,
+  heading: {
+    color: colors.primary900,
+    paddingBottom: spacing.smallest,
     fontWeight: typography.fwBold,
     fontSize: typography.fs3,
-    marginTop: spacing.largest,
-    marginLeft: spacing.large,
   },
-  seeAll: {
-    marginTop: 34,
-    marginLeft: 100,
-    color: themes.light.subduedTextColor,
-  },
-  pressablebutton: {width: 130},
-  groupOfCatergories: {flexDirection: 'row'},
 
-  //last opened style
-  lastOpenedTextCardView: {
-    marginVertical: spacing.base,
-    marginTop: spacing.base,
-    height: 280,
-    backgroundColor: themes.light.inverseTextColor,
+  titleBlock: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: spacing.base,
+    width: '95%'
   },
-  savedServicesTextCardView: {backgroundColor: themes.light.inverseTextColor},
-  services: {
-    color: themes.light.primaryColor,
-    fontSize: typography.fs3,
-    fontWeight: typography.fwBold,
-    marginTop: spacing.base,
-    marginLeft: spacing.large,
+  groupOfCatergories: {
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 
   //styling for modal container
@@ -216,13 +192,13 @@ const styles = StyleSheet.create({
     paddingTop: spacing.smallest,
   },
   closeButton: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     alignItems: 'center',
-    shadowOffset: {width: 1, height: 1},
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
-    shadowOpacity: 0.9,
-    borderRadius: 20,
+    shadowOpacity: 0.2,
+    borderRadius: 100,
     backgroundColor: colors.primary50,
   },
   closeButtonText: {
