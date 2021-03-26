@@ -9,11 +9,10 @@ import {
   StyleSheet,
   Modal,
   Pressable,
-  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import CategoryButton from '../../components/CategoryButton';
+import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
 import CategoriesList from '../../components/CategoriesList';
@@ -39,24 +38,23 @@ function ServiceScreen({ navigation }) {
           {/* group1 */}
           <View style={styles.groupOfCatergories}>
             <Pressable
-
-              onPress={() => navigation.navigate('Culture')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
                 name="Culture"
               />
             </Pressable>
             <Pressable
 
-              onPress={() => navigation.navigate('Government/Legal')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
                 name="Government/Legal" />
             </Pressable>
             <Pressable
 
-              onPress={() => navigation.navigate('Mental Health/ Addiction')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
                 name="Mental Health/ Addiction" />
             </Pressable>
@@ -65,20 +63,20 @@ function ServiceScreen({ navigation }) {
           {/* group2 */}
           <View style={styles.groupOfCatergories}>
             <Pressable
-              onPress={() => navigation.navigate('Community')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/communityIcon.png"
                 name="Community" />
             </Pressable>
             <Pressable
-              onPress={() => navigation.navigate('Employment and Housing')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/employmentIcon.png"
                 name="Employment & Housing" />
             </Pressable>
             <Pressable
-              onPress={() => navigation.navigate('Emergency')}>
-              <CategoryButton
+              onPress={() => navigation.navigate('Services and Programs')}>
+              <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/emergencyIcon.png"
                 name="Emergency" />
             </Pressable>
