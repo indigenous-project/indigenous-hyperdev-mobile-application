@@ -19,6 +19,8 @@ import EventInfo from '../../components/EventInfo';
 import {colors, themes, typography, spacing} from '../../styles';
 import {eventGetDetail} from '../../api/events/events.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
 
 //function return
 function EventDetail({navigation, route}) {
@@ -48,7 +50,15 @@ function EventDetail({navigation, route}) {
           <Image style={styles.image} source={{uri: event.medias[0].path}} />
           <EventInfo event={event} />
           <View style={styles.container}>
-            <Text style={styles.description}>{event.description}</Text>
+            <WebView
+              style={styles.description}
+              originWhitelist={['*']}
+              source={{
+                html: `<section style="font-size:30">${decodeHTML(
+                  event.description,
+                )}</section>`,
+              }}
+            />
           </View>
 
           <View style={styles.container}>
@@ -81,7 +91,9 @@ function EventDetail({navigation, route}) {
 const styles = StyleSheet.create({
   //container style
   container: {
-    alignItems: 'flex-start',
+    flex: 1,
+    flexDirection: 'column',
+    //  alignItems: 'flex-start',
     padding: spacing.small,
     backgroundColor: colors.white,
     marginTop: spacing.hairline,
@@ -101,7 +113,10 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: typography.fs3,
+    width: 400,
+    height: 300,
+    marginTop: 20,
+    fontSize: 50,
     lineHeight: typography.lh3,
     paddingHorizontal: spacing.small,
   },
