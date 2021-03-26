@@ -9,32 +9,13 @@ import ServiceDetail from '../../components/ServiceDetail'
 const ServiceCategoryScreen = ({ navigate, route }) => {
   // console.log(props)
   const token = route.params.token;
-  const [services, setServices] = useState(null);
   const [selectedService, setSelctedService] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const serviceId = route.params.name;
   const [filterServices, setFilteredServices] = useState(null);
 
-  // useEffect(() => {
-  //   console.log(selectedService)
-  // });
-
-  useEffect(() => {
-    serviceGetList(token, serviceId)
-      .then(setServices)
-      .catch((err) =>
-        Alert.alert(err.errors[0].title, err.errors[0].description),
-      );
-  }, [token, serviceId]);
-
   const filterServiceByCategory = (data) => {
     const array = data
-      .sort((item1, item2) => {
-        return (
-          parseInt(Date.parse(item2.updatedAt), [10]) -
-          parseInt(Date.parse(item1.updatedAt), [10])
-        );
-      })
       .filter((item) => {
         return item.category.name === serviceId;
       });
@@ -65,7 +46,6 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
 
         {filterServices
           ? filterServices.map((service) => (
-
             <TouchableOpacity
               onPress={() => setSelctedService(service._id) & setModalVisible(true)}
               key={service._id}>
@@ -99,7 +79,8 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
 
               <Pressable
                 style={styles.closeButton}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => setModalVisible(!modalVisible)}
+                key={service._id}>
                 <Text style={styles.buttonText}>x</Text>
               </Pressable>
             </View>

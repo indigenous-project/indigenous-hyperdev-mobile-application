@@ -11,7 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { colors, spacing, themes, typography } from '../styles';
 
 const ServiceDetail = (props) => {
-  console.log(props)
+  // console.log(props)
   return (
     <View style={styles.container}>
       <ScrollView >
@@ -52,14 +52,12 @@ const ServiceDetail = (props) => {
       </ScrollView>
       <View style={styles.buttonsGroup}>
         <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => props.visibleModal(false)}>
-          <Text style={styles.buttonText}>Cancel</Text>
+          style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Call</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => handlePostDiscussion()}>
-          <Text style={styles.buttonText}>Post</Text>
+          style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Email</Text>
         </TouchableOpacity>
       </View>
     </View>

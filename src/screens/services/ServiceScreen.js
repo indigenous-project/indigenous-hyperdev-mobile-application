@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -15,15 +15,35 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
+import { serviceGetList } from '../../api/services/services.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';
 import CategoriesList from '../../components/CategoriesList';
 
 //function return
 function ServiceScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [services, setServices] = useState(null);
   const [category, setCategory] = useState(null);
   const [currentUser, token] = useCurrentUser();
+  const [filterServices, setFilteredServices] = useState(null);
 
+  const filterServiceByCategory = (data) => {
+    const array = data
+      .filter((item) => {
+        return item.category.name === serviceId;
+      });
+    setFilteredServices(array);
+  };
+
+  useEffect(() => {
+    serviceGetList(token)
+      .then(setServices)
+      .catch((err) =>
+        Alert.alert(err.errors[0].title, err.errors[0].description),
+      );
+  }, [token]);
+
+  if (!services) return null;
 
   return (
     <SafeAreaView edges={['right', 'left']}>
@@ -41,7 +61,7 @@ function ServiceScreen({ navigation }) {
 
           {/* group1 */}
           <View style={styles.groupOfCatergories}>
-            <Pressable name="Culture"
+            <Pressable
               onPress={() => navigation.navigate('Services and Programs', {
                 name: "Culture",
                 token: token
@@ -52,15 +72,19 @@ function ServiceScreen({ navigation }) {
               />
             </Pressable>
             <Pressable
-
-              onPress={() => navigation.navigate('Services and Programs')}>
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Government/Legal",
+                token: token
+              })}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
                 name="Government/Legal" />
             </Pressable>
             <Pressable
-
-              onPress={() => navigation.navigate('Services and Programs')}>
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Mental Health/ Addiction",
+                token: token
+              })}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
                 name="Mental Health/ Addiction" />
@@ -70,7 +94,10 @@ function ServiceScreen({ navigation }) {
           {/* group2 */}
           <View style={styles.groupOfCatergories}>
             <Pressable
-              onPress={() => navigation.navigate('Services and Programs')}>
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Community",
+                token: token
+              })}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/communityIcon.png"
                 name="Community" />
@@ -86,7 +113,10 @@ function ServiceScreen({ navigation }) {
                 name="Employment & Housing" />
             </Pressable>
             <Pressable
-              onPress={() => navigation.navigate('Services and Programs')}>
+              onPress={() => navigation.navigate('Services and Programs', {
+                name: "Emergency",
+                token: token
+              })}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/emergencyIcon.png"
                 name="Emergency" />
