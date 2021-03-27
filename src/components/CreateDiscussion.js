@@ -1,7 +1,7 @@
 //Create Discussion module
 
 // import packages
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   Text,
@@ -17,18 +17,18 @@ import {
   Pressable,
 } from 'react-native';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { colors, themes, typography, spacing } from '../styles';
-import { discussionAdd } from '../api/discussions/discussions.api';
-import { useCurrentUser } from '../contexts/currentUserContext';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {colors, themes, typography, spacing} from '../styles';
+import {discussionAdd} from '../api/discussions/discussions.api';
+import {useCurrentUser} from '../contexts/currentUserContext';
 import Loader from './Loader';
 import MessageModal from './MessageModal';
 
-import { Chip } from 'react-native-paper';
+import {Chip} from 'react-native-paper';
 import CategoriesList from '../components/CategoriesList';
-import { mediaAddImage } from '../api/medias/media.api';
+import {mediaAddImage} from '../api/medias/media.api';
 
-import { s3Storage } from '../api/aws/s3Strorage';
+import {s3Storage} from '../api/aws/s3Strorage';
 
 //function return
 function CreateDiscussion(props) {
@@ -47,11 +47,14 @@ function CreateDiscussion(props) {
   // function handle when user tap Post discsussion button
   const handlePostDiscussion = () => {
     // prevent empty input
-    !discussionTitle
-      ? Alert.alert('Create New Discussion', 'Please fill the topic')
-      : !discussionDescription
-        ? Alert.alert('Create New Discussion', 'Please fill the description')
-        : null;
+    if (!discussionTitle) {
+      Alert.alert('Create New Discussion', 'Please fill the topic');
+      return;
+    }
+    if (!discussionDescription) {
+      Alert.alert('Create New Discussion', 'Please fill the description');
+      return;
+    }
 
     setLoading(true); // enable loader
 
@@ -190,7 +193,7 @@ function CreateDiscussion(props) {
                 onClose={() => setImageInfo(null)}>
                 <Text
                   numberOfLines={1}
-                  style={{ flex: 1, textDecorationLine: 'underline' }}>
+                  style={{flex: 1, textDecorationLine: 'underline'}}>
                   {imageInfo.fileName}
                 </Text>
               </Chip>
@@ -257,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   baseModal: {
-    height: "85%",
+    height: '85%',
     paddingTop: spacing.small,
   },
 
@@ -354,7 +357,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
