@@ -69,22 +69,22 @@ function HomeScreen({navigation}) {
   //useEffectRegion
   useEffect(() => {
     // fetching events
-    if (token)
+    if (token && isFocused)
       eventGetList(token)
         .then(setEvents)
         .catch((err) =>
           Alert.alert(err.errors[0].title, `${err.errors[0].description}`),
         );
-  }, [token, reloadData]);
+  }, [token, reloadData, isFocused]);
 
   useEffect(() => {
-    if (token)
+    if (token && isFocused)
       latestUpdateGet(token)
         .then(setLatestUpdate)
         .catch((err) =>
           Alert.alert(err.errors[0].title, err.errors[0].description),
         );
-  }, [token, reloadData]);
+  }, [token, reloadData, isFocused]);
 
   // End useEffect Region
 
