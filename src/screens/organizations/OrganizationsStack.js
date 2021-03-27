@@ -8,7 +8,7 @@ import OrganizationScreen from './OrganizationScreen';
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
-import OrganizationDetailScreen from './OrganizationDetailScreen';
+
 const theme = themes.light;
 const Organizations = createStackNavigator();
 
@@ -19,25 +19,13 @@ function OrganizationsStack({navigation}) {
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
+        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
       initialRouteName="Organizations">
       <Organizations.Screen
         name="Organizations"
         component={OrganizationScreen}
-        options={{
-          headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />,
-        }}
-      />
-      <Organizations.Screen
-        name="Organization Detail"
-        component={OrganizationDetailScreen}
-        options={{
-          headerRight: false,
-          headerBackTitleVisible:false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
       />
     </Organizations.Navigator>
   );
