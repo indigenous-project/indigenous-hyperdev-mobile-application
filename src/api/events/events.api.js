@@ -60,7 +60,6 @@ export const eventInterested = async (token, eventId) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {
@@ -83,7 +82,6 @@ export const eventGoing = async (token, eventId) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {
@@ -106,7 +104,6 @@ export const eventShare = async (token, eventId) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(''),
   });
   // handle errors
   if (!response.ok) {
