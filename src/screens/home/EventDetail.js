@@ -17,19 +17,46 @@ import {
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
 import {colors, themes, typography, spacing} from '../../styles';
-import {eventGetDetail} from '../../api/events/events.api';
+import {eventGetDetail, eventInterested} from '../../api/events/events.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import Loader from '../../components/Loader';
 import ShareHeader from '../../components/ShareHeader';
+import {useIsFocused} from '@react-navigation/core';
 
 //function return
 function EventDetail({navigation, route}) {
   const theme = themes.light;
+  const isFocused = useIsFocused();
   const [event, setEvent] = useState(null);
   const [currentUser, token] = useCurrentUser();
   const [loading, setLoading] = useState(false);
+  const [isInterested, setIsInterested] = useState(false);
+
+  //function handle interested button
+
+  useEffect(() => {
+    if (event)
+      event.interestedUsers.forEach((user) => {
+        console.log(user._id, currentUser._id);
+        if (user._id === currentUser._id) {
+          setIsInterested(true);
+          return;
+        }
+      });
+  }, [event, currentUser, isFocused]);
+
+  const handleInterestedButton = () => {
+    eventInterested(token, event._id)
+      .then((response) => {
+        if (response) {
+          setIsInterested(true);
+          Alert.alert('Interested the event');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   //ussEffect fetching data
   useEffect(() => {
@@ -43,7 +70,7 @@ function EventDetail({navigation, route}) {
         setLoading(false);
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
-  }, [token, route.params]);
+  }, [token, route.params, isInterested]);
 
   //useLayoutEffect to get title and share button
   useLayoutEffect(() => {
@@ -91,7 +118,10 @@ function EventDetail({navigation, route}) {
         </ScrollView>
       ) : null}
       <View style={styles.buttonsGroup}>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          disabled={isInterested}
+          style={styles.buttonContainer}
+          onPress={() => handleInterestedButton()}>
           <Text style={styles.buttonText}>Interested</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer}>
