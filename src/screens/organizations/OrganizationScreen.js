@@ -36,7 +36,6 @@ function OrganizationScreen() {
       .then((response) => {
         stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
         if (response) {
-          //  checking state of Selector
           setOrganizationList(response);
         }
       })
@@ -102,10 +101,10 @@ function OrganizationScreen() {
       ) : stateSelector == 2 ? (
         //  Map View
         <MapViews
-          // organizationList={organizationList}
-          latitude={45.35611}
-          longitude={-75.757248}
-          description="My Location"
+          organizationList={organizationList}
+          // latitude={45.35611}
+          // longitude={-75.757248}
+          // description="My Location"
         />
       ) : null}
     </SafeAreaView>
@@ -119,6 +118,7 @@ const styles = StyleSheet.create({
     width: '50%',
     alignSelf: 'center',
     position: 'absolute',
+    // height:500,
     marginTop: 60,
   },
 });

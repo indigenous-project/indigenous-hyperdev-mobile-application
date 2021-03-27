@@ -39,7 +39,8 @@ export default function OrganizationListViews(props) {
           onRefresh={onRefresh}
           tintColor={colors.primary900}
         />
-      }>
+      }
+      >
       {data
         ? data.map((organization) => (
             <TouchableOpacity
@@ -67,5 +68,5 @@ export default function OrganizationListViews(props) {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {marginTop:0},
+  scrollView: {paddingVertical:0},
 });

@@ -37,11 +37,7 @@ const OrganizationsCard = (props) => {
       path = img.path;
     });
 
-    // if (path) {
     return path;
-    // } else {
-    //   return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzkC9ryyokGzGyy-3DVWDqDJT8tu6k1M5vGuVh9vBj5hrTXV_AecRw8XRlulrf_UZBAIs&usqp=CAU';
-    // }
   }
 
   //function handle when user tap on link that navigate to google map with keyword search location near my location
@@ -50,8 +46,6 @@ const OrganizationsCard = (props) => {
       `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
     );
   };
-
-  console.log(imagePath);
   return (
     <Card style={styles.cardsView}>
       <CardItem cardBody style={styles.border}>
