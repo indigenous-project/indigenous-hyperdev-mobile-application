@@ -21,30 +21,44 @@ import {eventGetDetail} from '../../api/events/events.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
+import Loader from '../../components/Loader';
+import ShareHeader from '../../components/ShareHeader';
 
 //function return
 function EventDetail({navigation, route}) {
   const theme = themes.light;
   const [event, setEvent] = useState(null);
   const [currentUser, token] = useCurrentUser();
+  const [loading, setLoading] = useState(false);
 
-  const eventId = route.params.eventId;
-
+  //ussEffect fetching data
   useEffect(() => {
-    eventGetDetail(token, eventId)
-      .then(setEvent)
-      .catch((err) =>
-        Alert.alert(err.errors[0].title, err.errors[0].description),
-      );
-  }, [token, eventId]);
+    setLoading(true);
+    eventGetDetail(token, route.params.eventId)
+      .then((response) => {
+        setEvent(response);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        Alert.alert(err.errors[0].title, err.errors[0].description);
+      });
+  }, [token, route.params]);
 
+  //useLayoutEffect to get title and share button
   useLayoutEffect(() => {
-    event ? navigation.setOptions({headerTitle: event.title}) : null;
+    event
+      ? navigation.setOptions({
+          headerTitle: event.title,
+          headerRight: () => <ShareHeader shareData={event} />,
+        })
+      : null;
   }, [navigation, event]);
 
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
+      <Loader loading={loading} />
       {event ? (
         <ScrollView>
           <Image style={styles.image} source={{uri: event.medias[0].path}} />
