@@ -1,10 +1,10 @@
 //HomeScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { categoriesGetList } from '../../api/categories/categories.api';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {categoriesGetList} from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
@@ -18,16 +18,18 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import { colors, themes, typography, spacing } from '../../styles';
-import { useCurrentUser } from '../../contexts/currentUserContext';
-import { eventGetList } from '../../api/events/events.api';
-import { latestUpdateGet } from '../../api/latestUpdate/latestUpdate.api';
+import {colors, themes, typography, spacing} from '../../styles';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {eventGetList} from '../../api/events/events.api';
+import {latestUpdateGet} from '../../api/latestUpdate/latestUpdate.api';
+import {useIsFocused} from '@react-navigation/core';
 // End import region
 
 //function return
-function HomeScreen({ navigation }) {
+function HomeScreen({navigation}) {
   // State and useState region
   const theme = themes.light;
+  const isFocused = useIsFocused();
   const [categories, setCategories] = useState(null);
   const [latestUpdate, setLatestUpdate] = useState(null);
   const [events, setEvents] = useState(null);
@@ -52,10 +54,10 @@ function HomeScreen({ navigation }) {
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-    const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-    const weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(
+    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
+    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
       date,
     );
 
@@ -71,7 +73,7 @@ function HomeScreen({ navigation }) {
       eventGetList(token)
         .then(setEvents)
         .catch((err) =>
-          Alert.alert(err.errors[0].title, err.errors[0].description),
+          Alert.alert(err.errors[0].title, `${err.errors[0].description}`),
         );
   }, [token, reloadData]);
 
@@ -88,7 +90,7 @@ function HomeScreen({ navigation }) {
 
   // Render element
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -109,7 +111,6 @@ function HomeScreen({ navigation }) {
               showsHorizontalScrollIndicator={false}>
               {events
                 ? events.map((event) => (
-
                     <TouchableOpacity
                       key={event._id}
                       onPress={() =>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
     shadowOpacity: 0.2,
     width: '100%',
   },
