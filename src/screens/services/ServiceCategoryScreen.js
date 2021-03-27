@@ -1,4 +1,4 @@
-import { ServiceCatalog } from 'aws-sdk';
+import { SecretsManager, ServiceCatalog } from 'aws-sdk';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { serviceGetList } from '../../api/services/services.api';
@@ -50,6 +50,7 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
               onPress={() => setSelctedService(service._id) & setModalVisible(true)}
               key={service._id}>
               <ServicesCard
+                key={service._id}
                 title={service.name}
                 name={service.contact.email}
                 description={service.contact.phone}
@@ -70,7 +71,7 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
         {filterServices.filter(function (service) {
           return service._id === selectedService;
         }).map((service) => (
-          <View style={styles.modalView}>
+          <View style={styles.modalView} key={service._id}>
             <View style={styles.modalTitle}>
 
               <View>
