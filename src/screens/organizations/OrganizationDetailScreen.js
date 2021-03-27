@@ -14,8 +14,6 @@ const OrganizationDetailScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
-      {/* need to add header */}
-      <Header />
       <ScrollView>
         <View>
           {/* Detail card */}
@@ -38,26 +36,26 @@ const OrganizationDetailScreen = () => {
             facebook=""
           />
         </View>
-        {/* buttons */}
-        <View style={styles.buttonsView}>
-          {/* call button */}
-          <Button
-            style={styles.callButton}
-            onPress={() => {
-              console.log('call button pressed');
-            }}>
-            <Text style={styles.callButtonText}>Call</Text>
-          </Button>
-          {/* get direction button */}
-          <Button
-            style={styles.getDirButton}
-            onPress={() => {
-              console.log('getDirection button pressed');
-            }}>
-            <Text style={styles.getDirButtonText}>Get Direction</Text>
-          </Button>
-        </View>
       </ScrollView>
+      {/* buttons */}
+      <View style={styles.buttonsView}>
+        {/* call button */}
+        <Button
+          style={styles.callButton}
+          onPress={() => {
+            console.log('call button pressed');
+          }}>
+          <Text style={styles.callButtonText}>Call</Text>
+        </Button>
+        {/* get direction button */}
+        <Button
+          style={styles.getDirButton}
+          onPress={() => {
+            console.log('getDirection button pressed');
+          }}>
+          <Text style={styles.getDirButtonText}>Get Direction</Text>
+        </Button>
+      </View>
     </SafeAreaView>
   );
 };
