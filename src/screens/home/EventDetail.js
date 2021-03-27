@@ -42,7 +42,7 @@ function EventDetail({navigation, route}) {
   //function handle interested button
 
   useEffect(() => {
-    if (event)
+    if (event) {
       event.interestedUsers.forEach((user) => {
         console.log(user._id, currentUser._id);
         if (user._id === currentUser._id) {
@@ -50,6 +50,15 @@ function EventDetail({navigation, route}) {
           return;
         }
       });
+
+      event.goingUsers.forEach((user) => {
+        console.log(user._id, currentUser._id);
+        if (user._id === currentUser._id) {
+          setIsGoing(true);
+          return;
+        }
+      });
+    }
   }, [event, currentUser, isFocused]);
 
   const handleAskTapButton = (typeButton) => {
