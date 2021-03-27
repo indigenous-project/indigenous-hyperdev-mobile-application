@@ -153,7 +153,7 @@ function CreateDiscussion(props) {
       <Loader loading={loading} />
       <MessageModal
         showing={showing}
-        message="Discussion Created. Your discussion will be shown after admin approve it."
+        message={`\t\tDiscussion Created.\n\nYour discussion will be shown after admin approve it.`}
       />
       <ScrollView>
         <View>
