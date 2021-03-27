@@ -60,7 +60,3 @@ buck-out/
 
 #Others
 environment_variable.js
-
-package-lock.json
-
-yarn.lock
