@@ -32,6 +32,7 @@ function SideNavCustomContent(props) {
           if (response.logout) {
             // check if logout successfull
             deleteItemAsync('userToken'); // remove token from storage when logout
+            removeAsyncStorage('isRead'); // remove isRead disclaimer from Async storage when logout
             props.navigation.replace('Auth'); // navaigate to authentication screen
           }
         })
