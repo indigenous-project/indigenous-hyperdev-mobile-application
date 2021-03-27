@@ -102,9 +102,6 @@ function OrganizationScreen() {
         //  Map View
         <MapViews
           organizationList={organizationList}
-          // latitude={45.35611}
-          // longitude={-75.757248}
-          // description="My Location"
         />
       ) : null}
     </SafeAreaView>
