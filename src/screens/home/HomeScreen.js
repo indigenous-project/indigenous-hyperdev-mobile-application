@@ -1,14 +1,14 @@
 //HomeScreen module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {categoriesGetList} from '../../api/categories/categories.api';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { categoriesGetList } from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
-import CategoryButton from '../../components/CategoryButton';
+import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import {
   View,
   ScrollView,
@@ -18,14 +18,14 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import {colors, themes, typography, spacing} from '../../styles';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {eventGetList} from '../../api/events/events.api';
-import {latestUpdateGet} from '../../api/latestUpdate/latestUpdate.api';
+import { colors, themes, typography, spacing } from '../../styles';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { eventGetList } from '../../api/events/events.api';
+import { latestUpdateGet } from '../../api/latestUpdate/latestUpdate.api';
 // End import region
 
 //function return
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   // State and useState region
   const theme = themes.light;
   const [categories, setCategories] = useState(null);
@@ -52,10 +52,10 @@ function HomeScreen({navigation}) {
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
-    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
-    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
-    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+    const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+    const weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(
       date,
     );
 
@@ -88,7 +88,7 @@ function HomeScreen({navigation}) {
 
   // Render element
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -109,9 +109,12 @@ function HomeScreen({navigation}) {
               showsHorizontalScrollIndicator={false}>
               {events
                 ? events.map((event) => (
+
                     <TouchableOpacity
                       key={event._id}
-                      onPress={() => navigation.push('Event Detail')}>
+                      onPress={() =>
+                        navigation.navigate('EventDetail', {eventId: event._id})
+                      }>
                       <EventCard
                         image={event.medias[0].path}
                         name={event.title}
@@ -140,15 +143,15 @@ function HomeScreen({navigation}) {
         <View style={styles.container}>
           <Text style={styles.heading}>Popular Service Category</Text>
           <View style={styles.popularServices}>
-            <CategoryButton
+            <ServicesCategoryButton
               icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
               name="Culture"
             />
-            <CategoryButton
+            <ServicesCategoryButton
               icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
               name="Government/ Legal"
             />
-            <CategoryButton
+            <ServicesCategoryButton
               icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
               name="Mental Health/ Addiction"
             />
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
     shadowOpacity: 0.2,
     width: '100%',
   },

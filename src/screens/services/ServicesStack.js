@@ -3,9 +3,9 @@
 // import packages
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import ServiceScreen from './ServiceScreen';
-import {themes} from '../../styles';
+import { themes } from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceCategoryScreen from './ServiceCategoryScreen';
@@ -14,75 +14,34 @@ const theme = themes.light;
 const Services = createStackNavigator();
 
 //function return
-function ServicesStack({navigation}) {
+function ServicesStack({ navigation }) {
   return (
     <Services.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: theme.primaryColor}, //header background
+        headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
+
+        // headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
       initialRouteName="Services">
-      <Services.Screen name="Services" component={ServiceScreen} />
+      <Services.Screen
+        options={{
+          headerLeft: () => (
+            <HambugerMenuHeader navigationProps={navigation} />
+          ),
+        }}
+        name="Services" component={ServiceScreen} />
+
 
       <Services.Screen
-        name="Culture"
+        name="Services and Programs"
         component={ServiceCategoryScreen}
         options={{
           headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
-      <Services.Screen
-        name="Government/Legal"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
-      <Services.Screen
-        name="Mental Health/ Addiction"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
-      <Services.Screen
-        name="Community"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
-      <Services.Screen
-        name="Employment and Housing"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
-      <Services.Screen
-        name="Emergency"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          headerLeft: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          title: false,
+          headerStyle: { backgroundColor: themes.light.inverseTextColor },
+
           headerTintColor: themes.light.primaryColor,
         }}
       />
