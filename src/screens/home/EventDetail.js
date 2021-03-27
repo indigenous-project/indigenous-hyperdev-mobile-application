@@ -17,7 +17,11 @@ import {
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
 import {colors, themes, typography, spacing} from '../../styles';
-import {eventGetDetail, eventInterested} from '../../api/events/events.api';
+import {
+  eventGetDetail,
+  eventGoing,
+  eventInterested,
+} from '../../api/events/events.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
@@ -33,6 +37,7 @@ function EventDetail({navigation, route}) {
   const [currentUser, token] = useCurrentUser();
   const [loading, setLoading] = useState(false);
   const [isInterested, setIsInterested] = useState(false);
+  const [isGoing, setIsGoing] = useState(false);
 
   //function handle interested button
 
@@ -47,12 +52,45 @@ function EventDetail({navigation, route}) {
       });
   }, [event, currentUser, isFocused]);
 
+  const handleAskTapButton = (typeButton) => {
+    Alert.alert(
+      `Event ${typeButton}`,
+      `Are your ${typeButton} ${event.title}?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            typeButton === 'interested in'
+              ? handleInterestedButton()
+              : handleGoingButton();
+          },
+        },
+      ],
+    );
+  };
+
   const handleInterestedButton = () => {
     eventInterested(token, event._id)
       .then((response) => {
         if (response) {
           setIsInterested(true);
           Alert.alert('Interested the event');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleGoingButton = () => {
+    eventGoing(token, event._id)
+      .then((response) => {
+        if (response) {
+          setIsGoing(true);
+          Alert.alert('Going the event');
         }
       })
       .catch((err) => console.log(err));
@@ -70,7 +108,7 @@ function EventDetail({navigation, route}) {
         setLoading(false);
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
-  }, [token, route.params, isInterested]);
+  }, [token, route.params, isInterested, isGoing]);
 
   //useLayoutEffect to get title and share button
   useLayoutEffect(() => {
@@ -120,11 +158,20 @@ function EventDetail({navigation, route}) {
       <View style={styles.buttonsGroup}>
         <TouchableOpacity
           disabled={isInterested}
-          style={styles.buttonContainer}
-          onPress={() => handleInterestedButton()}>
+          style={
+            !isInterested
+              ? styles.buttonContainer
+              : styles.buttonContainerDisable
+          }
+          onPress={() => handleAskTapButton('interested in')}>
           <Text style={styles.buttonText}>Interested</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          disabled={isGoing}
+          style={
+            !isGoing ? styles.buttonContainer : styles.buttonContainerDisable
+          }
+          onPress={() => handleAskTapButton('going to')}>
           <Text style={styles.buttonText}>Going</Text>
         </TouchableOpacity>
       </View>
@@ -179,6 +226,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: spacing.small,
     backgroundColor: colors.primary500,
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
+  },
+  buttonContainerDisable: {
+    width: '40%',
+    borderRadius: 10,
+    marginBottom: spacing.small,
+    backgroundColor: colors.gray200,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
   },
