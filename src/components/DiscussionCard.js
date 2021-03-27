@@ -12,11 +12,9 @@ export default function EventCard(props) {
     <View style={styles.discussionCard}>
       <Text style={styles.cardTitle}>{props.title}</Text>
       <Text style={styles.cardDetail}>{props.nameAndDate}</Text>
-      {props.categories
-        ? props.categories.map((category) => (
-          <Chips key={category._id} name={category.name} />
-        ))
-        : null}
+      {props.categories ? (
+        <Chips key={props.categories_id} name={props.categories.name} />
+      ) : null}
       <Text style={styles.cardSubTitle}>{props.description}</Text>
       <View style={styles.actionContainer}>
         <Text>
