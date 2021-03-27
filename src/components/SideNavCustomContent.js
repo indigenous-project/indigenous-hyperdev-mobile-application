@@ -22,8 +22,9 @@ function SideNavCustomContent(props) {
   const [currentUser, token] = useCurrentUser();
   // Function handle when tap logout
   const handleLogout = () => {
-    setLoading(true); // show Loader
-    if (currentUser)
+    // show Loader
+    if (currentUser) {
+      setLoading(true);
       userLogout(token) // call API
         .then((response) => {
           props.navigation.toggleDrawer();
@@ -36,8 +37,11 @@ function SideNavCustomContent(props) {
         })
         .catch((err) => {
           setLoading(false); // hide Loader
-          Alert.alert(err.errors[0].description);
+          Alert.alert(err.errors[0].title, err.errors[0].description);
         });
+    } else {
+      props.navigation.replace('Auth');
+    }
   };
   return (
     <DrawerContentScrollView contentContainerStyle={{paddingTop: 0}} {...props}>
