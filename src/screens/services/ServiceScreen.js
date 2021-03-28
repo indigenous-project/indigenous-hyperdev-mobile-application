@@ -7,10 +7,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Modal,
   Pressable,
   FlatList,
-  TouchableOpacity,
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -66,8 +64,9 @@ function ServiceScreen({ navigation }) {
     ) : null;
   }
   return (
-    <SafeAreaView edges={['right', 'left']}>
-      <ScrollView >
+    <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
+      {/* <ScrollView > */}
+      <View>
         <FocusedStatusBar barStyle="light-content" />
 
         {/* Services by category template */}
@@ -80,7 +79,10 @@ function ServiceScreen({ navigation }) {
           </View>
         </View>
         <FlatList
-          style={{ backgroundColor: colors.white, marginBottom: spacing.base }}
+          style={{
+            backgroundColor: colors.white, marginBottom: spacing.base,
+            paddingVertical: spacing.smaller
+          }}
           data={categoriesGeneral}
           numColumns={3}
           keyExtractor={(item) => item._id}
@@ -103,20 +105,21 @@ function ServiceScreen({ navigation }) {
         </View>
 
         {/* saved Services template */}
-        <View style={styles.savedItemContainer}>
-          <Text style={styles.heading}>Saved Services</Text>
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-        </View>
-      </ScrollView>
+        {/* <View style={styles.savedItemContainer}>
+        <Text style={styles.heading}>Saved Services</Text>
+        <ServicesCard
+          title="A place to Gather"
+          name="Donny Sutherlan"
+          description="A place to Gather (Enjamonjading) Worker"
+        />
+        <ServicesCard
+          title="A place to Gather"
+          name="Donny Sutherlan"
+          description="A place to Gather (Enjamonjading) Worker"
+        />
+      </View> */}
+        {/* </ScrollView> */}
+      </View>
     </SafeAreaView>
   );
 }
@@ -127,11 +130,11 @@ const styles = StyleSheet.create({
     padding: spacing.base,
     backgroundColor: colors.white,
   },
-  savedItemContainer: {
-    padding: spacing.base,
-    backgroundColor: colors.white,
-    marginTop: spacing.base
-  },
+  // savedItemContainer: {
+  //   padding: spacing.base,
+  //   backgroundColor: colors.white,
+  //   marginTop: spacing.base
+  // },
   heading: {
     color: colors.primary900,
     paddingBottom: spacing.smallest,
