@@ -7,43 +7,22 @@ import MapView, {Marker} from 'react-native-maps';
 import {spacing} from '../styles';
 
 export default function MapViews(props) {
-  let organizations = props.organizationList;
-
-  //to get the latitutde
-  function getLat(data) {
-    let latitude;
-    data.forEach((organization) => {
-      latitude = organization.coords.lat;
-    });
-    return latitude;
-  }
-
-  //to get the latitutde
-  function getLong(data) {
-    let longitude;
-    data.forEach((organization) => {
-      longitude = organization.coords.long;
-    });
-    return longitude;
-  }
-
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const aspectRatio = windowWidth / windowHeight;
   const latitudeDelta = 0.0922;
   const coordinates = {
-    // call the getLat funnction to get the latitude
-    lat: getLat(organizations),
-    // call the getLong funnction to get the longitude
-    long: getLong(organizations),
+    lat: props.latitude,
+    long: props.longitude,
     desc: props.description,
   };
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         showsUserLocation={true}
-        // followsUserLocation={true}
+        //   followsUserLocation={true}
         showsTraffic={true}
         loadingEnabled={true}
         region={{
@@ -52,16 +31,15 @@ export default function MapViews(props) {
           latitudeDelta: latitudeDelta,
           longitudeDelta: latitudeDelta * aspectRatio,
         }}>
-        {organizations.map((org) => (
-          <Marker
-            key={org._id}
-            title={org.name}
-            coordinate={{
-              latitude: org.coords.lat,
-              longitude: org.coords.long,
-            }}
-          />
-        ))}
+        <Marker
+          key={props.id}
+          coordinate={{
+            latitude: coordinates.lat,
+            longitude: coordinates.long,
+          }}
+          title={props.title}
+          description={coordinates.desc}
+        />
       </MapView>
     </View>
   );

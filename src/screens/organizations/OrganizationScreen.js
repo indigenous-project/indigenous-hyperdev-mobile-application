@@ -25,20 +25,19 @@ function OrganizationScreen(props) {
     {label: 'Map', value: 'mapView'},
   ];
 
-  //useEffect to load organization list
-  useEffect(() => {
-    organizationGetList(token)
-      .then((response) => {
-        stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
-        if (response) {
-          setOrganizationList(response);
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err.errors[0].title, err.errors[0].description);
-      });
-  }, [token, reloadData, stateSelector, isFocused]);
+  const selectedView = (value) => {
+    switch (value) {
+      case 'listView':
+        // list view of the orgnizations;
+        setStateSelector(value);
+        return value;
 
+      case 'mapView':
+        // map view of the orgnizations;
+        setStateSelector(value);
+        return value;
+    }
+  };
 
   const data = {
     name: 'North Bay Medical Care',
@@ -84,8 +83,9 @@ function OrganizationScreen(props) {
       ) : stateSelector == 'mapView' ? (
         //  Map View 
         <MapViews
-          organizationList={organizationList}
-
+          latitude={45.35611}
+          longitude={-75.757248}
+          description="My Location"
         />
       ) : null}
     </SafeAreaView>
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     width: '50%',
     alignSelf: 'center',
     position: 'absolute',
-    // height:500,
     marginTop: 60,
   },
 });
