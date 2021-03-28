@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Modal,
   Pressable,
+  FlatList,
   TouchableOpacity,
   Alert,
 } from 'react-native';
@@ -19,23 +20,20 @@ import ServicesCard from '../../components/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
 import { serviceGetList } from '../../api/services/services.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';
-import CategoriesList from '../../components/CategoriesList';
+// import ServiceCategoriesList from '../../components/ServiceCategoriesList';
+import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
 
 //function return
 function ServiceScreen({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
   const [services, setServices] = useState(null);
-  const [category, setCategory] = useState(null);
+  // const [category, setCategory] = useState(null);
+  const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [currentUser, token] = useCurrentUser();
-  const [filterServices, setFilteredServices] = useState(null);
+  const [categories] = useCategoryGeneral();
 
-  const filterServiceByCategory = (data) => {
-    const array = data
-      .filter((item) => {
-        return item.category.name === serviceId;
-      });
-    setFilteredServices(array);
-  };
+  const categoriesGeneral = categories.filter(
+    (item) => item.type === 'general',
+  );
 
   useEffect(() => {
     serviceGetList(token)
@@ -45,8 +43,28 @@ function ServiceScreen({ navigation }) {
       );
   }, [token]);
 
-  if (!services) return null;
+  if (categoriesExpanded == false) {
+    categoriesGeneral.length = 6
+  }
 
+  if (!services) return null;
+  function renderItem({ item }) {
+    return categoriesGeneral ? (
+      <View style={{ width: '25%', marginHorizontal: spacing.base, marginVertical: spacing.smallest }}>
+        <Pressable
+          onPress={() => navigation.navigate('Services and Programs', {
+            name: item.name,
+            token: token
+          })}>
+          <ServicesCategoryButton
+            icon={item.icon}
+            name={item.name}
+            category={{ id: item._id, name: item.name }}
+          />
+        </Pressable>
+      </View>
+    ) : null;
+  }
   return (
     <SafeAreaView edges={['right', 'left']}>
       <ScrollView >
@@ -56,75 +74,18 @@ function ServiceScreen({ navigation }) {
         <View style={styles.container}>
           <View style={styles.titleBlock}>
             <Text style={styles.heading}>Services by Category</Text>
-            <Text onPress={() => setModalVisible(true)} >
-              See All(12)
-          </Text>
-          </View>
-
-          {/* group1 */}
-          <View style={styles.groupOfCatergories}>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Culture",
-                token: token
-              })}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
-                name="Culture"
-              />
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Government/Legal",
-                token: token
-              })}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
-                name="Government/Legal" />
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Mental Health/ Addiction",
-                token: token
-              })}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
-                name="Mental Health/ Addiction" />
-            </Pressable>
-          </View>
-
-          {/* group2 */}
-          <View style={styles.groupOfCatergories}>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Community",
-                token: token
-              })}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/communityIcon.png"
-                name="Community" />
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Employment & Housing",
-                token: token
-              })}
-            >
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/employmentIcon.png"
-                name="Employment & Housing" />
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('Services and Programs', {
-                name: "Emergency",
-                token: token
-              })}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/emergencyIcon.png"
-                name="Emergency" />
-            </Pressable>
+            <Text onPress={() => setCategoriesExpanded(!categoriesExpanded)} >
+              See All
+            </Text>
           </View>
         </View>
+        <FlatList
+          style={{ backgroundColor: colors.white, marginBottom: spacing.base }}
+          data={categoriesGeneral}
+          numColumns={3}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+        />
 
         {/* last opened template */}
         <View style={styles.container}>
@@ -142,7 +103,7 @@ function ServiceScreen({ navigation }) {
         </View>
 
         {/* saved Services template */}
-        <View style={styles.container}>
+        <View style={styles.savedItemContainer}>
           <Text style={styles.heading}>Saved Services</Text>
           <ServicesCard
             title="A place to Gather"
@@ -155,29 +116,6 @@ function ServiceScreen({ navigation }) {
             description="A place to Gather (Enjamonjading) Worker"
           />
         </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.modalView}>
-            <View style={styles.modalTitle}>
-              <Text style={styles.modalTitleText}>Categories</Text>
-              <Pressable
-                style={styles.closeButton}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.closeButtonText}>x</Text>
-              </Pressable>
-            </View>
-            <CategoriesList
-              selected={setCategory}
-              visibleModal={setModalVisible}
-            />
-          </View>
-        </Modal>
       </ScrollView>
     </SafeAreaView>
   );
@@ -188,7 +126,11 @@ const styles = StyleSheet.create({
   container: {
     padding: spacing.base,
     backgroundColor: colors.white,
-    marginBottom: spacing.small,
+  },
+  savedItemContainer: {
+    padding: spacing.base,
+    backgroundColor: colors.white,
+    marginTop: spacing.base
   },
   heading: {
     color: colors.primary900,
@@ -200,52 +142,12 @@ const styles = StyleSheet.create({
   titleBlock: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: spacing.base,
     width: '95%'
   },
   groupOfCatergories: {
     width: '100%',
     justifyContent: 'space-between',
     flexDirection: 'row',
-  },
-
-  //styling for modal container
-  modalView: {
-    marginTop: 50,
-    backgroundColor: colors.primary50,
-    borderRadius: 20,
-  },
-  modalTitle: {
-    justifyContent: 'space-between',
-    backgroundColor: colors.white,
-    paddingVertical: spacing.base,
-    paddingHorizontal: spacing.base,
-    flexDirection: 'row',
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-    borderBottomColor: colors.gray400,
-    borderBottomWidth: 0.2,
-  },
-  modalTitleText: {
-    fontSize: typography.fs3,
-    color: colors.primary900,
-    fontWeight: typography.fwBold,
-    paddingTop: spacing.smallest,
-  },
-  closeButton: {
-    width: 25,
-    height: 25,
-    alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
-    shadowColor: colors.gray900,
-    shadowOpacity: 0.2,
-    borderRadius: 100,
-    backgroundColor: colors.primary50,
-  },
-  closeButtonText: {
-    color: colors.primary900,
-    fontSize: 20,
-    fontWeight: typography.fwMedium,
   },
 });
 export default ServiceScreen;

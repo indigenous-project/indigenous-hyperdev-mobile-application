@@ -1,15 +1,13 @@
 //OrganizationScreen module
 
 // import packages
-import React, {useEffect, useState} from 'react';
-import {Card, CardItem, Text, Body, Right, View} from 'native-base';
-import {Image, Linking, StyleSheet} from 'react-native';
+import React from 'react';
+import {Card, CardItem, Text, Body, Right, Button} from 'native-base';
+import {Image, StyleSheet} from 'react-native';
 import {colors, spacing, themes, typography} from '../styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Hyperlink from 'react-native-hyperlink';
-import {Rating} from 'react-native-ratings';
 
 const OrganizationsCard = (props) => {
+
   let imagePath = getImage(props.image);
   //to get the ratings from the review
   function getRating(reviews) {
@@ -46,82 +44,28 @@ const OrganizationsCard = (props) => {
       `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
     );
   };
+
   return (
     <Card style={styles.cardsView}>
       <CardItem cardBody style={styles.border}>
         <Image
-          source={
-            imagePath !== undefined
-              ? {uri: getImage(props.image)}
-              : require('../testImages/noImageAvailable.jpeg')
-          }
+          source={{
+            uri: props.image,
+          }}
           style={styles.cardImage}
         />
       </CardItem>
       <CardItem style={styles.border}>
         <Body>
-          <Text style={styles.name}>
-            {props.name !== undefined ? props.name : ''}
-          </Text>
-          <Rating
-            readonly
-            style={styles.rating}
-            imageSize={typography.fs2}
-            fractions={1}
-            startingValue={getRating(props.reviews)}
-          />
-          <View style={{flexDirection: 'row'}}>
-            <MaterialCommunityIcons
-              name="earth"
-              size={22}
-              style={styles.earthIcon}
-              color={themes.light.subduedTextColor}
-            />
-            <Hyperlink
-              linkDefault={true}
-              linkStyle={{textDecorationLine: 'underline'}}>
-              <Text style={styles.website}>
-                {props.website !== undefined ? props.website.split('www.') : ''}
-              </Text>
-            </Hyperlink>
-          </View>
+          <Text style={styles.name}>{props.name}</Text>
+          <Text style={styles.rating}>{props.rating}</Text>
+          <Text style={styles.link}>{props.link}</Text>
         </Body>
 
         <Right>
-          <Body
-            style={[
-              props.isIndigenous == true
-                ? styles.typeAndLocationPositionWithIcon
-                : styles.typeAndLocationPosition,
-            ]}>
-            {props.isIndigenous == true ? (
-              <Image
-                style={styles.isIndigenousIcon}
-                source={require('../testImages/indigenousIcon.png')}
-              />
-            ) : null}
-
-            <Text
-              style={[
-                props.isIndigenous == true
-                  ? styles.typeWithisIndigenousIcon
-                  : styles.type,
-              ]}>
-              {props.type}
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <MaterialCommunityIcons
-                name="map-marker"
-                size={22}
-                style={styles.markerIcon}
-                color={themes.light.subduedTextColor}
-              />
-              <Text style={styles.location} onPress={handleGoLink}>
-                {props.location !== undefined
-                  ? props.location.split(',')[0].trim()
-                  : ''}
-              </Text>
-            </View>
+          <Body style={styles.typeAndLocationPosition}>
+            <Text style={styles.type}>{props.type}</Text>
+            <Text style={styles.location}>{props.location}</Text>
           </Body>
         </Right>
       </CardItem>
@@ -146,43 +90,19 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: typography.fs3,
     borderTopRightRadius: typography.fs3,
   },
-  typeAndLocationPosition: {marginTop: 18},
-  typeAndLocationPositionWithIcon: {marginTop: 0},
+  typeAndLocationPosition: {marginTop: 31},
   name: {
     width: 500,
     color: themes.light.primaryColor,
     fontWeight: typography.fwMedium,
-    marginBottom: spacing.smallest,
+    marginBottom: spacing.small,
   },
-  rating: {alignSelf: 'flex-start', marginBottom: spacing.small},
-  markerIcon: {color: colors.primary900, marginRight: 5},
-  earthIcon: {color: colors.primary900, marginRight: 5, bottom: 4},
-  website: {fontSize: typography.fs2},
-  location: {
-    alignSelf: 'flex-end',
-    fontSize: typography.fs2,
-    textDecorationLine: 'underline',
-    color: 'blue',
-  },
+  rating: {alignSelf: 'flex-start', marginBottom: spacing.smaller},
+  link: {alignSelf: 'flex-start'},
+  location: {alignSelf: 'flex-end'},
   type: {
     color: colors.gray500,
     alignSelf: 'flex-end',
-    marginBottom: 5,
-    fontSize: typography.fs2,
-    marginTop: 5,
-  },
-  typeWithisIndigenousIcon: {
-    color: colors.gray500,
-    alignSelf: 'flex-end',
-    marginBottom: 5,
-    fontSize: typography.fs2,
-    marginTop: 5,
-    marginRight: 5,
-  },
-  isIndigenousIcon: {
-    height: 20,
-    width: 20,
-    alignSelf: 'flex-end',
-    marginRight: 5,
+    marginBottom: spacing.smaller,
   },
 });

@@ -112,29 +112,30 @@ function DiscussionScreen({navigation}) {
 
   // useEffect load  new discussion list
   useEffect(() => {
-    discussionGetList(token)
-      .then((response) => {
-        stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
-        if (response) {
-          switch (
-            stateSelector // checking state of Selector
-          ) {
-            case 1:
-              sortDate(response); // filter by date
-              break;
-            case 2:
-              sortMostDiscussed(response); // filter by mostdiscussed
-              break;
-            case 3:
-              sortMyDiscussion(response); // filter by my discussion
-              break;
+    if (token && isFocused)
+      discussionGetList(token)
+        .then((response) => {
+          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+          if (response) {
+            switch (
+              stateSelector // checking state of Selector
+            ) {
+              case 1:
+                sortDate(response); // filter by date
+                break;
+              case 2:
+                sortMostDiscussed(response); // filter by mostdiscussed
+                break;
+              case 3:
+                sortMyDiscussion(response); // filter by my discussion
+                break;
+            }
           }
-        }
-      })
+        })
 
-      .catch((err) => {
-        Alert.alert(err.errors[0].title, err.errors[0].description);
-      });
+        .catch((err) => {
+          Alert.alert(err.errors[0].title, err.errors[0].description);
+        });
   }, [token, reloadData, stateSelector, isFocused]);
 
   // RETURN COMPONENTS

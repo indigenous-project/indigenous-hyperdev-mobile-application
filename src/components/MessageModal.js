@@ -21,7 +21,14 @@ const MessageModal = (props) => {
             size="large"
             style={styles.activityIndicator}
           /> */}
-          <Text>{message}</Text>
+          <Text
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              textAlignVertical: 'center',
+            }}>
+            {message}
+          </Text>
         </View>
       </View>
     </Modal>
@@ -43,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   activityIndicator: {
     alignItems: 'center',

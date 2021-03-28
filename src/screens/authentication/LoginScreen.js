@@ -44,13 +44,10 @@ function LoginScreen({navigation}) {
   const passwordInputRef = createRef();
 
   useEffect(() => {
-    console.log(token);
-
     if (token) {
       setLoading(true);
       userCurrent(token)
         .then((response) => {
-          //console.log(response.data.email);
           setLoading(false); // hide loader
           setUsername(response.email);
           navigation.replace('DrawerRoute'); //  if login already navigate to home page

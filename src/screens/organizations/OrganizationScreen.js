@@ -2,32 +2,27 @@
 
 // import packages
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import {spacing, themes} from '../../styles';
+import {spacing, themes, typography} from '../../styles';
 import OrganizationChips from '../../components/OrganizationChips';
 import OrganizationListViews from '../../components/OrganizationListViews';
 import MapViews from '../../components/MapViews';
 import {View} from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 
-import {organizationGetList} from '../../api/organizations/organizations.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useIsFocused} from '@react-navigation/core';
-
 //function return
-function OrganizationScreen() {
-  const [stateSelector, setStateSelector] = useState(null);
-  const [currentUser, token] = useCurrentUser();
-  const [reloadData, setReloadData] = useState(reloadData);
-  const isFocused = useIsFocused();
-  const [organizationList, setOrganizationList] = useState();
+function OrganizationScreen(props) {
+  const [stateSelector, setStateSelector] = useState('listView');
+  console.log(stateSelector);
 
-  //options for switch selectors
-  const options = [
-    {label: 'List', value: 1},
-    {label: 'Map', value: 2},
+  const viewOptions = [
+    {
+      label: 'List',
+      value: 'listView',
+    },
+    {label: 'Map', value: 'mapView'},
   ];
 
   //useEffect to load organization list
@@ -44,7 +39,7 @@ function OrganizationScreen() {
       });
   }, [token, reloadData, stateSelector, isFocused]);
 
-  //dynamic data
+
   const data = {
     name: 'North Bay Medical Care',
     rating: '5.0',
@@ -54,8 +49,6 @@ function OrganizationScreen() {
     image:
       'https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80',
   };
-  if (!organizationList) return null;
-
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -72,36 +65,27 @@ function OrganizationScreen() {
       {/* Custom Switch Selectors */}
       <View style={styles.switchView}>
         <SwitchSelector
-          options={options}
+          options={viewOptions}
           initial={0}
           textColor={themes.light.primaryColor}
           bold={true}
           borderRadius={10}
+          animationDuration={200}
           height={27}
           selectedColor={themes.light.inverseTextColor}
           buttonColor={themes.light.primaryColor}
-          onPress={(value) => {
-            switch (value) {
-              case 1:
-                // list view of the orgnizations;
-                setStateSelector(1);
-                break;
-
-              case 2:
-                // map view of the orgnizations;
-                setStateSelector(2);
-                break;
-            }
-          }}
+          onPress={selectedView}
         />
       </View>
-      {stateSelector == 1 ? (
+
+      {stateSelector == 'listView' ? (
         // List View
-        <OrganizationListViews organizationList={organizationList} />
-      ) : stateSelector == 2 ? (
-        //  Map View
+        <OrganizationListViews listofData={data} />
+      ) : stateSelector == 'mapView' ? (
+        //  Map View 
         <MapViews
           organizationList={organizationList}
+
         />
       ) : null}
     </SafeAreaView>
