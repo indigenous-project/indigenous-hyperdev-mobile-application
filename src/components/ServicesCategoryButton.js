@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { colors, typography, spacing } from '../styles';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {colors, typography, spacing} from '../styles';
 
 //card to display category button
 export default function ServicesCategoryButton(props) {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: 100,
-    marginBottom: spacing.base
+    marginBottom: spacing.base,
   },
 
   categoryButton: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
