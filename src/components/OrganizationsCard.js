@@ -7,6 +7,44 @@ import {Image, StyleSheet} from 'react-native';
 import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationsCard = (props) => {
+
+  let imagePath = getImage(props.image);
+  //to get the ratings from the review
+  function getRating(reviews) {
+    let totalReviews = 0;
+    //loop through the reviews
+    reviews.forEach((rev) => {
+      //add all the reviews of an organization
+      totalReviews += rev.score;
+    });
+
+    // condition whether there is reviews
+    if (reviews.length) {
+      //divide the total reviews by length of the array
+      totalReviews = totalReviews / reviews.length;
+    }
+    return totalReviews;
+  }
+
+  //to get the image of organization
+  function getImage(image) {
+    let path;
+    //loop through the image array
+    image.forEach((img) => {
+      //get the path of the image
+      path = img.path;
+    });
+
+    return path;
+  }
+
+  //function handle when user tap on link that navigate to google map with keyword search location near my location
+  const handleGoLink = () => {
+    Linking.openURL(
+      `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
+    );
+  };
+
   return (
     <Card style={styles.cardsView}>
       <CardItem cardBody style={styles.border}>
