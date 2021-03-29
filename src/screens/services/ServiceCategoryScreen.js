@@ -1,12 +1,20 @@
-import { SecretsManager, ServiceCatalog } from 'aws-sdk';
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Pressable } from 'react-native';
-import { serviceGetList } from '../../api/services/services.api';
-import { spacing, colors, typography } from '../../styles';
+import {SecretsManager, ServiceCatalog} from 'aws-sdk';
+import React, {useEffect, useState} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+} from 'react-native';
+import {serviceGetList} from '../../api/services/services.api';
+import {spacing, colors, typography} from '../../styles';
 import ServicesCard from '../../components/ServicesCard';
-import ServiceDetail from '../../components/ServiceDetail'
+import ServiceDetail from '../../components/ServiceDetail';
 
-const ServiceCategoryScreen = ({ navigate, route }) => {
+const ServiceCategoryScreen = ({navigate, route}) => {
   // console.log(props)
   const token = route.params.token;
   const [selectedService, setSelctedService] = useState(null);
@@ -15,10 +23,9 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
   const [filterServices, setFilteredServices] = useState(null);
 
   const filterServiceByCategory = (data) => {
-    const array = data
-      .filter((item) => {
-        return item.category.name === serviceId;
-      });
+    const array = data.filter((item) => {
+      return item.category.name === serviceId;
+    });
     setFilteredServices(array);
   };
 
@@ -39,24 +46,25 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
   if (!filterServices) return null;
   // console.log(filterServices)
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
-
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <View style={styles.container}>
         <Text style={styles.heading}>{serviceId}</Text>
 
         {filterServices
           ? filterServices.map((service) => (
-            <TouchableOpacity
-              onPress={() => setSelctedService(service._id) & setModalVisible(true)}
-              key={service._id}>
-              <ServicesCard
-                key={service._id}
-                title={service.name}
-                name={service.contact.email}
-                description={service.contact.phone}
-              />
-            </TouchableOpacity>
-          ))
+              <TouchableOpacity
+                onPress={() =>
+                  setSelctedService(service._id) & setModalVisible(true)
+                }
+                key={service._id}>
+                <ServicesCard
+                  key={service._id}
+                  title={service.name}
+                  name={service.contact.email}
+                  description={service.contact.phone}
+                />
+              </TouchableOpacity>
+            ))
           : null}
       </View>
 
@@ -68,33 +76,34 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        {filterServices.filter(function (service) {
-          return service._id === selectedService;
-        }).map((service) => (
-          <View style={styles.modalView} key={service._id}>
-            <View style={styles.modalTitle}>
+        {filterServices
+          .filter(function (service) {
+            return service._id === selectedService;
+          })
+          .map((service) => (
+            <View style={styles.modalView} key={service._id}>
+              <View style={styles.modalTitle}>
+                <View>
+                  <Text style={styles.modalTitleText}>{service.name}</Text>
+                </View>
 
-              <View>
-                <Text style={styles.modalTitleText}>{service.name}</Text>
+                <Pressable
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(!modalVisible)}
+                  key={service._id}>
+                  <Text style={styles.buttonText}>x</Text>
+                </Pressable>
               </View>
-
-              <Pressable
-                style={styles.closeButton}
-                onPress={() => setModalVisible(!modalVisible)}
-                key={service._id}>
-                <Text style={styles.buttonText}>x</Text>
-              </Pressable>
+              <ServiceDetail
+                serviceProviderName={'Service Provider'}
+                serviceProviderPosition={'Service Provider Position'}
+                contactEmail={service.contact.email}
+                contactPhone={service.contact.phone}
+                description={service.description}
+                media={service.media}
+              />
             </View>
-            <ServiceDetail
-              serviceProviderName={"Service Provider"}
-              serviceProviderPosition={"Service Provider Position"}
-              contactEmail={service.contact.email}
-              contactPhone={service.contact.phone}
-              description={service.description}
-              media={service.media}
-            />
-          </View>
-        ))}
+          ))}
       </Modal>
     </SafeAreaView>
   );
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     padding: spacing.base,
     backgroundColor: colors.white,
     marginBottom: spacing.small,
-    height: '100%'
+    height: '100%',
   },
   heading: {
     color: colors.primary900,
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     borderBottomColor: colors.gray900,
-    borderBottomWidth: 0.2
+    borderBottomWidth: 0.2,
   },
   modalTitleText: {
     fontSize: typography.fs4,
@@ -145,7 +154,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
