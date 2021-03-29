@@ -31,22 +31,22 @@ function AskQuestionScreen({navigation}) {
   const [currentUser, token] = useCurrentUser();
   const isFocused = useIsFocused();
 
-  const handleSend = (data) => {
-    messageAdd(token, data)
-      .then(() => setMessage(''))
-      .catch(console.log);
-  };
-  console.log(listMessage);
-  useEffect(() => {
-    if (token && isFocused) {
-      messageGetList(token, {
-        senderId: currentUser._id,
-        receiverId: '605030fddeae69a9ee1cc593',
-      })
-        .then(setListMessage)
-        .catch(console.log);
-    }
-  }, [token, currentUser, isFocused]);
+  // const handleSend = (data) => {
+  //   messageAdd(token, data)
+  //     .then(() => setMessage(''))
+  //     .catch(console.log);
+  // };
+  // console.log(listMessage);
+  // useEffect(() => {
+  //   if (token && isFocused) {
+  //     messageGetList(token, {
+  //       senderId: currentUser._id,
+  //       receiverId: '605030fddeae69a9ee1cc593',
+  //     })
+  //       .then(setListMessage)
+  //       .catch(console.log);
+  //   }
+  // }, [token, currentUser, isFocused]);
 
   return (
     <SafeAreaView
@@ -63,7 +63,7 @@ function AskQuestionScreen({navigation}) {
         </View>
 
         <ScrollView style={styles.scrollView}>
-          {listMessage
+          {/* {listMessage
             ? listMessage.map((chat) =>
                 chat.sender._id === currentUser._id ? (
                   <View key={chat._id} style={styles.myChat}>
@@ -81,8 +81,8 @@ function AskQuestionScreen({navigation}) {
                   </View>
                 ),
               )
-            : null}
-          {/* <View style={styles.myChat}>
+            : null} */}
+          <View style={styles.myChat}>
             <Text style={styles.myText}>
               Hello! I would like to get more information about your recent post
               related to scholarships.
@@ -93,7 +93,7 @@ function AskQuestionScreen({navigation}) {
               Sounds good. You can get more information from the following link:
               www.northbayschorships.ca{' '}
             </Text>
-          </View> */}
+          </View>
         </ScrollView>
         <View style={styles.bottomContainer}>
           <View style={styles.inputContainer}>
