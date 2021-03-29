@@ -1,4 +1,7 @@
-import React, {Component} from 'react';
+// News Detail Screen
+
+// Import Packages
+import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -15,11 +18,36 @@ import {
   Left,
   Body,
 } from 'native-base';
-
+;
+import {postGetDetail} from '../../api/news/news.api';
+import {formatDate} from '../../modules/date.format';
+import {useIsFocused} from '@react-navigation/core';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
 
-function NewsDetailScreen(navigate) {
+// function return
+function NewsDetailScreen({ navigate, route }) {
+  const theme = themes.light;
+  const isFocused = useIsFocused();
+  const [posts, setPosts] = useState(null);
+  const token = route.params.token;
+  const postId = route.params.postId;
+
+  // fetching data
+  useEffect(() => {
+    postGetDetail(token, postId)
+      .then(response => {
+        setPosts(response);
+      })
+
+      .catch(err => {
+        Alert.alert(err.errors[0].title, err.errors[0].description);
+      });
+  }, [token, postId]);
+
+  if (!posts) return null;
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -27,36 +55,28 @@ function NewsDetailScreen(navigate) {
         <View style={styles.headerStyle}>
           <View>
             <Text style={styles.title}>
-              North Bay expands its Education Opportunities for school kids
+             {posts.title}
             </Text>
-            <Text style={styles.date}>Posted Feb 10, 2021</Text>
+            <Text style={styles.date}>{formatDate(posts.lastModifiedDate)}</Text>
 
             <Image
               source={{
-                uri:
-                  'https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80',
+                uri: posts.medias.path
               }}
               style={styles.image}
             />
           </View>
-          <Text style={styles.description}>
-            There will be two rounds of judging. The purpose of the first round
-            will be to select finalists who will be presenting live to a panel
-            of industry and senior Algonquin College judges. All submitted
-            virtual posters will be judged by a team of internal judges.
-            Feedback will be available to all teams if requested. You’ll also
-            find a blank copy of the judging form attached to this email. After
-            the first round, finalists will be contacted in advance of the
-            showcase to ensure their availability. If a team does not respond
-            within the allocated time or is unavailable to present in the live
-            showcase on Friday, December 11th, an alternate team will be
-            selected. ind a blank copy of the judging form attached to this
-            email. After the first round, finalists will be contacted in advance
-            of the showcase to ensure their availability. If a team does not
-            respond within the allocated time or is unavailable to present in
-            the live showcase on Friday, December 11th, an alternate team will
-            be selected.
-          </Text>
+         <Text>
+          <WebView 
+          style={styles.description}
+          originWhitelist={['*']}
+          source={{
+            html: `<section style="font-size:30">${decodeHTML(
+              posts.description,
+            )}</section>`,
+          }}
+        />
+         </Text>
         </View>
       </ScrollView>
       <View style={{backgroundColor: colors.white}}>
@@ -87,9 +107,12 @@ const styles = StyleSheet.create({
     color: colors.gray900,
   },
   description: {
-    fontSize: typography.fs3,
+    width: 400,
+    height: 300,
+    marginTop: 20,
+    fontSize: 50,
     lineHeight: typography.lh3,
-    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
   },
   image: {
     height: 150,
