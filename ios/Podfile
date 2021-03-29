@@ -14,7 +14,7 @@ target 'IndigenousBridge' do
 
 
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
 
   target 'IndigenousBridgeTests' do
     inherit! :complete
