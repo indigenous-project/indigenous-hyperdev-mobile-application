@@ -4,7 +4,6 @@ import * as environment_variable from '../../../environment_variable.js';
 
 // Get a detail of a question: need token, text of message as body
 export const messageAdd = async (token, body) => {
-  body.receiver = '605030fddeae69a9ee1cc593';
   const url = `${environment_variable.BASE_API}/api/messages/add`;
   const response = await fetch(url, {
     method: 'POST',
@@ -27,8 +26,8 @@ export const messageAdd = async (token, body) => {
 };
 
 // Get all messages: need token, {senderId, receiverId}
-export const messageGetList = async (token, {senderId, receiverId}) => {
-  const url = `${environment_variable.BASE_API}/api/messages/list/${senderId}/${receiverId}`;
+export const messageGetList = async (token, {senderId}) => {
+  const url = `${environment_variable.BASE_API}/api/messages/list/${senderId}/admin`;
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors',
