@@ -144,18 +144,42 @@ function HomeScreen({navigation}) {
         <View style={styles.container}>
           <Text style={styles.heading}>Popular Service Category</Text>
           <View style={styles.popularServices}>
-            <ServicesCategoryButton
-              icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
-              name="Culture"
-            />
-            <ServicesCategoryButton
-              icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
-              name="Government/ Legal"
-            />
-            <ServicesCategoryButton
-              icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
-              name="Mental Health/ Addiction"
-            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Services and Programs', {
+                  name: 'Culture',
+                  token: token,
+                });
+              }}>
+              <ServicesCategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
+                name="Culture"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Services and Programs', {
+                  name: 'Government/ Legal',
+                  token: token,
+                });
+              }}>
+              <ServicesCategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
+                name="Government/ Legal"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Services and Programs', {
+                  name: 'Mental Health/ Addiction',
+                  token: token,
+                });
+              }}>
+              <ServicesCategoryButton
+                icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
+                name="Mental Health/ Addiction"
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

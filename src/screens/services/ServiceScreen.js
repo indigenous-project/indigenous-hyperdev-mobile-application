@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   View,
@@ -11,18 +11,18 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import { themes, spacing, typography, colors } from '../../styles';
-import { serviceGetList } from '../../api/services/services.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
+import {themes, spacing, typography, colors} from '../../styles';
+import {serviceGetList} from '../../api/services/services.api';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 // import ServiceCategoriesList from '../../components/ServiceCategoriesList';
-import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
+import {useCategoryGeneral} from '../../contexts/categoriesGeneralContext';
 
 //function return
-function ServiceScreen({ navigation }) {
+function ServiceScreen({navigation}) {
   const [services, setServices] = useState(null);
   // const [category, setCategory] = useState(null);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
@@ -42,43 +42,53 @@ function ServiceScreen({ navigation }) {
   }, [token]);
 
   if (categoriesExpanded == false) {
-    categoriesGeneral.length = 6
+    categoriesGeneral.length = 6;
   }
 
   if (!services) return null;
-  function renderItem({ item }) {
+  function renderItem({item}) {
     return categoriesGeneral ? (
-      <View style={{ width: '25%', marginHorizontal: spacing.base, marginVertical: spacing.smallest }}>
+      <View
+        style={{
+          width: '25%',
+          marginHorizontal: spacing.base,
+          marginVertical: spacing.smallest,
+        }}>
         <Pressable
-          onPress={() => navigation.navigate('Services and Programs', {
-            name: item.name,
-            token: token
-          })}>
+          onPress={() =>
+            navigation.navigate('Services and Programs', {
+              name: item.name,
+              token: token,
+            })
+          }>
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
-            category={{ id: item._id, name: item.name }}
+            category={{id: item._id, name: item.name}}
           />
         </Pressable>
       </View>
     ) : null;
   }
   return (
+
     <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
       {/* <ScrollView > */}
       <View>
+
         <FocusedStatusBar barStyle="light-content" />
 
         {/* Services by category template */}
         <View style={styles.container}>
           <View style={styles.titleBlock}>
             <Text style={styles.heading}>Services by Category</Text>
-            <Text onPress={() => setCategoriesExpanded(!categoriesExpanded)} >
+            <Text onPress={() => setCategoriesExpanded(!categoriesExpanded)}>
               See All
             </Text>
           </View>
         </View>
         <FlatList
+
           style={{
             backgroundColor: colors.white, marginBottom: spacing.base,
             paddingVertical: spacing.smaller
@@ -124,7 +134,6 @@ function ServiceScreen({ navigation }) {
   );
 }
 const styles = StyleSheet.create({
-
   // Services by category styles
   container: {
     padding: spacing.base,
@@ -135,6 +144,7 @@ const styles = StyleSheet.create({
   //   backgroundColor: colors.white,
   //   marginTop: spacing.base
   // },
+
   heading: {
     color: colors.primary900,
     paddingBottom: spacing.smallest,
@@ -145,7 +155,7 @@ const styles = StyleSheet.create({
   titleBlock: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '95%'
+    width: '95%',
   },
   groupOfCatergories: {
     width: '100%',
