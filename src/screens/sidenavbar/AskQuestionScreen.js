@@ -1,9 +1,9 @@
 //AskQuestionScreen.js
 
 // import packages
-import React from 'react';
+import React, {useState} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -13,21 +13,48 @@ import {
   KeyboardAvoidingView,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { colors, themes, typography, spacing } from '../../styles';
+
+import {colors, themes, typography, spacing} from '../../styles';
+import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {messageAdd, messageGetList} from '../../api/messages/messages.api';
+import {useEffect} from 'react/cjs/react.development';
+import {useIsFocused} from '@react-navigation/core';
 
 //function return
-function AskQuestionScreen(props) {
+function AskQuestionScreen({navigation}) {
   const theme = themes.light;
+  const [message, setMessage] = useState('');
+  const [listMessage, setListMessage] = useState(null);
+  const [currentUser, token] = useCurrentUser();
+  const isFocused = useIsFocused();
+
+  const handleSend = (data) => {
+    messageAdd(token, data)
+      .then(() => setMessage(''))
+      .catch(console.log);
+  };
+  console.log(listMessage);
+  useEffect(() => {
+    if (token && isFocused) {
+      messageGetList(token, {
+        senderId: currentUser._id,
+        receiverId: '605030fddeae69a9ee1cc593',
+      })
+        .then(setListMessage)
+        .catch(console.log);
+    }
+  }, [token, currentUser, isFocused]);
 
   return (
     <SafeAreaView
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-        <View
-          style={styles.headerContainer}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+        <BackButtonHeaderLeft navigationProps={navigation} />
+        <View style={styles.headerContainer}>
           <Image
             style={styles.topIcon}
             source={require('../../testImages/userIcon.png')}
@@ -36,18 +63,54 @@ function AskQuestionScreen(props) {
         </View>
 
         <ScrollView style={styles.scrollView}>
-          <View style={styles.myChat}>
-            <Text style={styles.myText}>Hello! I would like to get more information about your recent post related to scholarships.</Text>
+          {listMessage
+            ? listMessage.map((chat) =>
+                chat.sender._id === currentUser._id ? (
+                  <View key={chat._id} style={styles.myChat}>
+                    <Text style={styles.myText}>
+                      Hello! I would like to get more information about your
+                      recent post related to scholarships.
+                    </Text>
+                  </View>
+                ) : (
+                  <View key={chat._id} style={styles.adminChat}>
+                    <Text style={styles.adminText}>
+                      Sounds good. You can get more information from the
+                      following link: www.northbayschorships.ca{' '}
+                    </Text>
+                  </View>
+                ),
+              )
+            : null}
+          {/* <View style={styles.myChat}>
+            <Text style={styles.myText}>
+              Hello! I would like to get more information about your recent post
+              related to scholarships.
+            </Text>
           </View>
           <View style={styles.adminChat}>
-            <Text style={styles.adminText}>Sounds good. You can get more information from the following link: www.northbayschorships.ca </Text>
-          </View>
+            <Text style={styles.adminText}>
+              Sounds good. You can get more information from the following link:
+              www.northbayschorships.ca{' '}
+            </Text>
+          </View> */}
         </ScrollView>
         <View style={styles.bottomContainer}>
           <View style={styles.inputContainer}>
-            <TextInput style={styles.newInput} placeholder="Message" />
+            <TextInput
+              style={styles.newInput}
+              autoCapitalize="sentences"
+              placeholder="Message"
+              value={message}
+              multiline
+              numberOfLines={47}
+              scrollEnabled={false}
+              onChangeText={setMessage}
+            />
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleSend({text: message})}>
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
         </View>
@@ -59,14 +122,14 @@ function AskQuestionScreen(props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   headerContainer: {
     height: 70,
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     backgroundColor: colors.white,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
     justifyContent: 'center',
   },
   heading: {
@@ -82,11 +145,11 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'white',
     borderRadius: 100,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   scrollView: {
     paddingVertical: spacing.base,
-    width: '100%'
+    width: '100%',
   },
   myChat: {
     width: '70%',
@@ -96,13 +159,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginVertical: spacing.smaller,
     backgroundColor: colors.primary900,
-    marginHorizontal: spacing.smallest
+    marginHorizontal: spacing.smallest,
   },
   myText: {
     fontSize: typography.fs3,
     lineHeight: typography.lh3,
     color: colors.white,
-    paddingTop: spacing.small
+    paddingTop: spacing.small,
   },
   adminChat: {
     width: '70%',
@@ -112,13 +175,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginVertical: spacing.smaller,
     backgroundColor: colors.primary50,
-    marginHorizontal: spacing.smallest
+    marginHorizontal: spacing.smallest,
   },
   adminText: {
     fontSize: typography.fs3,
     lineHeight: typography.lh3,
     color: colors.gray900,
-    paddingTop: spacing.small
+    paddingTop: spacing.small,
   },
   bottomContainer: {
     // marginBottom: spacing.hairline,
@@ -126,32 +189,33 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.smallest,
     paddingHorizontal: spacing.base,
     flexDirection: 'row',
-    backgroundColor: colors.gray50
+    backgroundColor: colors.gray50,
   },
   inputContainer: {
     width: '85%',
     borderColor: colors.gray900,
     borderWidth: 0.2,
-    borderRadius: 100,
-    height: 40,
-    backgroundColor: colors.white
+    borderRadius: 40 / 2,
+    maxHeight: 300,
+    backgroundColor: colors.white,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   newInput: {
-    height: 25,
-    padding: spacing.large,
+    paddingVertical: spacing.smaller,
+    paddingHorizontal: spacing.smaller,
     fontWeight: typography.fwMedium,
     fontSize: typography.sf3,
   },
   button: {
-    width: '15%'
+    width: '15%',
   },
   buttonText: {
     paddingVertical: spacing.small,
     paddingLeft: spacing.small,
     color: 'blue',
-    fontSize: typography.fs3
-  }
+    fontSize: typography.fs3,
+  },
 });
-
 
 export default AskQuestionScreen;
