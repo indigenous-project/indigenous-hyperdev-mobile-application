@@ -31,22 +31,21 @@ function AskQuestionScreen({navigation}) {
   const [currentUser, token] = useCurrentUser();
   const isFocused = useIsFocused();
 
-  // const handleSend = (data) => {
-  //   messageAdd(token, data)
-  //     .then(() => setMessage(''))
-  //     .catch(console.log);
-  // };
-  // console.log(listMessage);
-  // useEffect(() => {
-  //   if (token && isFocused) {
-  //     messageGetList(token, {
-  //       senderId: currentUser._id,
-  //       receiverId: '605030fddeae69a9ee1cc593',
-  //     })
-  //       .then(setListMessage)
-  //       .catch(console.log);
-  //   }
-  // }, [token, currentUser, isFocused]);
+  const handleSend = (data) => {
+    messageAdd(token, data)
+      .then(() => setMessage(''))
+      .catch(console.log);
+  };
+
+  useEffect(() => {
+    if (token && isFocused) {
+      messageGetList(token, {
+        senderId: currentUser._id,
+      })
+        .then(setListMessage)
+        .catch(console.log);
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView
@@ -63,37 +62,19 @@ function AskQuestionScreen({navigation}) {
         </View>
 
         <ScrollView style={styles.scrollView}>
-          {/* {listMessage
+          {listMessage
             ? listMessage.map((chat) =>
-                chat.sender._id === currentUser._id ? (
+                chat.sender ? (
                   <View key={chat._id} style={styles.myChat}>
-                    <Text style={styles.myText}>
-                      Hello! I would like to get more information about your
-                      recent post related to scholarships.
-                    </Text>
+                    <Text style={styles.myText}>{chat.text}</Text>
                   </View>
                 ) : (
                   <View key={chat._id} style={styles.adminChat}>
-                    <Text style={styles.adminText}>
-                      Sounds good. You can get more information from the
-                      following link: www.northbayschorships.ca{' '}
-                    </Text>
+                    <Text style={styles.adminText}>{chat.text}</Text>
                   </View>
                 ),
               )
-            : null} */}
-          <View style={styles.myChat}>
-            <Text style={styles.myText}>
-              Hello! I would like to get more information about your recent post
-              related to scholarships.
-            </Text>
-          </View>
-          <View style={styles.adminChat}>
-            <Text style={styles.adminText}>
-              Sounds good. You can get more information from the following link:
-              www.northbayschorships.ca{' '}
-            </Text>
-          </View>
+            : null}
         </ScrollView>
         <View style={styles.bottomContainer}>
           <View style={styles.inputContainer}>
