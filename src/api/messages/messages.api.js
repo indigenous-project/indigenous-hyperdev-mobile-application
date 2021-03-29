@@ -3,7 +3,8 @@
 import * as environment_variable from '../../../environment_variable.js';
 
 // Get a detail of a question: need token, text of message as body
-export const messageAdd = async (token, {text}) => {
+export const messageAdd = async (token, body) => {
+  body.receiver = '605030fddeae69a9ee1cc593';
   const url = `${environment_variable.BASE_API}/api/messages/add`;
   const response = await fetch(url, {
     method: 'POST',
@@ -13,7 +14,7 @@ export const messageAdd = async (token, {text}) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({text}),
+    body: JSON.stringify(body),
   });
   // handle errors
   if (!response.ok) {
