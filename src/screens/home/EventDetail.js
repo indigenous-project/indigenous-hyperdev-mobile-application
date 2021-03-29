@@ -43,16 +43,15 @@ function EventDetail({navigation, route}) {
 
   useEffect(() => {
     if (event) {
-      event.interestedUsers.forEach(user => {
-        console.log(user._id, currentUser._id);
+      event.interestedUsers.forEach((user) => {
+
         if (user._id === currentUser._id) {
           setIsInterested(true);
           return;
         }
       });
 
-      event.goingUsers.forEach(user => {
-        console.log(user._id, currentUser._id);
+      event.goingUsers.forEach((user) => {
         if (user._id === currentUser._id) {
           setIsGoing(true);
           return;
