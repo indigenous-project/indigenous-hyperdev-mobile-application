@@ -44,6 +44,7 @@ function EventDetail({navigation, route}) {
   useEffect(() => {
     if (event) {
       event.interestedUsers.forEach((user) => {
+
         if (user._id === currentUser._id) {
           setIsInterested(true);
           return;
@@ -59,7 +60,7 @@ function EventDetail({navigation, route}) {
     }
   }, [event, currentUser, isFocused]);
 
-  const handleAskTapButton = (typeButton) => {
+  const handleAskTapButton = typeButton => {
     Alert.alert(
       `Event ${typeButton}`,
       `Are your ${typeButton} ${event.title}?`,
@@ -83,35 +84,35 @@ function EventDetail({navigation, route}) {
 
   const handleInterestedButton = () => {
     eventInterested(token, event._id)
-      .then((response) => {
+      .then(response => {
         if (response) {
           setIsInterested(true);
           Alert.alert('Interested the event');
         }
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   const handleGoingButton = () => {
     eventGoing(token, event._id)
-      .then((response) => {
+      .then(response => {
         if (response) {
           setIsGoing(true);
           Alert.alert('Going the event');
         }
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   //ussEffect fetching data
   useEffect(() => {
     setLoading(true);
     eventGetDetail(token, route.params.eventId)
-      .then((response) => {
+      .then(response => {
         setEvent(response);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
@@ -150,7 +151,7 @@ function EventDetail({navigation, route}) {
           <View style={styles.container}>
             <Text style={styles.heading}>Hosts</Text>
             {event.hosts.length > 0
-              ? event.hosts.map((host) => (
+              ? event.hosts.map(host => (
                   <EventHost
                     key={host._id}
                     name={host.name}
