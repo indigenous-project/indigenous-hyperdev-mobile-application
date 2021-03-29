@@ -6,17 +6,8 @@ import {Image, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
   Text,
   Button,
-  Icon,
-  Left,
-  Body,
 } from 'native-base';
 ;
 import {postGetDetail} from '../../api/news/news.api';
@@ -79,7 +70,7 @@ function NewsDetailScreen({ navigate, route }) {
          </Text>
         </View>
       </ScrollView>
-      <View style={{backgroundColor: colors.white}}>
+      <View style={styles.buttonsGroup}>
         <Button title="Ask Question" style={styles.loginButton} block>
           <Text style={styles.loginText}>Ask Question</Text>
         </Button>
@@ -119,17 +110,26 @@ const styles = StyleSheet.create({
     width: 340,
     flex: 1,
   },
+  buttonsGroup: {
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: colors.white,
+    justifyContent: 'space-around',
+    paddingHorizontal: spacing.base,
+    paddingTop: spacing.base,
+  },
   loginButton: {
-    width: '65%',
-    marginTop: '5%',
-    marginLeft: '15%',
+    borderRadius: 10,
+    marginBottom: spacing.small,
     backgroundColor: colors.primary500,
-    color: '#000',
-    borderRadius: spacing.smaller,
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
   },
   loginText: {
+    alignSelf: 'center',
+    fontSize: typography.fs2,
     color: colors.white,
-    fontWeight: typography.fwSemiBold,
+    fontWeight: typography.fwBold,
   },
 });
 

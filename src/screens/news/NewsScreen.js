@@ -10,19 +10,19 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {WebView} from 'react-native-webview';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import JobCard from '../../components/JobCard';
 import SurveyCard from '../../components/SurveyCard';
 import NewsCard from '../../components/NewsCard';
 import {colors, spacing, themes, typography} from '../../styles';
-
 import {postGetList} from '../../api/news/news.api';
 import {jobGetList} from '../../api/jobs/jobs.api';
 import {surveyGetList} from '../../api/surveys/surveys.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
+import {formatDate} from '../../modules/date.format'
 
 //function return
 function NewsScreen({navigation}) {
@@ -30,7 +30,7 @@ function NewsScreen({navigation}) {
   const isFocused = useIsFocused();
   const [jobs, setJobs] = useState(null);
   const [posts, setPosts] = useState(null);
-  const [surveys, setSurveys] = useState(null);
+  const [survey, setSurveys] = useState(null);
   const [currentUser, token] = useCurrentUser();
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
@@ -42,20 +42,7 @@ function NewsScreen({navigation}) {
     wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
   };
 
-  // function format date: Example Jan 30th, 2021
-  const formatDate = dateString => {
-    const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
-    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
-    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
-    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
-      date,
-    );
-
-    return `${weekday.toUpperCase()}, ${month} ${day}, ${year}`;
-  };
-
-  // useEffect load  new news list
+  // useEffect load job list
   useEffect(() => {
     jobGetList(token)
       .then(response => {
@@ -67,6 +54,7 @@ function NewsScreen({navigation}) {
       });
   }, [token, reloadData, isFocused]);
 
+  // useEffect load post list
   useEffect(() => {
     postGetList(token)
       .then(response => {
@@ -78,15 +66,14 @@ function NewsScreen({navigation}) {
       });
   }, [token, reloadData, isFocused]);
 
+  // useEffect load survey list
   useEffect(() => {
+    if (token && isFocused)
     surveyGetList(token)
-      .then(response => {
-        setSurveys(response);
-      })
-
-      .catch(err => {
-        Alert.alert(err.errors[0].title, err.errors[0].description);
-      });
+      .then(setSurveys)
+      .catch((err) => 
+        Alert.alert(err.errors[0].title, err.errors[0].description),
+      );
   }, [token, reloadData, isFocused]);
 
   return (
@@ -111,6 +98,7 @@ function NewsScreen({navigation}) {
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('Job Detail', {
+                         job: job,
                           jobId: job._id,
                           token: token,
                         })
@@ -133,8 +121,9 @@ function NewsScreen({navigation}) {
             <Text style={styles.heading}>New Survey</Text>
             <Text>See All</Text>
           </View>
-          {surveys ? (
-            <SurveyCard surveyText={surveys.title}></SurveyCard>
+          {survey ?  ( 
+            <SurveyCard title="Aborginal Peoples Survey Concepts and Methods" />
+
           ) : null}
         </View>
 
@@ -149,13 +138,17 @@ function NewsScreen({navigation}) {
                     })
                   }
                   key={post._id}>
-                  <NewsCard
+                  <NewsCard 
                     title={post.title}
                     date={formatDate(post.lastModifiedDate)}
-                    details={post.details}></NewsCard>
+                    details={post.description}></NewsCard>
                 </TouchableOpacity>
+                
               ))
             : null}
+            <Text>
+          
+         </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
