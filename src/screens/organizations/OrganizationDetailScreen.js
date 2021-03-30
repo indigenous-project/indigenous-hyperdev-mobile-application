@@ -2,7 +2,7 @@
 
 //import packages
 import React from 'react';
-import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {SafeAreaView, StyleSheet, ScrollView, Linking} from 'react-native';
 import {Button, Header, Text, View} from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import OrganizationDetailCard from '../../components/OrganizationDetailCard';
@@ -10,59 +10,63 @@ import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTim
 import OrganizationDetailsContactCard from '../../components/OrganizationDetailsContactCard';
 import {colors, spacing, typography} from '../../styles';
 
-const OrganizationDetailScreen = () => {
+export default function OrganizationDetailScreen({route}) {
+  const organization = route.params.organization;
+  console.log(organization)
+  //function handle when user tap on number that invoke call option
+  function handlePhone() {
+    Linking.openURL(`tel:${organization.contact.phone}`);
+  }
+
+    //function handle when user tap on link that navigate to google map with keyword search location near my location
+    function handleGoLink() {
+      Linking.openURL(
+        `https://maps.google.com/?q=${organization.contact.address.split(',')[0].trim()}`
+      );
+    }
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
-      {/* need to add header */}
-      <Header />
       <ScrollView>
         <View>
           {/* Detail card */}
           <OrganizationDetailCard
-            title="North Bay Medical Care (Walk In Clinic)"
-            rating="5.0"
-            decs="Walk-InClinic In North Bay, Ontario"
-            address="524 Lakshore Dr, North Bay, ON P1A 2E4"
-            image="https://images.unsplash.com/photo-1615484486786-5a3732131c13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80"
+            title={organization.name}
+            reviews={organization.reviews}
+            decs={organization.description}
+            address={organization.contact.address}
+            image={organization.medias}
           />
 
           {/* timings */}
-          <OrganizationDetailsTimeCard timearray="" />
+          <OrganizationDetailsTimeCard openHours={organization.openHours} />
 
           {/* contact details */}
           <OrganizationDetailsContactCard
-            phone=""
-            website=""
-            email=""
-            facebook=""
+            phone={organization.contact.phone}
+            website={organization.contact.website}
+            email={organization.contact.email}
+            facebook={organization.contact.facebook}
           />
         </View>
         {/* buttons */}
         <View style={styles.buttonsView}>
           {/* call button */}
-          <Button
-            style={styles.callButton}
-            onPress={() => {
-              console.log('call button pressed');
-            }}>
+          <Button style={styles.callButton} onPress={handlePhone}>
             <Text style={styles.callButtonText}>Call</Text>
           </Button>
           {/* get direction button */}
           <Button
             style={styles.getDirButton}
-            onPress={() => {
-              console.log('getDirection button pressed');
-            }}>
+            onPress={handleGoLink}>
             <Text style={styles.getDirButtonText}>Get Direction</Text>
           </Button>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
-
-export default OrganizationDetailScreen;
+}
 
 const styles = StyleSheet.create({
   //styling on call and get direction button
