@@ -6,12 +6,22 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Linking
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, spacing, themes, typography } from '../styles';
 
 const ServiceDetail = (props) => {
-  // console.log(props)
+  //function handle when user tap on link that navigate to mail app
+  const handleEmailLink = () => {
+    Linking.openURL(`mailto:${props.contactEmail}`);
+  };
+
+  //function handle when user tap on link that navigate to phone app
+  const handlePhoneLink = () => {
+    Linking.openURL(`tel:${props.contactPhone}`);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView >
@@ -24,12 +34,6 @@ const ServiceDetail = (props) => {
             <Text style={styles.heading}>{props.serviceProviderName}</Text>
             <Text>- {props.serviceProviderPosition}</Text>
           </View>
-          <MaterialCommunityIcons
-            name="heart"
-            size={typography.fs7}
-            color={themes.light.bodyBackgroundColor}
-            style={styles.saveIcon}
-          />
         </View>
 
         <View style={styles.contactContainer}>
@@ -45,17 +49,16 @@ const ServiceDetail = (props) => {
 
         <Text style={styles.description}>{props.description}</Text>
         <TouchableOpacity
-          style={styles.imageButton}
-          onPress={() => getPicturesFromGallery()}>
+          style={styles.imageButton}>
           <Text style={styles.imageButtonText}>See Brochure</Text>
         </TouchableOpacity>
       </ScrollView>
       <View style={styles.buttonsGroup}>
-        <TouchableOpacity
+        <TouchableOpacity onPress={handlePhoneLink}
           style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        <TouchableOpacity onPress={handleEmailLink}
           style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Email</Text>
         </TouchableOpacity>

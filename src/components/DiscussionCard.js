@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {View, Text, StyleSheet} from 'react-native';
-import {colors, typography, spacing, themes} from '../styles';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors, typography, spacing, themes } from '../styles';
 
 import Chips from '../components/Chips';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,17 +16,14 @@ export default function EventCard(props) {
         <Chips key={props.categories_id} name={props.categories.name} />
       ) : null}
       <Text style={styles.cardSubTitle}>{props.description}</Text>
-      <View style={styles.actionContainer}>
-        <Text>
-          <MaterialCommunityIcons
-            name="wechat"
-            size={24}
-            color={themes.light.primaryColor}
-          />
-          {` ${props.replies.length} Replies`}
-        </Text>
-        <Text>Save</Text>
-      </View>
+      <Text style={styles.actionContainer}>
+        <MaterialCommunityIcons
+          name="wechat"
+          size={24}
+          color={themes.light.primaryColor}
+        />
+        {` ${props.replies.length} Replies`}
+      </Text>
     </View>
   );
 }

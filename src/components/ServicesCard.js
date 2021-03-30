@@ -16,16 +16,6 @@ const ServicesCard = (props) => {
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.cardText}>-{props.description}</Text>
         </Body>
-        <Right>
-          <TouchableOpacity>
-            <MaterialCommunityIcons
-              name="heart"
-              size={typography.fs7}
-              color={themes.light.bodyBackgroundColor}
-              style={styles.saveIcon}
-            />
-          </TouchableOpacity>
-        </Right>
       </CardItem>
     </Card>
   );
