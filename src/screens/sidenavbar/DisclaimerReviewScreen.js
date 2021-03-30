@@ -98,10 +98,7 @@ function DisclaimerReviewScreen(props) {
       </ScrollView>
       <View style={styles.bottomButton}>
         <TouchableOpacity
-          disabled={buttonState}
-          style={
-            buttonState ? styles.disableButtonContainer : styles.buttonContainer
-          }
+          style={styles.buttonContainer}
           onPress={() => {
             props.navigation.goBack();
           }}>
