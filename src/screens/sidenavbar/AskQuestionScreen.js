@@ -1,7 +1,7 @@
 //AskQuestionScreen.js
 
 // import packages
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -14,13 +14,13 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 
 import {colors, themes, typography, spacing} from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {messageAdd, messageGetList} from '../../api/messages/messages.api';
-import {useEffect} from 'react/cjs/react.development';
 import {useIsFocused} from '@react-navigation/core';
 
 //function return
@@ -29,12 +29,31 @@ function AskQuestionScreen({navigation}) {
   const [message, setMessage] = useState('');
   const [listMessage, setListMessage] = useState(null);
   const [currentUser, token] = useCurrentUser();
+  const [isSent, setIsSent] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadData, setReloadData] = useState(false);
   const isFocused = useIsFocused();
+  const [listViewRef, setListViewRef] = useState();
 
   const handleSend = (data) => {
     messageAdd(token, data)
-      .then(() => setMessage(''))
+      .then(() => {
+        setMessage('');
+        setIsSent(!isSent);
+      })
       .catch(console.log);
+  };
+
+  // wait time for refresh
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  //handle on refresh
+  const onRefresh = () => {
+    setRefreshing(true); // enable refresh indicator
+    setReloadData(!reloadData); // change the reloadData to re-render new Discussion
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
   };
 
   useEffect(() => {
@@ -45,7 +64,9 @@ function AskQuestionScreen({navigation}) {
         .then(setListMessage)
         .catch(console.log);
     }
-  }, [isFocused]);
+  }, [reloadData, isSent, isFocused]);
+
+  //useEffect(scrollToBottom, [listMessage]);
 
   return (
     <SafeAreaView
@@ -61,7 +82,18 @@ function AskQuestionScreen({navigation}) {
           <Text style={styles.heading}>Ask Question</Text>
         </View>
 
-        <ScrollView style={styles.scrollView}>
+        <ScrollView
+          ref={(ref) => {
+            setListViewRef(ref);
+          }}
+          showsVerticalScrollIndicator={false}
+          onContentSizeChange={() => {
+            listViewRef.scrollToEnd({animated: true});
+          }}
+          style={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           {listMessage
             ? listMessage.map((chat) =>
                 chat.sender ? (
@@ -129,7 +161,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   scrollView: {
-    paddingVertical: spacing.base,
+    paddingVertical: spacing.smallest,
     width: '100%',
   },
   myChat: {

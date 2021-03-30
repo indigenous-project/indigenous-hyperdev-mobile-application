@@ -1,7 +1,7 @@
 //SideNavStack module
 
 // import packages
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {userLogout} from '../api/auth/auth.api';
@@ -13,13 +13,23 @@ import {useSecureStorage} from '../hooks/useSecureStorage';
 import {Alert, Image, View, Text, StyleSheet} from 'react-native';
 import {colors, spacing, typography} from '../styles';
 import {useCurrentUser} from '../contexts/currentUserContext';
+import {Badge} from 'react-native-paper';
+import {useIsDrawerOpen} from '@react-navigation/drawer';
+import {messageGetList} from '../api/messages/messages.api';
 
 //function return
 function SideNavCustomContent(props) {
   const [loading, setLoading] = useState(false);
-  const [isRead, setIsRead] = useAsyncStorage('isRead');
 
   const [currentUser, token] = useCurrentUser();
+  const isOpen = useIsDrawerOpen();
+
+  useEffect(() => {
+    if (isOpen) {
+      //do stuff
+    }
+  }, [isOpen]);
+
   // Function handle when tap logout
   const handleLogout = () => {
     // show Loader
@@ -111,9 +121,15 @@ function SideNavCustomContent(props) {
           />
         )}
       />
+
       <DrawerItem
         style={styles.drawerItem}
-        label="Ask Question"
+        label={() => (
+          <View styles={{flexDirection: 'row'}}>
+            <Badge styles={{flex: 1, marginTop: 10}} size={15} />
+            <Text styles={{flex: 2}}>Ask Questions</Text>
+          </View>
+        )}
         onPress={() => props.navigation.navigate('AskQuestionScreen')}
         labelStyle={styles.labelStyle}
         icon={() => (
@@ -123,14 +139,11 @@ function SideNavCustomContent(props) {
           />
         )}
       />
+
       <DrawerItem
         style={styles.drawerItem}
         label="Discussion Desclaimer"
-        onPress={() =>
-          !isRead
-            ? props.navigation.navigate('DisclaimerScreen')
-            : props.navigation.navigate('DisclaimerReviewScreen')
-        }
+        onPress={() => props.navigation.navigate('DisclaimerReviewScreen')}
         labelStyle={styles.labelStyle}
         icon={() => (
           <Image
