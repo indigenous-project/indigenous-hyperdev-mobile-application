@@ -73,13 +73,15 @@ function CreateDiscussion(props) {
         })
         .then((imageData) => mediaAddImage(token, imageData)) // add media: image in database
         .then((media) => {
-          return {
+          const dicussionObject = {
             // return discussion data object
             title: discussionTitle.trim(),
             description: discussionDescription.trim(),
             medias: [media._id],
-            categories: category ? [category.id] : [],
+            replies: [],
           };
+          category ? (dicussionObject.categories = category.id) : null;
+          return dicussionObject;
         })
         .then((discussionData) => {
           discussionAdd(token, discussionData); // add a discussion in database
@@ -100,8 +102,10 @@ function CreateDiscussion(props) {
       const discussionObject = {
         title: discussionTitle.trim(),
         description: discussionDescription.trim(),
-        categories: category ? [category.id] : [],
+
+        replies: [],
       };
+      category ? (discussionObject.categories = category.id) : null;
       discussionAdd(token, discussionObject)
         .then((response) => {
           setLoading(false); // hide loader
