@@ -1,5 +1,5 @@
-import {SecretsManager, ServiceCatalog} from 'aws-sdk';
-import React, {useEffect, useState} from 'react';
+import { SecretsManager, ServiceCatalog } from 'aws-sdk';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,12 +9,12 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import {serviceGetList} from '../../api/services/services.api';
-import {spacing, colors, typography} from '../../styles';
+import { serviceGetList } from '../../api/services/services.api';
+import { spacing, colors, typography } from '../../styles';
 import ServicesCard from '../../components/ServicesCard';
 import ServiceDetail from '../../components/ServiceDetail';
 
-const ServiceCategoryScreen = ({navigate, route}) => {
+const ServiceCategoryScreen = ({ navigate, route }) => {
   // console.log(props)
   const token = route.params.token;
   const [selectedService, setSelctedService] = useState(null);
@@ -46,25 +46,25 @@ const ServiceCategoryScreen = ({navigate, route}) => {
   if (!filterServices) return null;
   // console.log(filterServices)
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <View style={styles.container}>
         <Text style={styles.heading}>{serviceId}</Text>
 
         {filterServices
           ? filterServices.map((service) => (
-              <TouchableOpacity
-                onPress={() =>
-                  setSelctedService(service._id) & setModalVisible(true)
-                }
-                key={service._id}>
-                <ServicesCard
-                  key={service._id}
-                  title={service.name}
-                  name={service.contact.email}
-                  description={service.contact.phone}
-                />
-              </TouchableOpacity>
-            ))
+            <TouchableOpacity
+              onPress={() =>
+                setSelctedService(service._id) & setModalVisible(true)
+              }
+              key={service._id}>
+              <ServicesCard
+                key={service._id}
+                title={service.name}
+                name={service.contact.providerName}
+                description={service.contact.position}
+              />
+            </TouchableOpacity>
+          ))
           : null}
       </View>
 
@@ -95,8 +95,8 @@ const ServiceCategoryScreen = ({navigate, route}) => {
                 </Pressable>
               </View>
               <ServiceDetail
-                serviceProviderName={'Service Provider'}
-                serviceProviderPosition={'Service Provider Position'}
+                serviceProviderName={service.contact.providerName}
+                serviceProviderPosition={service.contact.position}
                 contactEmail={service.contact.email}
                 contactPhone={service.contact.phone}
                 description={service.description}
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: {width: 3, height: 3},
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
