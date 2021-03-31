@@ -9,6 +9,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -22,7 +23,8 @@ import {jobGetList} from '../../api/jobs/jobs.api';
 import {surveyGetList} from '../../api/surveys/surveys.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
-import {formatDate} from '../../modules/date.format'
+import {formatDate} from '../../modules/date.format';
+import OrganizationChips from '../../components/OrganizationChips';
 
 //function return
 function NewsScreen({navigation}) {
@@ -34,6 +36,22 @@ function NewsScreen({navigation}) {
   const [currentUser, token] = useCurrentUser();
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
+
+  //Methods Region
+  // wait time for refresh
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  // Converting cents to dollars
+  const convertSalary = data => {
+    var dollars = data / 100;
+    dollars = dollars.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'CAD',
+    });
+    return dollars;
+  };
 
   //handle on refresh
   const onRefresh = () => {
@@ -69,18 +87,26 @@ function NewsScreen({navigation}) {
   // useEffect load survey list
   useEffect(() => {
     if (token && isFocused)
-    surveyGetList(token)
-      .then(setSurveys)
-      .catch((err) => 
-        Alert.alert(err.errors[0].title, err.errors[0].description),
-      );
+      surveyGetList(token)
+        .then(setSurveys)
+        .catch(err =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, reloadData, isFocused]);
 
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
-      <ScrollView horizontal={false}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary900}
+          />
+        }
+        horizontal={false}>
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
@@ -98,7 +124,7 @@ function NewsScreen({navigation}) {
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('Job Detail', {
-                         job: job,
+                          job: job,
                           jobId: job._id,
                           token: token,
                         })
@@ -108,7 +134,7 @@ function NewsScreen({navigation}) {
                         title={job.title}
                         posting={job.subTitle}
                         type={job.type}
-                        salary={job.salary}></JobCard>
+                        salary={convertSalary(job.salary)}></JobCard>
                     </TouchableOpacity>
                   ))
                 : null}
@@ -121,13 +147,21 @@ function NewsScreen({navigation}) {
             <Text style={styles.heading}>New Survey</Text>
             <Text>See All</Text>
           </View>
-          {survey ?  ( 
+          {survey ? (
             <SurveyCard title="Aborginal Peoples Survey Concepts and Methods" />
-
           ) : null}
         </View>
 
         <View style={styles.container}>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}>
+            <OrganizationChips category="Categories" />
+            <OrganizationChips category="Indigenous" />
+            <OrganizationChips category="Top-Rated" />
+            <OrganizationChips category="Distance" />
+            <OrganizationChips category="Open-Now" />
+          </ScrollView>
           {posts
             ? posts.map(post => (
                 <TouchableOpacity
@@ -138,17 +172,14 @@ function NewsScreen({navigation}) {
                     })
                   }
                   key={post._id}>
-                  <NewsCard 
+                  <NewsCard
                     title={post.title}
                     date={formatDate(post.lastModifiedDate)}
                     details={post.description}></NewsCard>
                 </TouchableOpacity>
-                
               ))
             : null}
-            <Text>
-          
-         </Text>
+          <Text></Text>
         </View>
       </ScrollView>
     </SafeAreaView>

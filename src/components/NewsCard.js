@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
 import {colors, typography, spacing} from '../styles';
 import {decodeHTML} from '../modules/decode.text';
 import {WebView} from 'react-native-webview';
+import OrganizationChips from '../components/OrganizationChips';
 
 //card to display News
 export default function NewsCard(props) {
