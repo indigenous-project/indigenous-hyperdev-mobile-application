@@ -61,6 +61,7 @@ function AskQuestionScreen({navigation}) {
     wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
   };
 
+  // useEffect fetching list of messages
   useEffect(() => {
     if (token && isFocused) {
       messageGetList(token, {
@@ -71,6 +72,7 @@ function AskQuestionScreen({navigation}) {
     }
   }, [reloadData, isSent, isFocused]);
 
+  //useEffect fetching set meesage to "seen"
   useEffect(() => {
     if (token && listMessage) {
       const listMessageIds = listMessage.map((item) => {
@@ -79,12 +81,10 @@ function AskQuestionScreen({navigation}) {
         }
       });
       messageSeen(token, {messageIds: listMessageIds})
-        .then(console.log)
+        .then()
         .catch(console.log);
     }
   }, [isFocused]);
-
-  //useEffect(scrollToBottom, [listMessage]);
 
   return (
     <SafeAreaView
