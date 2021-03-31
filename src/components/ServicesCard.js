@@ -1,10 +1,10 @@
 //ServiceCard module
 
 // import packages
-import { Card, CardItem, Body, Right } from 'native-base';
+import {Card, CardItem, Body, Right} from 'native-base';
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { spacing, colors, themes, typography } from '../styles';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {spacing, colors, themes, typography} from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ServicesCard = (props) => {
@@ -14,7 +14,9 @@ const ServicesCard = (props) => {
         <Body>
           <Text style={styles.cardTitle}>{props.title}</Text>
           <Text style={styles.name}>{props.name}</Text>
-          <Text style={styles.cardText}>-{props.description}</Text>
+          <Text style={styles.cardText} numberOfLines={2}>
+            - {props.description}
+          </Text>
         </Body>
       </CardItem>
     </Card>
@@ -44,9 +46,9 @@ const styles = StyleSheet.create({
   },
   name: {
     marginVertical: spacing.smaller,
-    color: colors.gray600
+    color: colors.gray600,
   },
   saveIcon: {
-    marginBottom: '30%'
-  }
+    marginBottom: '30%',
+  },
 });
