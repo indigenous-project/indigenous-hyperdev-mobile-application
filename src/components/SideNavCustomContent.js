@@ -15,11 +15,12 @@ import {colors, spacing, typography} from '../styles';
 import {useCurrentUser} from '../contexts/currentUserContext';
 import {Badge} from 'react-native-paper';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
-import {messageGetList} from '../api/messages/messages.api';
+import {messageGetList, messageUnread} from '../api/messages/messages.api';
 
 //function return
 function SideNavCustomContent(props) {
   const [loading, setLoading] = useState(false);
+  const [unreadMessage, setUnreadMessage] = useState(0);
 
   const [currentUser, token] = useCurrentUser();
   const isOpen = useIsDrawerOpen();
@@ -27,9 +28,13 @@ function SideNavCustomContent(props) {
   useEffect(() => {
     if (isOpen) {
       //do stuff
+      console.log('isOpen');
+      messageUnread(token, {senderId: currentUser._id})
+        .then(setUnreadMessage)
+        .catch(console.log);
     }
   }, [isOpen]);
-
+  // console.log(unreadMessage);
   // Function handle when tap logout
   const handleLogout = () => {
     // show Loader
@@ -126,11 +131,18 @@ function SideNavCustomContent(props) {
         style={styles.drawerItem}
         label={() => (
           <View styles={{flexDirection: 'row'}}>
-            <Badge styles={{flex: 1, marginTop: 10}} size={15} />
+            {unreadMessage > 0 ? (
+              <Badge styles={{flex: 1, marginTop: 10}} size={20}>
+                {unreadMessage}
+              </Badge>
+            ) : null}
             <Text styles={{flex: 2}}>Ask Questions</Text>
           </View>
         )}
-        onPress={() => props.navigation.navigate('AskQuestionScreen')}
+        onPress={() => {
+          props.navigation.navigate('AskQuestionScreen');
+          setUnreadMessage(0);
+        }}
         labelStyle={styles.labelStyle}
         icon={() => (
           <Image
