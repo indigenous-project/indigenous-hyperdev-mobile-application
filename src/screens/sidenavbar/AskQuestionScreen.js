@@ -20,8 +20,13 @@ import {
 import {colors, themes, typography, spacing} from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
 import {useCurrentUser} from '../../contexts/currentUserContext';
-import {messageAdd, messageGetList} from '../../api/messages/messages.api';
+import {
+  messageAdd,
+  messageGetList,
+  messageSeen,
+} from '../../api/messages/messages.api';
 import {useIsFocused} from '@react-navigation/core';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //function return
 function AskQuestionScreen({navigation}) {
@@ -65,6 +70,19 @@ function AskQuestionScreen({navigation}) {
         .catch(console.log);
     }
   }, [reloadData, isSent, isFocused]);
+
+  useEffect(() => {
+    if (token && listMessage) {
+      const listMessageIds = listMessage.map((item) => {
+        if ('receiver' in item) {
+          return item._id;
+        }
+      });
+      messageSeen(token, {messageIds: listMessageIds})
+        .then(console.log)
+        .catch(console.log);
+    }
+  }, [isFocused]);
 
   //useEffect(scrollToBottom, [listMessage]);
 
@@ -124,7 +142,12 @@ function AskQuestionScreen({navigation}) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => handleSend({text: message})}>
-            <Text style={styles.buttonText}>Send</Text>
+            <MaterialCommunityIcons
+              style={styles.buttonSend}
+              name="send"
+              color={colors.primary600}
+              size={25}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -223,11 +246,9 @@ const styles = StyleSheet.create({
   button: {
     width: '15%',
   },
-  buttonText: {
+  buttonSend: {
     paddingVertical: spacing.small,
     paddingLeft: spacing.small,
-    color: 'blue',
-    fontSize: typography.fs3,
   },
 });
 
