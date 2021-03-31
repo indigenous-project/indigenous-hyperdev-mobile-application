@@ -47,9 +47,9 @@ const ServiceCategoryScreen = ({navigate, route}) => {
       });
   }, [token]);
 
-  const handleLastOpen = (id) => {
-    if (storeLastOpen[0] !== id && storeLastOpen[1] !== id) {
-      storeLastOpen.unshift(id);
+  const handleLastOpen = (service) => {
+    if (storeLastOpen[0] !== service && storeLastOpen[1] !== service) {
+      storeLastOpen.unshift(service);
       storeLastOpen.length > 2 ? storeLastOpen.pop() : null;
       setStoreLastOpen(storeLastOpen);
     }
