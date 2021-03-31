@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   View,
@@ -11,23 +11,25 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import { themes, spacing, typography, colors } from '../../styles';
-import { serviceGetList } from '../../api/services/services.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
+import {themes, spacing, typography, colors} from '../../styles';
+import {serviceGetList} from '../../api/services/services.api';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 // import ServiceCategoriesList from '../../components/ServiceCategoriesList';
-import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
+import {useCategoryGeneral} from '../../contexts/categoriesGeneralContext';
+import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 
 //function return
-function ServiceScreen({ navigation }) {
+function ServiceScreen({navigation}) {
   const [services, setServices] = useState(null);
   // const [category, setCategory] = useState(null);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [currentUser, token] = useCurrentUser();
   const [categories] = useCategoryGeneral();
+  const [lastOpen, setLastOpen] = useAsyncStorage('lastOpen', []);
 
   const categoriesGeneral = categories.filter(
     (item) => item.type === 'general',
@@ -46,7 +48,7 @@ function ServiceScreen({ navigation }) {
   }
 
   if (!services) return null;
-  function renderItem({ item }) {
+  function renderItem({item}) {
     return categoriesGeneral ? (
       <View
         style={{
@@ -64,18 +66,16 @@ function ServiceScreen({ navigation }) {
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
-            category={{ id: item._id, name: item.name }}
+            category={{id: item._id, name: item.name}}
           />
         </Pressable>
       </View>
     ) : null;
   }
   return (
-
-    <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
+    <SafeAreaView edges={['right', 'left']} style={{flex: 1}}>
       {/* <ScrollView > */}
       <View>
-
         <FocusedStatusBar barStyle="light-content" />
 
         {/* Services by category template */}
@@ -89,8 +89,9 @@ function ServiceScreen({ navigation }) {
         </View>
         <FlatList
           style={{
-            backgroundColor: colors.white, marginBottom: spacing.base,
-            paddingVertical: spacing.smaller
+            backgroundColor: colors.white,
+            marginBottom: spacing.base,
+            paddingVertical: spacing.smaller,
           }}
           data={categoriesGeneral}
           numColumns={3}
@@ -99,18 +100,25 @@ function ServiceScreen({ navigation }) {
         />
 
         {/* last opened template */}
+
         <View style={styles.container}>
           <Text style={styles.heading}>Last Opened</Text>
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
-          <ServicesCard
-            title="A place to Gather"
-            name="Donny Sutherlan"
-            description="A place to Gather (Enjamonjading) Worker"
-          />
+          <ScrollView>
+            {lastOpen.length > 0
+              ? lastOpen.map((service) => (
+                  <ServicesCard
+                    key={service._id}
+                    title={service.name}
+                    name={
+                      service.contact.providerName
+                        ? service.contact.providerName
+                        : '_'
+                    }
+                    description={service.description}
+                  />
+                ))
+              : null}
+          </ScrollView>
         </View>
 
         {/* saved Services template */}
