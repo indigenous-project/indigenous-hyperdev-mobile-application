@@ -8,7 +8,7 @@ export default function SurveyCard(props) {
         <View style={styles.newSurvey}>
             <Image style={styles.image} source={require('../testImages/demoPic.png')} />
             <View style={styles.surveyTitle}>
-                <Text style={styles.surveyText}>{props.surveyText}</Text>
+                <Text style={styles.surveyText}>{props.title}</Text>
                 <TouchableOpacity style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Start Survey</Text>
                 </TouchableOpacity>
