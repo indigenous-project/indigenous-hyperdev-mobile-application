@@ -1,9 +1,9 @@
 //AskQuestionScreen.js
 
 // import packages
-import React, {useState, useEffect, useRef, createRef} from 'react';
+import React, { useState, useEffect, useRef, createRef } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -17,19 +17,19 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import {colors, themes, typography, spacing} from '../../styles';
+import { colors, themes, typography, spacing } from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
-import {useCurrentUser} from '../../contexts/currentUserContext';
+import { useCurrentUser } from '../../contexts/currentUserContext';
 import {
   messageAdd,
   messageGetList,
   messageSeen,
 } from '../../api/messages/messages.api';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //function return
-function AskQuestionScreen({navigation}) {
+function AskQuestionScreen({ navigation }) {
   const theme = themes.light;
   const [message, setMessage] = useState('');
   const [listMessage, setListMessage] = useState(null);
@@ -80,7 +80,7 @@ function AskQuestionScreen({navigation}) {
           return item._id;
         }
       });
-      messageSeen(token, {messageIds: listMessageIds})
+      messageSeen(token, { messageIds: listMessageIds })
         .then()
         .catch(console.log);
     }
@@ -90,14 +90,16 @@ function AskQuestionScreen({navigation}) {
     <SafeAreaView
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
-      <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
-        <BackButtonHeaderLeft navigationProps={navigation} />
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <View style={styles.headerContainer}>
-          <Image
-            style={styles.topIcon}
-            source={require('../../testImages/userIcon.png')}
-          />
-          <Text style={styles.heading}>Ask Question</Text>
+          <BackButtonHeaderLeft navigationProps={navigation} />
+          <View style={headingContainer}>
+            <Image
+              style={styles.topIcon}
+              source={require('../../testImages/userIcon.png')}
+            />
+            <Text style={styles.heading}>Ask Question</Text>
+          </View>
         </View>
 
         <ScrollView
@@ -106,7 +108,7 @@ function AskQuestionScreen({navigation}) {
           }}
           showsVerticalScrollIndicator={false}
           onContentSizeChange={() => {
-            listViewRef.scrollToEnd({animated: true});
+            listViewRef.scrollToEnd({ animated: true });
           }}
           style={styles.scrollView}
           refreshControl={
@@ -114,16 +116,16 @@ function AskQuestionScreen({navigation}) {
           }>
           {listMessage
             ? listMessage.map((chat) =>
-                chat.sender ? (
-                  <View key={chat._id} style={styles.myChat}>
-                    <Text style={styles.myText}>{chat.text}</Text>
-                  </View>
-                ) : (
-                  <View key={chat._id} style={styles.adminChat}>
-                    <Text style={styles.adminText}>{chat.text}</Text>
-                  </View>
-                ),
-              )
+              chat.sender ? (
+                <View key={chat._id} style={styles.myChat}>
+                  <Text style={styles.myText}>{chat.text}</Text>
+                </View>
+              ) : (
+                <View key={chat._id} style={styles.adminChat}>
+                  <Text style={styles.adminText}>{chat.text}</Text>
+                </View>
+              ),
+            )
             : null}
         </ScrollView>
         <View style={styles.bottomContainer}>
@@ -141,7 +143,7 @@ function AskQuestionScreen({navigation}) {
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleSend({text: message})}>
+            onPress={() => handleSend({ text: message })}>
             <MaterialCommunityIcons
               style={styles.buttonSend}
               name="send"
@@ -161,12 +163,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   headerContainer: {
-    height: 70,
+    flexDirection: 'row', width: '100%',
     shadowColor: colors.gray900,
+    height: 70,
+    marginTop: spacing.base,
     shadowOpacity: 0.2,
     backgroundColor: colors.white,
-    shadowOffset: {width: 3, height: 6},
-    justifyContent: 'center',
+    shadowOffset: { width: 3, height: 6 },
+  },
+  headingContainer: {
+    width: '90%',
+    paddingRight: spacing.largest
   },
   heading: {
     color: colors.primary900,
