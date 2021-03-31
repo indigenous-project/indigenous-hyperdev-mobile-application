@@ -1,9 +1,9 @@
 //Event Detail module
 
 // import packages
-import React, {useState, useEffect, useLayoutEffect} from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -16,21 +16,21 @@ import {
 } from 'react-native';
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
-import {colors, themes, typography, spacing} from '../../styles';
+import { colors, themes, typography, spacing } from '../../styles';
 import {
   eventGetDetail,
   eventGoing,
   eventInterested,
 } from '../../api/events/events.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {decodeHTML} from '../../modules/decode.text';
-import {WebView} from 'react-native-webview';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { decodeHTML } from '../../modules/decode.text';
+import { WebView } from 'react-native-webview';
 import Loader from '../../components/Loader';
 import ShareHeader from '../../components/ShareHeader';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 
 //function return
-function EventDetail({navigation, route}) {
+function EventDetail({ navigation, route }) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   const [event, setEvent] = useState(null);
@@ -123,19 +123,19 @@ function EventDetail({navigation, route}) {
   useLayoutEffect(() => {
     event
       ? navigation.setOptions({
-          headerTitle: event.title,
-          headerRight: () => <ShareHeader shareData={event} />,
-        })
+        headerTitle: event.title,
+        headerRight: () => <ShareHeader shareData={event} />,
+      })
       : null;
   }, [navigation, event]);
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
       <Loader loading={loading} />
       {event ? (
         <ScrollView>
-          <Image style={styles.image} source={{uri: event.medias[0].path}} />
+          <Image style={styles.image} source={{ uri: event.medias[0].path }} />
           <EventInfo event={event} />
           <View style={styles.container}>
             <WebView
@@ -153,13 +153,13 @@ function EventDetail({navigation, route}) {
             <Text style={styles.heading}>Hosts</Text>
             {event.hosts.length > 0
               ? event.hosts.map((host) => (
-                  <EventHost
-                    key={host._id}
-                    name={host.name}
-                    type={host.category.name}
-                    logo={host.icon}
-                  />
-                ))
+                <EventHost
+                  key={host._id}
+                  name={host.name}
+                  type={host.category.name}
+                  logo={host.icon}
+                />
+              ))
               : null}
           </View>
         </ScrollView>
@@ -213,12 +213,10 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    width: 400,
-    height: 300,
-    marginTop: 20,
-    fontSize: 50,
+    minWidth: 600,
+    minHeight: 70,
+    marginTop: spacing.base,
     lineHeight: typography.lh3,
-    paddingHorizontal: spacing.small,
   },
 
   //styling for bottom buttons group
