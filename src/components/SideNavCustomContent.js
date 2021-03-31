@@ -1,21 +1,21 @@
 //SideNavStack module
 
 // import packages
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {userLogout} from '../api/auth/auth.api';
-import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { userLogout } from '../api/auth/auth.api';
+import { removeAsyncStorage, useAsyncStorage } from '../hooks/useAsyncStorage';
 import Loader from './Loader';
-import {useState} from 'react/cjs/react.development';
-import {deleteItemAsync} from 'expo-secure-store';
-import {useSecureStorage} from '../hooks/useSecureStorage';
-import {Alert, Image, View, Text, StyleSheet} from 'react-native';
-import {colors, spacing, typography} from '../styles';
-import {useCurrentUser} from '../contexts/currentUserContext';
-import {Badge} from 'react-native-paper';
-import {useIsDrawerOpen} from '@react-navigation/drawer';
-import {messageGetList, messageUnread} from '../api/messages/messages.api';
+import { useState } from 'react/cjs/react.development';
+import { deleteItemAsync } from 'expo-secure-store';
+import { useSecureStorage } from '../hooks/useSecureStorage';
+import { Alert, Image, View, Text, StyleSheet } from 'react-native';
+import { colors, spacing, typography } from '../styles';
+import { useCurrentUser } from '../contexts/currentUserContext';
+import { Badge } from 'react-native-paper';
+import { useIsDrawerOpen } from '@react-navigation/drawer';
+import { messageGetList, messageUnread } from '../api/messages/messages.api';
 
 //function return
 function SideNavCustomContent(props) {
@@ -29,7 +29,7 @@ function SideNavCustomContent(props) {
     if (isOpen) {
       //do stuff
       console.log('isOpen');
-      messageUnread(token, {senderId: currentUser._id})
+      messageUnread(token, { senderId: currentUser._id })
         .then(setUnreadMessage)
         .catch(console.log);
     }
@@ -60,7 +60,7 @@ function SideNavCustomContent(props) {
     }
   };
   return (
-    <DrawerContentScrollView contentContainerStyle={{paddingTop: 0}} {...props}>
+    <DrawerContentScrollView contentContainerStyle={{ paddingTop: 0 }} {...props}>
       <Loader loading={loading} />
       <View style={styles.drawerHeaderContainer}>
         <View style={styles.drawerHeaderContent}>
@@ -90,7 +90,7 @@ function SideNavCustomContent(props) {
           />
         )}
       />
-      <DrawerItem
+      {/* <DrawerItem
         style={styles.drawerItem}
         label="Font Size"
         onPress={() => props.navigation.navigate('FontSizeScreen')}
@@ -101,7 +101,7 @@ function SideNavCustomContent(props) {
             source={require('../testImages/fontSizeIcon.png')}
           />
         )}
-      />
+      /> */}
       <DrawerItem
         style={styles.drawerItem}
         label="About us"
@@ -130,13 +130,13 @@ function SideNavCustomContent(props) {
       <DrawerItem
         style={styles.drawerItem}
         label={() => (
-          <View styles={{flexDirection: 'row'}}>
+          <View styles={{ flexDirection: 'row' }}>
             {unreadMessage > 0 ? (
-              <Badge styles={{flex: 1, marginTop: 10}} size={20}>
+              <Badge styles={{ flex: 1, marginTop: 10 }} size={20}>
                 {unreadMessage}
               </Badge>
             ) : null}
-            <Text styles={{flex: 2}}>Ask Questions</Text>
+            <Text styles={{ flex: 2 }}>Ask Questions</Text>
           </View>
         )}
         onPress={() => {
