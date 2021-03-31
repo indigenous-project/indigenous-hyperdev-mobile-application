@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwMedium,
   },
   image: {
-    height: 160,
+    minHeight: 400,
     width: '100%',
     marginVertical: spacing.smaller,
   },

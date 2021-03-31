@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import {colors, typography, spacing} from '../styles';
+import { colors, typography, spacing } from '../styles';
 
 //card to display upcoming events
 export default function UpdateCard(props) {
@@ -24,7 +24,9 @@ export default function UpdateCard(props) {
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => toggleNumberOfLines()}>
-        <Text style={styles.buttonText}>Read More</Text>
+        {textShown == true ?
+          <Text style={styles.buttonText}>Read Less</Text> :
+          <Text style={styles.buttonText}>Read More</Text>}
       </TouchableOpacity>
     </View>
   );
