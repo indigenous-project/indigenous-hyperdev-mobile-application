@@ -93,7 +93,7 @@ function AskQuestionScreen({ navigation }) {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <View style={styles.headerContainer}>
           <BackButtonHeaderLeft navigationProps={navigation} />
-          <View style={headingContainer}>
+          <View style={styles.headingContainer}>
             <Image
               style={styles.topIcon}
               source={require('../../testImages/userIcon.png')}

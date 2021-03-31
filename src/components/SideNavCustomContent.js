@@ -116,7 +116,7 @@ function SideNavCustomContent(props) {
       />
       <DrawerItem
         style={styles.drawerItem}
-        label="Indigenous People"
+        label="Indigenous Peoples"
         onPress={() => props.navigation.navigate('IndigenousPeopleScreen')}
         labelStyle={styles.labelStyle}
         icon={() => (
