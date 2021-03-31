@@ -26,17 +26,7 @@ function BottomTabScreen(props) {
       tabBarOptions={{
         activeTintColor: theme.primaryColor,
         inactiveTintColor: theme.subduedTextColor,
-      }}
-      // appearance={{
-      //   activeTabBackgrounds: [
-      //     colors.primary300,
-      //     colors.primary300,
-      //     colors.primary300,
-      //     colors.primary300,
-      //     colors.primary300,
-      //   ],
-      // }}
-    >
+      }}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
