@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,8 @@ import {
 import { colors, spacing, themes, typography } from '../styles';
 
 const ServiceDetail = (props) => {
+  const [showImage, setShowImage] = useState(false);
+
   //function handle when user tap on link that navigate to mail app
   const handleEmailLink = () => {
     Linking.openURL(`mailto:${props.contactEmail}`);
@@ -20,6 +22,10 @@ const ServiceDetail = (props) => {
   const handlePhoneLink = () => {
     Linking.openURL(`tel:${props.contactPhone}`);
   };
+
+  const handleShowImage = () => {
+    setShowImage(!showImage)
+  }
 
   return (
     <View style={styles.container}>
@@ -55,10 +61,28 @@ const ServiceDetail = (props) => {
         </View>
 
         <Text style={styles.description}>{props.description}</Text>
-        <TouchableOpacity
-          style={styles.imageButton}>
-          <Text style={styles.imageButtonText}>See Brochure</Text>
-        </TouchableOpacity>
+
+        {props.media.length > 0 & showImage == false ?
+          <TouchableOpacity
+            style={styles.imageButton}
+            onPress={handleShowImage} >
+            <Text style={styles.imageButtonText}>See Brochure</Text>
+          </TouchableOpacity>
+          : null}
+        {props.media.length > 0 & showImage == true ?
+          <TouchableOpacity
+            style={styles.imageButton}
+            onPress={handleShowImage} >
+            <Text style={styles.imageButtonText}>Hide Brochure</Text>
+          </TouchableOpacity>
+          : null}
+        <View>
+          {showImage == true ?
+            <Image
+              style={styles.image}
+              source={{ uri: props.media[0].path }}
+            /> : null}
+        </View>
       </ScrollView>
       <View style={styles.buttonsGroup}>
         <TouchableOpacity onPress={handlePhoneLink}
@@ -133,6 +157,11 @@ const styles = StyleSheet.create({
     fontSize: typography.fs2,
     color: colors.primary900,
     fontWeight: typography.fwMedium,
+  },
+  image: {
+    height: 160,
+    width: '100%',
+    marginVertical: spacing.smaller,
   },
   indigenousIcon: {
     width: 40,

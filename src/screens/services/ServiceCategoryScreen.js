@@ -118,7 +118,7 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
                   contactPhone={service.contact.phone}
                   description={service.description}
                   isIndigenous={service.isIndigenous}
-                  media={service.media}
+                  media={service.medias}
                 />
               </View>
             ))
