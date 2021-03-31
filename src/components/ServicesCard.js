@@ -1,25 +1,30 @@
 //ServiceCard module
 
 // import packages
-import {Card, CardItem, Body, Right} from 'native-base';
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {spacing, colors, themes, typography} from '../styles';
+import { Text, StyleSheet, View, Image } from 'react-native';
+import { spacing, colors, themes, typography } from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ServicesCard = (props) => {
   return (
-    <Card style={styles.cardsContainer}>
-      <CardItem style={styles.cardBorder}>
-        <Body>
+    <View style={styles.cardsContainer}>
+      <View style={styles.content}>
+        <View>
           <Text style={styles.cardTitle}>{props.title}</Text>
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.cardText} numberOfLines={2}>
             - {props.description}
           </Text>
-        </Body>
-      </CardItem>
-    </Card>
+        </View>
+        {props.isIndigenous == true ?
+          <Image
+            style={styles.indigenousIcon}
+            source={require('../testImages/indigenousIcon.png')}
+          />
+          : null}
+      </View>
+    </View>
   );
 };
 
@@ -30,6 +35,9 @@ const styles = StyleSheet.create({
   cardsContainer: {
     borderRadius: spacing.small,
     shadowColor: colors.shadowcolor,
+    backgroundColor: colors.white,
+    padding: spacing.base,
+    marginVertical: spacing.smaller,
     shadowOffset: {
       width: spacing.none,
       height: spacing.smallest,
@@ -38,8 +46,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 7,
   },
-  cardBorder: {
-    borderRadius: spacing.small,
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   cardTitle: {
     fontWeight: typography.fwBold,
@@ -48,7 +57,8 @@ const styles = StyleSheet.create({
     marginVertical: spacing.smaller,
     color: colors.gray600,
   },
-  saveIcon: {
-    marginBottom: '30%',
+  indigenousIcon: {
+    width: 30,
+    height: 30,
   },
 });

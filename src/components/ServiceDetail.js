@@ -8,7 +8,6 @@ import {
   ScrollView,
   Linking
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, spacing, themes, typography } from '../styles';
 
 const ServiceDetail = (props) => {
@@ -25,15 +24,23 @@ const ServiceDetail = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView >
-        <View style={styles.titleContainer}>
-          <Image
-            style={styles.icon}
-            source={require('../testImages/userIcon.png')}
-          />
-          <View>
-            <Text style={styles.heading}>{props.serviceProviderName}</Text>
-            <Text>- {props.serviceProviderPosition}</Text>
+        <View style={styles.content}>
+          <View style={styles.titleContainer}>
+            <Image
+              style={styles.icon}
+              source={require('../testImages/userIcon.png')}
+            />
+            <View>
+              <Text style={styles.heading}>{props.serviceProviderName}</Text>
+              <Text>- {props.serviceProviderPosition}</Text>
+            </View>
           </View>
+          {props.isIndigenous == true ?
+            <Image
+              style={styles.indigenousIcon}
+              source={require('../testImages/indigenousIcon.png')}
+            />
+            : null}
         </View>
 
         <View style={styles.contactContainer}>
@@ -91,9 +98,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginRight: spacing.base,
   },
-  saveIcon: {
-    marginLeft: '15%',
-    marginTop: spacing.smaller
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   contactContainer: {
     marginVertical: spacing.base,
@@ -127,7 +134,10 @@ const styles = StyleSheet.create({
     color: colors.primary900,
     fontWeight: typography.fwMedium,
   },
-
+  indigenousIcon: {
+    width: 40,
+    height: 40,
+  },
   //styling for bottom buttons group
   buttonsGroup: {
     flexDirection: 'row',
