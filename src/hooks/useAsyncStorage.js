@@ -12,7 +12,7 @@ export function useAsyncStorage(key, initialValue) {
       })
       .then(setStoredValue)
       .catch(Alert.alert);
-  }, [key, initialValue]);
+  }, [key]);
 
   const setValue = (value) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;

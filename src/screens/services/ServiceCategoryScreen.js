@@ -1,5 +1,5 @@
-import { SecretsManager, ServiceCatalog } from 'aws-sdk';
-import React, { useEffect, useState } from 'react';
+import {SecretsManager, ServiceCatalog} from 'aws-sdk';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,13 +10,13 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import { serviceGetList } from '../../api/services/services.api';
-import { spacing, colors, typography } from '../../styles';
+import {serviceGetList} from '../../api/services/services.api';
+import {spacing, colors, typography} from '../../styles';
 import ServicesCard from '../../components/ServicesCard';
 import ServiceDetail from '../../components/ServiceDetail';
-import { useAsyncStorage } from '../../hooks/useAsyncStorage';
+import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 
-const ServiceCategoryScreen = ({ navigate, route }) => {
+const ServiceCategoryScreen = ({navigate, route}) => {
   // console.log(props)
   const token = route.params.token;
   const [selectedService, setSelectedService] = useState(null);
@@ -24,7 +24,7 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const serviceId = route.params.name;
   const [filterServices, setFilteredServices] = useState(null);
-  const [storeLastOpen, setStoreLastOpen] = useAsyncStorage('lastOpen', null);
+  const [storeLastOpen, setStoreLastOpen] = useAsyncStorage('lastOpen', []);
 
   const filterServiceByCategory = (data) => {
     const array = data.filter((item) => {
@@ -59,28 +59,28 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
   // console.log(filterServices)
   //console.log('hehehesadasdsadsda');
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <View style={styles.container}>
         <Text style={styles.heading}>{serviceId}</Text>
 
         {filterServices.length > 0
           ? filterServices.map((service) => (
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedService(service._id);
-                setModalVisible(true);
-                handleLastOpen(service);
-              }}
-              key={service._id}>
-              <ServicesCard
-                key={service._id}
-                title={service.name}
-                name={service.contact.providerName}
-                description={service.contact.position}
-                isIndigenous={service.isIndigenous}
-              />
-            </TouchableOpacity>
-          ))
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedService(service._id);
+                  setModalVisible(true);
+                  handleLastOpen(service);
+                }}
+                key={service._id}>
+                <ServicesCard
+                  key={service._id}
+                  title={service.name}
+                  name={service.contact.providerName}
+                  description={service.contact.position}
+                  isIndigenous={service.isIndigenous}
+                />
+              </TouchableOpacity>
+            ))
           : null}
       </View>
 
@@ -94,34 +94,34 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
         }}>
         {filterServices.length > 0
           ? filterServices
-            .filter(function (service) {
-              return service._id === selectedService;
-            })
-            .map((service) => (
-              <View style={styles.modalView} key={service._id}>
-                <View style={styles.modalTitle}>
-                  <View>
-                    <Text style={styles.modalTitleText}>{service.name}</Text>
-                  </View>
+              .filter(function (service) {
+                return service._id === selectedService;
+              })
+              .map((service) => (
+                <View style={styles.modalView} key={service._id}>
+                  <View style={styles.modalTitle}>
+                    <View>
+                      <Text style={styles.modalTitleText}>{service.name}</Text>
+                    </View>
 
-                  <Pressable
-                    style={styles.closeButton}
-                    onPress={() => setModalVisible(!modalVisible)}
-                    key={service._id}>
-                    <Text style={styles.buttonText}>x</Text>
-                  </Pressable>
+                    <Pressable
+                      style={styles.closeButton}
+                      onPress={() => setModalVisible(!modalVisible)}
+                      key={service._id}>
+                      <Text style={styles.buttonText}>x</Text>
+                    </Pressable>
+                  </View>
+                  <ServiceDetail
+                    serviceProviderName={service.contact.providerName}
+                    serviceProviderPosition={service.contact.position}
+                    contactEmail={service.contact.email}
+                    contactPhone={service.contact.phone}
+                    description={service.description}
+                    isIndigenous={service.isIndigenous}
+                    media={service.medias}
+                  />
                 </View>
-                <ServiceDetail
-                  serviceProviderName={service.contact.providerName}
-                  serviceProviderPosition={service.contact.position}
-                  contactEmail={service.contact.email}
-                  contactPhone={service.contact.phone}
-                  description={service.description}
-                  isIndigenous={service.isIndigenous}
-                  media={service.medias}
-                />
-              </View>
-            ))
+              ))
           : null}
       </Modal>
     </SafeAreaView>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,

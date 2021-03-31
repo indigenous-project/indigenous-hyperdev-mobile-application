@@ -27,7 +27,7 @@ const DrawerRoute = () => {
           backBehavior="history"
           drawerType="front"
           hideStatusBar={true}
-          initialRouteName="Home">
+          initialRouteName="BottomTabScreen">
           <Drawer.Screen
             options={{drawerLabel: 'Home'}}
             name="BottomTabScreen"
