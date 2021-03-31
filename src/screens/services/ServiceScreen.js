@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -11,21 +11,21 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import {themes, spacing, typography, colors} from '../../styles';
-import {serviceGetList} from '../../api/services/services.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
+import { themes, spacing, typography, colors } from '../../styles';
+import { serviceGetList } from '../../api/services/services.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
 // import ServiceCategoriesList from '../../components/ServiceCategoriesList';
-import {useCategoryGeneral} from '../../contexts/categoriesGeneralContext';
-import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
+import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
+import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 
 //function return
-function ServiceScreen({navigation}) {
+function ServiceScreen({ navigation }) {
   const [services, setServices] = useState(null);
   // const [category, setCategory] = useState(null);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
@@ -62,7 +62,7 @@ function ServiceScreen({navigation}) {
   }
 
   if (!services) return null;
-  function renderItem({item}) {
+  function renderItem({ item }) {
     return categoriesGeneral ? (
       <View
         style={{
@@ -80,14 +80,14 @@ function ServiceScreen({navigation}) {
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
-            category={{id: item._id, name: item.name}}
+            category={{ id: item._id, name: item.name }}
           />
         </Pressable>
       </View>
     ) : null;
   }
   return (
-    <SafeAreaView edges={['right', 'left']} style={{flex: 1}}>
+    <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
       {/* <ScrollView > */}
       <View>
         <FocusedStatusBar barStyle="light-content" />
@@ -126,17 +126,17 @@ function ServiceScreen({navigation}) {
           <ScrollView>
             {storedValue.length > 0
               ? storedValue.map((service) => (
-                  <ServicesCard
-                    key={service._id}
-                    title={service.name}
-                    name={
-                      service.contact.providerName
-                        ? service.contact.providerName
-                        : '_'
-                    }
-                    description={service.description}
-                  />
-                ))
+                <ServicesCard
+                  key={service._id}
+                  title={service.name}
+                  name={
+                    service.contact.providerName
+                      ? service.contact.providerName
+                      : '_'
+                  }
+                  position={service.contact.position}
+                />
+              ))
               : null}
           </ScrollView>
         </View>
