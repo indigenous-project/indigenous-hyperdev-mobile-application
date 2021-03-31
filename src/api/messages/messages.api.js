@@ -46,3 +46,48 @@ export const messageGetList = async (token, {senderId}) => {
   const {data} = await response.json();
   return data;
 };
+
+// Get unread messages: need token, {senderId, receiverId}
+export const messageUnread = async (token, {senderId}) => {
+  const url = `${environment_variable.BASE_API}/api/messages/unread/${senderId}/admin`;
+  const response = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // handle errors
+  if (!response.ok) {
+    return response.json().then((json) => {
+      throw json;
+    });
+  }
+  const {data} = await response.json();
+  return data;
+};
+
+// set message is seen: need token, array of message id
+export const messageSeen = async (token, body) => {
+  const url = `${environment_variable.BASE_API}/api/messages/seen`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+  // handle errors
+  if (!response.ok) {
+    return response.json().then((json) => {
+      throw json;
+    });
+  }
+  const {data} = await response.json();
+  return data;
+};
