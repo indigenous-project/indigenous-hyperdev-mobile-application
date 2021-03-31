@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
-import {themes, spacing, colors, typography} from '../styles';
-import {Container, Card, CardItem, Body, View} from 'native-base';
+import { Text, StyleSheet } from 'react-native';
+import { themes, spacing, colors, typography } from '../styles';
+import { Container, Card, CardItem, Body, View } from 'native-base';
 
 
 const ServicesProgramCard = (props) => {
@@ -36,7 +36,7 @@ const ServicesProgramCard = (props) => {
 export default ServicesProgramCard;
 
 const styles = StyleSheet.create({
-    textCardContainer: {height: 280},
+  textCardContainer: { height: 280 },
   lastOpened: {
     color: colors.primary900,
     fontSize: typography.fs3,
@@ -61,5 +61,5 @@ const styles = StyleSheet.create({
   cardBorder: {
     borderRadius: spacing.small,
   },
-  cardText: {marginTop: spacing.smaller, marginLeft: spacing.smallest},
+  cardText: { marginTop: spacing.smaller, marginLeft: spacing.smallest },
 });
