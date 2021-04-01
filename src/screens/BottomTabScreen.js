@@ -1,6 +1,6 @@
 //BottomTabScreen.js
 
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // Javascript
 import HomeStack from './home/HomeStack';
@@ -10,7 +10,8 @@ import ServicesStack from './services/ServicesStack';
 import OrganizationStack from './organizations/OrganizationsStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, themes, typography} from '../styles';
-import {StyleSheet, Button} from 'react-native';
+import {StyleSheet, Animated, Dimensions} from 'react-native';
+import BottomItem from '../components/BottomItem';
 
 const theme = themes.light;
 
@@ -32,11 +33,12 @@ function BottomTabScreen(props) {
         component={HomeStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons
-              style={styles.icon}
-              name="home"
+            <BottomItem
+              isCurrent={focused}
+              iconName="home"
               size={size}
               color={color}
+              index={1}
             />
           ),
           // tabBarVisible: !props.route.state?.routes[0]?.state?.index
@@ -47,11 +49,12 @@ function BottomTabScreen(props) {
         component={DiscussionsStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons
-              style={styles.icon}
-              name="card-bulleted-outline"
+            <BottomItem
+              isCurrent={focused}
+              iconName="card-bulleted-outline"
               size={size}
               color={color}
+              index={2}
             />
           ),
           tabStyle: styles.tabBarFocused,
@@ -62,11 +65,18 @@ function BottomTabScreen(props) {
         component={NewsStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons
-              style={styles.icon}
-              name="newspaper-variant-outline"
+            // <MaterialCommunityIcons
+            //   style={styles.icon}
+            //   name="newspaper-variant-outline"
+            //   size={size}
+            //   color={color}
+            // />
+            <BottomItem
+              isCurrent={focused}
+              iconName="newspaper-variant-outline"
               size={size}
               color={color}
+              index={3}
             />
           ),
         }}
@@ -76,11 +86,19 @@ function BottomTabScreen(props) {
         component={ServicesStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons
-              style={styles.icon}
-              name="calendar-outline"
+            // <MaterialCommunityIcons
+            //   style={styles.icon}
+            //   name="calendar-outline"
+            //   size={size}
+            //   color={color}
+            // />
+
+            <BottomItem
+              isCurrent={focused}
+              iconName="calendar-outline"
               size={size}
               color={color}
+              index={4}
             />
           ),
         }}
@@ -90,11 +108,19 @@ function BottomTabScreen(props) {
         component={OrganizationStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            <MaterialCommunityIcons
-              style={styles.icon}
-              name="home-city-outline"
+            // <MaterialCommunityIcons
+            //   style={styles.icon}
+            //   name="home-city-outline"
+            //   size={size}
+            //   color={color}
+            // />
+
+            <BottomItem
+              isCurrent={focused}
+              iconName="home-city-outline"
               size={size}
               color={color}
+              index={5}
             />
           ),
         }}
@@ -125,5 +151,14 @@ const styles = StyleSheet.create({
   icon: {
     marginVertical: 0,
     fontSize: typography.fs6,
+  },
+  slider: {
+    height: 4,
+    position: 'absolute',
+    top: 0,
+    left: 10,
+    backgroundColor: themes.light.primaryColor,
+    borderRadius: 10,
+    width: 50,
   },
 });
