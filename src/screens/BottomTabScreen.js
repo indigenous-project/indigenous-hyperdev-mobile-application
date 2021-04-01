@@ -41,7 +41,6 @@ function BottomTabScreen(props) {
               index={1}
             />
           ),
-          // tabBarVisible: !props.route.state?.routes[0]?.state?.index
         }}
       />
       <Tab.Screen
@@ -57,7 +56,6 @@ function BottomTabScreen(props) {
               index={2}
             />
           ),
-          tabStyle: styles.tabBarFocused,
         }}
       />
       <Tab.Screen
@@ -65,12 +63,6 @@ function BottomTabScreen(props) {
         component={NewsStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            // <MaterialCommunityIcons
-            //   style={styles.icon}
-            //   name="newspaper-variant-outline"
-            //   size={size}
-            //   color={color}
-            // />
             <BottomItem
               isCurrent={focused}
               iconName="newspaper-variant-outline"
@@ -86,13 +78,6 @@ function BottomTabScreen(props) {
         component={ServicesStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            // <MaterialCommunityIcons
-            //   style={styles.icon}
-            //   name="calendar-outline"
-            //   size={size}
-            //   color={color}
-            // />
-
             <BottomItem
               isCurrent={focused}
               iconName="calendar-outline"
@@ -108,13 +93,6 @@ function BottomTabScreen(props) {
         component={OrganizationStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
-            // <MaterialCommunityIcons
-            //   style={styles.icon}
-            //   name="home-city-outline"
-            //   size={size}
-            //   color={color}
-            // />
-
             <BottomItem
               isCurrent={focused}
               iconName="home-city-outline"
