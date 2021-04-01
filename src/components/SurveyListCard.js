@@ -8,7 +8,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Thumbnail} from 'native-base';
 
 const SurveyListCard = props => {
- 
   return (
     <View style={styles.cardsContainer}>
       <View style={styles.content}>
