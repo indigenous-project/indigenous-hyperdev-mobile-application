@@ -1,6 +1,6 @@
 // import statements
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, Button} from 'native-base';
 import {decodeHTML} from '../../modules/decode.text';
@@ -34,7 +34,12 @@ function JobDetailScreen({navigate, route}) {
         />
       </ScrollView>
       <View style={styles.buttonsGroup}>
-        <Button title="Send Email" style={styles.emailButton}>
+        <Button
+          title="Send Email"
+          onPress={() => {
+            Linking.openURL(`mailto:${job.email}`);
+          }}
+          style={styles.emailButton}>
           <Text style={styles.emailText}>Send Email</Text>
         </Button>
       </View>
