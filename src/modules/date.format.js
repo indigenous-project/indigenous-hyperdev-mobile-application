@@ -1,5 +1,5 @@
 // function format date: Example WEDNESDAY, Jan 30th, 2021
-export const formatDate = (dateString) => {
+export const formatDate = dateString => {
   const date = new Date(dateString);
   const year = new Intl.DateTimeFormat('en', {
     year: 'numeric',
@@ -21,8 +21,31 @@ export const formatDate = (dateString) => {
   return `${weekday.toUpperCase()}, ${month} ${day}, ${year}`;
 };
 
+// function format date: Example  May 30th, 2021
+export const formatDateByMonth = dateString => {
+  const date = new Date(dateString);
+  const year = new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+  const month = new Intl.DateTimeFormat('en', {
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(date);
+  const day = new Intl.DateTimeFormat('en', {
+    day: '2-digit',
+    timeZone: 'UTC',
+  }).format(date);
+  const weekday = new Intl.DateTimeFormat('en', {
+    weekday: 'long',
+    timeZone: 'UTC',
+  }).format(date);
+
+  return `${month} ${day}, ${year}`;
+};
+
 // function format date: Example Jan 30th, 2021
-export const formatDateByTime = (dateString) => {
+export const formatDateByTime = dateString => {
   const date = new Date(dateString);
 
   const time = new Intl.DateTimeFormat('en', {
