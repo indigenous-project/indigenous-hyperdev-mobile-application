@@ -13,7 +13,7 @@ import { useSecureStorage } from '../hooks/useSecureStorage';
 import { Alert, Image, View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../styles';
 import { useCurrentUser } from '../contexts/currentUserContext';
-import { Badge } from 'react-native-paper';
+import { Badge, IconButton } from 'react-native-paper';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
 import { messageGetList, messageUnread } from '../api/messages/messages.api';
 
@@ -130,13 +130,13 @@ function SideNavCustomContent(props) {
       <DrawerItem
         style={styles.drawerItem}
         label={() => (
-          <View styles={{ flexDirection: 'row' }}>
+          <View style={styles.row}>
+            <Text>Ask Question</Text>
             {unreadMessage > 0 ? (
-              <Badge styles={{ flex: 1, marginTop: 10 }} size={20}>
+              <Badge style={styles.badge} size={20}>
                 {unreadMessage}
               </Badge>
             ) : null}
-            <Text styles={{ flex: 2 }}>Ask Questions</Text>
           </View>
         )}
         onPress={() => {
@@ -223,6 +223,14 @@ const styles = StyleSheet.create({
   image: {
     width: 30,
     height: 30,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  badge: {
+    position: 'absolute',
+    right: 0,
   },
 });
 
