@@ -13,6 +13,7 @@ import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceCategoryScreen from '../services/ServiceCategoryScreen';
+import SearchStack from '../search/SearchStack';
 
 const Home = createStackNavigator();
 const theme = themes.light;
@@ -49,6 +50,11 @@ function HomeStack({navigation}) {
 
           headerTintColor: themes.light.primaryColor,
         }}
+      />
+      <Home.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{headerShown: false}}
       />
     </Home.Navigator>
   );

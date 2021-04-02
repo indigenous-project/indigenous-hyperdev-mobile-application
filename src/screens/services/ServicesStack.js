@@ -9,6 +9,7 @@ import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceCategoryScreen from './ServiceCategoryScreen';
+import SearchStack from '../search/SearchStack';
 
 const theme = themes.light;
 const Services = createStackNavigator();
@@ -43,6 +44,11 @@ function ServicesStack({navigation}) {
 
           headerTintColor: themes.light.primaryColor,
         }}
+      />
+      <Services.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{headerShown: false}}
       />
     </Services.Navigator>
   );

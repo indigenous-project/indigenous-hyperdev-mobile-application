@@ -9,6 +9,7 @@ import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import OrganizationDetailScreen from './OrganizationDetailScreen';
+import SearchStack from '../search/SearchStack';
 const theme = themes.light;
 const Organizations = createStackNavigator();
 
@@ -34,10 +35,15 @@ function OrganizationsStack({navigation}) {
         component={OrganizationDetailScreen}
         options={{
           headerRight: false,
-          headerBackTitleVisible:false,
+          headerBackTitleVisible: false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: themes.light.primaryColor,
         }}
+      />
+      <Organizations.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{headerShown: false}}
       />
     </Organizations.Navigator>
   );
