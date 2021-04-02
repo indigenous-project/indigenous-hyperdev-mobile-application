@@ -5,7 +5,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Card, CardItem, Text, Body, View} from 'native-base';
 import {typography, spacing, themes} from '../styles';
-const OrganizationDetailsTimeCard = props => {
+const OrganizationDetailsTimeCard = (props) => {
   const openHours = props.openHours !== undefined ? props.openHours : undefined;
   return (
     <Card style={styles.timingCard}>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   lineHeightMonday: {
     marginBottom: spacing.smaller,
     fontSize: typography.fs2,
-    marginLeft: '20%',
+    marginLeft: '21%',
   },
   lineHeightTuesday: {
     marginBottom: spacing.smaller,

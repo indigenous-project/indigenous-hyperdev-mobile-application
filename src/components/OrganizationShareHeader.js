@@ -1,18 +1,16 @@
 import React from 'react';
 import {View, TouchableOpacity, Share, Alert} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {formatDate} from '../modules/date.format';
 import {typography, themes} from '../styles';
 
 const ShareHeader = ({shareData}) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Know more about the ${shareData.name} ? Please click here.
-        )}`,
+        message: `Know more about the ${shareData.name} ? Please click here.`,
         url:
           shareData.contact.website !== undefined
-            ? shareData.contact.website
+            ? `https://${shareData.contact.website}`
             : null,
       });
       if (result.action === Share.sharedAction) {
