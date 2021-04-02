@@ -1,6 +1,6 @@
 // import statements
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import {Linking, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, Button} from 'native-base';
@@ -8,11 +8,25 @@ import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import JobShareHeader from '../../components/JobsShareHeader'
 
 // function and return
-function JobDetailScreen({ navigate, route }) {
+
+function JobDetailScreen({navigate, route, navigation}) {
+
   const token = route.params.token;
   const job = route.params.job;
+
+  //useLayoutEffect to get title and share button
+  useLayoutEffect(() => {
+    job
+      ? navigation.setOptions({
+        headerTitle: job.title,
+        headerRight: () => <JobShareHeader shareData={job} />,
+      })
+      : null;
+  }, [navigation, job]);
+
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
