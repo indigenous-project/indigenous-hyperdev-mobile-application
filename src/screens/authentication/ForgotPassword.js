@@ -1,18 +1,13 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, StyleSheet, Alert, Keyboard} from 'react-native';
-import {themes, colors, typography} from '../../styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Keyboard, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { themes, colors, typography, spacing } from '../../styles';
 
 import {
-  Container,
-  Content,
-  Form,
   Item,
   Input,
   Label,
-  Button,
   Text,
-  Header,
 } from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 
@@ -26,14 +21,14 @@ function ForgotPassword() {
         Please enter the email you used at the time of registration to get the
         password reset instructions
       </Text>
-      <View>
-        <Item style={styles.textBox} regular>
-          <Input style={{fontSize: typography.fs1}} placeholder=" Email" />
-        </Item>
-      </View>
-      <Button style={styles.emailButton} block light>
-        <Text style={styles.emailButtonText}>Send Email</Text>
-      </Button>
+      <Item style={styles.item} floatingLabel>
+        <Label style={styles.label}>Email</Label>
+        <Input style={styles.input} />
+      </Item>
+      <TouchableOpacity
+        style={styles.buttonContainer}>
+        <Text style={styles.buttonText}>Send Email</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -41,38 +36,45 @@ function ForgotPassword() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    paddingHorizontal: spacing.base,
+    backgroundColor: colors.white
   },
-
   infoText: {
-    fontSize: typography.fs3,
-    marginTop: '50%',
+    marginTop: '40%',
+    marginBottom: spacing.largest,
     fontWeight: typography.fwNormal,
-    marginLeft: '5%',
-    marginRight: '5%',
-    color: colors.primary800,
+    fontSize: typography.fs3,
+    lineHeight: typography.lh3,
+    color: colors.primary900,
   },
-
-  emailButton: {
-    alignItems: 'center',
-    color: colors.primary100,
-    position: 'absolute',
-    top: '50%',
-    marginLeft: '20%',
-    backgroundColor: themes.light.primaryColor,
-    width: '60%',
-    height: '5%',
+  label: {
+    marginHorizontal: spacing.base,
   },
-
-  emailButtonText: {
-    color: colors.white,
-    fontWeight: typography.fwSemiBold,
+  item: {
+    borderRadius: spacing.smaller,
+    marginVertical: spacing.base,
+    backgroundColor: colors.white,
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
   },
-
-  textBox: {
+  input: {
+    marginHorizontal: spacing.base
+  },
+  buttonContainer: {
     borderRadius: 10,
-    width: '90%',
-    marginLeft: '5%',
-    marginTop: '10%',
+    marginBottom: spacing.small,
+    width: '60%',
+    alignSelf: 'center',
+    backgroundColor: colors.primary500,
+    paddingVertical: spacing.small,
+    marginTop: spacing.largest
+  },
+  buttonText: {
+    alignSelf: 'center',
+    fontSize: typography.fs2,
+    color: colors.white,
+    fontWeight: typography.fwBold,
   },
 });
 

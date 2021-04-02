@@ -213,13 +213,14 @@ function SideNavCustomContent(props) {
       <DrawerItem
         style={styles.drawerItem}
         label={() => (
-          <View styles={{flexDirection: 'row'}}>
+          <View style={styles.row}>
+            <Text>Ask Question</Text>
             {unreadMessage > 0 ? (
-              <Badge styles={{flex: 1, marginTop: 10}} size={20}>
+              <Badge style={styles.badge} size={20}>
                 {unreadMessage}
               </Badge>
             ) : null}
-            <Text styles={{flex: 2}}>Ask Questions</Text>
+
           </View>
         )}
         onPress={() => {
@@ -307,6 +308,14 @@ const styles = StyleSheet.create({
   image: {
     width: 30,
     height: 30,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  badge: {
+    position: 'absolute',
+    right: 0,
   },
 });
 

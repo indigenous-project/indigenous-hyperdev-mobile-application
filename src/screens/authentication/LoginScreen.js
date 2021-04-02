@@ -1,33 +1,28 @@
 //LoginScreen module
 
 // import packages
-import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, StyleSheet, Alert, Keyboard} from 'react-native';
-import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-import {useState} from 'react';
-import {useEffect} from 'react';
-import {themes, colors, spacing, typography} from '../../styles';
-import {useIsFocused} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, StyleSheet, Alert, Keyboard, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
+import { themes, colors, spacing, typography } from '../../styles';
+import { useIsFocused } from '@react-navigation/native';
 
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
   Label,
-  Button,
   Text,
 } from 'native-base';
-import {createRef} from 'react';
+import { createRef } from 'react';
 import Loader from '../../components/Loader';
-import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
-import {useSecureStorage} from '../../hooks/useSecureStorage';
-import {deleteItemAsync} from 'expo-secure-store';
+import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
+import { useSecureStorage } from '../../hooks/useSecureStorage';
+import { deleteItemAsync } from 'expo-secure-store';
 
 //function return
-function LoginScreen({navigation}) {
+function LoginScreen({ navigation }) {
   // declaring a variable for themes
   const theme = themes.light;
 
@@ -93,140 +88,156 @@ function LoginScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
+    <SafeAreaView style={styles.safeArea} edges={['right', 'left', 'top', 'bottom']}>
       <Loader loading={loading} />
-      <View>
-        <Text style={styles.welcome}>Welcome!</Text>
-        <Text style={styles.loginTextToStart}>Log in to get started.</Text>
-        {/* using forms for login */}
-        <Form>
-          <Item style={styles.item} regular>
-            <Input
-              placeholder=" Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              blurOnSubmit={false}
-              value={userEmail}
-              onChangeText={setUserEmail}
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-            />
-          </Item>
-          <Item style={styles.item} regular>
-            <Input
-              placeholder=" Password"
-              value={userPassword}
-              onChangeText={setUserPassword}
-              secureTextEntry={true}
-              blurOnSubmit={false}
-              keyboardType="default"
-              ref={passwordInputRef}
-              onSubmitEditing={Keyboard.dismiss}
-            />
-          </Item>
-        </Form>
-        <Button
-          style={styles.forgotPasswordButton}
-          onPress={() => {
-            navigation.navigate('ForgotPassword');
-          }}
-          transparent>
-          <Text
-            style={{fontWeight: typography.fwMedium, fontSize: typography.fs3}}>
-            Forgot Password ?{' '}
-          </Text>
-        </Button>
-        <Button
-          title="Sign in"
-          onPress={() => signIn(userEmail, userPassword)}
-          style={styles.loginButton}
-          block>
-          <Text style={styles.loginText}>Log In</Text>
-        </Button>
-        <Button
-          style={styles.signUpBottom}
-          transparent
-          onPress={() => {
-            navigation.navigate('Register');
-          }}>
-          <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
-        </Button>
-        <Button
+
+      <Text style={styles.welcome}>Welcome!</Text>
+      <Text style={styles.loginTextToStart}>Log in to get started.</Text>
+      {/* using forms for login */}
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <View>
+          <Form>
+            <Item style={styles.item} floatingLabel>
+              <Label style={styles.label}>Email</Label>
+              <Input
+                // placeholder=" Email"
+                style={styles.input}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                blurOnSubmit={false}
+                value={userEmail}
+                onChangeText={setUserEmail}
+                onSubmitEditing={() =>
+                  passwordInputRef.current && passwordInputRef.current.focus()
+                }
+              />
+            </Item>
+            <Item style={styles.item} floatingLabel>
+              <Label style={styles.label}>Password</Label>
+              <Input
+                // placeholder=" Password"
+                style={styles.input}
+                value={userPassword}
+                onChangeText={setUserPassword}
+                secureTextEntry={true}
+                blurOnSubmit={false}
+                keyboardType="default"
+                ref={passwordInputRef}
+                onSubmitEditing={Keyboard.dismiss}
+              />
+            </Item>
+          </Form>
+          <TouchableOpacity
+            style={styles.forgotPasswordButton}
+            onPress={() => {
+              navigation.navigate('ForgotPassword');
+            }}
+            transparent>
+            <Text
+              style={styles.forgetPWText}>
+              Forgot Password ?{' '}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => signIn(userEmail, userPassword)}>
+            <Text style={styles.buttonText}>Log in</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.signUpBottom}
+            transparent
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
+            <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
           transparent
           onPress={() => {
             navigation.navigate('DrawerRoute');
           }}>
           <Text style={styles.skipText}>Skip For Now</Text>
-        </Button>
-      </View>
+        </TouchableOpacity> */}
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
-  );
+  )
 }
 
 // Stylesheet for the Log in
 const styles = StyleSheet.create({
-  loginButton: {
-    width: '65%',
-    marginTop: '5%',
-    marginLeft: '15%',
-    marginBottom: '5%',
-    height: '6%',
-    backgroundColor: colors.primary700,
-    color: '#000',
-    borderRadius: spacing.smaller,
-  },
 
   safeArea: {
     flex: 1,
+    backgroundColor: colors.white
   },
   container: {
-    padding: 10,
+    padding: spacing.base,
+    backgroundColor: colors.white
   },
   welcome: {
-    fontSize: typography.fs6,
+    fontSize: typography.fs8,
     marginTop: '20%',
     fontWeight: typography.fwBold,
-    marginLeft: '5%',
+    marginLeft: spacing.base,
     color: colors.primary900,
   },
   loginTextToStart: {
-    fontSize: typography.fs4,
-    marginTop: '2%',
-    fontWeight: typography.fwNormal,
-    marginLeft: '6%',
+    fontSize: typography.fs5,
+    marginTop: spacing.base,
+    fontWeight: typography.fwMedium,
+    marginLeft: spacing.base,
     color: colors.primary900,
-    marginBottom: '5%',
+    marginBottom: spacing.largest,
   },
   forgotPasswordButton: {
-    marginLeft: '55%',
-    marginTop: '1%',
+    marginLeft: '60%',
+    marginTop: spacing.smaller,
+    marginBottom: spacing.largest
   },
-  loginText: {
-    color: colors.white,
-    fontWeight: typography.fwSemiBold,
+  forgetPWText: {
+    fontWeight: typography.fwMedium,
+    fontSize: typography.fs3,
+    color: 'blue'
   },
   signUpBottom: {
-    margin: '14%',
-    marginTop: '0%',
-    color: '#FFFF',
+    alignSelf: 'center',
+    marginVertical: spacing.large
   },
   signUpText: {
     color: colors.primary900,
     fontWeight: typography.fwBold,
   },
+  label: {
+    marginHorizontal: spacing.base,
+  },
   item: {
     borderRadius: spacing.smaller,
-    marginTop: '5%',
-    marginLeft: '5%',
-    marginRight: '5%',
-    backgroundColor: colors.gray100,
+    marginHorizontal: spacing.base,
+    marginVertical: spacing.base,
+    backgroundColor: colors.white,
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
   },
-  skipText: {
+  input: {
+    marginHorizontal: spacing.base
+  },
+  buttonContainer: {
+    borderRadius: 10,
+    marginBottom: spacing.small,
+    width: '60%',
+    alignSelf: 'center',
+    backgroundColor: colors.primary500,
+    paddingVertical: spacing.small,
+    marginTop: spacing.largest
+  },
+  buttonText: {
+    alignSelf: 'center',
+    fontSize: typography.fs2,
+    color: colors.white,
     fontWeight: typography.fwBold,
-    color: colors.primary900,
-    marginLeft: '30%',
   },
 });
 
