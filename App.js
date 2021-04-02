@@ -6,40 +6,36 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import DrawerRoute from './src/screens/sidenavbar/DrawerRoute';
 import AuthStack from './src/screens/authentication/AuthStack';
-
-import SearchStack from './src/screens/search/SearchStack';
+import {CurrentUserProvider} from './src/contexts/currentUserContext';
 
 const Stack = createStackNavigator();
 const App = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Auth">
-          <Stack.Screen
-            name="Auth"
-            component={AuthStack}
-            options={{headerShown: false, animationTypeForReplace: 'pop'}}
-          />
+      <CurrentUserProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Auth">
+            <Stack.Screen
+              name="Auth"
+              component={AuthStack}
+              options={{headerShown: false, animationTypeForReplace: 'pop'}}
+            />
 
-          <Stack.Screen
-            name="DrawerRoute"
-            component={DrawerRoute}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SearchStack"
-            component={SearchStack}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen
+              name="DrawerRoute"
+              component={DrawerRoute}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CurrentUserProvider>
     </SafeAreaProvider>
   );
 };
