@@ -41,7 +41,15 @@ function SearchStack({navigation}) {
               headerStyle: {backgroundColor: theme.primaryColor},
             }}
           />
-          <Search.Screen name="Event Detail" component={EventDetail} />
+          <Search.Screen
+            name="Event Detail"
+            component={EventDetail}
+            options={{
+              headerTitle: false,
+              headerTintColor: theme.inverseTextColor,
+              headerStyle: {backgroundColor: theme.primaryColor},
+            }}
+          />
         </Search.Navigator>
       </EventProvider>
     </DiscussionProvider>
