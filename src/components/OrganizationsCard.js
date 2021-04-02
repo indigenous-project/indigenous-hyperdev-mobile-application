@@ -10,11 +10,11 @@ import Hyperlink from 'react-native-hyperlink';
 import {Rating} from 'react-native-ratings';
 
 function OrganizationsCard(props) {
-  let imagePath = getImage(props.image);
-
+  let imagePath = props.image ? getImage(props.image) : undefined;
   //to get the ratings from the review
   function getRating(reviews) {
     let totalReviews = 0;
+
     //loop through the reviews
     reviews.forEach(rev => {
       //add all the reviews of an organization
@@ -43,9 +43,11 @@ function OrganizationsCard(props) {
 
   //function handle when user tap on link that navigate to google map with keyword search location near my location
   function handleGoLink() {
-    Linking.openURL(
-      `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
-    );
+    props.location !== undefined
+      ? Linking.openURL(
+          `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
+        )
+      : null;
   }
   return (
     <Card style={styles.cardsView}>
@@ -65,11 +67,13 @@ function OrganizationsCard(props) {
             {props.name !== undefined ? props.name : ''}
           </Text>
           <Rating
-            readonly
+            readonly={true}
             style={styles.rating}
             imageSize={typography.fs2}
-            fractions={1}
-            startingValue={getRating(props.reviews)}
+            fractions={3}
+            startingValue={
+              props.reviews == undefined ? 0 : getRating(props.reviews)
+            }
           />
           <View style={{flexDirection: 'row'}}>
             <MaterialCommunityIcons
@@ -108,7 +112,7 @@ function OrganizationsCard(props) {
                   ? styles.typeWithisIndigenousIcon
                   : styles.type,
               ]}>
-              {props.type}
+              {props.type !== undefined ? props.type : null}
             </Text>
             <View style={{flexDirection: 'row'}}>
               <MaterialCommunityIcons

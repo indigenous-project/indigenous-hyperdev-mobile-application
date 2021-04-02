@@ -9,15 +9,14 @@ import {Rating} from 'react-native-ratings';
 import {decodeHTML} from '../modules/decode.text';
 import {WebView} from 'react-native-webview';
 
-const OrganizationDetailCard = (props) => {
-  
-  let imagePath = getImage(props.image);
+const OrganizationDetailCard = props => {
+  let imagePath = props.image ? getImage(props.image) : undefined;
 
   //to get the ratings from the review
   function getRating(reviews) {
     let totalReviews = 0;
     //loop through the reviews
-    reviews.forEach((rev) => {
+    reviews.forEach(rev => {
       //add all the reviews of an organization
       totalReviews += rev.score;
     });
@@ -34,7 +33,7 @@ const OrganizationDetailCard = (props) => {
   function getImage(image) {
     let path;
     //loop through the image array
-    image.forEach((img) => {
+    image.forEach(img => {
       //get the path of the image
       path = img.path;
     });
@@ -53,30 +52,37 @@ const OrganizationDetailCard = (props) => {
         style={styles.image}
       />
       <View style={{padding: spacing.small}}>
-        <Text style={styles.titleText}>{props.title}</Text>
+        <Text style={styles.titleText}>
+          {props.title !== undefined ? props.title : ' '}
+        </Text>
 
         <Rating
           readonly
           style={styles.rating}
           imageSize={typography.fs2}
           fractions={1}
-          startingValue={getRating(props.reviews)}
+          startingValue={
+            props.reviews !== undefined ? getRating(props.reviews) : 0
+          }
         />
-
-        <WebView
-          style={styles.desc}
-          originWhitelist={['*']}
-          source={{
-            html: `<section style="font-size:40">${decodeHTML(
-              props.decs,
-            )}</section>`,
-          }}
-        />
+        {props.desc !== undefined ? (
+          <WebView
+            style={styles.desc}
+            originWhitelist={['*']}
+            source={{
+              html: `<section style="font-size:40">${decodeHTML(
+                props.decs,
+              )}</section>`,
+            }}
+          />
+        ) : null}
       </View>
 
       <View style={styles.addressView}>
         <Text style={styles.addressLabel}>Address:</Text>
-        <Text style={styles.addressTextView}>{props.address}</Text>
+        <Text style={styles.addressTextView}>
+          {props.address !== undefined ? props.address : ''}
+        </Text>
       </View>
     </View>
   );
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: spacing.base,
   },
-  addressLabel:{fontSize: typography.fs2,},
+  addressLabel: {fontSize: typography.fs2},
   addressTextView: {
     marginLeft: spacing.smaller,
     width: '50%',
