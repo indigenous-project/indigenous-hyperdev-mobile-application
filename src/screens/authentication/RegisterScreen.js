@@ -1,50 +1,35 @@
 //LoginScreen module
 
 // import packages
-import React, {createRef, useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { createRef, useState, useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   StyleSheet,
   ScrollView,
   Alert,
   Keyboard,
-  KeyboardAvoidingView,
 } from 'react-native';
-import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-
-import CheckBox from '@react-native-community/checkbox';
-
-import {themes, colors, typography, spacing} from '../../styles';
+import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
+import { themes, colors, typography, spacing } from '../../styles';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
 
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
   Label,
   Button,
   Text,
-  Body,
-  Row,
-  Radio,
-  Right,
-  Left,
 } from 'native-base';
-import {RadioButton} from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
-
-import {useAsyncStorage} from '../../hooks/useAsyncStorage';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 //function return
-function RegisterScreen({navigation}) {
+function RegisterScreen({ navigation }) {
   // declaring a variable for themes
   const theme = themes.light;
 
@@ -72,7 +57,7 @@ function RegisterScreen({navigation}) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => {}, [userName]);
+  useEffect(() => { }, [userName]);
 
   const handleRegister = () => {
     if (!firstName) {
@@ -133,7 +118,7 @@ function RegisterScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={styles.safeArea} edges={['right', 'left', 'bottom', 'top']}>
       <FocusedStatusBar barStyle="light-content" />
       <MessageModal
         showing={isRegistraionSuccess}
@@ -141,270 +126,240 @@ function RegisterScreen({navigation}) {
       />
       <Loader loading={loading} />
       <ScrollView>
-        <Text style={styles.welcome}>Join The Community</Text>
-        <Text style={styles.signUpText}>Get full access today</Text>
-        <Text style={styles.allFields}>All Fields are Mandatory</Text>
-
-        <KeyboardAvoidingView enabled>
-          <Form>
-            <View style={{flexDirection: 'row'}}>
-              <Item
-                style={{
-                  flex: 1,
-                  borderRadius: spacing.smaller,
-                  height: '70%',
-                  marginLeft: '5%',
-                  marginTop: '5%',
-                }}
-                regular>
-                <Input
-                  style={{justifyContent: 'flex-start'}}
-                  placeholder=" First Name"
-                  value={firstName}
-                  onChangeText={setfirstName}
-                  autoCapitalize="sentences"
-                  returnKeyType="next"
-                  ref={firstNameInputRef}
-                  onSubmitEditing={() =>
-                    lastNameInputRef.current && lastNameInputRef.current.focus()
-                  }
-                  blurOnSubmit={false}
-                />
-              </Item>
-              <Item
-                style={{
-                  flex: 1,
-                  borderRadius: spacing.smaller,
-                  height: '70%',
-                  marginLeft: '5%',
-                  marginTop: '5%',
-                  marginRight: '5%',
-                }}
-                regular>
-                <Input
-                  style={{justifyContent: 'flex-end'}}
-                  placeholder=" Last Name"
-                  value={lastName}
-                  onChangeText={setLastName}
-                  autoCapitalize="sentences"
-                  returnKeyType="next"
-                  ref={lastNameInputRef}
-                  onSubmitEditing={() =>
-                    ageInputRef.current && ageInputRef.current.focus()
-                  }
-                  blurOnSubmit={false}
-                />
-              </Item>
-            </View>
-
-            <Item style={styles.item} regular>
-              <Input
-                placeholder=" Email"
-                value={userEmail}
-                onChangeText={setUserEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                ref={emailInputRef}
-                blurOnSubmit={false}
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-              />
-            </Item>
-            <Item style={styles.item} regular>
-              <Input
-                placeholder=" Password"
-                value={userPassword}
-                onChangeText={setUserPassword}
-                secureTextEntry={true}
-                blurOnSubmit={false}
-                keyboardType="default"
-                returnKeyType="next"
-                ref={passwordInputRef}
-                onSubmitEditing={() =>
-                  passwordConfirmInputRef.current &&
-                  passwordConfirmInputRef.current.focus()
-                }
-              />
-            </Item>
-            <Item style={styles.item} regular>
-              <Input
-                placeholder=" Confirm Password"
-                value={passwordConfirm}
-                onChangeText={setPasswordConfirm}
-                onSubmitEditing={Keyboard.dismiss}
-                ref={passwordConfirmInputRef}
-                returnKeyType="next"
-                blurOnSubmit={false}
-                secureTextEntry={true}
-              />
-            </Item>
-
-            <Item style={styles.item} regular>
-              <Input
-                placeholder=" Age"
-                value={userAge}
-                onChangeText={setUserAge}
-                keyboardType="numeric"
-                returnKeyType="next"
-                ref={ageInputRef}
-                onSubmitEditing={() =>
-                  genderInputRef.current && genderInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </Item>
-            <DropDownPicker
-              items={[
-                {
-                  label: 'Male',
-                  value: 'Male',
-                },
-                {
-                  label: 'Female',
-                  value: 'Female',
-                },
-                {
-                  label: 'Other',
-                  value: 'Other',
-                },
-              ]}
-              placeholder="Gender"
-              containerStyle={styles.genderItem}
-              style={{
-                backgroundColor: colors.gray100,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                borderBottomLeftRadius: 10,
-                borderBottomRightRadius: 10,
-              }}
-              labelStyle={{
-                color: themes.light.baseTextColor,
-                fontSize: typography.fs,
-              }}
-              itemStyle={{
-                justifyContent: 'flex-start',
-              }}
-              dropDownStyle={{backgroundColor: colors.gray100}}
-              onChangeItem={(item) => setUserGender(item.value)}
+        <Text style={styles.title}>Join The Community</Text>
+        <Text style={styles.subTtile}>Get full access today</Text>
+        <Form>
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>First Name</Label>
+            <Input
+              style={styles.input}
+              value={firstName}
+              onChangeText={setfirstName}
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              ref={firstNameInputRef}
+              onSubmitEditing={() =>
+                lastNameInputRef.current && lastNameInputRef.current.focus()
+              }
+              blurOnSubmit={false}
             />
-            <View style={styles.radioButtonGroup}>
-              <RadioButton.Group
-                onValueChange={(newValue) => setUserType(newValue)}
-                value={userType}>
-                <View style={{flexDirection: 'row'}}>
+          </Item>
+
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>Last Name</Label>
+            <Input
+              style={styles.input}
+              value={lastName}
+              onChangeText={setLastName}
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              ref={lastNameInputRef}
+              onSubmitEditing={() =>
+                ageInputRef.current && ageInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </Item>
+
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>Email</Label>
+            <Input
+              style={styles.input}
+              value={userEmail}
+              onChangeText={setUserEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              ref={emailInputRef}
+              blurOnSubmit={false}
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+            />
+          </Item>
+
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>Password</Label>
+            <Input
+              style={styles.input}
+              value={userPassword}
+              onChangeText={setUserPassword}
+              secureTextEntry={true}
+              blurOnSubmit={false}
+              keyboardType="default"
+              returnKeyType="next"
+              ref={passwordInputRef}
+              onSubmitEditing={() =>
+                passwordConfirmInputRef.current &&
+                passwordConfirmInputRef.current.focus()
+              }
+            />
+          </Item>
+
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>Confirm Password</Label>
+            <Input
+              style={styles.input}
+              value={passwordConfirm}
+              onChangeText={setPasswordConfirm}
+              onSubmitEditing={Keyboard.dismiss}
+              ref={passwordConfirmInputRef}
+              returnKeyType="next"
+              blurOnSubmit={false}
+              secureTextEntry={true}
+            />
+          </Item>
+
+          <Item style={styles.item} floatingLabel>
+            <Label style={styles.label}>Age (Optional)</Label>
+            <Input
+              style={styles.input}
+              value={userAge}
+              onChangeText={setUserAge}
+              keyboardType="numeric"
+              returnKeyType="next"
+              ref={ageInputRef}
+              onSubmitEditing={() =>
+                genderInputRef.current && genderInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </Item>
+          <DropDownPicker
+            items={[
+              {
+                label: 'Male',
+                value: 'Male',
+              },
+              {
+                label: 'Female',
+                value: 'Female',
+              },
+              {
+                label: 'Other',
+                value: 'Other',
+              },
+            ]}
+            placeholder="Gender (Optional)"
+            containerStyle={styles.genderDropDown}
+            labelStyle={{
+              color: themes.light.baseTextColor,
+              fontSize: typography.fs,
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            dropDownStyle={{ backgroundColor: colors.gray100 }}
+            onChangeItem={(item) => setUserGender(item.value)}
+          />
+          <View style={styles.radioButtonGroup}>
+            <RadioButton.Group
+              onValueChange={(newValue) => setUserType(newValue)}
+              value={userType}>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginRight: spacing.smallest,
+                  }}>
                   <View
                     style={{
-                      flexDirection: 'row',
-                      marginRight: spacing.smallest,
+                      borderColor: colors.gray700,
+                      borderWidth: 0.5,
+                      height: 35,
+                      width: 35,
+                      borderRadius: 100,
                     }}>
-                    <View
-                      style={{
-                        borderColor: colors.gray700,
-                        borderWidth: 0.5,
-                        height: 35,
-                        width: 35,
-                        borderRadius: 100,
-                      }}>
-                      <RadioButton value="Indigenous" />
-                    </View>
-                    <Text
-                      style={{
-                        alignSelf: 'center',
-                        marginLeft: spacing.smallest,
-                      }}>
-                      Indigenous
-                    </Text>
+                    <RadioButton value="Indigenous" />
                   </View>
-                  <View
+                  <Text
                     style={{
-                      flexDirection: 'row',
-                      marginRight: spacing.smallest,
+                      alignSelf: 'center',
+                      marginLeft: spacing.smallest,
                     }}>
-                    <View
-                      style={{
-                        borderColor: colors.gray700,
-                        borderWidth: 0.5,
-                        height: 35,
-                        width: 35,
-                        borderRadius: 100,
-                      }}>
-                      <RadioButton value="Inuit" />
-                    </View>
-                    <Text
-                      style={{
-                        alignSelf: 'center',
-                        marginLeft: spacing.smallest,
-                      }}>
-                      Inuit
+                    Indigenous
                     </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginRight: spacing.smallest,
-                    }}>
-                    <View
-                      style={{
-                        borderColor: colors.gray700,
-                        borderWidth: 0.5,
-                        height: 35,
-                        width: 35,
-                        borderRadius: 100,
-                      }}>
-                      <RadioButton value="Métis" />
-                    </View>
-                    <Text
-                      style={{
-                        alignSelf: 'center',
-                        marginLeft: spacing.smallest,
-                      }}>
-                      Métis
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginRight: spacing.smallest,
-                    }}>
-                    <View
-                      style={{
-                        borderColor: colors.gray700,
-                        borderWidth: 0.5,
-                        height: 35,
-                        width: 35,
-                        borderRadius: 100,
-                      }}>
-                      <RadioButton value="None" />
-                    </View>
-                    <Text
-                      style={{
-                        alignSelf: 'center',
-                        marginLeft: spacing.smallest,
-                      }}>
-                      None
-                    </Text>
-                  </View>
                 </View>
-              </RadioButton.Group>
-            </View>
-          </Form>
-          <Button style={styles.signUpButton} block onPress={handleRegister}>
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
-          </Button>
-
-          <Text style={styles.loginText}>
-            By Continuing, You Agree To Accept Our Privacy Policy & Terms of
-            Service.
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginRight: spacing.smallest,
+                  }}>
+                  <View
+                    style={{
+                      borderColor: colors.gray700,
+                      borderWidth: 0.5,
+                      height: 35,
+                      width: 35,
+                      borderRadius: 100,
+                    }}>
+                    <RadioButton value="Inuit" />
+                  </View>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginLeft: spacing.smallest,
+                    }}>
+                    Inuit
+                    </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginRight: spacing.smallest,
+                  }}>
+                  <View
+                    style={{
+                      borderColor: colors.gray700,
+                      borderWidth: 0.5,
+                      height: 35,
+                      width: 35,
+                      borderRadius: 100,
+                    }}>
+                    <RadioButton value="Métis" />
+                  </View>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginLeft: spacing.smallest,
+                    }}>
+                    Métis
+                    </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginRight: spacing.smallest,
+                  }}>
+                  <View
+                    style={{
+                      borderColor: colors.gray700,
+                      borderWidth: 0.5,
+                      height: 35,
+                      width: 35,
+                      borderRadius: 100,
+                    }}>
+                    <RadioButton value="None" />
+                  </View>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginLeft: spacing.smallest,
+                    }}>
+                    None
+                    </Text>
+                </View>
+              </View>
+            </RadioButton.Group>
+          </View>
+        </Form>
+        <Button style={styles.signUpButton} block onPress={handleRegister}>
+          <Text style={styles.signUpButtonText}>Sign Up</Text>
+        </Button>
+        <Text style={styles.privacyNotice}>
+          By Continuing, You Agree To Accept Our Privacy Policy & Terms of
+          Service.
           </Text>
-
-          <Button
-            transparent
-            onPress={() => {
-              navigation.navigate('TabScreen');
-            }}></Button>
-        </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -412,99 +367,81 @@ function RegisterScreen({navigation}) {
 
 // stylesheet for the signUp screen
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    paddingHorizontal: spacing.base,
-  },
-  signUpButton: {
-    width: '70%',
-    height: '6%',
-    marginTop: '15%',
-    marginLeft: '15%',
-    marginRight: '20%',
-    backgroundColor: colors.primary500,
-    borderRadius: spacing.smaller,
-  },
-  signUpText: {
-    fontSize: typography.fs5,
-    marginTop: '2%',
-    marginBottom: '3%',
-    fontWeight: typography.fwNormal,
-    marginLeft: '5%',
-    color: colors.primary900,
-  },
-
-  checkboxView: {
-    flexDirection: 'row',
-    marginTop: '5%',
-    marginLeft: '3%',
-  },
-
   safeArea: {
     flex: 1,
+    backgroundColor: colors.white
+  },
+
+  title: {
+    fontSize: typography.fs6,
+    marginHorizontal: spacing.base,
+    fontWeight: typography.fwBold,
+    color: colors.primary900,
+  },
+  subTtile: {
+    color: colors.primary900,
+    fontWeight: typography.fwMedium,
+    fontSize: typography.fs5,
+    marginHorizontal: spacing.base,
+    marginVertical: spacing.smaller
+  },
+
+  label: {
+    marginHorizontal: spacing.base,
+  },
+  item: {
+    borderRadius: spacing.smaller,
+    marginHorizontal: spacing.base,
+    marginBottom: spacing.smaller,
+    backgroundColor: colors.white,
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+  },
+  input: {
+    marginHorizontal: spacing.base
+  },
+  genderDropDown: {
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+    marginHorizontal: spacing.base,
+    marginVertical: spacing.small,
+    height: 50,
   },
   radioButtonGroup: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: spacing.largest,
+    marginTop: spacing.base,
     marginBottom: spacing.small,
   },
-  welcome: {
-    fontSize: typography.fs6,
-    marginTop: '10%',
-    fontWeight: typography.fwBold,
-    marginLeft: '5%',
-    color: colors.primary900,
-  },
-  inputField: {
-    borderWidth: 0.2,
-    // backgroundColor: colors.white,
-    // shadowColor: colors.gray900,
-    // shadowOffset: { width: 3, height: 6 },
-    // shadowOpacity: 0.2,
-    marginVertical: spacing.smallest,
-    borderRadius: spacing.small,
-    paddingRight: spacing.small,
-    // paddingTop: -5,
-    paddingBottom: spacing.smallest,
+  signUpButton: {
+    borderRadius: 10,
+    marginBottom: spacing.small,
+    width: '60%',
+    alignSelf: 'center',
+    backgroundColor: colors.primary500,
+    marginTop: spacing.largest
   },
   signUpButtonText: {
+    alignSelf: 'center',
+    fontSize: typography.fs2,
     color: colors.white,
-    fontWeight: typography.fwSemiBold,
+    fontWeight: typography.fwBold,
   },
-  loginText: {
+  privacyNotice: {
     color: themes.light.primaryColor,
     fontWeight: typography.fwNormal,
     lineHeight: typography.lh2,
     fontSize: typography.fs2,
     alignSelf: 'center',
     textAlign: 'center',
-    marginTop: '5%',
-    marginHorizontal: '15%',
-  },
-  item: {
-    borderRadius: spacing.smaller,
-    marginTop: '5%',
-    marginLeft: '5%',
-    marginRight: '5%',
-    backgroundColor: colors.gray100,
-    // marginBottom:100
-  },
-  allFields: {
-    fontSize: typography.fs2,
-    marginTop: '1%',
-    fontWeight: typography.fwBold,
-    marginLeft: '5%',
-    color: 'crimson',
-  },
-  genderItem: {
-    borderRadius: spacing.smaller,
-    marginTop: '5%',
-    marginLeft: '5%',
-    marginRight: '5%',
-    backgroundColor: colors.gray100,
-    height: 50,
+    marginTop: spacing.base,
+    marginBottom: spacing.largest,
+    width: '70%'
   },
 });
 
