@@ -20,7 +20,6 @@ import NewsCard from '../../components/NewsCard';
 import {colors, spacing, themes, typography} from '../../styles';
 import {postGetList} from '../../api/news/news.api';
 import {jobGetList} from '../../api/jobs/jobs.api';
-import {surveyGetList} from '../../api/surveys/surveys.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
 import {formatDate} from '../../modules/date.format';
@@ -32,7 +31,6 @@ function NewsScreen({navigation}) {
   const isFocused = useIsFocused();
   const [jobs, setJobs] = useState(null);
   const [posts, setPosts] = useState(null);
-  const [survey, setSurveys] = useState(null);
   const [currentUser, token] = useCurrentUser();
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
@@ -84,16 +82,6 @@ function NewsScreen({navigation}) {
       });
   }, [token, reloadData, isFocused]);
 
-  // useEffect load survey list
-  useEffect(() => {
-    if (token && isFocused)
-      surveyGetList(token)
-        .then(setSurveys)
-        .catch(err =>
-          Alert.alert(err.errors[0].title, err.errors[0].description),
-        );
-  }, [token, reloadData, isFocused]);
-
   return (
     <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
@@ -113,7 +101,7 @@ function NewsScreen({navigation}) {
         <View style={styles.container}>
           <View style={styles.containerHeading}>
             <Text style={styles.heading}>Job News</Text>
-            <Text>See All</Text>
+            <Text onPress={() => navigation.navigate('Jobs List')}>See All</Text>
           </View>
           <View style={styles.jobNews}>
             <ScrollView
@@ -145,17 +133,16 @@ function NewsScreen({navigation}) {
         <View style={styles.container}>
           <View style={styles.containerHeading}>
             <Text style={styles.heading}>New Survey</Text>
-            <Text>See All</Text>
+            <Text onPress={() => navigation.navigate('Surveys List')}>
+              See All
+            </Text>
           </View>
-          {survey ? (
-            <SurveyCard title="Aborginal Peoples Survey Concepts and Methods" />
-          ) : null}
+
+          <SurveyCard title="Aborginal Peoples Survey Concepts and Methods" />
         </View>
 
         <View style={styles.container}>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <OrganizationChips category="Categories" />
             <OrganizationChips category="Indigenous" />
             <OrganizationChips category="Top-Rated" />

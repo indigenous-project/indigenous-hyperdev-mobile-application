@@ -5,11 +5,7 @@ import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import {
-  Text,
-  Button,
-} from 'native-base';
-;
+import {Text, Button} from 'native-base';
 import {postGetDetail} from '../../api/news/news.api';
 import {formatDate} from '../../modules/date.format';
 import {useIsFocused} from '@react-navigation/core';
@@ -17,9 +13,10 @@ import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import AskQuestionScreen from '../sidenavbar/AskQuestionScreen'
 
 // function return
-function NewsDetailScreen({ navigate, route }) {
+function NewsDetailScreen({navigate, route, navigation}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   const [posts, setPosts] = useState(null);
@@ -45,33 +42,37 @@ function NewsDetailScreen({ navigate, route }) {
       <ScrollView>
         <View style={styles.headerStyle}>
           <View>
-            <Text style={styles.title}>
-             {posts.title}
+            <Text style={styles.title}>{posts.title}</Text>
+            <Text style={styles.date}>
+              {formatDate(posts.lastModifiedDate)}
             </Text>
-            <Text style={styles.date}>{formatDate(posts.lastModifiedDate)}</Text>
 
             <Image
               source={{
-                uri: posts.medias.path
+                uri: posts.medias.path,
               }}
               style={styles.image}
             />
           </View>
-         <Text>
-          <WebView 
-          style={styles.description}
-          originWhitelist={['*']}
-          source={{
-            html: `<section style="font-size:30">${decodeHTML(
-              posts.description,
-            )}</section>`,
-          }}
-        />
-         </Text>
+          <Text>
+            <WebView
+              style={styles.description}
+              originWhitelist={['*']}
+              source={{
+                html: `<section style="font-size:30">${decodeHTML(
+                  posts.description,
+                )}</section>`,
+              }}
+            />
+          </Text>
         </View>
       </ScrollView>
       <View style={styles.buttonsGroup}>
-        <Button title="Ask Question" style={styles.loginButton} block>
+        <Button
+          title="Ask Question"
+          onPress={() => navigation.navigate(AskQuestionScreen)}
+          style={styles.loginButton}
+          block>
           <Text style={styles.loginText}>Ask Question</Text>
         </Button>
       </View>

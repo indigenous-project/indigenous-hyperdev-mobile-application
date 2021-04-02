@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {colors, spacing, themes} from '../styles';
 
 import {Header, Item, Input, Icon, Left, Button, Right} from 'native-base';
+import {gray100, primary100} from '../styles/colors';
 
 const SearchBar = (props) => {
+  const [keywords, setKeywords] = useState(null);
+  //props.keyword(keywords);
   return (
     <Header
       searchBar
@@ -13,6 +16,7 @@ const SearchBar = (props) => {
       <Left style={{maxWidth: '10%'}}>
         <Button
           transparent
+          style={{marginBottom: 5}}
           onPress={() => {
             props.navigation.goBack();
           }}>
@@ -22,9 +26,14 @@ const SearchBar = (props) => {
           />
         </Button>
       </Left>
-      <Item rounded backgroundColor={colors.gray100}>
+      <Item rounded style={{backgroundColor: colors.gray200}}>
         <Icon name="ios-search" />
-        <Input placeholder="Search" />
+        <Input
+          placeholder={props.placeholder}
+          returnKeyType="search"
+          value={keywords}
+          onChangeText={setKeywords}
+        />
       </Item>
     </Header>
   );

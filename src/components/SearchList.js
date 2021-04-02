@@ -1,36 +1,59 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import { colors,typography} from '../styles';
+import {View, StyleSheet, FlatList} from 'react-native';
+import {Body, List, ListItem, Text, Separator, Content} from 'native-base';
 
-import { Text, ListItem, List, } from 'native-base';
-
+import {colors, typography} from '../styles';
 
 const SearchList = (props) => {
-    return (
-        <View>
-          <List>
-            <ListItem itemHeader  >
-              <Text style={styles.recent} >Recent</Text>
+  console.log(props.result);
+  return (
+    // <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
+    <Content>
+      <Separator bordered>
+        <Text>DISCUSSIONS</Text>
+      </Separator>
+      {props.result.length > 0 ? (
+        <FlatList
+          data={props.result}
+          renderItem={({item}) => (
+            <ListItem>
+              <Body>
+                <Text>{item.title}</Text>
+                <Text note numberOfLines={1}>
+                  {item.description}
+                </Text>
+              </Body>
             </ListItem>
-            <ListItem >
-              <Text>{props.name}</Text>
-            </ListItem>
-            <ListItem >
-              <Text>{props.name1}</Text>
-            </ListItem>
-          </List>
-       
-      </View>
-    )
-}
+          )}
+          keyExtractor={(item) => item._id}
+        />
+      ) : null}
+      <Separator bordered>
+        <Text>EVENTS</Text>
+      </Separator>
+      <Separator bordered>
+        <Text>JOBS</Text>
+      </Separator>
+      <Separator bordered>
+        <Text>NEWS</Text>
+      </Separator>
+      <Separator bordered>
+        <Text>SERVICES</Text>
+      </Separator>
+      <Separator bordered>
+        <Text>ORGANIZATIONS</Text>
+      </Separator>
+    </Content>
+    // </List>
+  );
+};
 
-export default SearchList
+export default SearchList;
 
 const styles = StyleSheet.create({
-    recent: {
-        color: colors.primary900,
-        fontSize: typography.fs2,
-        fontWeight: typography.fwBold,
-        
-      }
-})
+  recent: {
+    color: colors.primary900,
+    fontSize: typography.fs2,
+    fontWeight: typography.fwBold,
+  },
+});

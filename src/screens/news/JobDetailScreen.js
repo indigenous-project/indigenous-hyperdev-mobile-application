@@ -1,12 +1,13 @@
 // import statements
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, Button } from 'native-base';
-import { decodeHTML } from '../../modules/decode.text';
-import { WebView } from 'react-native-webview';
-import { colors, spacing, themes, typography } from '../../styles';
-import { ScrollView } from 'react-native-gesture-handler';
+
+import React, {useEffect, useState} from 'react';
+import {Linking, StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Text, Button} from 'native-base';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
+import {colors, spacing, themes, typography} from '../../styles';
+import {ScrollView} from 'react-native-gesture-handler';
 
 // function and return
 function JobDetailScreen({ navigate, route }) {
@@ -32,7 +33,12 @@ function JobDetailScreen({ navigate, route }) {
         />
       </ScrollView>
       <View style={styles.buttonsGroup}>
-        <Button title="Send Email" style={styles.emailButton}>
+        <Button
+          title="Send Email"
+          onPress={() => {
+            Linking.openURL(`mailto:${job.email}`);
+          }}
+          style={styles.emailButton}>
           <Text style={styles.emailText}>Send Email</Text>
         </Button>
       </View>
