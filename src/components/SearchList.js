@@ -40,7 +40,14 @@ const SearchList = (props) => {
       </Separator>
       {props.event.length > 0
         ? props.event.map((item) => (
-            <ListItem key={item._id}>
+            <ListItem
+              key={item._id}
+              onPress={() =>
+                props.navigationProp.navigate('Event Detail', {
+                  eventId: item._id,
+                  token: token,
+                })
+              }>
               <Body>
                 <Text>{item.title}</Text>
                 <Text note numberOfLines={1}>
