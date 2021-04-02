@@ -13,7 +13,7 @@ import { useSecureStorage } from '../hooks/useSecureStorage';
 import { Alert, Image, View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../styles';
 import { useCurrentUser } from '../contexts/currentUserContext';
-import { Badge, IconButton } from 'react-native-paper';
+import { Badge } from 'react-native-paper';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
 import { messageGetList, messageUnread } from '../api/messages/messages.api';
 
