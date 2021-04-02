@@ -9,6 +9,7 @@ import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import SearchScreen from './SearchScreen';
 import SearchResult from './SearchResult';
+import {DiscussionProvider} from '../../contexts/discussionContext';
 
 const theme = themes.light;
 const Search = createStackNavigator();
@@ -16,15 +17,17 @@ const Search = createStackNavigator();
 //function return
 function SearchStack({navigation}) {
   return (
-    <Search.Navigator initialRouteName="SearchScreen">
-      <Search.Screen
-        name="SearchScreen"
-        component={SearchScreen}
-        options={{headerShown: false}}
-      />
+    <DiscussionProvider>
+      <Search.Navigator initialRouteName="SearchScreen">
+        <Search.Screen
+          name="SearchScreen"
+          component={SearchScreen}
+          options={{headerShown: false}}
+        />
 
-      <Search.Screen name="SearchResult" component={SearchResult} />
-    </Search.Navigator>
+        <Search.Screen name="SearchResult" component={SearchResult} />
+      </Search.Navigator>
+    </DiscussionProvider>
   );
 }
 

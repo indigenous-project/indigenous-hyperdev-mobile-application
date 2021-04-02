@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -9,31 +9,34 @@ import {
   StyleSheet,
   Pressable,
   FlatList,
+  TouchableOpacity,
+  Modal,
   Alert,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import {themes, spacing, typography, colors} from '../../styles';
-import {serviceGetList} from '../../api/services/services.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-// import ServiceCategoriesList from '../../components/ServiceCategoriesList';
-import {useCategoryGeneral} from '../../contexts/categoriesGeneralContext';
-import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
+import { themes, spacing, typography, colors } from '../../styles';
+import { serviceGetList } from '../../api/services/services.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import ServiceDetail from '../../components/ServiceDetail';
+import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
+import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 
 //function return
-function ServiceScreen({navigation}) {
+function ServiceScreen({ navigation }) {
   const [services, setServices] = useState(null);
-  // const [category, setCategory] = useState(null);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [currentUser, token] = useCurrentUser();
   const [categories] = useCategoryGeneral();
   const [lastOpen, setLastOpen] = useAsyncStorage('lastOpen', []);
+  const [selectedService, setSelectedService] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const isFocused = useIsFocused();
-  //removeAsyncStorage('lastOpen');
+
   const [storedValue, setStoredValue] = useState();
   useEffect(() => {
     AsyncStorage.getItem('lastOpen')
@@ -48,7 +51,7 @@ function ServiceScreen({navigation}) {
   const categoriesGeneral = categories.filter(
     (item) => item.type === 'general',
   );
-  //removeAsyncStorage('lastOpen');
+
   useEffect(() => {
     serviceGetList(token)
       .then(setServices)
@@ -62,7 +65,7 @@ function ServiceScreen({navigation}) {
   }
 
   if (!services) return null;
-  function renderItem({item}) {
+  function renderItem({ item }) {
     return categoriesGeneral ? (
       <View
         style={{
@@ -80,15 +83,14 @@ function ServiceScreen({navigation}) {
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
-            category={{id: item._id, name: item.name}}
+            category={{ id: item._id, name: item.name }}
           />
         </Pressable>
       </View>
     ) : null;
   }
   return (
-    <SafeAreaView edges={['right', 'left']} style={{flex: 1}}>
-      {/* <ScrollView > */}
+    <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
       <View>
         <FocusedStatusBar barStyle="light-content" />
 
@@ -120,42 +122,67 @@ function ServiceScreen({navigation}) {
         />
 
         {/* last opened template */}
-
         <View style={styles.container}>
           <Text style={styles.heading}>Last Opened</Text>
           <ScrollView>
             {storedValue.length > 0
               ? storedValue.map((service) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedService(service);
+                    setModalVisible(true);
+                  }}
+                  key={service._id}>
                   <ServicesCard
                     key={service._id}
                     title={service.name}
+                    isIndigenous={service.isIndigenous}
                     name={
                       service.contact.providerName
                         ? service.contact.providerName
                         : '_'
                     }
-                    description={service.description}
+                    position={service.contact.position}
                   />
-                ))
+                </TouchableOpacity>
+              ))
               : null}
           </ScrollView>
         </View>
 
-        {/* saved Services template */}
-        {/* <View style={styles.savedItemContainer}>
-        <Text style={styles.heading}>Saved Services</Text>
-        <ServicesCard
-          title="A place to Gather"
-          name="Donny Sutherlan"
-          description="A place to Gather (Enjamonjading) Worker"
-        />
-        <ServicesCard
-          title="A place to Gather"
-          name="Donny Sutherlan"
-          description="A place to Gather (Enjamonjading) Worker"
-        />
-      </View> */}
-        {/* </ScrollView> */}
+        {modalVisible ?
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.modalView} key={selectedService._id}>
+              <View style={styles.modalTitle}>
+                <View>
+                  <Text style={styles.modalTitleText}>{selectedService.name}</Text>
+                </View>
+
+                <Pressable
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(!modalVisible)}
+                  key={selectedService._id}>
+                  <Text style={styles.buttonText}>x</Text>
+                </Pressable>
+              </View>
+              <ServiceDetail
+                serviceProviderName={selectedService.contact.providerName}
+                serviceProviderPosition={selectedService.contact.position}
+                contactEmail={selectedService.contact.email}
+                contactPhone={selectedService.contact.phone}
+                description={selectedService.description}
+                isIndigenous={selectedService.isIndigenous}
+                media={selectedService.medias}
+              />
+            </View>
+          </Modal> : null}
       </View>
     </SafeAreaView>
   );
@@ -166,12 +193,6 @@ const styles = StyleSheet.create({
     padding: spacing.base,
     backgroundColor: colors.white,
   },
-  // savedItemContainer: {
-  //   padding: spacing.base,
-  //   backgroundColor: colors.white,
-  //   marginTop: spacing.base
-  // },
-
   heading: {
     color: colors.primary900,
     paddingBottom: spacing.smallest,
@@ -188,6 +209,46 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+
+  //styling for modal container
+  modalView: {
+    marginTop: 50,
+    backgroundColor: colors.primary50,
+    borderRadius: 20,
+    height: '100%',
+  },
+  modalTitle: {
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    paddingVertical: spacing.base,
+    paddingHorizontal: spacing.base,
+    flexDirection: 'row',
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    borderBottomColor: colors.gray900,
+    borderBottomWidth: 0.2,
+  },
+  modalTitleText: {
+    fontSize: typography.fs4,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
+    paddingTop: spacing.smallest,
+  },
+  closeButton: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+    borderRadius: 100,
+    backgroundColor: colors.primary50,
+  },
+  buttonText: {
+    color: colors.primary900,
+    fontSize: 20,
+    fontWeight: typography.fwMedium,
   },
 });
 export default ServiceScreen;

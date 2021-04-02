@@ -14,7 +14,7 @@ const ServicesCard = (props) => {
           <Text style={styles.cardTitle}>{props.title}</Text>
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.cardText} numberOfLines={2}>
-            - {props.description}
+            - {props.position}
           </Text>
         </View>
         {props.isIndigenous == true ?

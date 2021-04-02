@@ -1,4 +1,5 @@
 // import statements
+
 import React, {useEffect, useState, useLayoutEffect} from 'react';
 import {Linking, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -10,7 +11,9 @@ import {ScrollView} from 'react-native-gesture-handler';
 import JobShareHeader from '../../components/JobsShareHeader'
 
 // function and return
+
 function JobDetailScreen({navigate, route, navigation}) {
+
   const token = route.params.token;
   const job = route.params.job;
 
@@ -26,20 +29,18 @@ function JobDetailScreen({navigate, route, navigation}) {
 
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <View style={styles.headerStyle}>
-        <View style={styles.heading}>
-          <Text style={styles.title}>{job.title}</Text>
-          <Text style={{marginTop: '2%'}}>{job.subTitle}</Text>
-          <Text style={{marginTop: '2%', marginBottom: '2%'}}>{job.type}</Text>
-        </View>
+        <Text style={styles.title}>{job.title}</Text>
+        <Text style={styles.subHeading}>{job.subTitle}</Text>
+        <Text style={styles.subHeading}>{job.type}</Text>
       </View>
       <ScrollView style={styles.jobView}>
         <WebView
           style={styles.description}
           originWhitelist={['*']}
           source={{
-            html: `<section style="font-size:30">${decodeHTML(
+            html: `<section style="font-size:40">${decodeHTML(
               job.description,
             )}</section>`,
           }}
@@ -66,23 +67,16 @@ const styles = StyleSheet.create({
     marginTop: spacing.base,
     minHeight: '15%',
   },
-
-  heading: {
-    alignSelf: 'center',
-  },
-
   title: {
     color: colors.primary900,
     marginTop: spacing.base,
     fontWeight: typography.fwBold,
     fontSize: typography.fs3,
+    alignSelf: 'center',
   },
-
   subHeading: {
-    color: colors.primary900,
-    fontWeight: typography.fwBold,
-    fontSize: typography.fs3,
-    marginTop: spacing.small,
+    marginTop: spacing.smaller,
+    alignSelf: 'center',
   },
 
   jobView: {
@@ -90,10 +84,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.base,
     padding: spacing.base,
   },
-
   description: {
     padding: spacing.base,
-    fontSize: 70,
   },
 
   buttonsGroup: {

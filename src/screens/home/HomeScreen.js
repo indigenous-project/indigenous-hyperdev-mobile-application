@@ -159,25 +159,25 @@ function HomeScreen({ navigation }) {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Services and Programs', {
-                  name: 'Government/ Legal',
+                  name: 'Government/Legal',
                   token: token,
                 });
               }}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
-                name="Government/ Legal"
+                name="Government/Legal"
               />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Services and Programs', {
-                  name: 'Mental Health/ Addiction',
+                  name: 'Mental Health/Addiction',
                   token: token,
                 });
               }}>
               <ServicesCategoryButton
                 icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
-                name="Mental Health/ Addiction"
+                name="Mental Health/Addiction"
               />
             </TouchableOpacity>
           </View>

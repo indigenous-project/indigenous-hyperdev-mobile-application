@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     paddingRight: spacing.largest,
-    paddingTop: spacing.smallest,
+    paddingTop: spacing.smaller,
     width: '90%'
   },
   logoContainer: {
