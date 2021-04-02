@@ -136,6 +136,7 @@ function ServiceScreen({ navigation }) {
                   <ServicesCard
                     key={service._id}
                     title={service.name}
+                    isIndigenous={service.isIndigenous}
                     name={
                       service.contact.providerName
                         ? service.contact.providerName

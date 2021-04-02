@@ -1,8 +1,10 @@
 // News Detail Screen
 
 // Import Packages
-import React, {useState, useEffect} from 'react';
+
+
 import {Image, StyleSheet, View, Alert} from 'react-native';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {Text, Button} from 'native-base';
@@ -13,7 +15,8 @@ import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
-import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
+import AskQuestionScreen from '../sidenavbar/AskQuestionScreen'
+import NewsShareHeader from '../../components/NewsShareHeader'
 
 // function return
 function NewsDetailScreen({navigate, route, navigation}) {
@@ -34,6 +37,16 @@ function NewsDetailScreen({navigate, route, navigation}) {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, postId]);
+
+  //useLayoutEffect to get title and share button
+  useLayoutEffect(() => {
+    posts
+      ? navigation.setOptions({
+        headerTitle: posts.title,
+        headerRight: () => <NewsShareHeader shareData={posts} />,
+      })
+      : null;
+  }, [navigation, posts]);
 
   if (!posts) return null;
   return (
