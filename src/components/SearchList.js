@@ -12,11 +12,9 @@ const SearchList = (props) => {
       <Separator bordered>
         <Text>DISCUSSIONS</Text>
       </Separator>
-      {props.result.length > 0 ? (
-        <FlatList
-          data={props.result}
-          renderItem={({item}) => (
-            <ListItem>
+      {props.result.length > 0
+        ? props.result.map((item) => (
+            <ListItem key={item._id}>
               <Body>
                 <Text>{item.title}</Text>
                 <Text note numberOfLines={1}>
@@ -24,10 +22,9 @@ const SearchList = (props) => {
                 </Text>
               </Body>
             </ListItem>
-          )}
-          keyExtractor={(item) => item._id}
-        />
-      ) : null}
+          ))
+        : null}
+
       <Separator bordered>
         <Text>EVENTS</Text>
       </Separator>
