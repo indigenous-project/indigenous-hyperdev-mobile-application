@@ -1,6 +1,6 @@
 // import statements
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button } from 'native-base';
 import { decodeHTML } from '../../modules/decode.text';

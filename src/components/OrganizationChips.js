@@ -1,13 +1,13 @@
 //OrganizationChips module
 
 // import packages
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Chip} from 'react-native-paper';
-import {colors, spacing, themes, typography} from '../styles';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Chip } from 'react-native-paper';
+import { colors, spacing, themes, typography } from '../styles';
 
 const OrganizationChips = (props) => {
-  const {chipPressed} = props;
+  const { chipPressed } = props;
   //To change the style after selection
   const [selected, setSelected] = useState(false);
   const [textColor, setTextColor] = useState();
@@ -55,12 +55,10 @@ const OrganizationChips = (props) => {
 const styles = StyleSheet.create({
   // Chips Style
   chipsView: {
-    marginLeft: spacing.large,
-    marginTop: spacing.small,
-    marginBottom: spacing.small,
-    marginVertical: 1,
+    marginHorizontal: spacing.smaller,
+    marginVertical: spacing.base,
   },
-  textStyle: {fontSize: typography.fs2, fontWeight: typography.fwMedium},
+  textStyle: { fontSize: typography.fs2, fontWeight: typography.fwMedium },
 });
 
 export default OrganizationChips;
