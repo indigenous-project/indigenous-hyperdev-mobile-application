@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {themes, typography} from '../styles';
+import {typography} from '../styles';
 
 const BackButtonHeaderLeft = (props) => {
   const goBack = () => {
-    props.navigationProps.goBack();
+    props.navigationProp.goBack();
   };
 
   return (
@@ -14,7 +14,7 @@ const BackButtonHeaderLeft = (props) => {
         <MaterialCommunityIcons
           name="chevron-left"
           size={typography.fs7}
-          color={themes.light.primaryColor}
+          color={props.color}
           style={{marginLeft: 5}}
         />
       </TouchableOpacity>
