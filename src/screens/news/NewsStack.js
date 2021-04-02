@@ -9,10 +9,11 @@ import NewsDetailScreen from './NewsDetailScreen';
 import JobDetailScreen from './JobDetailScreen';
 import SurveysListScreen from './SurveysListScreen';
 import JobListScreen from './JobListScreen';
-import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
+
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
+import BottomTabScreen from '../BottomTabScreen';
 
 const News = createStackNavigator();
 const theme = themes.light;
@@ -71,13 +72,6 @@ function NewsStack({navigation}) {
           headerRight: false,
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: theme.primaryColor,
-        }}
-      />
-      <News.Screen
-        name="Ask Question"
-        component={AskQuestionScreen}
-        options={{
-          headerShown: false,
         }}
       />
     </News.Navigator>
