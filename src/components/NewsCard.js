@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
-import {colors, typography, spacing} from '../styles';
-import {decodeHTML} from '../modules/decode.text';
-import {WebView} from 'react-native-webview';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { colors, typography, spacing } from '../styles';
+import { decodeHTML } from '../modules/decode.text';
+import { WebView } from 'react-native-webview';
 import OrganizationChips from '../components/OrganizationChips';
 
 //card to display News
@@ -16,9 +16,10 @@ export default function NewsCard(props) {
         <WebView
           numberOfLines={NUM_OF_LINES}
           style={styles.cardSubTitle}
+          scrollEnabled={false}
           originWhitelist={['*']}
           source={{
-            html: `<section style="font-size:30">${decodeHTML(
+            html: `<section style="font-size:70">${decodeHTML(
               props.details,
             )}</section>`,
           }}
