@@ -2,62 +2,99 @@
 
 //import packages
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Card, CardItem, Text, Body, View} from 'native-base';
+import {Linking, StyleSheet} from 'react-native';
+import {Text, View} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {spacing, themes, typography} from '../styles';
+import Hyperlink from 'react-native-hyperlink';
 
-const OrganizationDetailsContactCard = () => {
+const OrganizationDetailsContactCard = props => {
+  //function handle when user tap on number that invoke call option
+  function handlePhone() {
+    props.phone !== undefined ? Linking.openURL(`tel:${props.phone}`) : null;
+  }
+
+  //function handle when user tap on website that navigate to default browser
+  function handleWebsite() {
+    props.website !== undefined
+      ? Linking.openURL(`https://${props.website}`)
+      : null;
+  }
+  //function handle when user tap on website that navigate to default browser
+  function handleEmail() {
+    props.email !== undefined ? Linking.openURL(`mailto:${props.email}`) : null;
+  }
+  //function handle when user tap on website that navigate to default browser
+  function handleFacebook() {
+    props.facebook !== undefined
+      ? Linking.openURL(`https://facebook.com/${props.facebook}`)
+      : null;
+  }
   return (
-    <Card style={styles.contactCard}>
-      <CardItem style={styles.cardView}>
-        <Body style={styles.view}>
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name="phone"
-            size={20}
-            color={themes.light.primaryColor}
-          />
-          <Text style={styles.textView}>Phone:</Text>
-        </Body>
-        <Body style={styles.view}>
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name="earth"
-            size={20}
-            color={themes.light.primaryColor}
-          />
-          <Text style={styles.textView}>Website:</Text>
-        </Body>
-        <Body style={styles.view}>
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name="email"
-            size={20}
-            color={themes.light.primaryColor}
-          />
-          <Text style={styles.textView}>Email:</Text>
-        </Body>
-        <Body style={styles.view}>
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name="facebook"
-            size={20}
-            color={themes.light.primaryColor}
-          />
-          <Text style={styles.textView}>Facebook:</Text>
-        </Body>
-      </CardItem>
-    </Card>
+    <View style={styles.contactView}>
+      <View style={styles.view}>
+        <MaterialCommunityIcons
+          style={styles.icon}
+          name="phone"
+          size={20}
+          color={themes.light.primaryColor}
+        />
+        <Text style={styles.textView}>Phone:</Text>
+        <Text style={styles.phone} onPress={handlePhone}>
+          {props.phone !== undefined ? props.phone : ''}
+        </Text>
+      </View>
+      <View style={styles.view}>
+        <MaterialCommunityIcons
+          style={styles.icon}
+          name="earth"
+          size={20}
+          color={themes.light.primaryColor}
+        />
+        <Text style={styles.textView}>Website:</Text>
+        <Text style={styles.website} onPress={handleWebsite}>
+          {props.website !== undefined ? props.website : ''}
+        </Text>
+      </View>
+      <View style={styles.view}>
+        <MaterialCommunityIcons
+          style={styles.icon}
+          name="email"
+          size={20}
+          color={themes.light.primaryColor}
+        />
+        <Text style={styles.textView}>Email:</Text>
+        <Text style={styles.email} onPress={handleEmail}>
+          {props.email !== undefined ? props.email : ''}
+        </Text>
+      </View>
+      <View style={styles.view}>
+        <MaterialCommunityIcons
+          style={styles.icon}
+          name="facebook"
+          size={20}
+          color={themes.light.primaryColor}
+        />
+        <Text style={styles.textView}>Facebook:</Text>
+        <Text style={styles.facebook} onPress={handleFacebook}>
+          {props.facebook !== undefined ? props.facebook : ''}
+        </Text>
+      </View>
+    </View>
   );
 };
 
 export default OrganizationDetailsContactCard;
 
 const styles = StyleSheet.create({
-  contactCard: {shadowOpacity: 0},
-  cardView: {flexDirection: 'column'},
-  icon: {marginRight: spacing.small},
+  contactView: {
+    shadowOpacity: 0,
+    padding: 10,
+    backgroundColor: themes.light.inverseTextColor,
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  icon: {marginRight: spacing.small, bottom: 4},
   view: {
     flexDirection: 'row',
     color: themes.light.primaryColor,
@@ -67,5 +104,29 @@ const styles = StyleSheet.create({
     color: themes.light.primaryColor,
     fontSize: typography.fs2,
     fontWeight: typography.fwBold,
+  },
+  phone: {
+    marginLeft: 40,
+    color: 'blue',
+    fontSize: typography.fs2,
+    textDecorationLine: 'underline',
+  },
+  website: {
+    marginLeft: 29,
+    color: 'blue',
+    fontSize: typography.fs2,
+    textDecorationLine: 'underline',
+  },
+  email: {
+    marginLeft: 48,
+    color: 'blue',
+    fontSize: typography.fs2,
+    textDecorationLine: 'underline',
+  },
+  facebook: {
+    marginLeft: 20,
+    color: 'blue',
+    fontSize: typography.fs2,
+    textDecorationLine: 'underline',
   },
 });
