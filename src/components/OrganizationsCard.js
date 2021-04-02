@@ -11,7 +11,6 @@ import {Rating} from 'react-native-ratings';
 
 function OrganizationsCard(props) {
   let imagePath = props.image ? getImage(props.image) : undefined;
-console.log(props.reviews)
   //to get the ratings from the review
   function getRating(reviews) {
     let totalReviews = 0;
@@ -68,7 +67,7 @@ console.log(props.reviews)
             {props.name !== undefined ? props.name : ''}
           </Text>
           <Rating
-            readonly = {true}
+            readonly={true}
             style={styles.rating}
             imageSize={typography.fs2}
             fractions={3}
