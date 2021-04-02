@@ -8,23 +8,27 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {spacing, themes, typography} from '../styles';
 import Hyperlink from 'react-native-hyperlink';
 
-const OrganizationDetailsContactCard = (props) => {
+const OrganizationDetailsContactCard = props => {
   //function handle when user tap on number that invoke call option
   function handlePhone() {
-    Linking.openURL(`tel:${props.phone}`);
+    props.phone !== undefined ? Linking.openURL(`tel:${props.phone}`) : null;
   }
 
   //function handle when user tap on website that navigate to default browser
   function handleWebsite() {
-    Linking.openURL(`https://${props.website}`);
+    props.website !== undefined
+      ? Linking.openURL(`https://${props.website}`)
+      : null;
   }
   //function handle when user tap on website that navigate to default browser
   function handleEmail() {
-    Linking.openURL(`mailto:${props.email}`);
+    props.email !== undefined ? Linking.openURL(`mailto:${props.email}`) : null;
   }
   //function handle when user tap on website that navigate to default browser
   function handleFacebook() {
-    Linking.openURL(`https://facebook.com/${props.facebook}`);
+    props.facebook !== undefined
+      ? Linking.openURL(`https://facebook.com/${props.facebook}`)
+      : null;
   }
   return (
     <View style={styles.contactView}>
@@ -37,7 +41,7 @@ const OrganizationDetailsContactCard = (props) => {
         />
         <Text style={styles.textView}>Phone:</Text>
         <Text style={styles.phone} onPress={handlePhone}>
-          {props.phone}
+          {props.phone !== undefined ? props.phone : ''}
         </Text>
       </View>
       <View style={styles.view}>
@@ -49,7 +53,7 @@ const OrganizationDetailsContactCard = (props) => {
         />
         <Text style={styles.textView}>Website:</Text>
         <Text style={styles.website} onPress={handleWebsite}>
-          {props.website}
+          {props.website !== undefined ? props.website : ''}
         </Text>
       </View>
       <View style={styles.view}>
@@ -60,7 +64,9 @@ const OrganizationDetailsContactCard = (props) => {
           color={themes.light.primaryColor}
         />
         <Text style={styles.textView}>Email:</Text>
-        <Text style={styles.email} onPress={handleEmail}>{props.email}</Text>
+        <Text style={styles.email} onPress={handleEmail}>
+          {props.email !== undefined ? props.email : ''}
+        </Text>
       </View>
       <View style={styles.view}>
         <MaterialCommunityIcons
@@ -70,7 +76,9 @@ const OrganizationDetailsContactCard = (props) => {
           color={themes.light.primaryColor}
         />
         <Text style={styles.textView}>Facebook:</Text>
-        <Text style={styles.facebook} onPress={handleFacebook}>{props.facebook}</Text>
+        <Text style={styles.facebook} onPress={handleFacebook}>
+          {props.facebook !== undefined ? props.facebook : ''}
+        </Text>
       </View>
     </View>
   );

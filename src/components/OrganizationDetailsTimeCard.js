@@ -5,8 +5,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Card, CardItem, Text, Body, View} from 'native-base';
 import {typography, spacing, themes} from '../styles';
-const OrganizationDetailsTimeCard = (props) => {
-  const openHours = props.openHours;
+const OrganizationDetailsTimeCard = props => {
+  const openHours = props.openHours !== undefined ? props.openHours : undefined;
   return (
     <Card style={styles.timingCard}>
       <CardItem>
@@ -14,31 +14,45 @@ const OrganizationDetailsTimeCard = (props) => {
           <Text style={styles.timingTitle}>Hours:</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Monday:</Text>
-            <Text style={styles.lineHeightMonday}>{openHours.monday}</Text>
+            <Text style={styles.lineHeightMonday}>
+              {openHours.monday !== undefined ? openHours.monday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Tuesday:</Text>
-            <Text style={styles.lineHeightTuesday}>{openHours.tuesday}</Text>
+            <Text style={styles.lineHeightTuesday}>
+              {openHours.tuesday !== undefined ? openHours.tuesday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Wednesday:</Text>
-            <Text style={styles.lineHeightWednesday}>{openHours.wednesday}</Text>
+            <Text style={styles.lineHeightWednesday}>
+              {openHours.wednesday !== undefined ? openHours.wednesday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Thursday:</Text>
-            <Text style={styles.lineHeightThursday}>{openHours.thursday}</Text>
+            <Text style={styles.lineHeightThursday}>
+              {openHours.thursday !== undefined ? openHours.thursday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Friday:</Text>
-            <Text style={styles.lineHeightFriday}>{openHours.friday}</Text>
+            <Text style={styles.lineHeightFriday}>
+              {openHours.friday !== undefined ? openHours.friday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Saturday:</Text>
-            <Text style={styles.lineHeightSaturday}>{openHours.saturday}</Text>
+            <Text style={styles.lineHeightSaturday}>
+              {openHours.saturday !== undefined ? openHours.saturday : ''}
+            </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.lineHeight}>Sunday:</Text>
-            <Text style={styles.lineHeightSunday}>{openHours.sunday}</Text>
+            <Text style={styles.lineHeightSunday}>
+              {openHours.sunday !== undefined ? openHours.sunday : ''}
+            </Text>
           </View>
         </Body>
       </CardItem>

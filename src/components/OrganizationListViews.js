@@ -13,7 +13,7 @@ import OrganizationsCard from './OrganizationsCard';
 import {useNavigation} from '@react-navigation/native';
 
 export default function OrganizationListViews(props) {
-  const [data, setData] = useState(props.organizationList); //to store the data from Organization Screen
+  const data = props.organizationList; //to store the data from Organization Screen
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
   const navigation = useNavigation();
@@ -59,7 +59,7 @@ export default function OrganizationListViews(props) {
                 isIndigenous={organization.isIndigenous}
                 image={organization.medias}
               />
-            </TouchableOpacity>
+             </TouchableOpacity>
           ))
         : null}
     </ScrollView>
@@ -67,5 +67,5 @@ export default function OrganizationListViews(props) {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {paddingVertical: 0},
+  scrollView: {marginTop: 50},
 });

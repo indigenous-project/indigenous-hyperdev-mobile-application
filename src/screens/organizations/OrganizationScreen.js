@@ -33,13 +33,13 @@ function OrganizationScreen() {
   //useEffect to load organization list
   useEffect(() => {
     organizationGetList(token)
-      .then((response) => {
+      .then(response => {
         stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
         if (response) {
           setOrganizationList(response);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, stateSelector, isFocused]);
@@ -70,7 +70,7 @@ function OrganizationScreen() {
           height={27}
           selectedColor={themes.light.inverseTextColor}
           buttonColor={themes.light.primaryColor}
-          onPress={(value) => {
+          onPress={value => {
             switch (value) {
               case 1:
                 // list view of the orgnizations;
@@ -90,9 +90,7 @@ function OrganizationScreen() {
         <OrganizationListViews organizationList={organizationList} />
       ) : stateSelector == 2 ? (
         //  Map View
-        <MapViews
-          organizationList={organizationList}
-        />
+        <MapViews organizationList={organizationList} />
       ) : null}
     </SafeAreaView>
   );

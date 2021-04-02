@@ -1,7 +1,7 @@
 //OrganizationDetail Screen
 
 //import packages
-import React, { useLayoutEffect } from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, Linking} from 'react-native';
 import {Button, Text, View} from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -11,9 +11,7 @@ import OrganizationDetailsContactCard from '../../components/OrganizationDetails
 import OrganizationShareHeader from '../../components/OrganizationShareHeader';
 import {colors, spacing, typography} from '../../styles';
 
-
-
-export default function OrganizationDetailScreen({navigation,route}) {
+export default function OrganizationDetailScreen({navigation, route}) {
   const organization = route.params.organization;
 
   //function handle when user tap on number that invoke call option
@@ -34,7 +32,9 @@ export default function OrganizationDetailScreen({navigation,route}) {
     organization
       ? navigation.setOptions({
           headerTitle: organization.name,
-          headerRight: () => <OrganizationShareHeader shareData={organization} />,
+          headerRight: () => (
+            <OrganizationShareHeader shareData={organization} />
+          ),
         })
       : null;
   }, [navigation, organization]);
@@ -46,10 +46,10 @@ export default function OrganizationDetailScreen({navigation,route}) {
           {/* Detail card */}
           <OrganizationDetailCard
             title={organization.name}
-            reviews={organization.reviews}
+            // reviews={organization.reviews}
             decs={organization.description}
             address={organization.contact.address}
-            image={organization.medias}
+            // image={organization.medias}
           />
 
           {/* timings */}
