@@ -19,10 +19,9 @@ import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 const ServiceCategoryScreen = ({ navigate, route }) => {
   // console.log(props)
   const token = route.params.token;
-  const [selectedService, setSelectedService] = useState(null);
-
-  const [modalVisible, setModalVisible] = useState(false);
   const serviceId = route.params.name;
+  const [selectedService, setSelectedService] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const [filterServices, setFilteredServices] = useState(null);
   const [storeLastOpen, setStoreLastOpen] = useAsyncStorage('lastOpen', []);
 
@@ -56,8 +55,6 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
   };
 
   if (!filterServices) return null;
-  // console.log(filterServices)
-  //console.log('hehehesadasdsadsda');
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <View style={styles.container}>
@@ -67,13 +64,12 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
           ? filterServices.map((service) => (
             <TouchableOpacity
               onPress={() => {
-                setSelectedService(service._id);
+                setSelectedService(service);
                 setModalVisible(true);
                 handleLastOpen(service);
               }}
               key={service._id}>
               <ServicesCard
-                key={service._id}
                 title={service.name}
                 name={service.contact.providerName}
                 position={service.contact.position}
@@ -84,46 +80,39 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
           : null}
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        {filterServices.length > 0
-          ? filterServices
-            .filter(function (service) {
-              return service._id === selectedService;
-            })
-            .map((service) => (
-              <View style={styles.modalView} key={service._id}>
-                <View style={styles.modalTitle}>
-                  <View>
-                    <Text style={styles.modalTitleText}>{service.name}</Text>
-                  </View>
-
-                  <Pressable
-                    style={styles.closeButton}
-                    onPress={() => setModalVisible(!modalVisible)}
-                    key={service._id}>
-                    <Text style={styles.buttonText}>x</Text>
-                  </Pressable>
-                </View>
-                <ServiceDetail
-                  serviceProviderName={service.contact.providerName}
-                  serviceProviderPosition={service.contact.position}
-                  contactEmail={service.contact.email}
-                  contactPhone={service.contact.phone}
-                  description={service.description}
-                  isIndigenous={service.isIndigenous}
-                  media={service.medias}
-                />
+      {modalVisible ?
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.modalView} key={selectedService._id}>
+            <View style={styles.modalTitle}>
+              <View>
+                <Text style={styles.modalTitleText}>{selectedService.name}</Text>
               </View>
-            ))
-          : null}
-      </Modal>
+
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => setModalVisible(!modalVisible)}
+                key={selectedService._id}>
+                <Text style={styles.buttonText}>x</Text>
+              </Pressable>
+            </View>
+            <ServiceDetail
+              serviceProviderName={selectedService.contact.providerName}
+              serviceProviderPosition={selectedService.contact.position}
+              contactEmail={selectedService.contact.email}
+              contactPhone={selectedService.contact.phone}
+              description={selectedService.description}
+              isIndigenous={selectedService.isIndigenous}
+              media={selectedService.medias}
+            />
+          </View>
+        </Modal> : null}
     </SafeAreaView>
   );
 };
@@ -161,7 +150,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     borderBottomColor: colors.gray900,
-    borderBottomWidth: 0.15,
+    borderBottomWidth: 0.2,
   },
   modalTitleText: {
     fontSize: typography.fs4,
