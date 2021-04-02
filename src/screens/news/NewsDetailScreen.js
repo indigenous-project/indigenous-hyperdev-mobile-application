@@ -13,6 +13,7 @@ import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import AskQuestionScreen from '../sidenavbar/AskQuestionScreen'
 
 // function return
 function NewsDetailScreen({navigate, route, navigation}) {
@@ -69,7 +70,7 @@ function NewsDetailScreen({navigate, route, navigation}) {
       <View style={styles.buttonsGroup}>
         <Button
           title="Ask Question"
-          onPress={() => navigation.navigate('Ask Question')}
+          onPress={() => navigation.navigate(AskQuestionScreen)}
           style={styles.loginButton}
           block>
           <Text style={styles.loginText}>Ask Question</Text>
