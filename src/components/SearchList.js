@@ -3,18 +3,28 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import {Body, List, ListItem, Text, Separator, Content} from 'native-base';
 
 import {colors, typography} from '../styles';
+import {formatDate} from '../modules/date.format';
+import DiscussionDetail from '../screens/discussions/DiscussionDetail';
+import {useCurrentUser} from '../contexts/currentUserContext';
 
 const SearchList = (props) => {
-  console.log(props.result);
+  const [currentUser, token] = useCurrentUser();
   return (
     // <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
     <Content>
       <Separator bordered>
         <Text>DISCUSSIONS</Text>
       </Separator>
-      {props.result.length > 0
-        ? props.result.map((item) => (
-            <ListItem key={item._id}>
+      {props.discussion.length > 0
+        ? props.discussion.map((item) => (
+            <ListItem
+              key={item._id}
+              onPress={() =>
+                props.navigationProp.navigate('Discussion Detail', {
+                  discussionId: item._id,
+                  token: token,
+                })
+              }>
               <Body>
                 <Text>{item.title}</Text>
                 <Text note numberOfLines={1}>
@@ -28,6 +38,25 @@ const SearchList = (props) => {
       <Separator bordered>
         <Text>EVENTS</Text>
       </Separator>
+      {props.event.length > 0
+        ? props.event.map((item) => (
+            <ListItem
+              key={item._id}
+              onPress={() =>
+                props.navigationProp.navigate('Event Detail', {
+                  eventId: item._id,
+                  token: token,
+                })
+              }>
+              <Body>
+                <Text>{item.title}</Text>
+                <Text note numberOfLines={1}>
+                  {formatDate(item.date)}
+                </Text>
+              </Body>
+            </ListItem>
+          ))
+        : null}
       <Separator bordered>
         <Text>JOBS</Text>
       </Separator>

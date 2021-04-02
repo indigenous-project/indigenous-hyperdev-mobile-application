@@ -1,8 +1,10 @@
 // News Detail Screen
 
 // Import Packages
+
+
+import {Image, StyleSheet, View, Alert} from 'react-native';
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {Text, Button} from 'native-base';
@@ -27,11 +29,11 @@ function NewsDetailScreen({navigate, route, navigation}) {
   // fetching data
   useEffect(() => {
     postGetDetail(token, postId)
-      .then(response => {
+      .then((response) => {
         setPosts(response);
       })
 
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, postId]);

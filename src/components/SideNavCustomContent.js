@@ -9,7 +9,7 @@ import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
 import Loader from './Loader';
 import {useState} from 'react/cjs/react.development';
 import {deleteItemAsync} from 'expo-secure-store';
-import {useSecureStorage} from '../hooks/useSecureStorage';
+
 import {
   Alert,
   Image,
@@ -23,7 +23,7 @@ import {colors, spacing, themes, typography} from '../styles';
 import {useCurrentUser} from '../contexts/currentUserContext';
 import {Badge} from 'react-native-paper';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
-import {messageGetList, messageUnread} from '../api/messages/messages.api';
+import {messageUnread} from '../api/messages/messages.api';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {s3Storage} from '../api/aws/s3Strorage';

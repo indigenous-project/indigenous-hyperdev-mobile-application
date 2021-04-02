@@ -15,6 +15,7 @@ import RightHeaderButton from '../../components/RightHeaderButton';
 import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
 import DisclaimerScreen from '../sidenavbar/DisclaimerScreen';
 import {useEffect} from 'react/cjs/react.development';
+import SearchStack from '../search/SearchStack';
 
 const theme = themes.light;
 const Discussion = createStackNavigator();
@@ -60,6 +61,11 @@ function DiscussionsStack({navigation, route}) {
         name="Discussion Detail"
         component={DiscussionDetail}
         options={{headerRight: false, title: false}}
+      />
+      <Discussion.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{headerShown: false}}
       />
     </Discussion.Navigator>
   );

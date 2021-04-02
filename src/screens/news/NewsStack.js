@@ -13,7 +13,7 @@ import JobListScreen from './JobListScreen';
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
-import BottomTabScreen from '../BottomTabScreen';
+import SearchStack from '../search/SearchStack';
 
 const News = createStackNavigator();
 const theme = themes.light;
@@ -73,6 +73,11 @@ function NewsStack({navigation}) {
           headerStyle: {backgroundColor: themes.light.inverseTextColor},
           headerTintColor: theme.primaryColor,
         }}
+      />
+      <News.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{headerShown: false}}
       />
     </News.Navigator>
   );

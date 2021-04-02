@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {colors, themes, typography} from '../styles';
 import {StyleSheet, Animated, Dimensions} from 'react-native';
 import BottomItem from '../components/BottomItem';
+import SearchStack from './search/SearchStack';
 
 const theme = themes.light;
 

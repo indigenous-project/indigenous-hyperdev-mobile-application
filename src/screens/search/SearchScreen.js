@@ -7,25 +7,40 @@ import {Header, Item, Input, Icon, Left, Button, Right} from 'native-base';
 import SearchBar from '../../components/SearchBar';
 import {useDiscussion} from '../../contexts/discussionContext';
 import {useEffect} from 'react/cjs/react.development';
+import {useEvent} from '../../contexts/eventContext';
 
 function SearchScreen({navigation}) {
   const theme = themes.light;
 
   const [search, setSearch] = useState('');
-  const [searchArray, setSearchArray] = useState([]);
+  const [searchDiscussionArray, setSearchDiscussionArray] = useState([]);
+  const [searchEventArray, setSearchEventArray] = useState([]);
   const [discussions] = useDiscussion();
-  console.log(search);
+  const [events] = useEvent();
 
+  //search DISCUSSION
   useEffect(() => {
     discussions && search
-      ? setSearchArray(
+      ? setSearchDiscussionArray(
           discussions.filter((discussion) => {
-            const itemData = `${discussion.title.toLowerCase()} ${discussion.categories.name.toLowerCase()}`;
+            const itemData = `${discussion.title.toLowerCase()} ${discussion.categories.name.toLowerCase()} discussion`;
             return itemData.indexOf(search.trim().toLowerCase()) > -1;
           }),
         )
-      : setSearchArray([]);
+      : setSearchDiscussionArray([]);
   }, [discussions, search]);
+
+  //search EVENT
+  useEffect(() => {
+    events && search
+      ? setSearchEventArray(
+          events.filter((event) => {
+            const itemData = `${event.title.toLowerCase()} event`;
+            return itemData.indexOf(search.trim().toLowerCase()) > -1;
+          }),
+        )
+      : setSearchEventArray([]);
+  }, [events, search]);
 
   // console.log(searchArray);
   return (
@@ -63,7 +78,11 @@ function SearchScreen({navigation}) {
           </Item>
         </Header>
 
-        <SearchList result={searchArray} />
+        <SearchList
+          navigationProp={navigation}
+          discussion={searchDiscussionArray}
+          event={searchEventArray}
+        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
