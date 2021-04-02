@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     paddingRight: spacing.larger,
-    paddingTop: spacing.smallest,
+    paddingTop: spacing.smaller,
     width: '90%'
   },
   image: {
