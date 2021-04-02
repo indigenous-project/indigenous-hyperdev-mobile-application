@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {StyleSheet, Animated, Dimensions, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useEffect} from 'react/cjs/react.development';
-import {colors, themes, typography} from '../styles';
+
+import {themes, typography} from '../styles';
 export const BottomItem = ({iconName, isCurrent, size, color, index}) => {
   const [translateValue] = useState(new Animated.Value(0));
   const totalWidth = Dimensions.get('window').width;

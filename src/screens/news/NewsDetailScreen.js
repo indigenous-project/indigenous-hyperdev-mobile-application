@@ -2,7 +2,7 @@
 
 // Import Packages
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View, Alert} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {Text, Button} from 'native-base';
@@ -13,7 +13,7 @@ import {decodeHTML} from '../../modules/decode.text';
 import {WebView} from 'react-native-webview';
 import {colors, spacing, themes, typography} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
-import AskQuestionScreen from '../sidenavbar/AskQuestionScreen'
+import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
 
 // function return
 function NewsDetailScreen({navigate, route, navigation}) {
@@ -26,11 +26,11 @@ function NewsDetailScreen({navigate, route, navigation}) {
   // fetching data
   useEffect(() => {
     postGetDetail(token, postId)
-      .then(response => {
+      .then((response) => {
         setPosts(response);
       })
 
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, postId]);

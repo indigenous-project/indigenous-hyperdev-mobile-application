@@ -14,6 +14,7 @@ import {CurrentUserProvider} from '../../contexts/currentUserContext';
 import DisclaimerScreen from './DisclaimerScreen';
 import DisclaimerReviewScreen from './DisclaimerReviewScreen';
 import {CategoriesGeneralProvider} from '../../contexts/categoriesGeneralContext';
+import SearchStack from '../search/SearchStack';
 
 const Drawer = createDrawerNavigator();
 

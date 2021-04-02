@@ -2,9 +2,8 @@
 
 // import packages
 import React from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
-import { spacing, colors, themes, typography } from '../styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Text, StyleSheet, View, Image} from 'react-native';
+import {spacing, colors, themes, typography} from '../styles';
 
 const ServicesCard = (props) => {
   return (
@@ -17,12 +16,12 @@ const ServicesCard = (props) => {
             - {props.position}
           </Text>
         </View>
-        {props.isIndigenous == true ?
+        {props.isIndigenous == true ? (
           <Image
             style={styles.indigenousIcon}
             source={require('../testImages/indigenousIcon.png')}
           />
-          : null}
+        ) : null}
       </View>
     </View>
   );
