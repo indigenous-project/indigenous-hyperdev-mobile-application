@@ -16,8 +16,8 @@ function EventProvider(props) {
       eventGetList(token)
         .then(setEvents)
         .catch((err) => Alert.alert(err.errors[0]));
-  }, [token, props.isFocused]);
-  return <EventContext.Provider value={[events]} {...props} />;
+  }, [token, props.isFocused, setEvents]);
+  return <EventContext.Provider value={[events, setEvents]} {...props} />;
 }
 
 function useEvent() {
