@@ -23,7 +23,6 @@ function OrganizationScreen() {
   const [currentUser, token] = useCurrentUser();
   const [reloadData, setReloadData] = useState(reloadData);
   const isFocused = useIsFocused();
-  //const [organizationList, setOrganizationList] = useState();
   const [organizations, setOrganizations] = useOrganization();
 
   //options for switch selectors

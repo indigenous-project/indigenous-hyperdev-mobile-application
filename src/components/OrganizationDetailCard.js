@@ -11,7 +11,6 @@ import {WebView} from 'react-native-webview';
 
 const OrganizationDetailCard = props => {
   let imagePath = props.image ? getImage(props.image) : undefined;
-
   //to get the ratings from the review
   function getRating(reviews) {
     let totalReviews = 0;
@@ -57,15 +56,14 @@ const OrganizationDetailCard = props => {
         </Text>
 
         <Rating
-          readonly
+          readonly ={true}
           style={styles.rating}
           imageSize={typography.fs2}
-          fractions={1}
+          fractions={3}
           startingValue={
-            props.reviews !== undefined ? getRating(props.reviews) : 0
+            props.reviews == undefined ? 0 : getRating(props.reviews)
           }
         />
-        {props.desc !== undefined ? (
           <WebView
             style={styles.desc}
             originWhitelist={['*']}
@@ -75,7 +73,6 @@ const OrganizationDetailCard = props => {
               )}</section>`,
             }}
           />
-        ) : null}
       </View>
 
       <View style={styles.addressView}>

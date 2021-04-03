@@ -84,21 +84,22 @@ const styles = StyleSheet.create({
   buttonsView: {
     flexDirection: 'row',
     backgroundColor: colors.white,
-    marginVertical: '25%',
-    minHeight: '10%',
+    paddingVertical:10,
+    width:430,
     marginTop: spacing.none,
+    alignSelf:"center",
+    justifyContent:"space-between"
   },
   callButton: {
     backgroundColor: colors.primary400,
-    width: '36%',
+    width: '33%',
     height: 35,
     paddingLeft: spacing.largest,
-    marginLeft: 20,
-    alignSelf: 'center',
+    marginLeft:50
   },
   getDirButton: {
     backgroundColor: colors.primary400,
-    marginLeft: '15%',
+    marginRight:50,
     height: 35,
     alignSelf: 'center',
   },

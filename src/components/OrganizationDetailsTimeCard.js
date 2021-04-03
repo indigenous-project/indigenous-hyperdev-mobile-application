@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   lineHeightMonday: {
     marginBottom: spacing.smaller,
     fontSize: typography.fs2,
-    marginLeft: '21%',
+    marginLeft: 71,
   },
   lineHeightTuesday: {
     marginBottom: spacing.smaller,
