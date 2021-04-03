@@ -43,6 +43,7 @@ function SearchScreen({navigation}) {
   }, [events, search]);
 
   // console.log(searchArray);
+  if (!searchEventArray || !searchDiscussionArray) return null;
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{flex: 1}} edges={['right', 'left', 'bottom']}>
