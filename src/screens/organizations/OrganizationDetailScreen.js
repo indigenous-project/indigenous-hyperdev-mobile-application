@@ -1,17 +1,17 @@
 //OrganizationDetail Screen
 
 //import packages
-import React, {useLayoutEffect} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView, Linking} from 'react-native';
-import {Button, Text, View} from 'native-base';
+import React, { useLayoutEffect } from 'react';
+import { SafeAreaView, StyleSheet, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { Button, Text, View } from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import OrganizationDetailCard from '../../components/OrganizationDetailCard';
 import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTimeCard';
 import OrganizationDetailsContactCard from '../../components/OrganizationDetailsContactCard';
 import OrganizationShareHeader from '../../components/OrganizationShareHeader';
-import {colors, spacing, typography} from '../../styles';
+import { colors, spacing, typography } from '../../styles';
 
-export default function OrganizationDetailScreen({navigation, route}) {
+export default function OrganizationDetailScreen({ navigation, route }) {
   const organization = route.params.organization;
 
   //function handle when user tap on number that invoke call option
@@ -31,77 +31,79 @@ export default function OrganizationDetailScreen({navigation, route}) {
   useLayoutEffect(() => {
     organization
       ? navigation.setOptions({
-          headerTitle: organization.name,
-          headerRight: () => (
-            <OrganizationShareHeader shareData={organization} />
-          ),
-        })
+        headerTitle: organization.name,
+        headerRight: () => (
+          <OrganizationShareHeader shareData={organization} />
+        ),
+      })
       : null;
   }, [navigation, organization]);
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
       <ScrollView>
-        <View>
-          {/* Detail card */}
-          <OrganizationDetailCard
-            title={organization.name}
-            // reviews={organization.reviews}
-            decs={organization.description}
-            address={organization.contact.address}
-            // image={organization.medias}
-          />
+        {/* Detail card */}
+        <OrganizationDetailCard
+          title={organization.name}
+          // reviews={organization.reviews}
+          decs={organization.description}
+          address={organization.contact.address}
+        // image={organization.medias}
+        />
 
-          {/* timings */}
-          <OrganizationDetailsTimeCard openHours={organization.openHours} />
+        {/* timings */}
+        <OrganizationDetailsTimeCard openHours={organization.openHours} />
 
-          {/* contact details */}
-          <OrganizationDetailsContactCard
-            phone={organization.contact.phone}
-            website={organization.contact.website}
-            email={organization.contact.email}
-            facebook={organization.contact.facebook}
-          />
-        </View>
-        {/* buttons */}
-        <View style={styles.buttonsView}>
-          {/* call button */}
-          <Button style={styles.callButton} onPress={handlePhone}>
-            <Text style={styles.callButtonText}>Call</Text>
-          </Button>
-          {/* get direction button */}
-          <Button style={styles.getDirButton} onPress={handleGoLink}>
-            <Text style={styles.getDirButtonText}>Get Direction</Text>
-          </Button>
-        </View>
+        {/* contact details */}
+        <OrganizationDetailsContactCard
+          phone={organization.contact.phone}
+          website={organization.contact.website}
+          email={organization.contact.email}
+          facebook={organization.contact.facebook}
+        />
       </ScrollView>
+
+      {/* buttons */}
+      <View style={styles.buttonsGroup}>
+        {/* call button */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={handlePhone}>
+          <Text style={styles.buttonText}>Call</Text>
+        </TouchableOpacity>
+        {/* get direction button */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleGoLink}>
+          <Text style={styles.buttonText}>Get Direction</Text>
+        </TouchableOpacity>
+      </View>
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   //styling on call and get direction button
-  buttonsView: {
+  safeArea: {
+    flex: 1,
+  },
+  buttonsGroup: {
     flexDirection: 'row',
+    width: '100%',
     backgroundColor: colors.white,
-    marginVertical: '25%',
-    minHeight: '10%',
-    marginTop: spacing.none,
+    justifyContent: 'space-around',
+    paddingHorizontal: spacing.base,
+    paddingTop: spacing.base,
   },
-  callButton: {
+  buttonContainer: {
+    width: '40%',
+    borderRadius: 10,
+    marginBottom: spacing.small,
     backgroundColor: colors.primary400,
-    width: '36%',
-    height: 35,
-    paddingLeft: spacing.largest,
-    marginLeft: 20,
-    alignSelf: 'center',
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
   },
-  getDirButton: {
-    backgroundColor: colors.primary400,
-    marginLeft: '15%',
-    height: 35,
+  buttonText: {
     alignSelf: 'center',
+    fontSize: typography.fs2,
+    color: colors.white,
+    fontWeight: typography.fwBold,
   },
-  callButtonText: {fontWeight: typography.fwSemiBold},
-  getDirButtonText: {fontWeight: typography.fwSemiBold},
 });

@@ -1,9 +1,9 @@
 //Discussion Detail module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 import {
@@ -22,13 +22,13 @@ import {
 
 import Chips from '../../components/Chips';
 import ReplyCard from '../../components/ReplyCard';
-import {colors, themes, typography, spacing} from '../../styles';
-import {discussionGetDetail} from '../../api/discussions/discussions.api';
-import {repliesAdd} from '../../api/replies/replies.api';
+import { colors, themes, typography, spacing } from '../../styles';
+import { discussionGetDetail } from '../../api/discussions/discussions.api';
+import { repliesAdd } from '../../api/replies/replies.api';
 
 //function return
 
-function DiscussionDetail({navigate, route}) {
+function DiscussionDetail({ navigate, route }) {
   const theme = themes.light;
   const [discussion, setDiscussion] = useState(null);
   const [replyInput, setReplyInput] = useState(null);
@@ -69,7 +69,7 @@ function DiscussionDetail({navigate, route}) {
   //method handle user tap on Add Reply button
   const handleAddReplyButton = () => {
     if (replyInput && discussionId)
-      repliesAdd(token, {text: replyInput.trim()}, discussionId)
+      repliesAdd(token, { text: replyInput.trim() }, discussionId)
         .then(() => {
           setModalVisible(!modalVisible);
         })
@@ -78,16 +78,15 @@ function DiscussionDetail({navigate, route}) {
 
   if (!discussion) return null;
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
       <ScrollView>
         <View style={styles.container}>
           <View>
             <Text style={styles.heading}>{discussion.title}</Text>
             <Text style={styles.datePosted}>
-              {`${discussion.owner.firstName} ${
-                discussion.owner.lastName
-              } Posted ${formatDate(discussion.createdAt)}`}
+              {`${discussion.owner.firstName} ${discussion.owner.lastName
+                } Posted ${formatDate(discussion.createdAt)}`}
             </Text>
           </View>
           {discussion.categories ? (
@@ -98,7 +97,7 @@ function DiscussionDetail({navigate, route}) {
           {discussion.medias[0] ? (
             <Image
               style={styles.image}
-              source={{uri: discussion.medias[0].path}}
+              source={{ uri: discussion.medias[0].path }}
             />
           ) : null}
         </View>
@@ -106,12 +105,12 @@ function DiscussionDetail({navigate, route}) {
           <Text style={styles.heading}>Replies</Text>
           {discussion.replies.length > 0
             ? discussion.replies.map((reply) => (
-                <ReplyCard
-                  name={`${reply.owner.firstName} ${reply.owner.lastName}`}
-                  reply={reply.text}
-                  key={reply._id}
-                />
-              ))
+              <ReplyCard
+                name={`${reply.owner.firstName} ${reply.owner.lastName}`}
+                reply={reply.text}
+                key={reply._id}
+              />
+            ))
             : null}
         </View>
       </ScrollView>
@@ -131,7 +130,7 @@ function DiscussionDetail({navigate, route}) {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={{backgroundColor: 'rgba(0,0,0,0.5)', height: '100%'}}>
+        <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', height: '100%' }}>
           <View style={styles.modalView}>
             <View style={styles.modalTitle}>
               <Text style={styles.modalTitleText}>Reply</Text>
@@ -141,7 +140,7 @@ function DiscussionDetail({navigate, route}) {
                 <Text style={styles.closeButtonText}>x</Text>
               </Pressable>
             </View>
-            <View style={{height: 100}}>
+            <View style={{ height: 100 }}>
               <TextInput
                 style={styles.modalInput}
                 multiline={true}
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 10,
     marginBottom: spacing.small,
-    backgroundColor: colors.primary500,
+    backgroundColor: colors.primary400,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
   },
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: {width: 3, height: 3},
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
@@ -264,7 +263,7 @@ const styles = StyleSheet.create({
     marginVertical: spacing.small,
     width: '40%',
     alignSelf: 'center',
-    backgroundColor: colors.primary500,
+    backgroundColor: colors.primary400,
     paddingVertical: spacing.small,
   },
 });

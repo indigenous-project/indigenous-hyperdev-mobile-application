@@ -46,7 +46,10 @@ function AboutScreen({ navigation }) {
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
       <View style={styles.headerContainer}>
-        <BackButtonHeaderLeft navigationProps={navigation} />
+        <BackButtonHeaderLeft
+          navigationProp={navigation}
+          color={theme.primaryColor}
+        />
         <Text style={styles.heading}>About Us</Text>
       </View>
       <ScrollView>

@@ -2,10 +2,9 @@
 
 //import packages
 import React from 'react';
-import {Linking, StyleSheet} from 'react-native';
-import {Text, View} from 'native-base';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {spacing, themes, typography} from '../styles';
+import { spacing, themes, typography } from '../styles';
 import Hyperlink from 'react-native-hyperlink';
 
 const OrganizationDetailsContactCard = props => {
@@ -89,12 +88,11 @@ export default OrganizationDetailsContactCard;
 const styles = StyleSheet.create({
   contactView: {
     shadowOpacity: 0,
-    padding: 10,
+    padding: spacing.base,
     backgroundColor: themes.light.inverseTextColor,
-    marginBottom: 5,
-    marginTop: 5,
+    marginBottom: spacing.small,
   },
-  icon: {marginRight: spacing.small, bottom: 4},
+  icon: { marginRight: spacing.small, bottom: 4 },
   view: {
     flexDirection: 'row',
     color: themes.light.primaryColor,

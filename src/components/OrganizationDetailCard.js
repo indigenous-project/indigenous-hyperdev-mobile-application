@@ -2,12 +2,12 @@
 
 //import packages
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
-import {Text, View} from 'native-base';
-import {typography, spacing, themes} from '../styles';
-import {Rating} from 'react-native-ratings';
-import {decodeHTML} from '../modules/decode.text';
-import {WebView} from 'react-native-webview';
+import { StyleSheet, Image } from 'react-native';
+import { Text, View } from 'native-base';
+import { typography, spacing, themes, colors } from '../styles';
+import { Rating } from 'react-native-ratings';
+import { decodeHTML } from '../modules/decode.text';
+import { WebView } from 'react-native-webview';
 
 const OrganizationDetailCard = props => {
   let imagePath = props.image ? getImage(props.image) : undefined;
@@ -42,16 +42,16 @@ const OrganizationDetailCard = props => {
   }
 
   return (
-    <View style={{backgroundColor: themes.light.inverseTextColor}}>
+    <View style={styles.cardContainer}>
       <Image
         source={
           imagePath !== undefined
-            ? {uri: getImage(props.image)}
+            ? { uri: getImage(props.image) }
             : require('../testImages/demoPic.png')
         }
         style={styles.image}
       />
-      <View style={{padding: spacing.small}}>
+      <View style={styles.cardContent}>
         <Text style={styles.titleText}>
           {props.title !== undefined ? props.title : ' '}
         </Text>
@@ -76,13 +76,12 @@ const OrganizationDetailCard = props => {
             }}
           />
         ) : null}
-      </View>
-
-      <View style={styles.addressView}>
-        <Text style={styles.addressLabel}>Address:</Text>
-        <Text style={styles.addressTextView}>
-          {props.address !== undefined ? props.address : ''}
-        </Text>
+        <View style={styles.addressView}>
+          <Text style={styles.addressLabel}>Address:</Text>
+          <Text style={styles.addressTextView}>
+            {props.address !== undefined ? props.address : ''}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -91,21 +90,29 @@ const OrganizationDetailCard = props => {
 export default OrganizationDetailCard;
 
 const styles = StyleSheet.create({
-  view: {
-    shadowOpacity: spacing.none,
-    marginBottom: spacing.none,
-    paddingLeft: spacing.small,
+  cardContainer: {
+    backgroundColor: themes.light.inverseTextColor,
+    marginBottom: spacing.hairline
   },
-  image: {height: 150, width: null, flex: spacing.hairline},
+  image: {
+    height: 150,
+    width: null,
+    flex: spacing.hairline
+  },
+  cardContent:
+  {
+    padding: spacing.small
+  },
   titleText: {
-    color: themes.light.primaryColor,
+    color: colors.primary900,
     fontWeight: typography.fwSemiBold,
-    marginBottom: spacing.smallest,
+    marginBottom: spacing.smaller,
   },
-  rating: {alignSelf: 'flex-start'},
+  rating: {
+    alignSelf: 'flex-start',
+  },
   desc: {
     fontWeight: typography.fwMedium,
-    paddingBottom: spacing.smallest,
     marginTop: spacing.smallest,
     width: 300,
     lineHeight: typography.lh3,
@@ -114,9 +121,9 @@ const styles = StyleSheet.create({
   },
   addressView: {
     flexDirection: 'row',
-    padding: spacing.base,
+    marginTop: spacing.smaller,
   },
-  addressLabel: {fontSize: typography.fs2},
+  addressLabel: { fontSize: typography.fs2 },
   addressTextView: {
     marginLeft: spacing.smaller,
     width: '50%',

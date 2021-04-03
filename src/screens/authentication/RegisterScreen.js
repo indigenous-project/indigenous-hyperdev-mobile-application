@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.small,
     width: '60%',
     alignSelf: 'center',
-    backgroundColor: colors.primary500,
+    backgroundColor: colors.primary400,
     marginTop: spacing.largest
   },
   signUpButtonText: {

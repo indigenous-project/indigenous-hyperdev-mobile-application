@@ -21,7 +21,10 @@ function DisclaimerReviewScreen({ navigation }) {
       style={{ flex: 1, backgroundColor: colors.white }}
       edges={['right', 'top', 'left', 'bottom']}>
       <View style={styles.headerContainer}>
-        <BackButtonHeaderLeft navigationProps={navigation} />
+        <BackButtonHeaderLeft
+          navigationProp={navigation}
+          color={theme.primaryColor}
+        />
         <Text style={styles.heading}>Discussion Disclaimer & Privacy</Text>
       </View>
       <View>

@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.small,
     width: '60%',
     alignSelf: 'center',
-    backgroundColor: colors.primary500,
+    backgroundColor: colors.primary400,
     paddingVertical: spacing.small,
     marginTop: spacing.largest
   },

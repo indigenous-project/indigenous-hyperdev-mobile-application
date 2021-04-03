@@ -1,7 +1,7 @@
 //NewsScreen module
 
 // import packages
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -12,23 +12,23 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import JobCard from '../../components/JobCard';
 import SurveyCard from '../../components/SurveyCard';
 import NewsCard from '../../components/NewsCard';
-import {colors, spacing, themes, typography} from '../../styles';
-import {postGetList} from '../../api/news/news.api';
-import {jobGetList} from '../../api/jobs/jobs.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useIsFocused} from '@react-navigation/core';
-import {formatDate} from '../../modules/date.format';
+import { colors, spacing, themes, typography } from '../../styles';
+import { postGetList } from '../../api/news/news.api';
+import { jobGetList } from '../../api/jobs/jobs.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { useIsFocused } from '@react-navigation/core';
+import { formatDate } from '../../modules/date.format';
 import OrganizationChips from '../../components/OrganizationChips';
-import {useJob} from '../../contexts/jobContext';
-import {useNews} from '../../contexts/newsContext';
+import { useJob } from '../../contexts/jobContext';
+import { useNews } from '../../contexts/newsContext';
 
 //function return
-function NewsScreen({navigation}) {
+function NewsScreen({ navigation }) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   //const [jobs, setJobs] = useState(null);
@@ -87,7 +87,7 @@ function NewsScreen({navigation}) {
   }, [token, reloadData, isFocused]);
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <ScrollView
@@ -115,22 +115,22 @@ function NewsScreen({navigation}) {
               showsHorizontalScrollIndicator={false}>
               {jobs
                 ? jobs.map((job) => (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('Job Detail', {
-                          job: job,
-                          jobId: job._id,
-                          token: token,
-                        })
-                      }
-                      key={job._id}>
-                      <JobCard
-                        title={job.title}
-                        posting={job.subTitle}
-                        type={job.type}
-                        salary={convertSalary(job.salary)}></JobCard>
-                    </TouchableOpacity>
-                  ))
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Job Detail', {
+                        job: job,
+                        jobId: job._id,
+                        token: token,
+                      })
+                    }
+                    key={job._id}>
+                    <JobCard
+                      title={job.title}
+                      posting={job.subTitle}
+                      type={job.type}
+                      salary={convertSalary(job.salary)}></JobCard>
+                  </TouchableOpacity>
+                ))
                 : null}
             </ScrollView>
           </View>
@@ -139,7 +139,7 @@ function NewsScreen({navigation}) {
         <View style={styles.container}>
           <View style={styles.containerHeading}>
             <Text style={styles.heading}>New Survey</Text>
-            <Text onPress={() => navigation.navigate('Surveys List')}>
+            <Text onPress={() => navigation.navigate('Surveys')}>
               See All
             </Text>
           </View>
@@ -157,20 +157,20 @@ function NewsScreen({navigation}) {
           </ScrollView>
           {posts
             ? posts.map((post) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('News Article', {
-                      postId: post._id,
-                      token: token,
-                    })
-                  }
-                  key={post._id}>
-                  <NewsCard
-                    title={post.title}
-                    date={formatDate(post.lastModifiedDate)}
-                    details={post.description}></NewsCard>
-                </TouchableOpacity>
-              ))
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('News Article', {
+                    postId: post._id,
+                    token: token,
+                  })
+                }
+                key={post._id}>
+                <NewsCard
+                  title={post.title}
+                  date={formatDate(post.lastModifiedDate)}
+                  details={post.description}></NewsCard>
+              </TouchableOpacity>
+            ))
             : null}
           <Text></Text>
         </View>

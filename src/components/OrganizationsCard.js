@@ -1,13 +1,13 @@
 //OrganizationScreen module
 
 // import packages
-import React, {useEffect, useState} from 'react';
-import {Card, CardItem, Text, Body, Right, View} from 'native-base';
-import {Image, Linking, StyleSheet} from 'react-native';
-import {colors, spacing, themes, typography} from '../styles';
+import React, { useEffect, useState } from 'react';
+import { Card, CardItem, Text, Body, Right, View } from 'native-base';
+import { Image, Linking, StyleSheet } from 'react-native';
+import { colors, spacing, themes, typography } from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Hyperlink from 'react-native-hyperlink';
-import {Rating} from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
 
 function OrganizationsCard(props) {
   let imagePath = props.image ? getImage(props.image) : undefined;
@@ -45,8 +45,8 @@ function OrganizationsCard(props) {
   function handleGoLink() {
     props.location !== undefined
       ? Linking.openURL(
-          `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
-        )
+        `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
+      )
       : null;
   }
   return (
@@ -55,7 +55,7 @@ function OrganizationsCard(props) {
         <Image
           source={
             imagePath !== undefined
-              ? {uri: getImage(props.image)}
+              ? { uri: getImage(props.image) }
               : require('../testImages/demoPic.png')
           }
           style={styles.cardImage}
@@ -75,7 +75,7 @@ function OrganizationsCard(props) {
               props.reviews == undefined ? 0 : getRating(props.reviews)
             }
           />
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <MaterialCommunityIcons
               name="earth"
               size={22}
@@ -84,7 +84,7 @@ function OrganizationsCard(props) {
             />
             <Hyperlink
               linkDefault={true}
-              linkStyle={{textDecorationLine: 'underline'}}>
+              linkStyle={{ textDecorationLine: 'underline' }}>
               <Text style={styles.website}>
                 {props.website !== undefined ? props.website.split('www.') : ''}
               </Text>
@@ -114,7 +114,7 @@ function OrganizationsCard(props) {
               ]}>
               {props.type !== undefined ? props.type : null}
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <MaterialCommunityIcons
                 name="map-marker"
                 size={22}
@@ -144,25 +144,25 @@ const styles = StyleSheet.create({
     marginBottom: spacing.smaller,
     borderRadius: spacing.small,
   },
-  border: {borderRadius: typography.fs3},
+  border: { borderRadius: typography.fs3 },
   cardImage: {
     height: 100,
     flex: spacing.hairline,
     borderTopLeftRadius: typography.fs3,
     borderTopRightRadius: typography.fs3,
   },
-  typeAndLocationPosition: {marginTop: 18},
-  typeAndLocationPositionWithIcon: {marginTop: 0},
+  typeAndLocationPosition: { marginTop: 18 },
+  typeAndLocationPositionWithIcon: { marginTop: 0 },
   name: {
     width: 500,
     color: themes.light.primaryColor,
     fontWeight: typography.fwMedium,
     marginBottom: spacing.smallest,
   },
-  rating: {alignSelf: 'flex-start', marginBottom: spacing.small},
-  markerIcon: {color: colors.primary900, marginRight: 5},
-  earthIcon: {color: colors.primary900, marginRight: 5, bottom: 4},
-  website: {fontSize: typography.fs2},
+  rating: { alignSelf: 'flex-start', marginBottom: spacing.small },
+  markerIcon: { color: colors.primary900, marginRight: 5 },
+  earthIcon: { color: colors.primary900, marginRight: 5, bottom: 4 },
+  website: { fontSize: typography.fs2 },
   location: {
     alignSelf: 'flex-end',
     fontSize: typography.fs2,

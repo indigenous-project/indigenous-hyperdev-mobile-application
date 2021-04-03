@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     width: '40%',
     borderRadius: 10,
     marginBottom: spacing.small,
-    backgroundColor: colors.primary500,
+    backgroundColor: colors.primary400,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
   },
