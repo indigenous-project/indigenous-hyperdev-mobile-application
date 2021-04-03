@@ -1,5 +1,5 @@
-import { SecretsManager, ServiceCatalog } from 'aws-sdk';
-import React, { useEffect, useState } from 'react';
+import {SecretsManager, ServiceCatalog} from 'aws-sdk';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,13 +10,13 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import { serviceGetList } from '../../api/services/services.api';
-import { spacing, colors, typography } from '../../styles';
+import {serviceGetList} from '../../api/services/services.api';
+import {spacing, colors, typography} from '../../styles';
 import ServicesCard from '../../components/ServicesCard';
 import ServiceDetail from '../../components/ServiceDetail';
-import { useAsyncStorage } from '../../hooks/useAsyncStorage';
+import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 
-const ServiceCategoryScreen = ({ navigate, route }) => {
+const ServiceCategoryScreen = ({navigate, route}) => {
   // console.log(props)
   const token = route.params.token;
   const serviceId = route.params.name;
@@ -46,41 +46,47 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
       });
   }, [token]);
 
+  // handle lastOpen
   const handleLastOpen = (service) => {
-    if (storeLastOpen[0] !== service && storeLastOpen[1] !== service) {
-      storeLastOpen.unshift(service);
-      storeLastOpen.length > 2 ? storeLastOpen.pop() : null;
-      setStoreLastOpen(storeLastOpen);
-    }
+    let arr = storeLastOpen;
+    arr.unshift(service);
+    // filter to get unique item
+    let uniqueArr = arr.filter(
+      (item1, index, a) =>
+        a.findIndex((item2) => item1._id === item2._id) === index,
+    );
+    uniqueArr.length > 2 ? uniqueArr.pop() : null; // only get 2 item
+
+    setStoreLastOpen(uniqueArr);
   };
 
   if (!filterServices) return null;
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <View style={styles.container}>
         <Text style={styles.heading}>{serviceId}</Text>
 
         {filterServices.length > 0
           ? filterServices.map((service) => (
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedService(service);
-                setModalVisible(true);
-                handleLastOpen(service);
-              }}
-              key={service._id}>
-              <ServicesCard
-                title={service.name}
-                name={service.contact.providerName}
-                position={service.contact.position}
-                isIndigenous={service.isIndigenous}
-              />
-            </TouchableOpacity>
-          ))
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedService(service);
+                  setModalVisible(true);
+                  handleLastOpen(service);
+                }}
+                key={service._id}>
+                <ServicesCard
+                  title={service.name}
+                  name={service.contact.providerName}
+                  position={service.contact.position}
+                  isIndigenous={service.isIndigenous}
+                />
+              </TouchableOpacity>
+            ))
           : null}
       </View>
 
-      {modalVisible ?
+      {modalVisible ? (
         <Modal
           animationType="slide"
           transparent={true}
@@ -92,7 +98,9 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
           <View style={styles.modalView} key={selectedService._id}>
             <View style={styles.modalTitle}>
               <View>
-                <Text style={styles.modalTitleText}>{selectedService.name}</Text>
+                <Text style={styles.modalTitleText}>
+                  {selectedService.name}
+                </Text>
               </View>
 
               <Pressable
@@ -112,7 +120,8 @@ const ServiceCategoryScreen = ({ navigate, route }) => {
               media={selectedService.medias}
             />
           </View>
-        </Modal> : null}
+        </Modal>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -162,7 +171,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
