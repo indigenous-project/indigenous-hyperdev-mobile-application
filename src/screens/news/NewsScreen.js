@@ -24,25 +24,29 @@ import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
 import {formatDate} from '../../modules/date.format';
 import OrganizationChips from '../../components/OrganizationChips';
+import {useJob} from '../../contexts/jobContext';
+import {useNews} from '../../contexts/newsContext';
 
 //function return
 function NewsScreen({navigation}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
-  const [jobs, setJobs] = useState(null);
-  const [posts, setPosts] = useState(null);
+  //const [jobs, setJobs] = useState(null);
+  //const [posts, setPosts] = useState(null);
+  const [jobs, setJobs] = useJob();
+  const [posts, setPosts] = useNews();
   const [currentUser, token] = useCurrentUser();
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
 
   //Methods Region
   // wait time for refresh
-  const wait = timeout => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
   };
 
   // Converting cents to dollars
-  const convertSalary = data => {
+  const convertSalary = (data) => {
     var dollars = data / 100;
     dollars = dollars.toLocaleString('en-US', {
       style: 'currency',
@@ -61,11 +65,11 @@ function NewsScreen({navigation}) {
   // useEffect load job list
   useEffect(() => {
     jobGetList(token)
-      .then(response => {
+      .then((response) => {
         setJobs(response);
       })
 
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, isFocused]);
@@ -73,11 +77,11 @@ function NewsScreen({navigation}) {
   // useEffect load post list
   useEffect(() => {
     postGetList(token)
-      .then(response => {
+      .then((response) => {
         setPosts(response);
       })
 
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, isFocused]);
@@ -101,14 +105,16 @@ function NewsScreen({navigation}) {
         <View style={styles.container}>
           <View style={styles.containerHeading}>
             <Text style={styles.heading}>Job News</Text>
-            <Text onPress={() => navigation.navigate('Jobs List')}>See All</Text>
+            <Text onPress={() => navigation.navigate('Jobs List')}>
+              See All
+            </Text>
           </View>
           <View style={styles.jobNews}>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               {jobs
-                ? jobs.map(job => (
+                ? jobs.map((job) => (
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('Job Detail', {
@@ -150,7 +156,7 @@ function NewsScreen({navigation}) {
             <OrganizationChips category="Open-Now" />
           </ScrollView>
           {posts
-            ? posts.map(post => (
+            ? posts.map((post) => (
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('News Article', {

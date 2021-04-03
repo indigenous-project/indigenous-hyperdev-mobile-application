@@ -15,6 +15,7 @@ import SwitchSelector from 'react-native-switch-selector';
 import {organizationGetList} from '../../api/organizations/organizations.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
+import {useOrganization} from '../../contexts/organizationContext';
 
 //function return
 function OrganizationScreen() {
@@ -22,7 +23,8 @@ function OrganizationScreen() {
   const [currentUser, token] = useCurrentUser();
   const [reloadData, setReloadData] = useState(reloadData);
   const isFocused = useIsFocused();
-  const [organizationList, setOrganizationList] = useState();
+  //const [organizationList, setOrganizationList] = useState();
+  const [organizations, setOrganizations] = useOrganization();
 
   //options for switch selectors
   const options = [
@@ -33,18 +35,18 @@ function OrganizationScreen() {
   //useEffect to load organization list
   useEffect(() => {
     organizationGetList(token)
-      .then(response => {
+      .then((response) => {
         stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
         if (response) {
-          setOrganizationList(response);
+          setOrganizations(response);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, stateSelector, isFocused]);
 
-  if (!organizationList) return null;
+  if (!organizations) return null;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
@@ -70,7 +72,7 @@ function OrganizationScreen() {
           height={27}
           selectedColor={themes.light.inverseTextColor}
           buttonColor={themes.light.primaryColor}
-          onPress={value => {
+          onPress={(value) => {
             switch (value) {
               case 1:
                 // list view of the orgnizations;
@@ -87,10 +89,10 @@ function OrganizationScreen() {
       </View>
       {stateSelector == 1 ? (
         // List View
-        <OrganizationListViews organizationList={organizationList} />
+        <OrganizationListViews organizationList={organizations} />
       ) : stateSelector == 2 ? (
         //  Map View
-        <MapViews organizationList={organizationList} />
+        <MapViews organizationList={organizations} />
       ) : null}
     </SafeAreaView>
   );
