@@ -14,27 +14,48 @@ import {createStackNavigator} from '@react-navigation/stack';
 import DrawerRoute from './src/screens/sidenavbar/DrawerRoute';
 import AuthStack from './src/screens/authentication/AuthStack';
 import {CurrentUserProvider} from './src/contexts/currentUserContext';
+import {DiscussionProvider} from './src/contexts/discussionContext';
+import {EventProvider} from './src/contexts/eventContext';
+import {JobProvider} from './src/contexts/jobContext';
+import {NewsProvider} from './src/contexts/newsContext';
+import {ServiceProvider} from './src/contexts/serviceContext';
+import {OrganizationProvider} from './src/contexts/organizationContext';
 
 const Stack = createStackNavigator();
 const App = () => {
   return (
     <SafeAreaProvider>
       <CurrentUserProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth">
-            <Stack.Screen
-              name="Auth"
-              component={AuthStack}
-              options={{headerShown: false, animationTypeForReplace: 'pop'}}
-            />
+        <DiscussionProvider>
+          <EventProvider>
+            <JobProvider>
+              <NewsProvider>
+                <ServiceProvider>
+                  <OrganizationProvider>
+                    <NavigationContainer>
+                      <Stack.Navigator initialRouteName="Auth">
+                        <Stack.Screen
+                          name="Auth"
+                          component={AuthStack}
+                          options={{
+                            headerShown: false,
+                            animationTypeForReplace: 'pop',
+                          }}
+                        />
 
-            <Stack.Screen
-              name="DrawerRoute"
-              component={DrawerRoute}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+                        <Stack.Screen
+                          name="DrawerRoute"
+                          component={DrawerRoute}
+                          options={{headerShown: false}}
+                        />
+                      </Stack.Navigator>
+                    </NavigationContainer>
+                  </OrganizationProvider>
+                </ServiceProvider>
+              </NewsProvider>
+            </JobProvider>
+          </EventProvider>
+        </DiscussionProvider>
       </CurrentUserProvider>
     </SafeAreaProvider>
   );

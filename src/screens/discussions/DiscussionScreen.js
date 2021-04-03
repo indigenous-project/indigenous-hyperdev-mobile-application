@@ -26,6 +26,7 @@ import {discussionGetList} from '../../api/discussions/discussions.api';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {useCurrentUser} from '../../contexts/currentUserContext';
 import {useIsFocused} from '@react-navigation/core';
+import {useDiscussion} from '../../contexts/discussionContext';
 
 //switch-selector options
 const options = [
@@ -44,6 +45,7 @@ function DiscussionScreen({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [stateSelector, setStateSelector] = useState(null);
   const [currentUser, token] = useCurrentUser();
+  const [discussions, setDiscussions] = useDiscussion(); //use discussion context
 
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
@@ -116,6 +118,7 @@ function DiscussionScreen({navigation}) {
       discussionGetList(token)
         .then((response) => {
           stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = 1
+          setDiscussions(response); // set new discussion context
           if (response) {
             switch (
               stateSelector // checking state of Selector

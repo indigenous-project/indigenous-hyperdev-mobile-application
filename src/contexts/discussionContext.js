@@ -15,8 +15,13 @@ function DiscussionProvider(props) {
       discussionGetList(token)
         .then(setDiscussions)
         .catch((err) => Alert.alert(err.errors[0]));
-  }, [token, props.isFocused]);
-  return <DiscussionContext.Provider value={[discussions]} {...props} />;
+  }, [token, props.isFocused, setDiscussions]);
+  return (
+    <DiscussionContext.Provider
+      value={[discussions, setDiscussions]}
+      {...props}
+    />
+  );
 }
 
 function useDiscussion() {
