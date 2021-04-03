@@ -23,6 +23,7 @@ import {useCurrentUser} from '../../contexts/currentUserContext';
 import {eventGetList} from '../../api/events/events.api';
 import {latestUpdateGet} from '../../api/latestUpdate/latestUpdate.api';
 import {useIsFocused} from '@react-navigation/core';
+import {useEvent} from '../../contexts/eventContext';
 // End import region
 
 //function return
@@ -32,7 +33,8 @@ function HomeScreen({navigation}) {
   const isFocused = useIsFocused();
   const [categories, setCategories] = useState(null);
   const [latestUpdate, setLatestUpdate] = useState(null);
-  const [events, setEvents] = useState(null);
+  //const [events, setEvents] = useState(null);
+  const [events, setEvents] = useEvent(); // use event context
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(false);
   const [currentUser, token] = useCurrentUser();
