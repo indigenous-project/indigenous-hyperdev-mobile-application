@@ -1,7 +1,7 @@
 //ServiceScreen module
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   View,
@@ -13,31 +13,31 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import ServicesCard from '../../components/ServicesCard';
-import { themes, spacing, typography, colors } from '../../styles';
-import { serviceGetList } from '../../api/services/services.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
+import {themes, spacing, typography, colors} from '../../styles';
+import {serviceGetList} from '../../api/services/services.api';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 import ServiceDetail from '../../components/ServiceDetail';
-import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
-import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
+import {useCategoryGeneral} from '../../contexts/categoriesGeneralContext';
+import {removeAsyncStorage, useAsyncStorage} from '../../hooks/useAsyncStorage';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useIsFocused } from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/core';
 
 //function return
-function ServiceScreen({ navigation }) {
+function ServiceScreen({navigation}) {
   const [services, setServices] = useState(null);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [currentUser, token] = useCurrentUser();
   const [categories] = useCategoryGeneral();
-  const [lastOpen, setLastOpen] = useAsyncStorage('lastOpen', []);
   const [selectedService, setSelectedService] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const isFocused = useIsFocused();
 
   const [storedValue, setStoredValue] = useState();
+  //removeAsyncStorage('lastOpen');
   useEffect(() => {
     AsyncStorage.getItem('lastOpen')
       .then((value) => {
@@ -65,7 +65,7 @@ function ServiceScreen({ navigation }) {
   }
 
   if (!services) return null;
-  function renderItem({ item }) {
+  function renderItem({item}) {
     return categoriesGeneral ? (
       <View
         style={{
@@ -83,14 +83,14 @@ function ServiceScreen({ navigation }) {
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
-            category={{ id: item._id, name: item.name }}
+            category={{id: item._id, name: item.name}}
           />
         </Pressable>
       </View>
     ) : null;
   }
   return (
-    <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
+    <SafeAreaView edges={['right', 'left']} style={{flex: 1}}>
       <View>
         <FocusedStatusBar barStyle="light-content" />
 
@@ -127,30 +127,30 @@ function ServiceScreen({ navigation }) {
           <ScrollView>
             {storedValue.length > 0
               ? storedValue.map((service) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedService(service);
-                    setModalVisible(true);
-                  }}
-                  key={service._id}>
-                  <ServicesCard
-                    key={service._id}
-                    title={service.name}
-                    isIndigenous={service.isIndigenous}
-                    name={
-                      service.contact.providerName
-                        ? service.contact.providerName
-                        : '_'
-                    }
-                    position={service.contact.position}
-                  />
-                </TouchableOpacity>
-              ))
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSelectedService(service);
+                      setModalVisible(true);
+                    }}
+                    key={service._id}>
+                    <ServicesCard
+                      key={service._id}
+                      title={service.name}
+                      isIndigenous={service.isIndigenous}
+                      name={
+                        service.contact.providerName
+                          ? service.contact.providerName
+                          : '_'
+                      }
+                      position={service.contact.position}
+                    />
+                  </TouchableOpacity>
+                ))
               : null}
           </ScrollView>
         </View>
 
-        {modalVisible ?
+        {modalVisible ? (
           <Modal
             animationType="slide"
             transparent={true}
@@ -162,7 +162,9 @@ function ServiceScreen({ navigation }) {
             <View style={styles.modalView} key={selectedService._id}>
               <View style={styles.modalTitle}>
                 <View>
-                  <Text style={styles.modalTitleText}>{selectedService.name}</Text>
+                  <Text style={styles.modalTitleText}>
+                    {selectedService.name}
+                  </Text>
                 </View>
 
                 <Pressable
@@ -182,7 +184,8 @@ function ServiceScreen({ navigation }) {
                 media={selectedService.medias}
               />
             </View>
-          </Modal> : null}
+          </Modal>
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,
