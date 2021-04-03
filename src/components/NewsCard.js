@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     width: '95%',
     marginHorizontal: spacing.small,
     backgroundColor: colors.white,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
     borderBottomColor: colors.gray900,
     paddingVertical: spacing.small,
   },

@@ -148,20 +148,21 @@ function EventDetail({ navigation, route }) {
               }}
             />
           </View>
+          {event.hosts.length > 0
+            ? event.hosts.map((host) => (
+              <View style={styles.container}>
+                <Text style={styles.heading}>Hosts</Text>
 
-          <View style={styles.container}>
-            <Text style={styles.heading}>Hosts</Text>
-            {event.hosts.length > 0
-              ? event.hosts.map((host) => (
                 <EventHost
                   key={host._id}
                   name={host.name}
                   type={host.category.name}
                   logo={host.icon}
                 />
-              ))
-              : null}
-          </View>
+
+
+              </View>
+            )) : null}
         </ScrollView>
       ) : null}
       <View style={styles.buttonsGroup}>
