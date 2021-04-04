@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     borderBottomColor: colors.gray900,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
   },
   modalTitleText: {
     fontSize: typography.fs4,

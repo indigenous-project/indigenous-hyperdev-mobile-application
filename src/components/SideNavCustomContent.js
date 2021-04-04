@@ -1,14 +1,14 @@
 //SideNavStack module
 
 // import packages
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {userLogout} from '../api/auth/auth.api';
-import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { userLogout } from '../api/auth/auth.api';
+import { removeAsyncStorage, useAsyncStorage } from '../hooks/useAsyncStorage';
 import Loader from './Loader';
-import {useState} from 'react/cjs/react.development';
-import {deleteItemAsync} from 'expo-secure-store';
+import { useState } from 'react/cjs/react.development';
+import { deleteItemAsync } from 'expo-secure-store';
 
 import {
   Alert,
@@ -19,15 +19,15 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from 'react-native';
-import {colors, spacing, themes, typography} from '../styles';
-import {useCurrentUser} from '../contexts/currentUserContext';
-import {Badge} from 'react-native-paper';
-import {useIsDrawerOpen} from '@react-navigation/drawer';
-import {messageUnread} from '../api/messages/messages.api';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {s3Storage} from '../api/aws/s3Strorage';
-import {mediaAddImage} from '../api/medias/media.api';
+import { colors, spacing, themes, typography } from '../styles';
+import { useCurrentUser } from '../contexts/currentUserContext';
+import { Badge } from 'react-native-paper';
+import { useIsDrawerOpen } from '@react-navigation/drawer';
+import { messageUnread } from '../api/messages/messages.api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { s3Storage } from '../api/aws/s3Strorage';
+import { mediaAddImage } from '../api/medias/media.api';
 
 //function return
 function SideNavCustomContent(props) {
@@ -43,7 +43,7 @@ function SideNavCustomContent(props) {
     if (isOpen) {
       //do stuff
 
-      messageUnread(token, {senderId: currentUser._id})
+      messageUnread(token, { senderId: currentUser._id })
         .then(setUnreadMessage)
         .catch(console.log);
     }
@@ -130,7 +130,7 @@ function SideNavCustomContent(props) {
   };
 
   return (
-    <DrawerContentScrollView contentContainerStyle={{paddingTop: 0}} {...props}>
+    <DrawerContentScrollView contentContainerStyle={{ paddingTop: 0 }} {...props}>
       <Loader loading={loading} />
       <View style={styles.drawerHeaderContainer}>
         <View style={styles.drawerHeaderContent}>
@@ -138,7 +138,7 @@ function SideNavCustomContent(props) {
             <ImageBackground
               style={styles.headerIcon}
               source={
-                !avatar ? require('../testImages/userIcon.png') : {uri: avatar}
+                !avatar ? require('../testImages/userIcon.png') : { uri: avatar }
               }>
               {loadImage ? (
                 <ActivityIndicator
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   //drawer items styles
   drawerItem: {
     borderBottomColor: colors.gray900,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
     width: '100%',
   },
   labelStyle: {
