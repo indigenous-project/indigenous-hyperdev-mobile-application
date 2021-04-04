@@ -1,22 +1,35 @@
 //LoginScreen module
 
 // import packages
-import React, {createRef, useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, StyleSheet, ScrollView, Alert, Keyboard} from 'react-native';
-import {userCurrent, userSignIn, userSignUp} from '../../api/auth/auth.api';
-import {themes, colors, typography, spacing} from '../../styles';
+import React, { createRef, useState, useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  Keyboard,
+} from 'react-native';
+import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
+import { themes, colors, typography, spacing } from '../../styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {Form, Item, Input, Label, Button, Text} from 'native-base';
-import {RadioButton} from 'react-native-paper';
+import {
+  Form,
+  Item,
+  Input,
+  Label,
+  Button,
+  Text,
+} from 'native-base';
+import { RadioButton } from 'react-native-paper';
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
-import {useAsyncStorage} from '../../hooks/useAsyncStorage';
+import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 
 //function return
-function RegisterScreen({navigation}) {
+function RegisterScreen({ navigation }) {
   // declaring a variable for themes
   const theme = themes.light;
 
@@ -44,7 +57,7 @@ function RegisterScreen({navigation}) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => {}, [userName]);
+  useEffect(() => { }, [userName]);
 
   const handleRegister = () => {
     if (!firstName) {
@@ -73,12 +86,10 @@ function RegisterScreen({navigation}) {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: userEmail.trim(),
+      gender: userGender.trim(),
+      age: userAge.trim(),
+      type: userType.trim(),
     };
-
-    userGender ? (data.gender = userGender.trim()) : null;
-    userAge ? (data.age = userAge.trim()) : null;
-    userType ? (data.type = userType.trim()) : null;
-
     if (passwordConfirm.trim() == userPassword.trim()) {
       data.password = userPassword.trim();
       userSignUp(data)
@@ -107,9 +118,7 @@ function RegisterScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView
-      style={styles.safeArea}
-      edges={['right', 'left', 'bottom', 'top']}>
+    <SafeAreaView style={styles.safeArea} edges={['right', 'left', 'bottom', 'top']}>
       <FocusedStatusBar barStyle="light-content" />
       <MessageModal
         showing={isRegistraionSuccess}
@@ -240,14 +249,14 @@ function RegisterScreen({navigation}) {
             itemStyle={{
               justifyContent: 'flex-start',
             }}
-            dropDownStyle={{backgroundColor: colors.gray100}}
+            dropDownStyle={{ backgroundColor: colors.gray100 }}
             onChangeItem={(item) => setUserGender(item.value)}
           />
           <View style={styles.radioButtonGroup}>
             <RadioButton.Group
               onValueChange={(newValue) => setUserType(newValue)}
               value={userType}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -269,7 +278,7 @@ function RegisterScreen({navigation}) {
                       marginLeft: spacing.smallest,
                     }}>
                     Indigenous
-                  </Text>
+                    </Text>
                 </View>
                 <View
                   style={{
@@ -292,7 +301,7 @@ function RegisterScreen({navigation}) {
                       marginLeft: spacing.smallest,
                     }}>
                     Inuit
-                  </Text>
+                    </Text>
                 </View>
                 <View
                   style={{
@@ -315,7 +324,7 @@ function RegisterScreen({navigation}) {
                       marginLeft: spacing.smallest,
                     }}>
                     Métis
-                  </Text>
+                    </Text>
                 </View>
                 <View
                   style={{
@@ -338,7 +347,7 @@ function RegisterScreen({navigation}) {
                       marginLeft: spacing.smallest,
                     }}>
                     None
-                  </Text>
+                    </Text>
                 </View>
               </View>
             </RadioButton.Group>
@@ -350,7 +359,7 @@ function RegisterScreen({navigation}) {
         <Text style={styles.privacyNotice}>
           By Continuing, You Agree To Accept Our Privacy Policy & Terms of
           Service.
-        </Text>
+          </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -360,7 +369,7 @@ function RegisterScreen({navigation}) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.white
   },
 
   title: {
@@ -374,7 +383,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwMedium,
     fontSize: typography.fs5,
     marginHorizontal: spacing.base,
-    marginVertical: spacing.smaller,
+    marginVertical: spacing.smaller
   },
 
   label: {
@@ -385,17 +394,17 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.base,
     marginBottom: spacing.smaller,
     backgroundColor: colors.white,
-    shadowOffset: {width: 2, height: 2},
+    shadowOffset: { width: 2, height: 2 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
   },
   input: {
-    marginHorizontal: spacing.base,
+    marginHorizontal: spacing.base
   },
   genderDropDown: {
     backgroundColor: colors.white,
     borderRadius: 10,
-    shadowOffset: {width: 2, height: 2},
+    shadowOffset: { width: 2, height: 2 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     marginHorizontal: spacing.base,
@@ -415,7 +424,7 @@ const styles = StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
     backgroundColor: colors.primary400,
-    marginTop: spacing.largest,
+    marginTop: spacing.largest
   },
   signUpButtonText: {
     alignSelf: 'center',
@@ -432,7 +441,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: spacing.base,
     marginBottom: spacing.largest,
-    width: '70%',
+    width: '70%'
   },
 });
 
