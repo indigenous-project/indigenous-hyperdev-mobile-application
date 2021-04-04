@@ -36,7 +36,11 @@ function SearchScreen({navigation}) {
     discussions && search
       ? setSearchDiscussionArray(
           discussions.filter((discussion) => {
-            const itemData = `${discussion.title.toLowerCase()} ${discussion.categories.name.toLowerCase()} discussions`;
+            const itemData = `${discussion.title.toLowerCase()} ${
+              discussion.categories
+                ? discussion.categories.name.toLowerCase()
+                : null
+            } discussions`;
             return itemData.indexOf(search.trim().toLowerCase()) > -1;
           }),
         )
