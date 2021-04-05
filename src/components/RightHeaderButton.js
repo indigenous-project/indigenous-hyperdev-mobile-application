@@ -7,7 +7,9 @@ const RightHeaderButton = (props) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
-        onPress={() => props.navigationProps.navigate('SearchStack')}
+        onPress={() =>
+          props.navigationProps.navigate(`SearchStack${props.section}`)
+        }
         style={styles.headerButton}>
         <MaterialCommunityIcons
           name="magnify"
