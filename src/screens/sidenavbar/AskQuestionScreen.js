@@ -41,12 +41,13 @@ function AskQuestionScreen({navigation}) {
   const [listViewRef, setListViewRef] = useState();
 
   const handleSend = (data) => {
-    messageAdd(token, data)
-      .then(() => {
-        setMessage('');
-        setIsSent(!isSent);
-      })
-      .catch(console.log);
+    if (data.text !== '')
+      messageAdd(token, data)
+        .then(() => {
+          setMessage('');
+          setIsSent(!isSent);
+        })
+        .catch(console.log);
   };
 
   // wait time for refresh
