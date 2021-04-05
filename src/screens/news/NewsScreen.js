@@ -150,10 +150,9 @@ function NewsScreen({ navigation }) {
         <View style={styles.container}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <OrganizationChips category="Categories" />
+            <OrganizationChips category="Most-Read" />
+            <OrganizationChips category="Recent" />
             <OrganizationChips category="Indigenous" />
-            <OrganizationChips category="Top-Rated" />
-            <OrganizationChips category="Distance" />
-            <OrganizationChips category="Open-Now" />
           </ScrollView>
           {posts
             ? posts.map((post) => (

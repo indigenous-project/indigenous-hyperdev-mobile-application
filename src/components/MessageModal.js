@@ -1,9 +1,10 @@
 // Import React and Component
 import React from 'react';
-import {StyleSheet, View, Modal, ActivityIndicator, Text} from 'react-native';
+import { StyleSheet, View, Modal, ActivityIndicator, Text } from 'react-native';
+import { spacing, typography } from '../styles';
 
 const MessageModal = (props) => {
-  const {showing, message, ...attributes} = props;
+  const { showing, message, ...attributes } = props;
 
   return (
     <Modal
@@ -24,8 +25,12 @@ const MessageModal = (props) => {
           <Text
             style={{
               flex: 1,
+              fontSize: typography.fs3,
+              fontWeight: typography.fwMedium,
+              padding: spacing.base,
               justifyContent: 'center',
-              textAlignVertical: 'center',
+              alignSelf: 'center',
+              // textAlignVertical: 'center',
             }}>
             {message}
           </Text>

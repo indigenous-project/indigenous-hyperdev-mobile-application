@@ -41,7 +41,7 @@ function NewsStack({ navigation }) {
         name="News Article"
         component={NewsDetailScreen}
         options={{
-          title: 'Article Detail',
+          // title: true,
           headerRight: false,
           headerStyle: { backgroundColor: themes.light.inverseTextColor },
           headerTintColor: theme.primaryColor,

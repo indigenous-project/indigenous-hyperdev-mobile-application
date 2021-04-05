@@ -3,9 +3,9 @@
 // import packages
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import OrganizationScreen from './OrganizationScreen';
-import {themes} from '../../styles';
+import { themes } from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import OrganizationDetailScreen from './OrganizationDetailScreen';
@@ -14,11 +14,11 @@ const theme = themes.light;
 const Organizations = createStackNavigator();
 
 //function return
-function OrganizationsStack({navigation}) {
+function OrganizationsStack({ navigation }) {
   return (
     <Organizations.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: theme.primaryColor}, //header background
+        headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
         headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
@@ -36,14 +36,14 @@ function OrganizationsStack({navigation}) {
         options={{
           headerRight: false,
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerStyle: { backgroundColor: themes.light.inverseTextColor },
           headerTintColor: themes.light.primaryColor,
         }}
       />
       <Organizations.Screen
         name="SearchStack"
         component={SearchStack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Organizations.Navigator>
   );

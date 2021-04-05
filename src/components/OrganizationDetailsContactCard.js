@@ -31,54 +31,61 @@ const OrganizationDetailsContactCard = props => {
   }
   return (
     <View style={styles.contactView}>
-      <View style={styles.view}>
-        <MaterialCommunityIcons
-          style={styles.icon}
-          name="phone"
-          size={20}
-          color={themes.light.primaryColor}
-        />
-        <Text style={styles.textView}>Phone:</Text>
-        <Text style={styles.phone} onPress={handlePhone}>
-          {props.phone !== undefined ? props.phone : ''}
-        </Text>
-      </View>
-      <View style={styles.view}>
-        <MaterialCommunityIcons
-          style={styles.icon}
-          name="earth"
-          size={20}
-          color={themes.light.primaryColor}
-        />
-        <Text style={styles.textView}>Website:</Text>
-        <Text style={styles.website} onPress={handleWebsite}>
-          {props.website !== undefined ? props.website : ''}
-        </Text>
-      </View>
-      <View style={styles.view}>
-        <MaterialCommunityIcons
-          style={styles.icon}
-          name="email"
-          size={20}
-          color={themes.light.primaryColor}
-        />
-        <Text style={styles.textView}>Email:</Text>
-        <Text style={styles.email} onPress={handleEmail}>
-          {props.email !== undefined ? props.email : ''}
-        </Text>
-      </View>
-      <View style={styles.view}>
-        <MaterialCommunityIcons
-          style={styles.icon}
-          name="facebook"
-          size={20}
-          color={themes.light.primaryColor}
-        />
-        <Text style={styles.textView}>Facebook:</Text>
-        <Text style={styles.facebook} onPress={handleFacebook}>
-          {props.facebook !== undefined ? props.facebook : ''}
-        </Text>
-      </View>
+      {props.phone !== undefined ?
+        <View style={styles.view}>
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name="phone"
+            size={20}
+            color={themes.light.primaryColor}
+          />
+          <Text style={styles.textView}>Phone:</Text>
+          <Text style={styles.phone} onPress={handlePhone}>
+            {props.phone}
+          </Text>
+        </View> : null}
+
+      {props.website !== undefined ?
+        <View style={styles.view}>
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name="earth"
+            size={20}
+            color={themes.light.primaryColor}
+          />
+          <Text style={styles.textView}>Website:</Text>
+          <Text style={styles.website} onPress={handleWebsite}>
+            {props.website}
+          </Text>
+        </View> : null}
+
+      {props.email !== undefined ?
+        <View style={styles.view}>
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name="email"
+            size={20}
+            color={themes.light.primaryColor}
+          />
+          <Text style={styles.textView}>Email:</Text>
+          <Text style={styles.email} onPress={handleEmail}>
+            {props.email}
+          </Text>
+        </View> : null}
+
+      {props.facebook !== undefined ?
+        <View style={styles.view}>
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name="facebook"
+            size={20}
+            color={themes.light.primaryColor}
+          />
+          <Text style={styles.textView}>Facebook:</Text>
+          <Text style={styles.facebook} onPress={handleFacebook}>
+            {props.facebook}
+          </Text>
+        </View> : null}
     </View>
   );
 };

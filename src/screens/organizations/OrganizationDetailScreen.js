@@ -31,7 +31,7 @@ export default function OrganizationDetailScreen({ navigation, route }) {
   useLayoutEffect(() => {
     organization
       ? navigation.setOptions({
-        headerTitle: organization.name,
+        // headerTitle: organization.name,
         headerRight: () => (
           <OrganizationShareHeader shareData={organization} />
         ),
@@ -48,7 +48,7 @@ export default function OrganizationDetailScreen({ navigation, route }) {
           // reviews={organization.reviews}
           decs={organization.description}
           address={organization.contact.address}
-        // image={organization.medias}
+          image={organization.medias}
         />
 
         {/* timings */}
