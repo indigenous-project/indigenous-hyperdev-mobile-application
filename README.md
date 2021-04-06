@@ -101,7 +101,7 @@ npx react-native run-ios
  - Choose your project and device to run.
  - Click Play button to build and run the app in your device.
 ```
-![Indigenous Bridge Application](src/testImages/home.png)
+![Indigenous Bridge Application](src/testImages/home.jpg)
 
 ## 6. Testing and Fix bugs:
 
