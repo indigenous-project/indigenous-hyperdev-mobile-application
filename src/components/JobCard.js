@@ -6,10 +6,10 @@ import { colors, typography, spacing } from '../styles';
 export default function JobCard(props) {
     return (
         <View style={styles.JobCard}>
-            <Text style={styles.cardTitle}>{props.title}</Text>
-            <Text style={styles.cardSubTitle}>{props.posting}</Text>
-            <Text style={styles.cardDetail}>{props.type}</Text>
-            <Text style={styles.cardSubTitle}>{props.salary}</Text>
+            <Text numberOfLines={1} style={styles.cardTitle}>{props.title}</Text>
+            <Text numberOfLines={1} style={styles.cardSubTitle}>{props.posting}</Text>
+            <Text numberOfLines={1} style={styles.cardDetail}>{props.type}</Text>
+            <Text numberOfLines={1} style={styles.cardSubTitle}>{props.salary}</Text>
         </View>
     );
 }
@@ -18,29 +18,32 @@ const styles = StyleSheet.create({
 
     //job card styles
     JobCard: {
-        borderRadius: 10,
-        minWidth: "60%",
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 3, height: 6 },
-        shadowColor: colors.gray900,
+        borderRadius: spacing.small,
+        shadowColor: colors.shadowcolor,
         backgroundColor: colors.white,
-        margin: spacing.small,
-        padding: spacing.small,
+        padding: spacing.base,
+        maxWidth: '100%',
+        marginTop: spacing.small,
+        shadowOffset: {
+            width: spacing.none,
+            height: spacing.smallest,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4.65,
+        elevation: 7,
     },
     cardTitle: {
         fontWeight: typography.fwBold,
-        paddingBottom: spacing.smallest,
+        paddingBottom: spacing.small,
         color: colors.primary900,
-        fontSize: typography.fs4
+        fontSize: typography.fs4,
     },
     cardSubTitle: {
-        fontWeight: typography.fwMedium,
-        paddingBottom: spacing.smallest,
-        fontSize: typography.fs3
+        fontSize: typography.fs3,
     },
     cardDetail: {
         fontWeight: typography.fwLight,
-        paddingBottom: spacing.smallest,
-        fontSize: typography.fs3
+        paddingVertical: spacing.small,
+        fontSize: typography.fs3,
     },
 })

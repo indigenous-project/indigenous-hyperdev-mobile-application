@@ -18,7 +18,7 @@ const SurveyListCard = props => {
         </View>
 
         <View style={{ width: 250, marginRight: 20 }}>
-          <Text style={styles.cardTitle}>{props.title}</Text>
+          <Text numberOfLines={2} style={styles.cardTitle}>{props.title}</Text>
           <Text style={styles.date}>
             {props.startDate} - {props.endDate}{' '}
           </Text>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.small,
     shadowColor: colors.shadowcolor,
     backgroundColor: colors.white,
-    padding: spacing.base,
+    padding: spacing.small,
     marginTop: spacing.base,
     marginHorizontal: spacing.base,
     shadowOffset: {
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: typography.fwMedium,
-    fontSize: typography.fs4,
+    fontSize: typography.fs3,
+    lineHeight: typography.lh3
   },
   date: {
     marginVertical: spacing.smaller,

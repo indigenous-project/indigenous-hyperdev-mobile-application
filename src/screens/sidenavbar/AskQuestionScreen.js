@@ -242,12 +242,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     borderRadius: 20,
     backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignContent: 'center',
   },
   newInput: {
-    paddingVertical: spacing.smaller,
-    paddingHorizontal: spacing.smaller,
+    padding: spacing.smaller,
+    paddingTop: spacing.smaller,
+    paddingHorizontal: spacing.base,
     fontWeight: typography.fwMedium,
     fontSize: typography.fs3,
   },
@@ -256,7 +255,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonSend: {
-    paddingVertical: spacing.small,
     paddingLeft: spacing.small,
   },
 });

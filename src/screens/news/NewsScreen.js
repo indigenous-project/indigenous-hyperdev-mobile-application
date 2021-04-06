@@ -102,39 +102,32 @@ function NewsScreen({ navigation }) {
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
-        <View style={styles.container}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.heading}>Job News</Text>
-            <Text onPress={() => navigation.navigate('Jobs List')}>
-              See All
+        {jobs
+          ?
+          <View style={styles.container}>
+            <View style={styles.containerHeading}>
+              <Text style={styles.heading}>Job News</Text>
+              <Text onPress={() => navigation.navigate('Jobs List')}>
+                See All
             </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Job Detail', {
+                  job: jobs[0],
+                  jobId: jobs[0]._id,
+                  token: token,
+                })
+              }
+              key={jobs[0]._id}>
+              <JobCard
+                title={jobs[0].title}
+                posting={jobs[0].subTitle}
+                type={jobs[0].type}
+                salary={convertSalary(jobs[0].salary)}></JobCard>
+            </TouchableOpacity>
           </View>
-          <View style={styles.jobNews}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              {jobs
-                ? jobs.map((job) => (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('Job Detail', {
-                        job: job,
-                        jobId: job._id,
-                        token: token,
-                      })
-                    }
-                    key={job._id}>
-                    <JobCard
-                      title={job.title}
-                      posting={job.subTitle}
-                      type={job.type}
-                      salary={convertSalary(job.salary)}></JobCard>
-                  </TouchableOpacity>
-                ))
-                : null}
-            </ScrollView>
-          </View>
-        </View>
+          : null}
 
         <View style={styles.container}>
           <View style={styles.containerHeading}>
@@ -167,11 +160,10 @@ function NewsScreen({ navigation }) {
                 <NewsCard
                   title={post.title}
                   date={formatDate(post.lastModifiedDate)}
-                  details={post.description}></NewsCard>
+                  details={post.description} />
               </TouchableOpacity>
             ))
             : null}
-          <Text></Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -184,13 +176,12 @@ const styles = StyleSheet.create({
   //container style
   container: {
     alignItems: 'flex-start',
-    padding: spacing.small,
+    padding: spacing.base,
     backgroundColor: colors.white,
     marginTop: spacing.small,
   },
   heading: {
     color: colors.primary900,
-    paddingLeft: spacing.small,
     fontWeight: typography.fwBold,
     fontSize: typography.fs3,
   },
@@ -199,10 +190,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '95%',
     marginRight: spacing.small,
-  },
-
-  //job card styles
-  jobNews: {
-    flexDirection: 'row',
   },
 });

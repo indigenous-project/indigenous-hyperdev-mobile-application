@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { colors } from '../styles';
+import { colors, spacing } from '../styles';
 import OrganizationsCard from './OrganizationsCard';
 import { useNavigation } from '@react-navigation/native';
 
@@ -67,5 +67,5 @@ export default function OrganizationListViews(props) {
 }
 
 const styles = StyleSheet.create({
-  scrollView: { marginTop: 40 },
+  scrollView: { marginTop: 50 },
 });

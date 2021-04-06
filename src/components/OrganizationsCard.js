@@ -139,9 +139,7 @@ export default OrganizationsCard;
 const styles = StyleSheet.create({
   //Card Style
   cardsView: {
-    marginLeft: spacing.larger,
-    marginRight: spacing.larger,
-    marginBottom: spacing.smaller,
+    marginBottom: spacing.small,
     borderRadius: spacing.small,
   },
   border: { borderRadius: typography.fs3 },

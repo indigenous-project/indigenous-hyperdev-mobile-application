@@ -20,9 +20,13 @@ const styles = StyleSheet.create({
     width: 200,
     margin: spacing.small,
     backgroundColor: colors.white,
-    shadowOffset: { width: 3, height: 6 },
-    shadowColor: colors.gray900,
+    shadowOffset: {
+      width: spacing.none,
+      height: spacing.smallest,
+    },
     shadowOpacity: 0.2,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
   cardTitle: {
     fontWeight: typography.fwBold,

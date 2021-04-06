@@ -11,7 +11,7 @@ export default function NewsCard(props) {
   return (
     <View style={styles.newsCard}>
       <View style={styles.newsContent}>
-        <Text style={styles.cardTitle}>{props.title}</Text>
+        <Text numberOfLines={2} style={styles.cardTitle}>{props.title}</Text>
         <Text style={styles.cardDetail}>{props.date}</Text>
         <WebView
           numberOfLines={NUM_OF_LINES}
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
   //News card style
   newsCard: {
     flexDirection: 'row',
-    width: '95%',
-    marginHorizontal: spacing.small,
     backgroundColor: colors.white,
     borderBottomWidth: 0.3,
     borderBottomColor: colors.gray900,
@@ -55,16 +53,10 @@ const styles = StyleSheet.create({
     color: colors.primary900,
     fontSize: typography.fs3,
   },
-  cardSubTitle: {
-    fontWeight: typography.fwMedium,
-    paddingBottom: spacing.smallest,
-    lineHeight: typography.lh3,
-    fontSize: typography.fs3,
-  },
   cardDetail: {
     fontWeight: typography.fwLight,
     paddingBottom: spacing.smallest,
-    fontSize: typography.fs3,
+    fontSize: typography.fs2,
   },
   image: {
     borderRadius: 10,

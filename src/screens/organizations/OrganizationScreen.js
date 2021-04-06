@@ -1,21 +1,21 @@
 //OrganizationScreen module
 
 // import packages
-import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import {spacing, themes} from '../../styles';
+import { spacing, themes } from '../../styles';
 import OrganizationChips from '../../components/OrganizationChips';
 import OrganizationListViews from '../../components/OrganizationListViews';
 import MapViews from '../../components/MapViews';
-import {View} from 'native-base';
+import { View } from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 
-import {organizationGetList} from '../../api/organizations/organizations.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useIsFocused} from '@react-navigation/core';
-import {useOrganization} from '../../contexts/organizationContext';
+import { organizationGetList } from '../../api/organizations/organizations.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { useIsFocused } from '@react-navigation/core';
+import { useOrganization } from '../../contexts/organizationContext';
 
 //function return
 function OrganizationScreen() {
@@ -28,8 +28,8 @@ function OrganizationScreen() {
 
   //options for switch selectors
   const options = [
-    {label: 'List', value: 1},
-    {label: 'Map', value: 2},
+    { label: 'List', value: 1 },
+    { label: 'Map', value: 2 },
   ];
 
   //useEffect to load organization list
@@ -53,7 +53,7 @@ function OrganizationScreen() {
       <FocusedStatusBar barStyle="light-content" />
 
       {/* Chips */}
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView style={{ paddingVertical: 10 }} horizontal={true} showsHorizontalScrollIndicator={false}>
         <OrganizationChips category="Categories" />
         <OrganizationChips category="Indigenous" />
         <OrganizationChips category="Top-Rated" />
@@ -99,13 +99,12 @@ function OrganizationScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {flex: spacing.hairline},
+  safeArea: { flex: spacing.hairline, paddingHorizontal: spacing.base },
   // Custom Switch Selectors Style
   switchView: {
     width: '50%',
     alignSelf: 'center',
     position: 'absolute',
-    // height:500,
     marginTop: 60,
   },
 });

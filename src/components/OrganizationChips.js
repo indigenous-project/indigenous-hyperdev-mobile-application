@@ -55,10 +55,12 @@ const OrganizationChips = (props) => {
 const styles = StyleSheet.create({
   // Chips Style
   chipsView: {
-    marginHorizontal: spacing.smaller,
-    marginVertical: spacing.base,
+    marginRight: spacing.small,
   },
-  textStyle: { fontSize: typography.fs2, fontWeight: typography.fwMedium },
+  textStyle: {
+    fontSize: typography.fs2,
+    fontWeight: typography.fwMedium
+  },
 });
 
 export default OrganizationChips;

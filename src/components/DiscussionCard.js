@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: spacing.base,
     backgroundColor: colors.white,
-    marginBottom: spacing.small,
+    marginBottom: spacing.base,
     borderRadius: spacing.small,
   },
   cardTitle: {

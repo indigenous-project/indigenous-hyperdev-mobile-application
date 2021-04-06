@@ -8,7 +8,7 @@ export default function SurveyCard(props) {
         <View style={styles.newSurvey}>
             <Image style={styles.image} source={require('../testImages/demoPic.png')} />
             <View style={styles.surveyTitle}>
-                <Text style={styles.surveyText}>{props.title}</Text>
+                <Text numberOfLines={2} style={styles.surveyText}>{props.title}</Text>
                 <TouchableOpacity style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Start Survey</Text>
                 </TouchableOpacity>
@@ -21,12 +21,16 @@ const styles = StyleSheet.create({
     newSurvey: {
         flexDirection: 'row',
         borderRadius: 10,
-        maxWidth: "95%",
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 3, height: 6 },
-        shadowColor: colors.gray900,
+        maxWidth: "100%",
         backgroundColor: colors.white,
-        margin: spacing.small,
+        marginTop: spacing.small,
+        shadowOffset: {
+            width: spacing.none,
+            height: spacing.smallest,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4.65,
+        elevation: 7,
     },
     image: {
         borderRadius: 10,
@@ -46,6 +50,8 @@ const styles = StyleSheet.create({
         lineHeight: typography.lh3,
         fontWeight: typography.fwMedium,
         paddingBottom: spacing.small,
+        paddingHorizontal: spacing.small,
+        alignItems: 'flex-start'
     },
     buttonContainer: {
         minWidth: "50%",
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: typography.fs2,
         color: colors.white,
+        fontWeight: typography.fwMedium
     },
 
 })
