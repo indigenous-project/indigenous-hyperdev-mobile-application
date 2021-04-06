@@ -20,7 +20,12 @@ function OrganizationsStack({ navigation }) {
       screenOptions={{
         headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
+        headerRight: () => (
+          <RightHeaderButton
+            navigationProps={navigation}
+            section="Organization"
+          />
+        ), // implement right header buttons: search, notification
       }}
       initialRouteName="Organizations">
       <Organizations.Screen
@@ -41,7 +46,7 @@ function OrganizationsStack({ navigation }) {
         }}
       />
       <Organizations.Screen
-        name="SearchStack"
+        name="SearchStackOrganization"
         component={SearchStack}
         options={{ headerShown: false }}
       />

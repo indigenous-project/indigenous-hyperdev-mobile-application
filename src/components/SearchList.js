@@ -117,12 +117,13 @@ const SearchList = (props) => {
         ? props.service.map((item) => (
             <ListItem
               key={item._id}
-              onPress={() =>
-                props.navigationProp.navigate('Service Detail', {
-                  name: item.name,
-                  token: token,
-                })
-              }>
+              // onPress={() =>
+              //   props.navigationProp.navigate('Service Detail', {
+              //     name: item.name,
+              //     token: token,
+              //   })
+              // }>
+            >
               <Body>
                 <Text>{item.name}</Text>
                 <Text note numberOfLines={1}>

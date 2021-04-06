@@ -36,7 +36,6 @@ function DiscussionsStack({navigation, route}) {
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
-        headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
       }}
       initialRouteName="Discussions">
       {isRead ? (
@@ -47,6 +46,12 @@ function DiscussionsStack({navigation, route}) {
             headerLeft: () => (
               <HambugerMenuHeader navigationProps={navigation} />
             ),
+            headerRight: () => (
+              <RightHeaderButton
+                navigationProps={navigation}
+                section="Discussion"
+              />
+            ), // implement right header buttons: search, notification
           }}
         />
       ) : (
@@ -63,7 +68,7 @@ function DiscussionsStack({navigation, route}) {
         options={{headerRight: false, title: false}}
       />
       <Discussion.Screen
-        name="SearchStack"
+        name="SearchStackDiscussion"
         component={SearchStack}
         options={{headerShown: false}}
       />

@@ -23,7 +23,9 @@ function ServicesStack({navigation}) {
         headerTintColor: theme.inverseTextColor, // text color
 
         // headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
-        headerRight: () => <RightHeaderButton navigationProps={navigation} />, // implement right header buttons: search, notification
+        headerRight: () => (
+          <RightHeaderButton navigationProps={navigation} section="Service" />
+        ), // implement right header buttons: search, notification
       }}
       initialRouteName="Services">
       <Services.Screen
@@ -46,7 +48,7 @@ function ServicesStack({navigation}) {
         }}
       />
       <Services.Screen
-        name="SearchStack"
+        name="SearchStackService"
         component={SearchStack}
         options={{headerShown: false}}
       />

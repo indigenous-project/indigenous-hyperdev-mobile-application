@@ -14,11 +14,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceCategoryScreen from '../services/ServiceCategoryScreen';
 import SearchStack from '../search/SearchStack';
+import {useEffect} from 'react/cjs/react.development';
 
 const Home = createStackNavigator();
 const theme = themes.light;
 //function return
 function HomeStack({navigation}) {
+  useEffect(() => {}, [navigation]);
   return (
     <Home.Navigator
       screenOptions={{
@@ -31,7 +33,9 @@ function HomeStack({navigation}) {
         component={HomeScreen}
         options={{
           headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
-          headerRight: () => <RightHeaderButton navigationProps={navigation} />,
+          headerRight: () => (
+            <RightHeaderButton navigationProps={navigation} section="Home" />
+          ),
           title: 'Indigenous Bridge', // implement right header buttons: search, notification
         }}
       />
@@ -52,7 +56,7 @@ function HomeStack({navigation}) {
         }}
       />
       <Home.Screen
-        name="SearchStack"
+        name="SearchStackHome"
         component={SearchStack}
         options={{headerShown: false}}
       />
