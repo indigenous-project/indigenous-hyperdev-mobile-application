@@ -16,7 +16,6 @@ import {
   Modal,
   Pressable,
   TextInput,
-  Button,
   Alert,
 } from 'react-native';
 
@@ -101,18 +100,17 @@ function DiscussionDetail({ navigate, route }) {
             />
           ) : null}
         </View>
-        <View style={styles.container}>
-          <Text style={styles.heading}>Replies</Text>
-          {discussion.replies.length > 0
-            ? discussion.replies.map((reply) => (
+        {discussion.replies.length > 0 ?
+          <View style={styles.container}>
+            <Text style={styles.heading}>Replies</Text>
+            {discussion.replies.map((reply) => (
               <ReplyCard
                 name={`${reply.owner.firstName} ${reply.owner.lastName}`}
                 reply={reply.text}
                 key={reply._id}
               />
-            ))
-            : null}
-        </View>
+            ))}
+          </View> : null}
       </ScrollView>
       <View style={styles.buttonsGroup}>
         <TouchableOpacity style={styles.buttonContainer}>

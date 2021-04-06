@@ -11,11 +11,11 @@ export default function EventCard(props) {
   return (
     <View style={styles.discussionCard}>
       <Text style={styles.cardTitle}>{props.title}</Text>
-      <Text style={styles.cardDetail}>{props.nameAndDate}</Text>
+      <Text numberOfLines={2} style={styles.cardDetail}>{props.nameAndDate}</Text>
       {props.categories ? (
         <Chips key={props.categories_id} name={props.categories.name} />
       ) : null}
-      <Text style={styles.cardSubTitle}>{props.description}</Text>
+      <Text numberOfLines={2} style={styles.cardSubTitle}>{props.description}</Text>
       <Text style={styles.actionContainer}>
         <MaterialCommunityIcons
           name="wechat"

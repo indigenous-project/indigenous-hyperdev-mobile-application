@@ -52,7 +52,7 @@ const ServiceDetail = (props) => {
         <View style={styles.contactContainer}>
           <View style={styles.contactCard}>
             <Text style={styles.label}>Email:</Text>
-            <Text>{props.contactEmail}</Text>
+            <Text>  {props.contactEmail}</Text>
           </View>
           <View style={styles.contactCard}>
             <Text style={styles.label}>Phone:</Text>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     padding: spacing.base,
     backgroundColor: colors.white,
-    height: '87%'
+    height: '87%',
   },
   titleContainer: {
     flexDirection: 'row',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwMedium,
   },
   image: {
-    minHeight: 400,
+    minHeight: 600,
     width: '100%',
     marginVertical: spacing.smaller,
   },

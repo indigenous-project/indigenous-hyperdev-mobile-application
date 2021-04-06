@@ -138,31 +138,31 @@ function EventDetail({ navigation, route }) {
           <Image style={styles.image} source={{ uri: event.medias[0].path }} />
           <EventInfo event={event} />
           <View style={styles.container}>
-            <WebView
-              style={styles.description}
-              originWhitelist={['*']}
-              source={{
-                html: `<section style="font-size:30">${decodeHTML(
-                  event.description,
-                )}</section>`,
-              }}
-            />
+            <View style={{ minHeight: 250 }}>
+              <WebView
+                scrollEnabled={true}
+                originWhitelist={['*']}
+                source={{
+                  html: `<section style="font-size:30">${decodeHTML(
+                    event.description,
+                  )}</section>`,
+                }}
+              />
+            </View>
           </View>
-          {event.hosts.length > 0
-            ? event.hosts.map((host) => (
-              <View style={styles.container}>
-                <Text style={styles.heading}>Hosts</Text>
-
+          {event.hosts.length > 0 ?
+            <View style={styles.container}>
+              <Text style={styles.heading}>Hosts</Text>
+              {event.hosts.map((host) => (
                 <EventHost
                   key={host._id}
                   name={host.name}
                   type={host.category.name}
                   logo={host.icon}
                 />
-
-
-              </View>
-            )) : null}
+              ))}
+            </View>
+            : null}
         </ScrollView>
       ) : null}
       <View style={styles.buttonsGroup}>
@@ -192,15 +192,12 @@ function EventDetail({ navigation, route }) {
 const styles = StyleSheet.create({
   //container style
   container: {
-    flex: 1,
     flexDirection: 'column',
-    //  alignItems: 'flex-start',
     padding: spacing.small,
     backgroundColor: colors.white,
     marginTop: spacing.hairline,
-    marginBottom: spacing.smaller,
+    marginBottom: spacing.base,
   },
-
   //styling for upcoming event
   image: {
     height: 160,
@@ -213,11 +210,8 @@ const styles = StyleSheet.create({
     fontSize: typography.fs3,
   },
 
-  description: {
-    minWidth: 600,
-    minHeight: 70,
-    marginTop: spacing.base,
-    lineHeight: typography.lh3,
+  webViewContainer: {
+    // minHeight: 100,
   },
 
   //styling for bottom buttons group

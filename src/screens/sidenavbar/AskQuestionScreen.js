@@ -1,9 +1,9 @@
 //AskQuestionScreen.js
 
 // import packages
-import React, {useState, useEffect, useRef, createRef} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -17,19 +17,19 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import {colors, themes, typography, spacing} from '../../styles';
+import { colors, themes, typography, spacing } from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
-import {useCurrentUser} from '../../contexts/currentUserContext';
+import { useCurrentUser } from '../../contexts/currentUserContext';
 import {
   messageAdd,
   messageGetList,
   messageSeen,
 } from '../../api/messages/messages.api';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //function return
-function AskQuestionScreen({navigation}) {
+function AskQuestionScreen({ navigation }) {
   const theme = themes.light;
   const [message, setMessage] = useState('');
   const [listMessage, setListMessage] = useState(null);
@@ -80,7 +80,7 @@ function AskQuestionScreen({navigation}) {
           return item._id;
         }
       });
-      messageSeen(token, {messageIds: listMessageIds})
+      messageSeen(token, { messageIds: listMessageIds })
         .then()
         .catch(console.log);
     }
@@ -90,7 +90,7 @@ function AskQuestionScreen({navigation}) {
     <SafeAreaView
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
-      <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <View style={styles.headerContainer}>
           <BackButtonHeaderLeft
             navigationProp={navigation}
@@ -111,7 +111,7 @@ function AskQuestionScreen({navigation}) {
           }}
           showsVerticalScrollIndicator={false}
           onContentSizeChange={() => {
-            listViewRef.scrollToEnd({animated: true});
+            listViewRef.scrollToEnd({ animated: true });
           }}
           style={styles.scrollView}
           refreshControl={
@@ -119,16 +119,16 @@ function AskQuestionScreen({navigation}) {
           }>
           {listMessage
             ? listMessage.map((chat) =>
-                chat.sender ? (
-                  <View key={chat._id} style={styles.myChat}>
-                    <Text style={styles.myText}>{chat.text}</Text>
-                  </View>
-                ) : (
-                  <View key={chat._id} style={styles.adminChat}>
-                    <Text style={styles.adminText}>{chat.text}</Text>
-                  </View>
-                ),
-              )
+              chat.sender ? (
+                <View key={chat._id} style={styles.myChat}>
+                  <Text style={styles.myText}>{chat.text}</Text>
+                </View>
+              ) : (
+                <View key={chat._id} style={styles.adminChat}>
+                  <Text style={styles.adminText}>{chat.text}</Text>
+                </View>
+              ),
+            )
             : null}
         </ScrollView>
         <View style={styles.bottomContainer}>
@@ -146,7 +146,7 @@ function AskQuestionScreen({navigation}) {
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleSend({text: message})}>
+            onPress={() => handleSend({ text: message })}>
             <MaterialCommunityIcons
               style={styles.buttonSend}
               name="send"
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.base,
     shadowOpacity: 0.2,
     backgroundColor: colors.white,
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
   },
   headingContainer: {
     width: '90%',
@@ -199,9 +199,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   myChat: {
-    width: '70%',
+    maxWidth: '70%',
     paddingHorizontal: spacing.base,
-    paddingBottom: spacing.base,
+    paddingVertical: spacing.smaller,
     borderRadius: 20,
     alignSelf: 'flex-end',
     marginVertical: spacing.smaller,
@@ -212,12 +212,11 @@ const styles = StyleSheet.create({
     fontSize: typography.fs3,
     lineHeight: typography.lh3,
     color: colors.white,
-    paddingTop: spacing.small,
   },
   adminChat: {
-    width: '70%',
+    maxWidth: '70%',
     paddingHorizontal: spacing.base,
-    paddingBottom: spacing.base,
+    paddingVertical: spacing.smaller,
     borderRadius: 20,
     alignSelf: 'flex-start',
     marginVertical: spacing.smaller,
@@ -228,10 +227,8 @@ const styles = StyleSheet.create({
     fontSize: typography.fs3,
     lineHeight: typography.lh3,
     color: colors.gray900,
-    paddingTop: spacing.small,
   },
   bottomContainer: {
-    // marginBottom: spacing.hairline,
     width: '100%',
     paddingVertical: spacing.smallest,
     paddingHorizontal: spacing.base,
@@ -241,9 +238,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '85%',
     borderColor: colors.gray900,
-    borderWidth: 0.2,
-    borderRadius: 40 / 2,
-    maxHeight: 300,
+    borderWidth: 0.3,
+    borderRadius: 20,
     backgroundColor: colors.white,
     justifyContent: 'center',
     alignContent: 'center',
@@ -252,10 +248,11 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.smaller,
     paddingHorizontal: spacing.smaller,
     fontWeight: typography.fwMedium,
-    fontSize: typography.sf3,
+    fontSize: typography.fs3,
   },
   button: {
     width: '15%',
+    alignSelf: 'center',
   },
   buttonSend: {
     paddingVertical: spacing.small,

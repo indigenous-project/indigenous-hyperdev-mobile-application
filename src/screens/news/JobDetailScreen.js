@@ -21,7 +21,7 @@ function JobDetailScreen({ navigate, route, navigation }) {
   useLayoutEffect(() => {
     job
       ? navigation.setOptions({
-        headerTitle: job.title,
+        // headerTitle: job.title,
         headerRight: () => <JobShareHeader shareData={job} />,
       })
       : null;
@@ -29,23 +29,23 @@ function JobDetailScreen({ navigate, route, navigation }) {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }} edges={['right', 'left']}>
       <View style={styles.headerStyle}>
         <Text style={styles.title}>{job.title}</Text>
         <Text style={styles.subHeading}>{job.subTitle}</Text>
         <Text style={styles.subHeading}>{job.type}</Text>
       </View>
-      <ScrollView style={styles.jobView}>
-        <WebView
-          style={styles.description}
-          originWhitelist={['*']}
-          source={{
-            html: `<section style="font-size:40">${decodeHTML(
-              job.description,
-            )}</section>`,
-          }}
-        />
-      </ScrollView>
+      {/* <View style={styles.jobView}> */}
+      <WebView
+        style={styles.description}
+        originWhitelist={['*']}
+        source={{
+          html: `<section style="font-size:40">${decodeHTML(
+            job.description,
+          )}</section>`,
+        }}
+      />
+      {/* </View> */}
       <View style={styles.buttonsGroup}>
         <Button
           title="Send Email"
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   headerStyle: {
     backgroundColor: colors.white,
     paddingHorizontal: spacing.base,
-    marginTop: spacing.base,
+    marginVertical: spacing.smallest,
     minHeight: '15%',
   },
   title: {
@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
   },
   description: {
     padding: spacing.base,
+    width: "95%",
+    alignSelf: 'center'
   },
 
   buttonsGroup: {

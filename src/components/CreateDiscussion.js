@@ -157,7 +157,7 @@ function CreateDiscussion(props) {
       <Loader loading={loading} />
       <MessageModal
         showing={showing}
-        message={`\t\tDiscussion Created.\n\nYour discussion will be shown after admin approve it.`}
+        message={`\tDiscussion Created.\n\nYour discussion will be shown after admin approve it.`}
       />
       <ScrollView>
         <View>
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   },
   titleInput: {
     borderBottomColor: colors.gray900,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
     width: '100%',
     height: 40,
     paddingHorizontal: spacing.hairline,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   },
   categoryDopdown: {
     borderColor: colors.gray900,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     width: '100%',
     height: 40,
     marginTop: spacing.smallest,
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   },
   categoryDopdownSelect: {
     borderColor: colors.gray900,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     width: '100%',
     height: 40,
     marginTop: spacing.smallest,
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     borderBottomColor: colors.gray400,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
   },
   modalTitleText: {
     fontSize: typography.fs3,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.3,
     borderRadius: 100,
     backgroundColor: colors.primary50,
   },

@@ -42,7 +42,7 @@ function NewsDetailScreen({ navigate, route, navigation }) {
   useLayoutEffect(() => {
     posts
       ? navigation.setOptions({
-        headerTitle: posts.title,
+        // headerTitle: posts.title,
         headerRight: () => <NewsShareHeader shareData={posts} />,
       })
       : null;
@@ -50,36 +50,30 @@ function NewsDetailScreen({ navigate, route, navigation }) {
 
   if (!posts) return null;
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={styles.container} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
-      <ScrollView>
-        <View style={styles.headerStyle}>
-          <View>
-            <Text style={styles.title}>{posts.title}</Text>
-            <Text style={styles.date}>
-              {formatDate(posts.lastModifiedDate)}
-            </Text>
+      <View style={{ marginBottom: spacing.small }}>
+        <Text style={styles.title}>{posts.title}</Text>
+        <Text style={styles.date}>
+          {formatDate(posts.lastModifiedDate)}
+        </Text>
 
-            <Image
-              source={{
-                uri: posts.medias.path,
-              }}
-              style={styles.image}
-            />
-          </View>
-          <Text>
-            <WebView
-              style={styles.description}
-              originWhitelist={['*']}
-              source={{
-                html: `<section style="font-size:30">${decodeHTML(
-                  posts.description,
-                )}</section>`,
-              }}
-            />
-          </Text>
-        </View>
-      </ScrollView>
+        {posts.medias.path ?
+          <Image
+            source={{
+              uri: posts.medias.path,
+            }}
+            style={styles.image}
+          /> : null}
+      </View>
+      <WebView
+        originWhitelist={['*']}
+        source={{
+          html: `<section style="font-size:30">${decodeHTML(
+            posts.description,
+          )}</section>`,
+        }}
+      />
       <View style={styles.buttonsGroup}>
         <Button
           title="Ask Question"
@@ -94,30 +88,24 @@ function NewsDetailScreen({ navigate, route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  headerStyle: {
+  container: {
     backgroundColor: colors.white,
+    flex: 1,
     paddingHorizontal: spacing.base,
-    marginTop: spacing.small,
+    marginTop: spacing.smaller,
   },
   title: {
     color: colors.primary900,
     marginTop: spacing.base,
     fontWeight: typography.fwBold,
     fontSize: typography.fs3,
+    lineHeight: typography.lh3
   },
   date: {
-    fontSize: typography.fs3,
-    marginBottom: spacing.small,
+    fontSize: typography.fs2,
+    marginVertical: spacing.smallest,
     fontWeight: typography.fwLight,
     color: colors.gray900,
-  },
-  description: {
-    width: 400,
-    height: 300,
-    marginTop: 20,
-    fontSize: 50,
-    lineHeight: typography.lh3,
-    paddingHorizontal: spacing.small,
   },
   image: {
     height: 150,

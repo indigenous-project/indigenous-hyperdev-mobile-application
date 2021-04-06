@@ -63,7 +63,7 @@ function OrganizationsCard(props) {
       </CardItem>
       <CardItem style={styles.border}>
         <Body>
-          <Text style={styles.name}>
+          <Text numberOfLines={1} style={styles.name}>
             {props.name !== undefined ? props.name : ''}
           </Text>
           <Rating
@@ -75,7 +75,7 @@ function OrganizationsCard(props) {
               props.reviews == undefined ? 0 : getRating(props.reviews)
             }
           />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', maxWidth: '70%' }}>
             <MaterialCommunityIcons
               name="earth"
               size={22}
@@ -85,7 +85,7 @@ function OrganizationsCard(props) {
             <Hyperlink
               linkDefault={true}
               linkStyle={{ textDecorationLine: 'underline' }}>
-              <Text style={styles.website}>
+              <Text numberOfLines={1} style={styles.website}>
                 {props.website !== undefined ? props.website.split('www.') : ''}
               </Text>
             </Hyperlink>
@@ -114,14 +114,14 @@ function OrganizationsCard(props) {
               ]}>
               {props.type !== undefined ? props.type : null}
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', maxWidth: '100%' }}>
               <MaterialCommunityIcons
                 name="map-marker"
                 size={22}
                 style={styles.markerIcon}
                 color={themes.light.subduedTextColor}
               />
-              <Text style={styles.location} onPress={handleGoLink}>
+              <Text numberOfLines={1} style={styles.location} onPress={handleGoLink}>
                 {props.location !== undefined
                   ? props.location.split(',')[0].trim()
                   : ''}
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   typeAndLocationPosition: { marginTop: 18 },
   typeAndLocationPositionWithIcon: { marginTop: 0 },
   name: {
-    width: 500,
+    width: "150%",
     color: themes.light.primaryColor,
     fontWeight: typography.fwMedium,
     marginBottom: spacing.smallest,
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
   location: {
     alignSelf: 'flex-end',
     fontSize: typography.fs2,
+    paddingRight: 25,
     textDecorationLine: 'underline',
     color: 'blue',
   },
