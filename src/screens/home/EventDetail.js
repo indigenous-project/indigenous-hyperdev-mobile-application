@@ -1,9 +1,9 @@
 //Event Detail module
 
 // import packages
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -16,21 +16,23 @@ import {
 } from 'react-native';
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 import {
   eventGetDetail,
   eventGoing,
+  eventGoingRemove,
   eventInterested,
+  eventInterestedRemove,
 } from '../../api/events/events.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
-import { decodeHTML } from '../../modules/decode.text';
-import { WebView } from 'react-native-webview';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
 import Loader from '../../components/Loader';
 import ShareHeader from '../../components/ShareHeader';
-import { useIsFocused } from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/core';
 
 //function return
-function EventDetail({ navigation, route }) {
+function EventDetail({navigation, route}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   const [event, setEvent] = useState(null);
@@ -59,50 +61,71 @@ function EventDetail({ navigation, route }) {
     }
   }, [event, currentUser, isFocused]);
 
-  const handleAskTapButton = (typeButton) => {
-    Alert.alert(
-      `Event ${typeButton}`,
-      `Are your ${typeButton} ${event.title}?`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            typeButton === 'interested in'
-              ? handleInterestedButton()
-              : handleGoingButton();
-          },
-        },
-      ],
-    );
-  };
+  // //function handle asking to confirm user want to going or interested to an event
+  // const handleAskTapButton = (typeButton) => {
+  //   Alert.alert(
+  //     `Event ${typeButton}`,
+  //     `Are your ${typeButton} ${event.title}?`,
+  //     [
+  //       {
+  //         text: 'Cancel',
+  //         onPress: () => console.log('Cancel Pressed'),
+  //         style: 'cancel',
+  //       },
+  //       {
+  //         text: 'OK',
+  //         onPress: () => {
+  //           typeButton === 'interested in'
+  //             ? handleInterestedButton()
+  //             : handleGoingButton();
+  //         },
+  //       },
+  //     ],
+  //   );
+  // };
 
+  // Function handle when user want to tap interested button
   const handleInterestedButton = () => {
     eventInterested(token, event._id)
       .then((response) => {
         if (response) {
           setIsInterested(true);
-          Alert.alert('Interested the event');
         }
       })
       .catch((err) => console.log(err));
   };
 
+  // Function handle when user dont want to be interested to an event
+  const handleInterestedRemove = () => {
+    eventInterestedRemove(token, event._id)
+      .then((response) => {
+        if (response) {
+          setIsInterested(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // Function handle when user want to tap going button
   const handleGoingButton = () => {
     eventGoing(token, event._id)
       .then((response) => {
         if (response) {
           setIsGoing(true);
-          Alert.alert('Going the event');
         }
       })
       .catch((err) => console.log(err));
   };
-
+  // Function handle when user dont want to go to an event
+  const handleGoingButtonRemove = () => {
+    eventGoingRemove(token, event._id)
+      .then((response) => {
+        if (response) {
+          setIsGoing(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   //ussEffect fetching data
   useEffect(() => {
     if (route.params.eventId) {
@@ -123,22 +146,22 @@ function EventDetail({ navigation, route }) {
   useLayoutEffect(() => {
     event
       ? navigation.setOptions({
-        headerTitle: event.title,
-        headerRight: () => <ShareHeader shareData={event} />,
-      })
+          headerTitle: event.title,
+          headerRight: () => <ShareHeader shareData={event} />,
+        })
       : null;
   }, [navigation, event]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
       <Loader loading={loading} />
       {event ? (
         <ScrollView>
-          <Image style={styles.image} source={{ uri: event.medias[0].path }} />
+          <Image style={styles.image} source={{uri: event.medias[0].path}} />
           <EventInfo event={event} />
           <View style={styles.container}>
-            <View style={{ minHeight: 250 }}>
+            <View style={{minHeight: 250}}>
               <WebView
                 scrollEnabled={true}
                 originWhitelist={['*']}
@@ -150,7 +173,7 @@ function EventDetail({ navigation, route }) {
               />
             </View>
           </View>
-          {event.hosts.length > 0 ?
+          {event.hosts.length > 0 ? (
             <View style={styles.container}>
               <Text style={styles.heading}>Hosts</Text>
               {event.hosts.map((host) => (
@@ -162,27 +185,36 @@ function EventDetail({ navigation, route }) {
                 />
               ))}
             </View>
-            : null}
+          ) : null}
         </ScrollView>
       ) : null}
       <View style={styles.buttonsGroup}>
         <TouchableOpacity
-          disabled={isInterested}
+          // disabled={isInterested}
           style={
-            !isInterested
+            isInterested
               ? styles.buttonContainer
               : styles.buttonContainerDisable
           }
-          onPress={() => handleAskTapButton('interested in')}>
-          <Text style={styles.buttonText}>Interested</Text>
+          onPress={() => {
+            isInterested ? handleInterestedRemove() : handleInterestedButton();
+          }}>
+          <Text
+            style={isInterested ? styles.buttonTextSelect : styles.buttonText}>
+            Interested
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={isGoing}
+          // disabled={isGoing}
           style={
-            !isGoing ? styles.buttonContainer : styles.buttonContainerDisable
+            isGoing ? styles.buttonContainer : styles.buttonContainerDisable
           }
-          onPress={() => handleAskTapButton('going to')}>
-          <Text style={styles.buttonText}>Going</Text>
+          onPress={() => {
+            isGoing ? handleGoingButtonRemove() : handleGoingButton();
+          }}>
+          <Text style={isGoing ? styles.buttonTextSelect : styles.buttonText}>
+            Going
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -227,7 +259,9 @@ const styles = StyleSheet.create({
     width: '40%',
     borderRadius: 10,
     marginBottom: spacing.small,
-    backgroundColor: colors.primary400,
+    // backgroundColor: colors.primary400,
+    backgroundColor: colors.primary100,
+
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
   },
@@ -235,11 +269,17 @@ const styles = StyleSheet.create({
     width: '40%',
     borderRadius: 10,
     marginBottom: spacing.small,
-    backgroundColor: colors.gray200,
+    backgroundColor: colors.gray100,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
   },
   buttonText: {
+    alignSelf: 'center',
+    fontSize: typography.fs2,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
+  },
+  buttonTextSelect: {
     alignSelf: 'center',
     fontSize: typography.fs2,
     color: colors.white,
