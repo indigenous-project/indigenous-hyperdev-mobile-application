@@ -6,7 +6,6 @@
 import { Image, StyleSheet, View, Alert } from 'react-native';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FocusedStatusBar from '../../components/FocusedStatusBar';
 import { Text, Button } from 'native-base';
 import { postGetDetail } from '../../api/news/news.api';
 import { formatDate } from '../../modules/date.format';
@@ -14,7 +13,6 @@ import { useIsFocused } from '@react-navigation/core';
 import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 import { colors, spacing, themes, typography } from '../../styles';
-import { ScrollView } from 'react-native-gesture-handler';
 import AskQuestionScreen from '../sidenavbar/AskQuestionScreen'
 import NewsShareHeader from '../../components/NewsShareHeader'
 
@@ -51,7 +49,6 @@ function NewsDetailScreen({ navigate, route, navigation }) {
   if (!posts) return null;
   return (
     <SafeAreaView style={styles.container} edges={['right', 'left']}>
-      <FocusedStatusBar barStyle="light-content" />
       <View style={{ marginBottom: spacing.small }}>
         <Text style={styles.title}>{posts.title}</Text>
         <Text style={styles.date}>

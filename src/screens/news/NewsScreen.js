@@ -175,6 +175,7 @@ function NewsScreen({ navigation }) {
             />
           </View>
         ) : null}
+
         <View style={styles.container}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <OrganizationChips category="Categories" />

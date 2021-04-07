@@ -8,7 +8,6 @@ import ServiceScreen from './ServiceScreen';
 import { themes } from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
-import ServiceCategoryScreen from './ServiceCategoryScreen';
 import SearchStack from '../search/SearchStack';
 import ServiceDetailScreen from './ServiceDetailScreen';
 
@@ -37,17 +36,6 @@ function ServicesStack({ navigation }) {
         component={ServiceScreen}
       />
 
-      <Services.Screen
-        name="Services and Programs"
-        component={ServiceCategoryScreen}
-        options={{
-          headerRight: false,
-          title: false,
-          headerStyle: { backgroundColor: themes.light.inverseTextColor },
-
-          headerTintColor: themes.light.primaryColor,
-        }}
-      />
       <Services.Screen
         name="Service Detail"
         component={ServiceDetailScreen}

@@ -8,6 +8,8 @@ import { categoriesGetList } from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import EventCard from '../../components/EventCard';
 import UpdateCard from '../../components/UpdateCard';
+import ServicesCard from '../../components/ServicesCard';
+import { serviceGetList } from '../../api/services/services.api';
 import ServicesCategoryButton from '../../components/ServicesCategoryButton';
 import {
   View,
@@ -17,6 +19,8 @@ import {
   TouchableOpacity,
   RefreshControl,
   Alert,
+  Modal,
+  Pressable
 } from 'react-native';
 import { colors, themes, typography, spacing } from '../../styles';
 import { useCurrentUser } from '../../contexts/currentUserContext';
@@ -33,10 +37,12 @@ function HomeScreen({ navigation }) {
   const isFocused = useIsFocused();
   const [categories, setCategories] = useState(null);
   const [latestUpdate, setLatestUpdate] = useState(null);
-  //const [events, setEvents] = useState(null);
+  const [selectedServiceCategory, setSelectedServiceCategory] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const [events, setEvents] = useEvent(); // use event context
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(false);
+  const [services, setServices] = useState(null);
   const [currentUser, token] = useCurrentUser();
   //End useState region
 
@@ -88,6 +94,29 @@ function HomeScreen({ navigation }) {
         );
   }, [token, reloadData, isFocused]);
 
+  // useEffect load  new category list
+  useEffect(() => {
+    if (token && isFocused)
+      categoriesGetList(token)
+        .then((response) => {
+          if (response) {
+            setCategories(response);
+          }
+        })
+
+        .catch((err) => {
+          Alert.alert(err.errors[0].title, err.errors[0].description);
+        });
+  }, [token, reloadData, isFocused]);
+
+  useEffect(() => {
+    if (token && isFocused)
+      serviceGetList(token)
+        .then(setServices)
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
+  }, [token, reloadData, isFocused]);
   // End useEffect Region
 
   // Render element
@@ -146,45 +175,78 @@ function HomeScreen({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.heading}>Popular Service Category</Text>
           <View style={styles.popularServices}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Services and Programs', {
-                  name: 'Culture',
-                  token: token,
-                });
-              }}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/cultureIcon.png"
-                name="Culture"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Services and Programs', {
-                  name: 'Government/Legal',
-                  token: token,
-                });
-              }}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/legalIcon.png"
-                name="Government/Legal"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Services and Programs', {
-                  name: 'Mental Health/Addiction',
-                  token: token,
-                });
-              }}>
-              <ServicesCategoryButton
-                icon="https://indigenous-images.s3.amazonaws.com/hospitalIcon.png"
-                name="Mental Health/Addiction"
-              />
-            </TouchableOpacity>
+            {categories
+              ? categories.slice(1, 4).map((category) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedServiceCategory(category);
+                    setModalVisible(true);
+                  }} key={category._id}>
+                  <ServicesCategoryButton
+                    icon={category.icon}
+                    name={category.name}
+                  />
+                </TouchableOpacity>
+              ))
+              : null}
+
           </View>
         </View>
       </ScrollView>
+
+      {selectedServiceCategory ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.modalView} key={selectedServiceCategory._id}>
+            <View style={styles.modalTitle}>
+              <View>
+                <Text style={styles.modalTitleText}>
+                  {selectedServiceCategory.name}
+                </Text>
+              </View>
+
+              <Pressable
+                style={styles.closeButton}
+                onPress={() => setModalVisible(!modalVisible)}
+                key={selectedServiceCategory._id}>
+                <Text style={styles.buttonText}>x</Text>
+              </Pressable>
+            </View>
+
+            <View style={{ padding: spacing.base }}>
+              <Text style={styles.heading} >Services and Programs</Text>
+              {services.filter((service) => {
+                return service.category.name === selectedServiceCategory.name;
+              }).map((service) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible)
+                    navigation.navigate('Service Detail', {
+                      name: service,
+                      token: token,
+                    });
+                  }} key={service._id} >
+                  <ServicesCard
+                    title={service.name}
+                    name={service.contact.providerName}
+                    position={service.contact.position}
+                    isIndigenous={service.isIndigenous}
+                  />
+                </TouchableOpacity>
+              ))
+              }
+            </View>
+          </View>
+        </Modal>
+      ) : null
+      }
+
     </SafeAreaView>
   );
 }
@@ -229,6 +291,46 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: spacing.small,
     backgroundColor: colors.white,
+  },
+
+  //styling for modal container
+  modalView: {
+    marginTop: 50,
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    height: '100%',
+  },
+  modalTitle: {
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    paddingVertical: spacing.base,
+    paddingHorizontal: spacing.base,
+    flexDirection: 'row',
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    borderBottomColor: colors.gray900,
+    borderBottomWidth: 0.3,
+  },
+  modalTitleText: {
+    fontSize: typography.fs4,
+    color: colors.primary900,
+    fontWeight: typography.fwBold,
+    paddingTop: spacing.smallest,
+  },
+  closeButton: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: colors.gray900,
+    shadowOpacity: 0.2,
+    borderRadius: 100,
+    backgroundColor: colors.primary50,
+  },
+  buttonText: {
+    color: colors.primary900,
+    fontSize: 20,
+    fontWeight: typography.fwMedium,
   },
 });
 
