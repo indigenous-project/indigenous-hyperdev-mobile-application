@@ -24,16 +24,14 @@ import { useCurrentUser } from '../../contexts/currentUserContext';
 import { useIsFocused } from '@react-navigation/core';
 import { formatDate } from '../../modules/date.format';
 import OrganizationChips from '../../components/OrganizationChips';
-import { useJob } from '../../contexts/jobContext';
 import { useNews } from '../../contexts/newsContext';
+import { surveyGetList } from '../../api/surveys/surveys.api';
 
 //function return
 function NewsScreen({ navigation }) {
-  const theme = themes.light;
   const isFocused = useIsFocused();
-  //const [jobs, setJobs] = useState(null);
-  //const [posts, setPosts] = useState(null);
-  const [jobs, setJobs] = useJob();
+  const [filterJobs, setFilterJobs] = useState(null);
+  const [filterSurveys, setFilterSurveys] = useState(null);
   const [posts, setPosts] = useNews();
   const [currentUser, token] = useCurrentUser();
   const [refreshing, setRefreshing] = useState(false);
@@ -41,12 +39,32 @@ function NewsScreen({ navigation }) {
 
   //Methods Region
   // wait time for refresh
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  // sort the recent job list by updated Date
+  const sortRecentJob = data => {
+    let array = data.sort(
+      (item1, item2) =>
+        parseInt(Date.parse(item2.createdAt), [10]) -
+        parseInt(Date.parse(item1.createdAt), [10]),
+    );
+    setFilterJobs(array); // set Filter jobs
+  };
+
+  // sort the recent survey list by updated Date
+  const sortRecentSurvey = data => {
+    let array = data.sort(
+      (item1, item2) =>
+        parseInt(Date.parse(item2.createdAt), [10]) -
+        parseInt(Date.parse(item1.createdAt), [10]),
+    );
+    setFilterSurveys(array); // set Filter jobs
   };
 
   // Converting cents to dollars
-  const convertSalary = (data) => {
+  const convertSalary = data => {
     var dollars = data / 100;
     dollars = dollars.toLocaleString('en-US', {
       style: 'currency',
@@ -65,11 +83,11 @@ function NewsScreen({ navigation }) {
   // useEffect load job list
   useEffect(() => {
     jobGetList(token)
-      .then((response) => {
-        setJobs(response);
+      .then(response => {
+        sortRecentJob(response);
       })
 
-      .catch((err) => {
+      .catch(err => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, isFocused]);
@@ -77,14 +95,27 @@ function NewsScreen({ navigation }) {
   // useEffect load post list
   useEffect(() => {
     postGetList(token)
-      .then((response) => {
+      .then(response => {
         setPosts(response);
       })
 
-      .catch((err) => {
+      .catch(err => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, reloadData, isFocused]);
+
+  // useEffect load survey list
+  useEffect(() => {
+    if (token && isFocused)
+      surveyGetList(token)
+        .then(response => {
+          sortRecentSurvey(response);
+        })
+
+        .catch(err =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
+  }, [token, isFocused]);
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
@@ -102,44 +133,48 @@ function NewsScreen({ navigation }) {
         <FocusedStatusBar barStyle="light-content" />
         {/* <Text>{JSON.stringify(categories)}</Text> */}
 
-        {jobs
-          ?
+        {filterJobs ? (
           <View style={styles.container}>
             <View style={styles.containerHeading}>
               <Text style={styles.heading}>Job News</Text>
               <Text onPress={() => navigation.navigate('Jobs List')}>
                 See All
-            </Text>
+              </Text>
             </View>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('Job Detail', {
-                  job: jobs[0],
-                  jobId: jobs[0]._id,
+                  job: filterJobs[0],
+                  jobId: filterJobs[0]._id,
                   token: token,
                 })
               }
-              key={jobs[0]._id}>
+              key={filterJobs[0]._id}>
               <JobCard
-                title={jobs[0].title}
-                posting={jobs[0].subTitle}
-                type={jobs[0].type}
-                salary={convertSalary(jobs[0].salary)}></JobCard>
+                title={filterJobs[0].title}
+                posting={filterJobs[0].subTitle}
+                type={filterJobs[0].type}
+                salary={convertSalary(filterJobs[0].salary)}></JobCard>
             </TouchableOpacity>
           </View>
-          : null}
+        ) : null}
 
-        <View style={styles.container}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.heading}>New Survey</Text>
-            <Text onPress={() => navigation.navigate('Surveys')}>
-              See All
-            </Text>
+        {filterSurveys ? (
+          <View style={styles.container}>
+            <View style={styles.containerHeading}>
+              <Text style={styles.heading}>New Survey</Text>
+
+              <Text onPress={() => navigation.navigate('Surveys')}>
+                See All
+              </Text>
+            </View>
+            <SurveyCard
+              title={filterSurveys[0].title}
+              key={filterSurveys[0]._id}
+              link={filterSurveys[0].link}
+            />
           </View>
-
-          <SurveyCard title="Aborginal Peoples Survey Concepts and Methods" />
-        </View>
-
+        ) : null}
         <View style={styles.container}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <OrganizationChips category="Categories" />
@@ -148,7 +183,7 @@ function NewsScreen({ navigation }) {
             <OrganizationChips category="Indigenous" />
           </ScrollView>
           {posts
-            ? posts.map((post) => (
+            ? posts.map(post => (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('News Article', {
@@ -160,7 +195,8 @@ function NewsScreen({ navigation }) {
                 <NewsCard
                   title={post.title}
                   date={formatDate(post.lastModifiedDate)}
-                  details={post.description} />
+                  details={post.description}
+                />
               </TouchableOpacity>
             ))
             : null}

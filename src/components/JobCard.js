@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         shadowColor: colors.shadowcolor,
         backgroundColor: colors.white,
         padding: spacing.base,
-        maxWidth: '100%',
+        minWidth: '100%',
         marginTop: spacing.small,
         shadowOffset: {
             width: spacing.none,
