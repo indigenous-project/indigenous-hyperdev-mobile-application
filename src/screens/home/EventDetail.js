@@ -197,7 +197,12 @@ function EventDetail({navigation, route}) {
               : styles.buttonContainerDisable
           }
           onPress={() => {
-            isInterested ? handleInterestedRemove() : handleInterestedButton();
+            if (isInterested) {
+              handleInterestedRemove();
+            } else {
+              handleInterestedButton();
+              handleGoingButtonRemove();
+            }
           }}>
           <Text
             style={isInterested ? styles.buttonTextSelect : styles.buttonText}>
@@ -210,7 +215,12 @@ function EventDetail({navigation, route}) {
             isGoing ? styles.buttonContainer : styles.buttonContainerDisable
           }
           onPress={() => {
-            isGoing ? handleGoingButtonRemove() : handleGoingButton();
+            if (isGoing) {
+              handleGoingButtonRemove();
+            } else {
+              handleGoingButton();
+              handleInterestedRemove();
+            }
           }}>
           <Text style={isGoing ? styles.buttonTextSelect : styles.buttonText}>
             Going
