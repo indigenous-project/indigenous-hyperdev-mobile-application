@@ -1,5 +1,5 @@
-import {SecretsManager, ServiceCatalog} from 'aws-sdk';
-import React, {useEffect, useState} from 'react';
+import { SecretsManager, ServiceCatalog } from 'aws-sdk';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,13 +10,13 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import {serviceGetList} from '../../api/services/services.api';
-import {spacing, colors, typography} from '../../styles';
+import { serviceGetList } from '../../api/services/services.api';
+import { spacing, colors, typography } from '../../styles';
 import ServicesCard from '../../components/ServicesCard';
 import ServiceDetail from '../../components/ServiceDetail';
-import {useAsyncStorage} from '../../hooks/useAsyncStorage';
+import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 
-const ServiceCategoryScreen = ({navigate, route}) => {
+const ServiceCategoryScreen = ({ navigate, route }) => {
   // console.log(props)
   const token = route.params.token;
   const serviceId = route.params.name;
@@ -62,27 +62,27 @@ const ServiceCategoryScreen = ({navigate, route}) => {
 
   if (!filterServices) return null;
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <View style={styles.container}>
         <Text style={styles.heading}>{serviceId}</Text>
 
         {filterServices.length > 0
           ? filterServices.map((service) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setSelectedService(service);
-                  setModalVisible(true);
-                  handleLastOpen(service);
-                }}
-                key={service._id}>
-                <ServicesCard
-                  title={service.name}
-                  name={service.contact.providerName}
-                  position={service.contact.position}
-                  isIndigenous={service.isIndigenous}
-                />
-              </TouchableOpacity>
-            ))
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedService(service);
+                setModalVisible(true);
+                handleLastOpen(service);
+              }}
+              key={service._id}>
+              <ServicesCard
+                title={service.name}
+                name={service.contact.providerName}
+                position={service.contact.position}
+                isIndigenous={service.isIndigenous}
+              />
+            </TouchableOpacity>
+          ))
           : null}
       </View>
 
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: {width: 3, height: 3},
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,

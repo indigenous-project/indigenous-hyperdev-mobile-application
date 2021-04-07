@@ -3,6 +3,7 @@
 // import packages
 import React, { useState, useEffect } from 'react';
 import {
+  Linking,
   ScrollView,
   View,
   Text,
@@ -20,7 +21,6 @@ import ServicesCard from '../../components/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
 import { serviceGetList } from '../../api/services/services.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';
-import ServiceDetail from '../../components/ServiceDetail';
 import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
 import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -32,21 +32,26 @@ function ServiceScreen({ navigation }) {
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [currentUser, token] = useCurrentUser();
   const [categories] = useCategoryGeneral();
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedServiceCategory, setSelectedServiceCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const isFocused = useIsFocused();
+  const [storeLastOpen, setStoreLastOpen] = useAsyncStorage('lastOpen', []);
 
-  const [storedValue, setStoredValue] = useState();
-  //removeAsyncStorage('lastOpen');
-  useEffect(() => {
-    AsyncStorage.getItem('lastOpen')
-      .then((value) => {
-        if (value === null) return [];
-        return JSON.parse(value);
-      })
-      .then(setStoredValue)
-      .catch(Alert.alert);
-  }, [isFocused]);
+  // removeAsyncStorage('lastOpen');
+
+  // handle lastOpen
+  const handleLastOpen = (service) => {
+    let arr = storeLastOpen;
+    arr.unshift(service);
+    // filter to get unique item
+    let uniqueArr = arr.filter(
+      (item1, index, a) =>
+        a.findIndex((item2) => item1._id === item2._id) === index,
+    );
+    uniqueArr.length > 2 ? uniqueArr.pop() : null; // only get 2 item
+
+    setStoreLastOpen(uniqueArr);
+  };
 
   const categoriesGeneral = categories.filter(
     (item) => item.type === 'general',
@@ -74,19 +79,17 @@ function ServiceScreen({ navigation }) {
           marginVertical: spacing.smallest,
         }}>
         <Pressable
-          onPress={() =>
-            navigation.navigate('Services and Programs', {
-              name: item.name,
-              token: token,
-            })
-          }>
+          onPress={() => {
+            setSelectedServiceCategory(item);
+            setModalVisible(true);
+          }}>
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
             category={{ id: item._id, name: item.name }}
           />
         </Pressable>
-      </View>
+      </View >
     ) : null;
   }
   return (
@@ -114,36 +117,34 @@ function ServiceScreen({ navigation }) {
           renderItem={renderItem}
         />
       </View>
+
       {/* last opened template */}
-      <View style={styles.lastOpenedcontainer}>
-        <Text style={styles.heading}>Last Opened</Text>
-        <ScrollView style={{ paddingHorizontal: spacing.smallest }}>
-          {storedValue.length > 0
-            ? storedValue.map((service) => (
+      {storeLastOpen ?
+        <View style={styles.lastOpenedcontainer}>
+          <Text style={styles.heading}>Last Opened</Text>
+          <ScrollView style={{ paddingHorizontal: spacing.smallest }}>
+            {storeLastOpen.map((service) => (
               <TouchableOpacity
-                onPress={() => {
-                  setSelectedService(service);
-                  setModalVisible(true);
-                }}
+                onPress={() =>
+                  navigation.navigate('Service Detail', {
+                    name: service,
+                    token: token,
+                  })
+                }
                 key={service._id}>
                 <ServicesCard
-                  key={service._id}
                   title={service.name}
-                  isIndigenous={service.isIndigenous}
-                  name={
-                    service.contact.providerName
-                      ? service.contact.providerName
-                      : '_'
-                  }
+                  name={service.contact.providerName}
                   position={service.contact.position}
+                  isIndigenous={service.isIndigenous}
                 />
               </TouchableOpacity>
-            ))
-            : null}
-        </ScrollView>
-      </View>
+            ))}
 
-      {modalVisible ? (
+          </ScrollView>
+        </View>
+        : null}
+      {selectedServiceCategory ? (
         <Modal
           animationType="slide"
           transparent={true}
@@ -152,34 +153,52 @@ function ServiceScreen({ navigation }) {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
-          <View style={styles.modalView} key={selectedService._id}>
+          <View style={styles.modalView} key={selectedServiceCategory._id}>
             <View style={styles.modalTitle}>
               <View>
                 <Text style={styles.modalTitleText}>
-                  {selectedService.name}
+                  {selectedServiceCategory.name}
                 </Text>
               </View>
 
               <Pressable
                 style={styles.closeButton}
                 onPress={() => setModalVisible(!modalVisible)}
-                key={selectedService._id}>
+                key={selectedServiceCategory._id}>
                 <Text style={styles.buttonText}>x</Text>
               </Pressable>
             </View>
-            <ServiceDetail
-              serviceProviderName={selectedService.contact.providerName}
-              serviceProviderPosition={selectedService.contact.position}
-              contactEmail={selectedService.contact.email}
-              contactPhone={selectedService.contact.phone}
-              description={selectedService.description}
-              isIndigenous={selectedService.isIndigenous}
-              media={selectedService.medias}
-            />
+
+            <View style={{ padding: spacing.base }}>
+              <Text style={styles.heading} >Services and Programs</Text>
+              {services.filter((service) => {
+                return service.category.name === selectedServiceCategory.name;
+              }).map((service) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible)
+                    handleLastOpen(service)
+                    navigation.navigate('Service Detail', {
+                      name: service,
+                      token: token,
+                    })
+                  }}
+                  key={service._id}>
+                  <ServicesCard
+                    title={service.name}
+                    name={service.contact.providerName}
+                    position={service.contact.position}
+                    isIndigenous={service.isIndigenous}
+                  />
+                </TouchableOpacity>
+              ))
+              }
+            </View>
           </View>
         </Modal>
-      ) : null}
-    </SafeAreaView>
+      ) : null
+      }
+    </SafeAreaView >
   );
 }
 const styles = StyleSheet.create({
@@ -211,7 +230,7 @@ const styles = StyleSheet.create({
   //styling for modal container
   modalView: {
     marginTop: 50,
-    backgroundColor: colors.primary50,
+    backgroundColor: colors.white,
     borderRadius: 20,
     height: '100%',
   },
