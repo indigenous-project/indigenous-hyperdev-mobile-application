@@ -1,50 +1,49 @@
 //OrganizationScreen module
 
 // import packages
-import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {Alert, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import { spacing, themes } from '../../styles';
+import {spacing, themes} from '../../styles';
 import OrganizationChips from '../../components/OrganizationChips';
 import OrganizationListViews from '../../components/OrganizationListViews';
 import MapViews from '../../components/MapViews';
-import { View } from 'native-base';
+import {View} from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 
-import { organizationGetList } from '../../api/organizations/organizations.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
-import { useIsFocused } from '@react-navigation/core';
-import { useOrganization } from '../../contexts/organizationContext';
+import {organizationGetList} from '../../api/organizations/organizations.api';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {useIsFocused} from '@react-navigation/core';
+import {useOrganization} from '../../contexts/organizationContext';
 
 //function return
-function OrganizationScreen() {
+function OrganizationScreen({navigation}) {
   const [stateSelector, setStateSelector] = useState(null);
   const [currentUser, token] = useCurrentUser();
-  const [reloadData, setReloadData] = useState(reloadData);
-  const isFocused = useIsFocused();
-  //const [organizationList, setOrganizationList] = useState();
   const [organizations, setOrganizations] = useOrganization();
+  const isFocused = useIsFocused();
 
   //options for switch selectors
   const options = [
-    { label: 'List', value: 1 },
-    { label: 'Map', value: 2 },
+    {label: 'List', value: 1},
+    {label: 'Map', value: 2},
   ];
 
   //useEffect to load organization list
   useEffect(() => {
-    organizationGetList(token)
-      .then((response) => {
-        stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
-        if (response) {
-          setOrganizations(response);
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err.errors[0].title, err.errors[0].description);
-      });
-  }, [token, reloadData, stateSelector, isFocused]);
+    if (token && isFocused)
+      organizationGetList(token)
+        .then((response) => {
+          stateSelector === null ? setStateSelector(1) : null; // set initial stateSelector = listView
+          if (response) {
+            setOrganizations(response);
+          }
+        })
+        .catch((err) => {
+          Alert.alert(err.errors[0].title, err.errors[0].description);
+        });
+  }, [token, isFocused, stateSelector, setOrganizations]);
 
   if (!organizations) return null;
 
@@ -53,7 +52,10 @@ function OrganizationScreen() {
       <FocusedStatusBar barStyle="light-content" />
 
       {/* Chips */}
-      <ScrollView style={{ paddingVertical: 10 }} horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        style={{paddingVertical: 10}}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}>
         <OrganizationChips category="Categories" />
         <OrganizationChips category="Indigenous" />
         <OrganizationChips category="Top-Rated" />
@@ -89,7 +91,10 @@ function OrganizationScreen() {
       </View>
       {stateSelector == 1 ? (
         // List View
-        <OrganizationListViews organizationList={organizations} />
+        <OrganizationListViews
+          organizationList={organizations}
+          navigationProps={navigation}
+        />
       ) : stateSelector == 2 ? (
         //  Map View
         <MapViews organizationList={organizations} />
@@ -99,7 +104,7 @@ function OrganizationScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: spacing.hairline, paddingHorizontal: spacing.base },
+  safeArea: {flex: spacing.hairline, paddingHorizontal: spacing.base},
   // Custom Switch Selectors Style
   switchView: {
     width: '50%',
