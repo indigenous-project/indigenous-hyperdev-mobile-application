@@ -1,13 +1,12 @@
 // import statements
 
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button } from 'native-base';
 import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 import { colors, spacing, themes, typography } from '../../styles';
-import { ScrollView } from 'react-native-gesture-handler';
 import JobShareHeader from '../../components/JobsShareHeader'
 
 // function and return
