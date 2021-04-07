@@ -1,7 +1,7 @@
 //NewsScreen module
 
 // import packages
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -12,23 +12,23 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import JobCard from '../../components/JobCard';
 import SurveyCard from '../../components/SurveyCard';
 import NewsCard from '../../components/NewsCard';
-import {colors, spacing, themes, typography} from '../../styles';
-import {postGetList} from '../../api/news/news.api';
-import {jobGetList} from '../../api/jobs/jobs.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useIsFocused} from '@react-navigation/core';
-import {formatDate} from '../../modules/date.format';
+import { colors, spacing, themes, typography } from '../../styles';
+import { postGetList } from '../../api/news/news.api';
+import { jobGetList } from '../../api/jobs/jobs.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { useIsFocused } from '@react-navigation/core';
+import { formatDate } from '../../modules/date.format';
 import OrganizationChips from '../../components/OrganizationChips';
-import {useNews} from '../../contexts/newsContext';
-import {surveyGetList} from '../../api/surveys/surveys.api';
+import { useNews } from '../../contexts/newsContext';
+import { surveyGetList } from '../../api/surveys/surveys.api';
 
 //function return
-function NewsScreen({navigation}) {
+function NewsScreen({ navigation }) {
   const isFocused = useIsFocused();
   const [filterJobs, setFilterJobs] = useState(null);
   const [filterSurveys, setFilterSurveys] = useState(null);
@@ -118,7 +118,7 @@ function NewsScreen({navigation}) {
   }, [token, isFocused]);
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
 
       <ScrollView
@@ -168,13 +168,11 @@ function NewsScreen({navigation}) {
                 See All
               </Text>
             </View>
-            <TouchableOpacity key={filterSurveys[0]._id}>
-              <SurveyCard
-                title={filterSurveys[0].title}
-                key={filterSurveys[0]._id}
-                link={filterSurveys[0].link}
-              />
-            </TouchableOpacity>
+            <SurveyCard
+              title={filterSurveys[0].title}
+              key={filterSurveys[0]._id}
+              link={filterSurveys[0].link}
+            />
           </View>
         ) : null}
         <View style={styles.container}>
@@ -186,21 +184,21 @@ function NewsScreen({navigation}) {
           </ScrollView>
           {posts
             ? posts.map(post => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('News Article', {
-                      postId: post._id,
-                      token: token,
-                    })
-                  }
-                  key={post._id}>
-                  <NewsCard
-                    title={post.title}
-                    date={formatDate(post.lastModifiedDate)}
-                    details={post.description}
-                  />
-                </TouchableOpacity>
-              ))
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('News Article', {
+                    postId: post._id,
+                    token: token,
+                  })
+                }
+                key={post._id}>
+                <NewsCard
+                  title={post.title}
+                  date={formatDate(post.lastModifiedDate)}
+                  details={post.description}
+                />
+              </TouchableOpacity>
+            ))
             : null}
         </View>
       </ScrollView>
