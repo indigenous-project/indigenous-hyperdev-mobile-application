@@ -1,22 +1,21 @@
 //OrgnizationListView module
 
 // import packages
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { colors, spacing } from '../styles';
+import {colors, spacing} from '../styles';
 import OrganizationsCard from './OrganizationsCard';
-import { useNavigation } from '@react-navigation/native';
 
 export default function OrganizationListViews(props) {
   const data = props.organizationList; //to store the data from Organization Screen
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
-  const navigation = useNavigation();
+  const navigation = props.navigationProps;
 
   //handle on refresh
   const onRefresh = () => {
@@ -42,30 +41,30 @@ export default function OrganizationListViews(props) {
       }>
       {data
         ? data.map((organization) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Organization Detail', {
-                organization: organization
-              })
-            }
-            key={organization._id}>
-            <OrganizationsCard
-              id={organization._id}
-              name={organization.name}
-              reviews={organization.reviews}
-              website={organization.contact.website}
-              location={organization.contact.address}
-              type={organization.category.name}
-              isIndigenous={organization.isIndigenous}
-              image={organization.medias}
-            />
-          </TouchableOpacity>
-        ))
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Organization Detail', {
+                  organization: organization,
+                })
+              }
+              key={organization._id}>
+              <OrganizationsCard
+                id={organization._id}
+                name={organization.name}
+                reviews={organization.reviews}
+                website={organization.contact.website}
+                location={organization.contact.address}
+                type={organization.category.name}
+                isIndigenous={organization.isIndigenous}
+                image={organization.medias}
+              />
+            </TouchableOpacity>
+          ))
         : null}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: { marginTop: 50 },
+  scrollView: {marginTop: 50},
 });
