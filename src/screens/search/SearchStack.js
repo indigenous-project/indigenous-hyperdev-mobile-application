@@ -3,8 +3,8 @@
 // import packages
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
-import {themes} from '../../styles';
+import { createStackNavigator } from '@react-navigation/stack';
+import { themes } from '../../styles';
 
 import SearchScreen from './SearchScreen';
 
@@ -15,19 +15,20 @@ import JobDetailScreen from '../news/JobDetailScreen';
 import NewsDetailScreen from '../news/NewsDetailScreen';
 
 import OrganizationDetailScreen from '../organizations/OrganizationDetailScreen';
-import ServiceCategoryScreen from '../services/ServiceCategoryScreen';
+
+import ServiceDetailScreen from '../services/ServiceDetailScreen';
 
 const theme = themes.light;
 const Search = createStackNavigator();
 
 //function return
-function SearchStack({navigation}) {
+function SearchStack({ navigation }) {
   return (
     <Search.Navigator initialRouteName="SearchScreen">
       <Search.Screen
         name="SearchScreen"
         component={SearchScreen}
-        options={{headerShown: false, headerTitle: 'Search'}}
+        options={{ headerShown: false, headerTitle: 'Search' }}
       />
 
       <Search.Screen
@@ -36,7 +37,7 @@ function SearchStack({navigation}) {
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
       <Search.Screen
@@ -45,7 +46,7 @@ function SearchStack({navigation}) {
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
       <Search.Screen
@@ -54,7 +55,7 @@ function SearchStack({navigation}) {
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
 
@@ -64,17 +65,17 @@ function SearchStack({navigation}) {
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
 
       <Search.Screen
         name="Service Detail"
-        component={ServiceCategoryScreen}
+        component={ServiceDetailScreen}
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
 
@@ -84,7 +85,7 @@ function SearchStack({navigation}) {
         options={{
           headerTitle: false,
           headerTintColor: theme.inverseTextColor,
-          headerStyle: {backgroundColor: theme.primaryColor},
+          headerStyle: { backgroundColor: theme.primaryColor },
         }}
       />
     </Search.Navigator>

@@ -3,23 +3,24 @@
 // import packages
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import ServiceScreen from './ServiceScreen';
-import {themes} from '../../styles';
+import { themes } from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceCategoryScreen from './ServiceCategoryScreen';
 import SearchStack from '../search/SearchStack';
+import ServiceDetailScreen from './ServiceDetailScreen';
 
 const theme = themes.light;
 const Services = createStackNavigator();
 
 //function return
-function ServicesStack({navigation}) {
+function ServicesStack({ navigation }) {
   return (
     <Services.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: theme.primaryColor}, //header background
+        headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
 
         // headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />, // implement hambuger menu on the left of the header
@@ -42,7 +43,18 @@ function ServicesStack({navigation}) {
         options={{
           headerRight: false,
           title: false,
-          headerStyle: {backgroundColor: themes.light.inverseTextColor},
+          headerStyle: { backgroundColor: themes.light.inverseTextColor },
+
+          headerTintColor: themes.light.primaryColor,
+        }}
+      />
+      <Services.Screen
+        name="Service Detail"
+        component={ServiceDetailScreen}
+        options={{
+          headerRight: false,
+          title: false,
+          headerStyle: { backgroundColor: themes.light.inverseTextColor },
 
           headerTintColor: themes.light.primaryColor,
         }}
@@ -50,7 +62,7 @@ function ServicesStack({navigation}) {
       <Services.Screen
         name="SearchStackService"
         component={SearchStack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Services.Navigator>
   );
