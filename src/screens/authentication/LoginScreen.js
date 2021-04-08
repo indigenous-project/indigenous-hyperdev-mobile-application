@@ -1,68 +1,68 @@
 //LoginScreen module
 
-// import packages
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, StyleSheet, Alert, Keyboard, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
-import { themes, colors, spacing, typography } from '../../styles';
-import { useIsFocused } from '@react-navigation/native';
-
+// Import field////////////////////////////////////////////
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
-  Form,
-  Item,
-  Input,
-  Label,
-  Text,
-} from 'native-base';
-import { createRef } from 'react';
+  View,
+  StyleSheet,
+  Alert,
+  Keyboard,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import {userCurrent, userSignIn} from '../../api/auth/auth.api';
+import {colors, spacing, typography} from '../../styles';
+
+import {Form, Item, Input, Label, Text} from 'native-base';
+import {createRef} from 'react';
 import Loader from '../../components/Loader';
-import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
-import { useSecureStorage } from '../../hooks/useSecureStorage';
-import { deleteItemAsync } from 'expo-secure-store';
+import {useAsyncStorage} from '../../hooks/useAsyncStorage';
+import {useSecureStorage} from '../../hooks/useSecureStorage';
+import {deleteItemAsync} from 'expo-secure-store';
+////////////////////////////////////////////////////
 
-//function return
-function LoginScreen({ navigation }) {
-  // declaring a variable for themes
-  const theme = themes.light;
+//Define function LoginScreen
+function LoginScreen({navigation}) {
+  // useState field
+  const [userName, setUsername] = useAsyncStorage('userName', ''); // use Async storage hook to store email
+  const [token, setToken] = useSecureStorage('userToken', ''); // use Secure storage hook to store email
+  const [userEmail, setUserEmail] = useState(userName); // use state for email input
 
-  // set up useState
-  const [userName, setUsername] = useAsyncStorage('userName', '');
-  const [token, setToken] = useSecureStorage('userToken', '');
-  const [userEmail, setUserEmail] = useState(userName);
-  //const [currentUser, setCurrentUser] = useState(userName);
-  const [userPassword, setUserPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const isFocused = useIsFocused();
+  const [userPassword, setUserPassword] = useState(''); // use state for password input
+  const [loading, setLoading] = useState(false); // use state for Loader activity indicator
 
-  //define passwordRef to autofil password
+  //define passwordRef
   const passwordInputRef = createRef();
 
+  //Use Effect:  Verify current
   useEffect(() => {
     if (token) {
-      setLoading(true);
-      userCurrent(token)
+      setLoading(true); // Enable loader
+      userCurrent(token) // Fetching current user api
         .then((response) => {
-          setLoading(false); // hide loader
-          setUsername(response.email);
+          setLoading(false); // Hide loader
+          setUsername(response.email); // Store email into Async storage
           navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
         .catch((err) => {
           setLoading(false); // hide loader
-          //removeAsyncStorage('userName');
-          deleteItemAsync('userToken'); // remove token from storage when logout
-          Alert.alert('User authentication', err.errors[0].description);
+
+          deleteItemAsync('userToken'); // remove token from storage when verify user fails
+          Alert.alert('User authentication', err.errors[0].description); // Show Alert message if verify user fails
         });
     }
-  }, [token]);
+  }, [token]); // dependency: token
 
+  // User Effect; autofil user name field
   useEffect(() => {
     if (userName) {
       setUserEmail(userName); // if userName exist , then autofil user name field
     }
   }, [userName]);
 
-  //function handle tap submit button
+  //Function handle tap Login button
   const signIn = async (email, password) => {
     if (!email) {
       Alert.alert('User authentication', 'Please fill email'); // check if email is entered
@@ -79,102 +79,113 @@ function LoginScreen({ navigation }) {
       password: password,
     })
       .then((response) => {
-        setToken(response.token);
+        setToken(response.token); // Store token in sercure storage
       })
       .catch((err) => {
         setLoading(false); // hide loader
-        Alert.alert('User authentication', err.errors[0].description); // show error
+        Alert.alert('User authentication', err.errors[0].description); // Show message error if Sign in fails
       });
   };
 
+  //Render elements
   return (
-    <SafeAreaView style={styles.safeArea} edges={['right', 'left', 'top', 'bottom']}>
-      <Loader loading={loading} />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView
+        style={styles.safeArea}
+        edges={['right', 'left', 'top', 'bottom']}>
+        {/*Use Loader*/}
+        <Loader loading={loading} />
 
-      <Text style={styles.welcome}>Welcome!</Text>
-      <Text style={styles.loginTextToStart}>Log in to get started.</Text>
-      {/* using forms for login */}
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-        <View>
-          <Form>
-            <Item style={styles.item} floatingLabel>
-              <Label style={styles.label}>Email</Label>
-              <Input
-                // placeholder=" Email"
-                style={styles.input}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={userEmail}
-                onChangeText={setUserEmail}
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-              />
-            </Item>
-            <Item style={styles.item} floatingLabel>
-              <Label style={styles.label}>Password</Label>
-              <Input
-                // placeholder=" Password"
-                style={styles.input}
-                value={userPassword}
-                onChangeText={setUserPassword}
-                secureTextEntry={true}
-                blurOnSubmit={false}
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-            </Item>
-          </Form>
-          <TouchableOpacity
-            style={styles.forgotPasswordButton}
-            onPress={() => {
-              navigation.navigate('ForgotPassword');
-            }}
-            transparent>
-            <Text
-              style={styles.forgetPWText}>
-              Forgot Password ?{' '}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => signIn(userEmail, userPassword)}>
-            <Text style={styles.buttonText}>Log in</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.signUpBottom}
-            transparent
-            onPress={() => {
-              navigation.navigate('Register');
-            }}>
-            <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
-          </TouchableOpacity>
-          {/* <TouchableOpacity
+        <Text style={styles.welcome}>Welcome!</Text>
+        <Text style={styles.loginTextToStart}>Log in to get started.</Text>
+        {/* Using forms for login */}
+        <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+          <View>
+            <Form>
+              {/*Email input field floating label*/}
+              <Item style={styles.item} floatingLabel>
+                <Label style={styles.label}>Email</Label>
+                <Input
+                  style={styles.input}
+                  autoCapitalize="none" // No auto capitaliza first character
+                  keyboardType="email-address" // Set up keyboard type
+                  returnKeyType="next" // Set up return key : Next
+                  blurOnSubmit={false}
+                  value={userEmail} // Show value for email input field
+                  onChangeText={setUserEmail} // Upate value for email input field
+                  onSubmitEditing={() =>
+                    passwordInputRef.current && passwordInputRef.current.focus()
+                  } // Focus on email field while editting
+                />
+              </Item>
+              {/*Password input field floating label*/}
+              <Item style={styles.item} floatingLabel>
+                <Label style={styles.label}>Password</Label>
+                <Input
+                  style={styles.input}
+                  value={userPassword} // Show value for password input field
+                  onChangeText={setUserPassword} // Upate value for password input field
+                  secureTextEntry={true} // Secure password typing
+                  blurOnSubmit={false}
+                  keyboardType="default"
+                  returnKeyType="next" // Set up return key : Next
+                  ref={passwordInputRef} // use Ref
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+              </Item>
+            </Form>
+            {/*Forgot password button*/}
+            <TouchableOpacity
+              style={styles.forgotPasswordButton}
+              // Navigate to Forgot password screen when user tap in
+              onPress={() => {
+                navigation.navigate('ForgotPassword');
+              }}
+              transparent>
+              <Text style={styles.forgetPWText}>Forgot Password ? </Text>
+            </TouchableOpacity>
+            {/*Login button*/}
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              // Call function Sign in when uer tap in
+              onPress={() => signIn(userEmail, userPassword)}>
+              <Text style={styles.buttonText}>Log in</Text>
+            </TouchableOpacity>
+            {/*Sign up an account button*/}
+            <TouchableOpacity
+              style={styles.signUpBottom}
+              transparent
+              // Navigate to register screen when user tap in
+              onPress={() => {
+                navigation.navigate('Register');
+              }}>
+              <Text style={styles.signUpText}>
+                Don't have an account? Sign up
+              </Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity
           transparent
           onPress={() => {
             navigation.navigate('DrawerRoute');
           }}>
           <Text style={styles.skipText}>Skip For Now</Text>
         </TouchableOpacity> */}
-        </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
-  )
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
+  );
 }
 
 // Stylesheet for the Log in
 const styles = StyleSheet.create({
-
   safeArea: {
     flex: 1,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   container: {
     padding: spacing.base,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   welcome: {
     fontSize: typography.fs8,
@@ -194,16 +205,16 @@ const styles = StyleSheet.create({
   forgotPasswordButton: {
     marginLeft: '60%',
     marginTop: spacing.smaller,
-    marginBottom: spacing.largest
+    marginBottom: spacing.largest,
   },
   forgetPWText: {
     fontWeight: typography.fwMedium,
     fontSize: typography.fs3,
-    color: 'blue'
+    color: 'blue',
   },
   signUpBottom: {
     alignSelf: 'center',
-    marginVertical: spacing.large
+    marginVertical: spacing.large,
   },
   signUpText: {
     color: colors.primary900,
@@ -217,12 +228,12 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.base,
     marginVertical: spacing.base,
     backgroundColor: colors.white,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: {width: 2, height: 2},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
   },
   input: {
-    marginHorizontal: spacing.base
+    marginHorizontal: spacing.base,
   },
   buttonContainer: {
     borderRadius: 10,
@@ -231,7 +242,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: colors.primary400,
     paddingVertical: spacing.small,
-    marginTop: spacing.largest
+    marginTop: spacing.largest,
   },
   buttonText: {
     alignSelf: 'center',
@@ -240,5 +251,5 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwBold,
   },
 });
-
+/////////////////////////////////
 export default LoginScreen;
