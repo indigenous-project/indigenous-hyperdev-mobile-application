@@ -1,6 +1,6 @@
 //LoginScreen module
 
-// import packages
+// Import field////////////////////////////////////////////
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -13,8 +13,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {userCurrent, userSignIn} from '../../api/auth/auth.api';
-import {themes, colors, spacing, typography} from '../../styles';
-import {useIsFocused} from '@react-navigation/native';
+import {colors, spacing, typography} from '../../styles';
 
 import {Form, Item, Input, Label, Text} from 'native-base';
 import {createRef} from 'react';
@@ -22,49 +21,48 @@ import Loader from '../../components/Loader';
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {deleteItemAsync} from 'expo-secure-store';
+////////////////////////////////////////////////////
 
-//function return
+//Define function LoginScreen
 function LoginScreen({navigation}) {
-  // declaring a variable for themes
-  const theme = themes.light;
+  // useState field
+  const [userName, setUsername] = useAsyncStorage('userName', ''); // use Async storage hook to store email
+  const [token, setToken] = useSecureStorage('userToken', ''); // use Secure storage hook to store email
+  const [userEmail, setUserEmail] = useState(userName); // use state for email input
 
-  // set up useState
-  const [userName, setUsername] = useAsyncStorage('userName', '');
-  const [token, setToken] = useSecureStorage('userToken', '');
-  const [userEmail, setUserEmail] = useState(userName);
-  //const [currentUser, setCurrentUser] = useState(userName);
-  const [userPassword, setUserPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const isFocused = useIsFocused();
+  const [userPassword, setUserPassword] = useState(''); // use state for password input
+  const [loading, setLoading] = useState(false); // use state for Loader activity indicator
 
-  //define passwordRef to autofil password
+  //define passwordRef
   const passwordInputRef = createRef();
 
+  //Use Effect:  Verify current
   useEffect(() => {
     if (token) {
-      setLoading(true);
-      userCurrent(token)
+      setLoading(true); // Enable loader
+      userCurrent(token) // Fetching current user api
         .then((response) => {
-          setLoading(false); // hide loader
-          setUsername(response.email);
+          setLoading(false); // Hide loader
+          setUsername(response.email); // Store email into Async storage
           navigation.replace('DrawerRoute'); //  if login already navigate to home page
         })
         .catch((err) => {
           setLoading(false); // hide loader
-          //removeAsyncStorage('userName');
-          deleteItemAsync('userToken'); // remove token from storage when logout
-          Alert.alert('User authentication', err.errors[0].description);
+
+          deleteItemAsync('userToken'); // remove token from storage when verify user fails
+          Alert.alert('User authentication', err.errors[0].description); // Show Alert message if verify user fails
         });
     }
-  }, [token]);
+  }, [token]); // dependency: token
 
+  // User Effect; autofil user name field
   useEffect(() => {
     if (userName) {
       setUserEmail(userName); // if userName exist , then autofil user name field
     }
   }, [userName]);
 
-  //function handle tap submit button
+  //Function handle tap Login button
   const signIn = async (email, password) => {
     if (!email) {
       Alert.alert('User authentication', 'Please fill email'); // check if email is entered
@@ -81,74 +79,83 @@ function LoginScreen({navigation}) {
       password: password,
     })
       .then((response) => {
-        setToken(response.token);
+        setToken(response.token); // Store token in sercure storage
       })
       .catch((err) => {
         setLoading(false); // hide loader
-        Alert.alert('User authentication', err.errors[0].description); // show error
+        Alert.alert('User authentication', err.errors[0].description); // Show message error if Sign in fails
       });
   };
 
+  //Render elements
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView
         style={styles.safeArea}
         edges={['right', 'left', 'top', 'bottom']}>
+        {/*Use Loader*/}
         <Loader loading={loading} />
 
         <Text style={styles.welcome}>Welcome!</Text>
         <Text style={styles.loginTextToStart}>Log in to get started.</Text>
-        {/* using forms for login */}
+        {/* Using forms for login */}
         <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
           <View>
             <Form>
+              {/*Email input field floating label*/}
               <Item style={styles.item} floatingLabel>
                 <Label style={styles.label}>Email</Label>
                 <Input
-                  // placeholder=" Email"
                   style={styles.input}
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  returnKeyType="next"
+                  autoCapitalize="none" // No auto capitaliza first character
+                  keyboardType="email-address" // Set up keyboard type
+                  returnKeyType="next" // Set up return key : Next
                   blurOnSubmit={false}
-                  value={userEmail}
-                  onChangeText={setUserEmail}
+                  value={userEmail} // Show value for email input field
+                  onChangeText={setUserEmail} // Upate value for email input field
                   onSubmitEditing={() =>
                     passwordInputRef.current && passwordInputRef.current.focus()
-                  }
+                  } // Focus on email field while editting
                 />
               </Item>
+              {/*Password input field floating label*/}
               <Item style={styles.item} floatingLabel>
                 <Label style={styles.label}>Password</Label>
                 <Input
-                  // placeholder=" Password"
                   style={styles.input}
-                  value={userPassword}
-                  onChangeText={setUserPassword}
-                  secureTextEntry={true}
+                  value={userPassword} // Show value for password input field
+                  onChangeText={setUserPassword} // Upate value for password input field
+                  secureTextEntry={true} // Secure password typing
                   blurOnSubmit={false}
                   keyboardType="default"
-                  ref={passwordInputRef}
+                  returnKeyType="next" // Set up return key : Next
+                  ref={passwordInputRef} // use Ref
                   onSubmitEditing={Keyboard.dismiss}
                 />
               </Item>
             </Form>
+            {/*Forgot password button*/}
             <TouchableOpacity
               style={styles.forgotPasswordButton}
+              // Navigate to Forgot password screen when user tap in
               onPress={() => {
                 navigation.navigate('ForgotPassword');
               }}
               transparent>
               <Text style={styles.forgetPWText}>Forgot Password ? </Text>
             </TouchableOpacity>
+            {/*Login button*/}
             <TouchableOpacity
               style={styles.buttonContainer}
+              // Call function Sign in when uer tap in
               onPress={() => signIn(userEmail, userPassword)}>
               <Text style={styles.buttonText}>Log in</Text>
             </TouchableOpacity>
+            {/*Sign up an account button*/}
             <TouchableOpacity
               style={styles.signUpBottom}
               transparent
+              // Navigate to register screen when user tap in
               onPress={() => {
                 navigation.navigate('Register');
               }}>
@@ -244,5 +251,5 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwBold,
   },
 });
-
+/////////////////////////////////
 export default LoginScreen;
