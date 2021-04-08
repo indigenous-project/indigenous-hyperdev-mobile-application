@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {colors, spacing} from '../styles';
+import {colors} from '../styles';
 import OrganizationsCard from './OrganizationsCard';
 
 export default function OrganizationListViews(props) {
@@ -30,6 +30,7 @@ export default function OrganizationListViews(props) {
   };
 
   return (
+    //to display the list of organizations
     <ScrollView
       style={styles.scrollView}
       refreshControl={
@@ -39,15 +40,19 @@ export default function OrganizationListViews(props) {
           tintColor={colors.primary900}
         />
       }>
+      {/* to get each array from organization using map function  */}
       {data
         ? data.map((organization) => (
-            <TouchableOpacity
+            <TouchableOpacity // navigate to organization detail screen 
               onPress={() =>
                 navigation.navigate('Organization Detail', {
                   organization: organization,
+                  token: props.token
                 })
               }
               key={organization._id}>
+                
+              {/*organization card component */}
               <OrganizationsCard
                 id={organization._id}
                 name={organization.name}
@@ -66,5 +71,6 @@ export default function OrganizationListViews(props) {
 }
 
 const styles = StyleSheet.create({
+  //styling for the scrollView
   scrollView: {marginTop: 50},
 });

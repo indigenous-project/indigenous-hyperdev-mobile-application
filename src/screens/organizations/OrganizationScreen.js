@@ -1,27 +1,26 @@
 //OrganizationScreen module
 
-// import packages
+// import packages and files
 import React, {useEffect, useState} from 'react';
 import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {spacing, themes} from '../../styles';
-import OrganizationChips from '../../components/OrganizationChips';
-import OrganizationListViews from '../../components/OrganizationListViews';
-import MapViews from '../../components/MapViews';
 import {View} from 'native-base';
+import {useIsFocused} from '@react-navigation/core';
 import SwitchSelector from 'react-native-switch-selector';
-
+import FocusedStatusBar from '../../components/FocusedStatusBar';
+import OrganizationListViews from '../../components/OrganizationListViews';
+import OrganizationChips from '../../components/OrganizationChips';
+import MapViews from '../../components/MapViews';
 import {organizationGetList} from '../../api/organizations/organizations.api';
 import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useIsFocused} from '@react-navigation/core';
 import {useOrganization} from '../../contexts/organizationContext';
 
 //function return
 function OrganizationScreen({navigation}) {
-  const [stateSelector, setStateSelector] = useState(null);
-  const [currentUser, token] = useCurrentUser();
-  const [organizations, setOrganizations] = useOrganization();
+  const [stateSelector, setStateSelector] = useState(null); // to set the value for the view in swtich selector
+  const [currentUser, token] = useCurrentUser(); // to get the token of the user
+  const [organizations, setOrganizations] = useOrganization(); // to get the organization data from the database
   const isFocused = useIsFocused();
 
   //options for switch selectors
@@ -56,6 +55,7 @@ function OrganizationScreen({navigation}) {
         style={{paddingVertical: 10}}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
+        {/* OrgainzationChips component */}
         <OrganizationChips category="Categories" />
         <OrganizationChips category="Indigenous" />
         <OrganizationChips category="Top-Rated" />
@@ -88,15 +88,17 @@ function OrganizationScreen({navigation}) {
             }
           }}
         />
+        {/*Display the oraganizations in list view/map view */}
       </View>
       {stateSelector == 1 ? (
-        // List View
+        // ListView component
         <OrganizationListViews
           organizationList={organizations}
           navigationProps={navigation}
+          token={token}
         />
       ) : stateSelector == 2 ? (
-        //  Map View
+        // MapView component
         <MapViews organizationList={organizations} />
       ) : null}
     </SafeAreaView>
