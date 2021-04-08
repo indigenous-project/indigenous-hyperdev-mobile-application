@@ -47,6 +47,7 @@ export default function OrganizationListViews(props) {
               onPress={() =>
                 navigation.navigate('Organization Detail', {
                   organization: organization,
+                  token: props.token
                 })
               }
               key={organization._id}>

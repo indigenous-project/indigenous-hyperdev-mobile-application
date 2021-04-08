@@ -95,6 +95,7 @@ function OrganizationScreen({navigation}) {
         <OrganizationListViews
           organizationList={organizations}
           navigationProps={navigation}
+          token={token}
         />
       ) : stateSelector == 2 ? (
         // MapView component
