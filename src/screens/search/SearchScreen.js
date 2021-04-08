@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableWithoutFeedback, Keyboard} from 'react-native';
-import {themes, colors, spacing, typography} from '../../styles';
+import {themes, colors} from '../../styles';
 import SearchList from '../../components/SearchList';
-import {Header, Item, Input, Icon, Left, Button, Right} from 'native-base';
-import SearchBar from '../../components/SearchBar';
+import {Header, Item, Input, Icon, Left, Button} from 'native-base';
 import {useDiscussion} from '../../contexts/discussionContext';
 import {useEffect} from 'react/cjs/react.development';
 import {useEvent} from '../../contexts/eventContext';
@@ -14,8 +13,6 @@ import {useService} from '../../contexts/serviceContext';
 import {useOrganization} from '../../contexts/organizationContext';
 
 function SearchScreen({navigation}) {
-  const theme = themes.light;
-
   const [search, setSearch] = useState('');
   const [searchDiscussionArray, setSearchDiscussionArray] = useState([]);
   const [searchEventArray, setSearchEventArray] = useState([]);
