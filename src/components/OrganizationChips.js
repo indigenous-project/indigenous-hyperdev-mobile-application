@@ -1,26 +1,31 @@
 //OrganizationChips module
 
 // import packages
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Chip } from 'react-native-paper';
-import { colors, spacing, themes, typography } from '../styles';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Chip} from 'react-native-paper';
+import {colors, spacing, themes, typography} from '../styles';
 
 const OrganizationChips = (props) => {
-  const { chipPressed } = props;
-  //To change the style after selection
+  //to change the style after selection
   const [selected, setSelected] = useState(false);
   const [textColor, setTextColor] = useState();
   const [style, setStyle] = useState();
 
+  //to load the styles for the chips
   useEffect(() => {
     if (selected) {
+      //set the text color of the chip if selected
       setTextColor(colors.white);
+      //set the style of the chip if selected
       setStyle({
         backgroundColor: themes.light.primaryColor,
       });
     } else {
+      //set the text of the chip
       setTextColor(themes.light.primaryColor);
+
+      //set the style of the chip
       setStyle({
         backgroundColor: themes.light.inverseTextColor,
         borderColor: themes.light.primaryColor,
@@ -32,12 +37,10 @@ const OrganizationChips = (props) => {
   // when the chip is selected this method is invoked.
   const chipsSelected = () => {
     setSelected(!selected);
-    if (chipPressed) {
-      chipPressed(selected);
-    }
   };
 
   return (
+    //display the chips
     <View style={styles.chipsView}>
       <Chip
         style={style}
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: typography.fs2,
-    fontWeight: typography.fwMedium
+    fontWeight: typography.fwMedium,
   },
 });
 

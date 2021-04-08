@@ -1,25 +1,32 @@
 //OrganizationDetail Screen
 
 //import packages
-import React, { useLayoutEffect } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, Linking, TouchableOpacity } from 'react-native';
-import { Button, Text, View } from 'native-base';
+import React, {useLayoutEffect} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
+import {Text, View} from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import OrganizationDetailCard from '../../components/OrganizationDetailCard';
 import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTimeCard';
 import OrganizationDetailsContactCard from '../../components/OrganizationDetailsContactCard';
 import OrganizationShareHeader from '../../components/OrganizationShareHeader';
-import { colors, spacing, typography } from '../../styles';
+import {colors, spacing, typography} from '../../styles';
 
-export default function OrganizationDetailScreen({ navigation, route }) {
+export default function OrganizationDetailScreen({navigation, route}) {
+  //to get the organization detail
   const organization = route.params.organization;
 
-  //function handle when user tap on number that invoke call option
+  //function to handle when user taps on number that invoke call option
   function handlePhone() {
     Linking.openURL(`tel:${organization.contact.phone}`);
   }
 
-  //function handle when user tap on link that navigate to google map with keyword search location near my location
+  //function to handle when user taps on link that navigate to google map with keyword search location near my location
   function handleGoLink() {
     Linking.openURL(
       `https://maps.google.com/?q=${organization.contact.address
@@ -31,30 +38,31 @@ export default function OrganizationDetailScreen({ navigation, route }) {
   useLayoutEffect(() => {
     organization
       ? navigation.setOptions({
-        // headerTitle: organization.name,
-        headerRight: () => (
-          <OrganizationShareHeader shareData={organization} />
-        ),
-      })
+          headerRight: () => (
+            <OrganizationShareHeader shareData={organization} />
+          ),
+        })
       : null;
   }, [navigation, organization]);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
+
       <ScrollView>
-        {/* Detail card */}
+        {/* Component of Organization Detail card */}
         <OrganizationDetailCard
           title={organization.name}
-          // reviews={organization.reviews}
+          reviews={organization.reviews}
           decs={organization.description}
           address={organization.contact.address}
           image={organization.medias}
         />
 
-        {/* timings */}
+        {/* Component of Organization opening and closing details */}
         <OrganizationDetailsTimeCard openHours={organization.openHours} />
 
-        {/* contact details */}
+        {/* Component of Organization contact details */}
         <OrganizationDetailsContactCard
           phone={organization.contact.phone}
           website={organization.contact.website}
@@ -65,16 +73,17 @@ export default function OrganizationDetailScreen({ navigation, route }) {
 
       {/* buttons */}
       <View style={styles.buttonsGroup}>
+
         {/* call button */}
         <TouchableOpacity style={styles.buttonContainer} onPress={handlePhone}>
           <Text style={styles.buttonText}>Call</Text>
         </TouchableOpacity>
+
         {/* get direction button */}
         <TouchableOpacity style={styles.buttonContainer} onPress={handleGoLink}>
           <Text style={styles.buttonText}>Get Direction</Text>
         </TouchableOpacity>
       </View>
-
     </SafeAreaView>
   );
 }

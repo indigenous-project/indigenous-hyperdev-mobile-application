@@ -2,28 +2,27 @@
 
 //import packages
 import React from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import {Linking, StyleSheet, Text, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { spacing, themes, typography } from '../styles';
-import Hyperlink from 'react-native-hyperlink';
+import {spacing, themes, typography} from '../styles';
 
-const OrganizationDetailsContactCard = props => {
-  //function handle when user tap on number that invoke call option
+const OrganizationDetailsContactCard = (props) => {
+  //function to handle when user taps on number that invokes call option
   function handlePhone() {
     props.phone !== undefined ? Linking.openURL(`tel:${props.phone}`) : null;
   }
 
-  //function handle when user tap on website that navigate to default browser
+  //function to handle when user taps on website that navigate to default browser
   function handleWebsite() {
     props.website !== undefined
       ? Linking.openURL(`https://${props.website}`)
       : null;
   }
-  //function handle when user tap on website that navigate to default browser
+  //function to handle when user taps on email
   function handleEmail() {
     props.email !== undefined ? Linking.openURL(`mailto:${props.email}`) : null;
   }
-  //function handle when user tap on website that navigate to default browser
+  //function handle when user tap on facebook that navigate to default browser
   function handleFacebook() {
     props.facebook !== undefined
       ? Linking.openURL(`https://facebook.com/${props.facebook}`)
@@ -31,7 +30,8 @@ const OrganizationDetailsContactCard = props => {
   }
   return (
     <View style={styles.contactView}>
-      {props.phone !== undefined ?
+      {/* to display phone number */}
+      {props.phone !== undefined ? (
         <View style={styles.view}>
           <MaterialCommunityIcons
             style={styles.icon}
@@ -43,9 +43,11 @@ const OrganizationDetailsContactCard = props => {
           <Text style={styles.phone} onPress={handlePhone}>
             {props.phone}
           </Text>
-        </View> : null}
+        </View>
+      ) : null}
 
-      {props.website !== undefined ?
+      {/* to display website */}
+      {props.website !== undefined ? (
         <View style={styles.view}>
           <MaterialCommunityIcons
             style={styles.icon}
@@ -54,12 +56,15 @@ const OrganizationDetailsContactCard = props => {
             color={themes.light.primaryColor}
           />
           <Text style={styles.textView}>Website:</Text>
+          {/* calls the handleEmail function when the user clicks on the website */}
           <Text style={styles.website} onPress={handleWebsite}>
             {props.website}
           </Text>
-        </View> : null}
+        </View>
+      ) : null}
 
-      {props.email !== undefined ?
+      {/* to display email */}
+      {props.email !== undefined ? (
         <View style={styles.view}>
           <MaterialCommunityIcons
             style={styles.icon}
@@ -68,12 +73,15 @@ const OrganizationDetailsContactCard = props => {
             color={themes.light.primaryColor}
           />
           <Text style={styles.textView}>Email:</Text>
+          {/* calls the handleEmail function when the user clicks on the email */}
           <Text style={styles.email} onPress={handleEmail}>
             {props.email}
           </Text>
-        </View> : null}
+        </View>
+      ) : null}
 
-      {props.facebook !== undefined ?
+      {/* to display facebook link */}
+      {props.facebook !== undefined ? (
         <View style={styles.view}>
           <MaterialCommunityIcons
             style={styles.icon}
@@ -82,10 +90,12 @@ const OrganizationDetailsContactCard = props => {
             color={themes.light.primaryColor}
           />
           <Text style={styles.textView}>Facebook:</Text>
+          {/* calls the handleFacebook function when the user clicks on the facebook link */}
           <Text style={styles.facebook} onPress={handleFacebook}>
             {props.facebook}
           </Text>
-        </View> : null}
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -93,13 +103,14 @@ const OrganizationDetailsContactCard = props => {
 export default OrganizationDetailsContactCard;
 
 const styles = StyleSheet.create({
+  //styling on Organization contact View
   contactView: {
     shadowOpacity: 0,
     padding: spacing.base,
     backgroundColor: themes.light.inverseTextColor,
     marginBottom: spacing.small,
   },
-  icon: { marginRight: spacing.small, bottom: 4 },
+  icon: {marginRight: spacing.small, bottom: 4},
   view: {
     flexDirection: 'row',
     color: themes.light.primaryColor,

@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function MapViews(props) {
   const navigation = useNavigation();
-  let organizations = props.organizationList;
+  let organizations = props.organizationList; //to get the organization detail
 
   //to get the latitutde
   function getLat(data) {
@@ -30,6 +30,7 @@ export default function MapViews(props) {
     return longitude;
   }
 
+  //get the dimensions of the device to calculate the aspect ratio
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const aspectRatio = windowWidth / windowHeight;
@@ -42,21 +43,29 @@ export default function MapViews(props) {
     desc: props.description,
   };
   return (
+    //to dipslay map
     <View style={styles.container}>
       <MapView
         style={styles.map}
         showsUserLocation={true}
-        // followsUserLocation={true}
         showsTraffic={true}
         zoomLevel={10}
+        showsCompass={true}
         loadingEnabled={true}
+        showsBuildings={true}
+        showsTraffic={true}
+        showsIndoors={true}
+        liteMode={false}
         region={{
           latitude: coordinates.lat,
           longitude: coordinates.long,
           latitudeDelta: latitudeDelta,
           longitudeDelta: latitudeDelta * aspectRatio,
         }}>
-        {organizations.map((org) => (
+        {/* to display the organizations in map using marker */}
+        {organizations.map((
+          org, // map function to get the values of each organization
+        ) => (
           <Marker
             key={org._id}
             title={org.name}
@@ -64,11 +73,13 @@ export default function MapViews(props) {
               latitude: org.coords.lat,
               longitude: org.coords.long,
             }}
-            onPress={() =>
+            //to navigate to organization detail screen when user clicks on the marker
+            onCalloutPress={() =>
               navigation.navigate('Organization Detail', {
                 organization: org,
               })
             }>
+            {/* icon for marker  */}
             <MaterialCommunityIcons
               name="map-marker"
               size={30}
@@ -84,6 +95,7 @@ export default function MapViews(props) {
 
 const styles = StyleSheet.create({
   safeArea: {flex: spacing.hairline},
+  // styling for the map
   container: {
     ...StyleSheet.absoluteFillObject,
     top: 110,
