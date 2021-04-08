@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet} from 'react-native';
 import { colors, typography, spacing } from '../styles';
 import { decodeHTML } from '../modules/decode.text';
 import { WebView } from 'react-native-webview';
-import OrganizationChips from '../components/OrganizationChips';
+
 
 //card to display News
 export default function NewsCard(props) {
   const NUM_OF_LINES = 2;
+   // Render element
   return (
     <View style={styles.newsCard}>
       <View style={styles.newsContent}>
@@ -32,6 +33,8 @@ export default function NewsCard(props) {
     </View>
   );
 }
+
+// Stylesheet for JobCard
 const styles = StyleSheet.create({
   //News card style
   newsCard: {

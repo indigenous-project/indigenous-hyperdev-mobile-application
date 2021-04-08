@@ -6,7 +6,9 @@ import { Text, StyleSheet, View } from 'react-native';
 import { spacing, colors, typography } from '../styles';
 import { none } from '../styles/spacing';
 
+//card to display Job List
 const JobListCard = props => {
+   // Render element
   return (
     <View style={styles.cardsContainer}>
       <Text numberOfLines={1} style={styles.cardTitle}>{props.title}</Text>
@@ -19,6 +21,7 @@ const JobListCard = props => {
 
 export default JobListCard;
 
+// Stylesheet for JobListCard
 const styles = StyleSheet.create({
   //service card style
   cardsContainer: {

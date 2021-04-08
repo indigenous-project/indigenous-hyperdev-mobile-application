@@ -1,21 +1,26 @@
+// NewsShareHeader Component
+
+// Import Packages
 import React from 'react';
 import {View, TouchableOpacity, Share, Alert} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {eventShare} from '../api/events/events.api';
 import {useCurrentUser} from '../contexts/currentUserContext';
 import {formatDate, formatDateByTime} from '../modules/date.format';
 import {typography, themes} from '../styles';
-import { postShare } from '../api/news/news.api';
+import {postShare} from '../api/news/news.api';
 
+//card to display JobShareHeader
+
+// Method region
 const ShareHeader = ({shareData}) => {
   const [currentUser, token] = useCurrentUser();
   const shareCountHandle = () => {
     postShare(token, shareData._id)
-      .then((response) => {
-          console.log(response)
+      .then(response => {
+        console.log(response);
         if (response) Alert.alert('The news is shared');
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
   const onShare = async () => {
     try {
@@ -23,12 +28,9 @@ const ShareHeader = ({shareData}) => {
         message: `${shareData.title}.\nDate: ${formatDate(
           shareData.lastModifiedDate,
         )}.`,
-        // url: shareData.medias[0].path,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          // console.log(result.activityType);
-          // shared with activity type of result.activityType
           shareCountHandle();
         } else {
           // shared
@@ -42,7 +44,9 @@ const ShareHeader = ({shareData}) => {
       Alert.alert(error.message);
     }
   };
+  // End method region
 
+  // Render element
   return (
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={onShare}>
