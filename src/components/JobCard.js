@@ -1,9 +1,13 @@
+// Job Card Component
+
+// Import Packages
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors, typography, spacing } from '../styles';
 
 //card to display Job News
 export default function JobCard(props) {
+    // Render element
     return (
         <View style={styles.JobCard}>
             <Text numberOfLines={1} style={styles.cardTitle}>{props.title}</Text>
@@ -14,8 +18,8 @@ export default function JobCard(props) {
     );
 }
 
+// Stylesheet for JobCard
 const styles = StyleSheet.create({
-
     //job card styles
     JobCard: {
         borderRadius: spacing.small,

@@ -65,6 +65,10 @@ If you have already installed Node on your system, make sure it is Node 10 or ne
 
 [Documentation](https://reactnative.dev/docs/environment-setup)
 
+##### Required environment variables for AWS service secret keys file
+
+We are using AWS services so there are some secret keys that it is not published in here. Please contact to us to get the API keys, then put the file in the root directory before testing the project.
+
 ## 5. Steps to Run:
 1. Clone the repo
 ```

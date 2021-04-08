@@ -2,14 +2,12 @@
 
 // import packages
 import React from 'react';
-
 import {createStackNavigator} from '@react-navigation/stack';
 import NewsScreen from './NewsScreen';
 import NewsDetailScreen from './NewsDetailScreen';
 import JobDetailScreen from './JobDetailScreen';
 import SurveysListScreen from './SurveysListScreen';
 import JobListScreen from './JobListScreen';
-
 import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
@@ -17,15 +15,15 @@ import SearchStack from '../search/SearchStack';
 
 const News = createStackNavigator();
 const theme = themes.light;
+
 //function return
 function NewsStack({navigation}) {
   return (
+    /* Navigation logic and header styles for News Screen */
     <News.Navigator
       screenOptions={{
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text colors
-        // implement hambuger menu on the left of the header
-        // headerLeft: () => <HambugerMenuHeader navigationProps={navigation} />,
         headerRight: () => (
           <RightHeaderButton navigationProps={navigation} section="News" />
         ), // implement right header buttons: search, notification
@@ -39,6 +37,7 @@ function NewsStack({navigation}) {
         component={NewsScreen}
       />
 
+      {/* Navigation logic and header styles for News Detail Screen */}
       <News.Screen
         name="News Article"
         component={NewsDetailScreen}
@@ -49,6 +48,8 @@ function NewsStack({navigation}) {
           headerTintColor: theme.primaryColor,
         }}
       />
+
+      {/* Navigation logic and header styles for Job Detail Screen */}
       <News.Screen
         name="Job Detail"
         component={JobDetailScreen}
@@ -58,6 +59,8 @@ function NewsStack({navigation}) {
           headerTintColor: theme.primaryColor,
         }}
       />
+
+      {/* Navigation logic and header styles for Surveys List Screen */}
       <News.Screen
         name="Surveys"
         component={SurveysListScreen}
@@ -67,6 +70,8 @@ function NewsStack({navigation}) {
           headerTintColor: theme.primaryColor,
         }}
       />
+
+      {/* Navigation logic and header styles for Jobs List Screen */}
       <News.Screen
         name="Jobs List"
         component={JobListScreen}
@@ -76,6 +81,8 @@ function NewsStack({navigation}) {
           headerTintColor: theme.primaryColor,
         }}
       />
+
+      {/* Navigation logic and header styles for Search News  */}
       <News.Screen
         name="SearchStackNews"
         component={SearchStack}

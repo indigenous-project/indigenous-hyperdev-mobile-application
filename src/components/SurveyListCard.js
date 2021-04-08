@@ -2,23 +2,28 @@
 
 // import packages
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { spacing, colors, themes, typography } from '../styles';
-import { Thumbnail } from 'native-base';
+import {Text, StyleSheet, View} from 'react-native';
+import {spacing, colors, typography} from '../styles';
+import {Thumbnail} from 'native-base';
 
+//card to display Survey list
 const SurveyListCard = props => {
+  // Render element
   return (
     <View style={styles.cardsContainer}>
       <View style={styles.content}>
         <View style={styles.thumbnail}>
-          <Thumbnail style={{ borderRadius: 10, }}
+          <Thumbnail
+            style={{borderRadius: 10}}
             square
             large
             source={require('../testImages/demoPic.png')}></Thumbnail>
         </View>
 
-        <View style={{ width: 250, marginRight: 20 }}>
-          <Text numberOfLines={2} style={styles.cardTitle}>{props.title}</Text>
+        <View style={{width: 250, marginRight: 20}}>
+          <Text numberOfLines={2} style={styles.cardTitle}>
+            {props.title}
+          </Text>
           <Text style={styles.date}>
             {props.startDate} - {props.endDate}{' '}
           </Text>
@@ -30,6 +35,7 @@ const SurveyListCard = props => {
 
 export default SurveyListCard;
 
+// Stylesheet for JobCard
 const styles = StyleSheet.create({
   //service card style
   cardsContainer: {
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontWeight: typography.fwMedium,
     fontSize: typography.fs3,
-    lineHeight: typography.lh3
+    lineHeight: typography.lh3,
   },
   date: {
     marginVertical: spacing.smaller,
