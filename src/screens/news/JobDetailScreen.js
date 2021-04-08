@@ -1,40 +1,39 @@
-// import statements
+// Job Detail Screen
 
-import React, { useLayoutEffect } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, Button } from 'native-base';
-import { decodeHTML } from '../../modules/decode.text';
-import { WebView } from 'react-native-webview';
-import { colors, spacing, themes, typography } from '../../styles';
-import JobShareHeader from '../../components/JobsShareHeader'
+// Import statements
+import React, {useLayoutEffect} from 'react';
+import {Linking, StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Text, Button} from 'native-base';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
+import {colors, spacing, typography} from '../../styles';
+import JobShareHeader from '../../components/JobsShareHeader';
 
 // function and return
-
-function JobDetailScreen({ navigate, route, navigation }) {
-
-  const token = route.params.token;
+function JobDetailScreen({route, navigation}) {
   const job = route.params.job;
 
   //useLayoutEffect to get title and share button
   useLayoutEffect(() => {
     job
       ? navigation.setOptions({
-        // headerTitle: job.title,
-        headerRight: () => <JobShareHeader shareData={job} />,
-      })
+          // headerTitle: job.title,
+          headerRight: () => <JobShareHeader shareData={job} />,
+        })
       : null;
   }, [navigation, job]);
 
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }} edges={['right', 'left']}>
+    <SafeAreaView
+      style={{flex: 1, backgroundColor: colors.white}}
+      edges={['right', 'left']}>
+      {/* Extracting the data using the route from the job array and displaying the required elements */}
       <View style={styles.headerStyle}>
         <Text style={styles.title}>{job.title}</Text>
         <Text style={styles.subHeading}>{job.subTitle}</Text>
         <Text style={styles.subHeading}>{job.type}</Text>
       </View>
-      {/* <View style={styles.jobView}> */}
       <WebView
         style={styles.description}
         originWhitelist={['*']}
@@ -44,7 +43,7 @@ function JobDetailScreen({ navigate, route, navigation }) {
           )}</section>`,
         }}
       />
-      {/* </View> */}
+      {/* Displaying and logic of Send Email Button */}
       <View style={styles.buttonsGroup}>
         <Button
           title="Send Email"
@@ -59,7 +58,9 @@ function JobDetailScreen({ navigate, route, navigation }) {
   );
 }
 
+/* Stylesheet for NewsDetailScreen */
 const styles = StyleSheet.create({
+  //container style
   headerStyle: {
     backgroundColor: colors.white,
     paddingHorizontal: spacing.base,
@@ -85,10 +86,11 @@ const styles = StyleSheet.create({
   },
   description: {
     padding: spacing.base,
-    width: "95%",
-    alignSelf: 'center'
+    width: '95%',
+    alignSelf: 'center',
   },
 
+  // Styling for Send Email Button
   buttonsGroup: {
     flexDirection: 'row',
     width: '100%',

@@ -1,9 +1,13 @@
+// Survey Card Component
+
+// Import Packages
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Linking} from 'react-native';
 import {colors, typography, spacing} from '../styles';
 
 //card to display New Survey Available
 export default function SurveyCard(props) {
+  // Render element
   return (
     <View style={styles.newSurvey}>
       <Image
@@ -25,6 +29,8 @@ export default function SurveyCard(props) {
     </View>
   );
 }
+
+// Stylesheet for JobCard
 const styles = StyleSheet.create({
   //survey card style
   newSurvey: {
