@@ -15,7 +15,9 @@ function NewsProvider(props) {
     if (token)
       postGetList(token)
         .then(setNews)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, props.isFocused, setNews]);
   return <NewsContext.Provider value={[news, setNews]} {...props} />;
 }

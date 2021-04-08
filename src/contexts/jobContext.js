@@ -15,7 +15,9 @@ function JobProvider(props) {
     if (token)
       jobGetList(token)
         .then(setJobs)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, props.isFocused, setJobs]);
   return <JobContext.Provider value={[jobs, setJobs]} {...props} />;
 }

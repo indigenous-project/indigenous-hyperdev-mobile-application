@@ -14,7 +14,9 @@ function CurrentUserProvider(props) {
     if (token)
       userCurrent(token)
         .then(setCurrentUser)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, setCurrentUser]);
   return (
     <CurrentUserContext.Provider
