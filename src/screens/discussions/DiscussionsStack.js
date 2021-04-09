@@ -35,12 +35,13 @@ function DiscussionsStack({navigation, route}) {
         headerStyle: {backgroundColor: theme.primaryColor}, //header background
         headerTintColor: theme.inverseTextColor, // text color
       }}
-      initialRouteName="Discussions">
+      initialRouteName="DiscussionsScreen">
       {isRead ? ( // check if user has read the disclaimer then go to discussion Screen
         <Discussion.Screen
-          name="Discussions"
+          name="DiscussionScreen"
           component={DiscussionScreen}
           options={{
+            headerTitle: 'Discussions',
             headerLeft: () => (
               <HambugerMenuHeader navigationProps={navigation} /> //Hambuger Menu
             ),
