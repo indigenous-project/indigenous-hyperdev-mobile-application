@@ -3,7 +3,6 @@
 // import packages
 import React, { useState, useEffect } from 'react';
 import {
-  Linking,
   ScrollView,
   View,
   Text,
@@ -23,7 +22,6 @@ import { serviceGetList } from '../../api/services/services.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';
 import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
 import { removeAsyncStorage, useAsyncStorage } from '../../hooks/useAsyncStorage';
-import AsyncStorage from '@react-native-community/async-storage';
 import { useIsFocused } from '@react-navigation/core';
 
 //function return
@@ -53,10 +51,12 @@ function ServiceScreen({ navigation }) {
     setStoreLastOpen(uniqueArr);
   };
 
+  //get only categories those are listed as "general"
   const categoriesGeneral = categories.filter(
     (item) => item.type === 'general',
   );
 
+  //useEffect to get the services from API
   useEffect(() => {
     serviceGetList(token)
       .then(setServices)
@@ -65,11 +65,12 @@ function ServiceScreen({ navigation }) {
       );
   }, [token]);
 
+  //toggle between size of categories to show "more" or "less" categories
   if (categoriesExpanded == false) {
     categoriesGeneral.length = 6;
   }
 
-  if (!services) return null;
+  //renderItem to set each category in component
   function renderItem({ item }) {
     return categoriesGeneral ? (
       <View
@@ -83,6 +84,7 @@ function ServiceScreen({ navigation }) {
             setSelectedServiceCategory(item);
             setModalVisible(true);
           }}>
+          {/* ServicesCategoryButton Component */}
           <ServicesCategoryButton
             icon={item.icon}
             name={item.name}
@@ -92,6 +94,9 @@ function ServiceScreen({ navigation }) {
       </View >
     ) : null;
   }
+
+  if (!services) return null;
+  //return Function
   return (
     <SafeAreaView edges={['right', 'left']} style={{ flex: 1 }}>
       <FocusedStatusBar barStyle="light-content" />
@@ -132,6 +137,7 @@ function ServiceScreen({ navigation }) {
                   })
                 }
                 key={service._id}>
+                {/* ServicesCarrd Component */}
                 <ServicesCard
                   title={service.name}
                   name={service.contact.providerName}
@@ -140,10 +146,11 @@ function ServiceScreen({ navigation }) {
                 />
               </TouchableOpacity>
             ))}
-
           </ScrollView>
         </View>
         : null}
+
+      {/* Modal to show services by selected category */}
       {selectedServiceCategory ? (
         <Modal
           animationType="slide"
@@ -184,6 +191,7 @@ function ServiceScreen({ navigation }) {
                     })
                   }}
                   key={service._id}>
+                  {/* ServicesCard Component */}
                   <ServicesCard
                     title={service.name}
                     name={service.contact.providerName}

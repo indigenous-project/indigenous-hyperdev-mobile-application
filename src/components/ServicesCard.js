@@ -5,6 +5,7 @@ import React from 'react';
 import { Text, StyleSheet, View, Image } from 'react-native';
 import { spacing, colors, themes, typography } from '../styles';
 
+//card to display service information
 const ServicesCard = (props) => {
   return (
     <View style={styles.cardsContainer}>

@@ -113,7 +113,7 @@ export default function OrganizationDetailScreen({ navigation, route }) {
           <Text style={styles.heading}>Rate your experience:</Text>
           <AirbnbRating
             count={5}
-            size={20}
+            size={25}
             defaultRating={0}
             onFinishRating={(rate) => {
               setRating(rate)

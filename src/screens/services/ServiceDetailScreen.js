@@ -11,8 +11,7 @@ import {
 import { spacing, colors, typography } from '../../styles';
 import ServiceDetailCard from '../../components/ServiceDetailCard';
 
-const ServiceDetailScreen = ({ navigate, route }) => {
-    // console.log(props)
+const ServiceDetailScreen = ({ route }) => {
     const token = route.params.token;
     const serviceId = route.params.name;
 
@@ -26,10 +25,12 @@ const ServiceDetailScreen = ({ navigate, route }) => {
         Linking.openURL(`tel:${serviceId.contact.contactPhone}`);
     };
 
+    //return serviceDetails by selected service
     if (!serviceId) return null;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }} edges={['right', 'left']}>
             <ScrollView style={styles.container}>
+                {/* ServiceDetailCard Component */}
                 <ServiceDetailCard
                     name={serviceId.name}
                     serviceProviderName={serviceId.contact.providerName}
@@ -42,11 +43,14 @@ const ServiceDetailScreen = ({ navigate, route }) => {
                 />
             </ScrollView>
 
+            {/* buttons to call or sending email to service provider */}
             <View style={styles.buttonsGroup}>
+                {/* buttons to call */}
                 <TouchableOpacity onPress={handlePhoneLink}
                     style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Call</Text>
                 </TouchableOpacity>
+                {/* buttons to sendi */}
                 <TouchableOpacity onPress={handleEmailLink}
                     style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Email</Text>
