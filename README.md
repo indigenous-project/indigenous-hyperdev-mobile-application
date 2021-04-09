@@ -44,6 +44,7 @@ Indigenous-Bridge is an iOS app designed and developed for indigenous people who
 - [ ] Organization rating.
 - [ ] Forgot password.
 - [ ] Serve server thru HTTPS
+- [ ] Offline mode
 
 ## 4. Setting up the development environment:
 ##### Xcode & CocoaPods
