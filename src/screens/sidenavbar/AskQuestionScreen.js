@@ -1,9 +1,9 @@
 //AskQuestionScreen.js
 
 // import packages
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -17,19 +17,21 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
-import { useCurrentUser } from '../../contexts/currentUserContext';
+import {useCurrentUser} from '../../contexts/currentUserContext';
 import {
   messageAdd,
   messageGetList,
   messageSeen,
 } from '../../api/messages/messages.api';
-import { useIsFocused } from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+///////////////////////////////////////////////////////////////////////////////////
 
-//function return
-function AskQuestionScreen({ navigation }) {
+//Define  AskQuestionscreen module
+function AskQuestionScreen({navigation}) {
+  //useState Field
   const theme = themes.light;
   const [message, setMessage] = useState('');
   const [listMessage, setListMessage] = useState(null);
@@ -40,13 +42,14 @@ function AskQuestionScreen({ navigation }) {
   const isFocused = useIsFocused();
   const [listViewRef, setListViewRef] = useState();
 
+  // Function handle user tap on Send button to send a message
   const handleSend = (data) => {
     if (data.text !== '')
-      messageAdd(token, data)
+      messageAdd(token, data) //Call API to send a messages
         .then(() => {
-          setMessage('');
+          setMessage(''); // Set value of input is empty when the message is sent
           setIsSent(!isSent);
-        })
+        }) // Reload the list of message if there is a message was sent
         .catch(console.log);
   };
 
@@ -71,7 +74,7 @@ function AskQuestionScreen({ navigation }) {
         .then(setListMessage)
         .catch(console.log);
     }
-  }, [reloadData, isSent, isFocused]);
+  }, [reloadData, isSent, isFocused]); // Get a new list of messages when the screen is focused, a message was sent and refresh screen
 
   //useEffect fetching set meesage to "seen"
   useEffect(() => {
@@ -81,18 +84,20 @@ function AskQuestionScreen({ navigation }) {
           return item._id;
         }
       });
-      messageSeen(token, { messageIds: listMessageIds })
+      messageSeen(token, {messageIds: listMessageIds})
         .then()
         .catch(console.log);
     }
-  }, [isFocused]);
+  }, [isFocused]); // When user go to the screen, all coming message is set to "Seen"
 
+  //Render elements
   return (
     <SafeAreaView
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
         <View style={styles.headerContainer}>
+          {/*Back button in header */}
           <BackButtonHeaderLeft
             navigationProp={navigation}
             color={theme.primaryColor}
@@ -100,7 +105,7 @@ function AskQuestionScreen({ navigation }) {
           <View style={styles.headingContainer}>
             <Image
               style={styles.topIcon}
-              source={require('../../testImages/userIcon.png')}
+              source={require('../../asserts/userIcon.png')}
             />
             <Text style={styles.heading}>Ask Question</Text>
           </View>
@@ -111,27 +116,31 @@ function AskQuestionScreen({ navigation }) {
             setListViewRef(ref);
           }}
           showsVerticalScrollIndicator={false}
+          // Auto scroll to bottom when the new message is coming
           onContentSizeChange={() => {
-            listViewRef.scrollToEnd({ animated: true });
+            listViewRef.scrollToEnd({animated: true});
           }}
           style={styles.scrollView}
+          //Refresh to get a new messages from admin
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
+          {/*Render list of messages: amdin messages and user messages */}
           {listMessage
             ? listMessage.map((chat) =>
-              chat.sender ? (
-                <View key={chat._id} style={styles.myChat}>
-                  <Text style={styles.myText}>{chat.text}</Text>
-                </View>
-              ) : (
-                <View key={chat._id} style={styles.adminChat}>
-                  <Text style={styles.adminText}>{chat.text}</Text>
-                </View>
-              ),
-            )
+                chat.sender ? (
+                  <View key={chat._id} style={styles.myChat}>
+                    <Text style={styles.myText}>{chat.text}</Text>
+                  </View>
+                ) : (
+                  <View key={chat._id} style={styles.adminChat}>
+                    <Text style={styles.adminText}>{chat.text}</Text>
+                  </View>
+                ),
+              )
             : null}
         </ScrollView>
+        {/*Input message field */}
         <View style={styles.bottomContainer}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -142,12 +151,12 @@ function AskQuestionScreen({ navigation }) {
               multiline
               numberOfLines={47}
               scrollEnabled={false}
-              onChangeText={setMessage}
+              onChangeText={setMessage} //update value of input
             />
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleSend({ text: message })}>
+            onPress={() => handleSend({text: message})}>
             <MaterialCommunityIcons
               style={styles.buttonSend}
               name="send"
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.base,
     shadowOpacity: 0.2,
     backgroundColor: colors.white,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
   },
   headingContainer: {
     width: '90%',

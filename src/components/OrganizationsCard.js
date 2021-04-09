@@ -61,7 +61,7 @@ function OrganizationsCard(props) {
           source={
             imagePath !== undefined
               ? {uri: getImage(props.image)}
-              : require('../testImages/demoPic.png')
+              : require('../asserts/demoPic.png')
           }
           style={styles.cardImage}
         />
@@ -121,7 +121,7 @@ function OrganizationsCard(props) {
             {props.isIndigenous == true ? (
               <Image
                 style={styles.isIndigenousIcon}
-                source={require('../testImages/indigenousIcon.png')}
+                source={require('../asserts/indigenousIcon.png')}
               />
             ) : null}
             {/* to display the category of orgainzation */}

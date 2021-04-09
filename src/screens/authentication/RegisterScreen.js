@@ -17,6 +17,9 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 //////////////////////////////////////////////////////////////
 
 //Define function Register screen
+//User can register an account to log in the app
+//User should fill out all fields, there are 2-3 optional fields
+//When user sign up an account successfully, then navigate to login screen to login the account
 function RegisterScreen({navigation}) {
   //use state for showing message modal registration
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);

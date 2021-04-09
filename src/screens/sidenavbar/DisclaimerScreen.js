@@ -17,9 +17,8 @@ import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 
 //function return
 function DisclaimerScreen(props) {
-  const theme = themes.light;
-  const [readDisclaimer, setReadDisclaimer] = useAsyncStorage('isRead', false);
-  const [buttonState, setButtonState] = useState(true);
+  const [readDisclaimer, setReadDisclaimer] = useAsyncStorage('isRead', false); // Remember if user read the disclaimer already
+  const [buttonState, setButtonState] = useState(true); // state of button
 
   //function handle when scroll view go bottom
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -32,12 +31,14 @@ function DisclaimerScreen(props) {
 
   useEffect(() => {
     if (readDisclaimer)
+      // If user read the disclaimer, navigate to Discussion Screen
       props.navigation.navigate('Discussions', {
         isRead: readDisclaimer,
       });
-    setButtonState(true);
+    setButtonState(true); //enable the button when user go to the bottom of the disclaimer
   }, [props.navigation, readDisclaimer]);
 
+  //Render elements
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: colors.white}}
@@ -61,7 +62,7 @@ function DisclaimerScreen(props) {
       <ScrollView
         onScroll={({nativeEvent}) => {
           if (isCloseToBottom(nativeEvent)) {
-            setButtonState(false);
+            setButtonState(false); // enable the button if user go to the bottom of the disclaimer
           }
         }}
         scrollEventThrottle={400}>
@@ -106,12 +107,12 @@ function DisclaimerScreen(props) {
       </ScrollView>
       <View style={styles.bottomButton}>
         <TouchableOpacity
-          disabled={buttonState}
+          disabled={buttonState} // disable the button if user dont go to the bottom
           style={
             buttonState ? styles.disableButtonContainer : styles.buttonContainer
           }
           onPress={() => {
-            setReadDisclaimer(true);
+            setReadDisclaimer(true); // Remembe if user read the disclaimer
           }}>
           <Text style={styles.buttonText}>Done</Text>
         </TouchableOpacity>

@@ -1,3 +1,5 @@
+//Right Header buttons: Search, Notification
+
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,8 +9,8 @@ const RightHeaderButton = (props) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
-        onPress={() =>
-          props.navigationProps.navigate(`SearchStack${props.section}`)
+        onPress={
+          () => props.navigationProps.navigate(`SearchStack${props.section}`) // Navigate to Search Screen
         }
         style={styles.headerButton}>
         <MaterialCommunityIcons

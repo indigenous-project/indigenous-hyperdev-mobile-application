@@ -23,7 +23,10 @@ import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {deleteItemAsync} from 'expo-secure-store';
 ////////////////////////////////////////////////////
 
-//Define function LoginScreen
+//Define function LoginScreen:
+//User can enter the credential: email and password to log in the app
+//If user has no an account,  tap button Sign up to navigate to Register screen
+//If user forgot password, tap forgot password button to navigate to forgot password screen.
 function LoginScreen({navigation}) {
   // useState field
   const [userName, setUsername] = useAsyncStorage('userName', ''); // use Async storage hook to store email

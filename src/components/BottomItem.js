@@ -1,13 +1,19 @@
+//BottomItem.js
+
+//Import field
 import React, {useState} from 'react';
 import {StyleSheet, Animated, Dimensions, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {themes, typography} from '../styles';
-export const BottomItem = ({iconName, isCurrent, size, color, index}) => {
+//////////////////////////////////////////
+
+//Define BottomItem module
+const BottomItem = ({iconName, isCurrent, size, color, index}) => {
   const [translateValue] = useState(new Animated.Value(0));
   const totalWidth = Dimensions.get('window').width;
-  const tabWidth = totalWidth / 5;
+  const tabWidth = totalWidth / 5; //Calculate the width of each tab
 
   return (
     <>

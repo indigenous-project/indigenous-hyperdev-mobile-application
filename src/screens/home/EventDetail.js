@@ -1,9 +1,9 @@
 //Event Detail module
 
 // import packages
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 import {
   eventGetDetail,
   eventGoing,
@@ -24,15 +24,18 @@ import {
   eventInterested,
   eventInterestedRemove,
 } from '../../api/events/events.api';
-import { useCurrentUser } from '../../contexts/currentUserContext';
-import { decodeHTML } from '../../modules/decode.text';
-import { WebView } from 'react-native-webview';
+import {useCurrentUser} from '../../contexts/currentUserContext';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
 import Loader from '../../components/Loader';
 import ShareHeader from '../../components/ShareHeader';
-import { useIsFocused } from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/core';
 
-//function return
-function EventDetail({ navigation, route }) {
+//function Event Detail
+//User can view an event in detail
+//User can react going or interested to an event.
+//User can share an event.
+function EventDetail({navigation, route}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   const [event, setEvent] = useState(null);
@@ -41,8 +44,7 @@ function EventDetail({ navigation, route }) {
   const [isInterested, setIsInterested] = useState(false);
   const [isGoing, setIsGoing] = useState(false);
 
-  //function handle interested button
-
+  //Check if user tapped the going or interested an event
   useEffect(() => {
     if (event) {
       event.interestedUsers.forEach((user) => {
@@ -60,29 +62,6 @@ function EventDetail({ navigation, route }) {
       });
     }
   }, [event, currentUser, isFocused]);
-
-  // //function handle asking to confirm user want to going or interested to an event
-  // const handleAskTapButton = (typeButton) => {
-  //   Alert.alert(
-  //     `Event ${typeButton}`,
-  //     `Are your ${typeButton} ${event.title}?`,
-  //     [
-  //       {
-  //         text: 'Cancel',
-  //         onPress: () => console.log('Cancel Pressed'),
-  //         style: 'cancel',
-  //       },
-  //       {
-  //         text: 'OK',
-  //         onPress: () => {
-  //           typeButton === 'interested in'
-  //             ? handleInterestedButton()
-  //             : handleGoingButton();
-  //         },
-  //       },
-  //     ],
-  //   );
-  // };
 
   // Function handle when user want to tap interested button
   const handleInterestedButton = () => {
@@ -146,29 +125,27 @@ function EventDetail({ navigation, route }) {
   useLayoutEffect(() => {
     event
       ? navigation.setOptions({
-        headerTitle: event.title,
-        headerRight: () => <ShareHeader shareData={event} />,
-      })
+          headerTitle: event.title,
+          headerRight: () => <ShareHeader shareData={event} />,
+        })
       : null;
   }, [navigation, event]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="light-content" />
       <Loader loading={loading} />
       {event ? (
         <ScrollView>
-          <Image style={styles.image} source={{ uri: event.medias[0].path }} />
+          <Image style={styles.image} source={{uri: event.medias[0].path}} />
           <EventInfo event={event} />
           <View style={styles.container}>
-            <View style={{ minHeight: 250 }}>
+            <View style={{minHeight: 250}}>
               <WebView
                 scrollEnabled={true}
                 originWhitelist={['*']}
                 source={{
-                  html: `<section style="font-size:30">${decodeHTML(
-                    event.description,
-                  )}</section>`,
+                  html: decodeHTML(event.description),
                 }}
               />
             </View>
@@ -190,7 +167,6 @@ function EventDetail({ navigation, route }) {
       ) : null}
       <View style={styles.buttonsGroup}>
         <TouchableOpacity
-          // disabled={isInterested}
           style={
             isInterested
               ? styles.buttonContainer
@@ -198,10 +174,10 @@ function EventDetail({ navigation, route }) {
           }
           onPress={() => {
             if (isInterested) {
-              handleInterestedRemove();
+              handleInterestedRemove(); // re - tap the button remove user from interested list of event
             } else {
-              handleInterestedButton();
-              handleGoingButtonRemove();
+              handleInterestedButton(); // Tap button:  interested to an event
+              handleGoingButtonRemove(); // Remove user from going list of event
             }
           }}>
           <Text
@@ -210,16 +186,15 @@ function EventDetail({ navigation, route }) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          // disabled={isGoing}
           style={
             isGoing ? styles.buttonContainer : styles.buttonContainerDisable
           }
           onPress={() => {
             if (isGoing) {
-              handleGoingButtonRemove();
+              handleGoingButtonRemove(); // re - tap the button remove user from going list of event
             } else {
-              handleGoingButton();
-              handleInterestedRemove();
+              handleGoingButton(); // Tap button:  going to an event
+              handleInterestedRemove(); // Remove user from interested list of event
             }
           }}>
           <Text style={isGoing ? styles.buttonTextSelect : styles.buttonText}>

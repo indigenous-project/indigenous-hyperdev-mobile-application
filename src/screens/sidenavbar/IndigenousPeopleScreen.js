@@ -3,20 +3,14 @@
 // import packages
 import React from 'react';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Image,
-} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {View, ScrollView, StyleSheet, Text, Image} from 'react-native';
 
-import { colors, themes, typography, spacing } from '../../styles';
+import {colors, themes, typography, spacing} from '../../styles';
 import BackButtonHeaderLeft from '../../components/BackButtonHeaderLeft';
 
 //function return
-function IndigenousPeopleScreen({ navigation }) {
+function IndigenousPeopleScreen({navigation}) {
   const theme = themes.light;
 
   return (
@@ -32,13 +26,15 @@ function IndigenousPeopleScreen({ navigation }) {
       </View>
       <Image
         style={styles.image}
-        source={require('../../testImages/indigenousImage.png')}
+        source={require('../../asserts/indigenousImage.png')}
       />
-      <Text style={styles.description}>North Bay is situated in traditional Anishinabek territory,
-      on lands occupied by the peoples of Nipissing and
-      Dokis First Nations whose aboriginal and treaty rights
-      are recognized by the Robinson Huron Treaty of 1850 and
-      affirmed by Section 35 (1) of the Constitution Act of Canada, 1982.</Text>
+      <Text style={styles.description}>
+        North Bay is situated in traditional Anishinabek territory, on lands
+        occupied by the peoples of Nipissing and Dokis First Nations whose
+        aboriginal and treaty rights are recognized by the Robinson Huron Treaty
+        of 1850 and affirmed by Section 35 (1) of the Constitution Act of
+        Canada, 1982.
+      </Text>
     </SafeAreaView>
   );
 }
@@ -49,13 +45,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   headerContainer: {
-    flexDirection: 'row', width: '100%',
+    flexDirection: 'row',
+    width: '100%',
     shadowColor: colors.gray900,
     height: 45,
     marginTop: spacing.base,
     shadowOpacity: 0.2,
     backgroundColor: colors.white,
-    shadowOffset: { width: 3, height: 6 },
+    shadowOffset: {width: 3, height: 6},
   },
   heading: {
     color: colors.primary900,
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingRight: spacing.larger,
     paddingTop: spacing.smaller,
-    width: '90%'
+    width: '90%',
   },
   image: {
     alignSelf: 'center',

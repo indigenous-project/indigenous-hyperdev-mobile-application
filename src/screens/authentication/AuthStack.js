@@ -16,7 +16,7 @@ const Auth = createStackNavigator();
 //Define theme to use theme light
 const theme = themes.light;
 
-//Define AuthStack
+//Define AuthStack contains: Login, Register and Forgot Paswword Screen
 function AuthStack(props) {
   //Render elements
   return (
