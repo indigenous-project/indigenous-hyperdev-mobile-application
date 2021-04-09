@@ -21,6 +21,7 @@ import Loader from '../../components/Loader';
 import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {deleteItemAsync} from 'expo-secure-store';
+import {useNetInfo} from '@react-native-community/netinfo';
 ////////////////////////////////////////////////////
 
 //Define function LoginScreen:
@@ -38,25 +39,33 @@ function LoginScreen({navigation}) {
 
   //define passwordRef
   const passwordInputRef = createRef();
+  //use Hook check network info
+  const netInfo = useNetInfo();
 
   //Use Effect:  Verify current
   useEffect(() => {
-    if (token) {
-      setLoading(true); // Enable loader
-      userCurrent(token) // Fetching current user api
-        .then((response) => {
-          setLoading(false); // Hide loader
-          setUsername(response.email); // Store email into Async storage
-          navigation.replace('DrawerRoute'); //  if login already navigate to home page
-        })
-        .catch((err) => {
-          setLoading(false); // hide loader
+    if (netInfo.isConnected === true) {
+      if (token) {
+        setLoading(true); // Enable loader
+        userCurrent(token) // Fetching current user api
+          .then((response) => {
+            setLoading(false); // Hide loader
+            setUsername(response.email); // Store email into Async storage
+            navigation.replace('DrawerRoute'); //  if login already navigate to home page
+          })
+          .catch((err) => {
+            setLoading(false); // hide loader
 
-          deleteItemAsync('userToken'); // remove token from storage when verify user fails
-          Alert.alert('User authentication', err.errors[0].description); // Show Alert message if verify user fails
-        });
+            deleteItemAsync('userToken'); // remove token from storage when verify user fails
+            err.errors
+              ? Alert.alert('User authentication', err.errors[0].description)
+              : Alert.alert(err.message); // Show Alert message if verify user fails
+          });
+      }
+    } else if (netInfo.isConnected === false) {
+      Alert.alert('No internet connection');
     }
-  }, [token]); // dependency: token
+  }, [netInfo.isConnected, token]); // dependency: token
 
   // User Effect; autofil user name field
   useEffect(() => {
@@ -67,27 +76,33 @@ function LoginScreen({navigation}) {
 
   //Function handle tap Login button
   const signIn = async (email, password) => {
-    if (!email) {
-      Alert.alert('User authentication', 'Please fill email'); // check if email is entered
-      return;
-    }
-    if (!password) {
-      Alert.alert('User authentication', 'Please fill password'); // check if password is entered
-      return;
-    }
-    setLoading(true); // show loader indicator
-    // call API
-    userSignIn({
-      email: email,
-      password: password,
-    })
-      .then((response) => {
-        setToken(response.token); // Store token in sercure storage
+    if (netInfo.isConnected === true) {
+      if (!email) {
+        Alert.alert('User authentication', 'Please fill email'); // check if email is entered
+        return;
+      }
+      if (!password) {
+        Alert.alert('User authentication', 'Please fill password'); // check if password is entered
+        return;
+      }
+      setLoading(true); // show loader indicator
+      // call API
+      userSignIn({
+        email: email,
+        password: password,
       })
-      .catch((err) => {
-        setLoading(false); // hide loader
-        Alert.alert('User authentication', err.errors[0].description); // Show message error if Sign in fails
-      });
+        .then((response) => {
+          setToken(response.token); // Store token in sercure storage
+        })
+        .catch((err) => {
+          setLoading(false); // hide loader
+          err.errors
+            ? Alert.alert('User authentication', err.errors[0].description)
+            : Alert.alert(err.message); // Show Alert message if verify user fails
+        });
+    } else if (netInfo.isConnected === false) {
+      Alert.alert('No internet connection');
+    }
   };
 
   //Render elements

@@ -13,6 +13,7 @@ import {
   Pressable,
   Alert,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -43,7 +44,7 @@ const options = [
 function DiscussionScreen({navigation}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
-  const [filterDiscussion, setFilterDiscussion] = useState(null);
+  const [filterDiscussion, setFilterDiscussion] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
   const [modalVisible, setModalVisible] = useState(false);
@@ -224,28 +225,40 @@ function DiscussionScreen({navigation}) {
             />
           }
           horizontal={false}>
-          {filterDiscussion
-            ? filterDiscussion.map((discussion) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Discussion Detail', {
-                      discussionId: discussion._id,
-                      token: token,
-                    })
-                  }
-                  key={discussion._id}>
-                  <DiscussionCard
-                    title={discussion.title}
-                    nameAndDate={`${discussion.owner.firstName} ${
-                      discussion.owner.lastName
-                    } Posted ${formatDate(discussion.createdAt)}`}
-                    description={discussion.description}
-                    categories={discussion.categories}
-                    replies={discussion.replies}
-                  />
-                </TouchableOpacity>
-              ))
-            : null}
+          {filterDiscussion.length > 0 ? (
+            filterDiscussion.map((discussion) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Discussion Detail', {
+                    discussionId: discussion._id,
+                    token: token,
+                  })
+                }
+                key={discussion._id}>
+                <DiscussionCard
+                  title={discussion.title}
+                  nameAndDate={`${discussion.owner.firstName} ${
+                    discussion.owner.lastName
+                  } Posted ${formatDate(discussion.createdAt)}`}
+                  description={discussion.description}
+                  categories={discussion.categories}
+                  replies={discussion.replies}
+                />
+              </TouchableOpacity>
+            ))
+          ) : (
+            <View
+              style={{
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '100%',
+                height: Dimensions.get('window').width,
+              }}>
+              <Text style={{marginTop: 10, textAlign: 'center'}}>
+                There is no Discussion
+              </Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
