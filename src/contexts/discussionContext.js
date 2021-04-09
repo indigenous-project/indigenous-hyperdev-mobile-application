@@ -14,7 +14,9 @@ function DiscussionProvider(props) {
     if (token)
       discussionGetList(token)
         .then(setDiscussions)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, props.isFocused, setDiscussions]);
   return (
     <DiscussionContext.Provider

@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import { colors, spacing, themes, typography } from '../styles';
+import React, {useState} from 'react';
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
+import {colors, spacing, themes, typography} from '../styles';
 
 const ServiceDetailCard = (props) => {
   const [showImage, setShowImage] = useState(false);
 
   const handleShowImage = () => {
-    setShowImage(!showImage)
-  }
+    setShowImage(!showImage);
+  };
 
   return (
-    <View >
+    <View>
       <View style={styles.content}>
         {/* Service title and provider name */}
         <View style={styles.titleContainer}>
@@ -26,19 +20,19 @@ const ServiceDetailCard = (props) => {
             <Text>- {props.serviceProviderPosition}</Text>
           </View>
         </View>
-        {props.isIndigenous == true ?
+        {props.isIndigenous == true ? (
           <Image
             style={styles.indigenousIcon}
-            source={require('../testImages/indigenousIcon.png')}
+            source={require('../asserts/indigenousIcon.png')}
           />
-          : null}
+        ) : null}
       </View>
 
       {/* Contact information of service provider */}
       <View style={styles.contactContainer}>
         <View style={styles.contactCard}>
           <Text style={styles.label}>Email:</Text>
-          <Text>  {props.contactEmail}</Text>
+          <Text> {props.contactEmail}</Text>
         </View>
         <View style={styles.contactCard}>
           <Text style={styles.label}>Phone:</Text>
@@ -49,29 +43,26 @@ const ServiceDetailCard = (props) => {
       {/* description of service */}
       <Text style={styles.description}>{props.description}</Text>
 
+
       {/* if there is media attached to service it will display on button Click */}
       {props.media.length > 0 & showImage == false ?
         <TouchableOpacity
           style={styles.imageButton}
           onPress={handleShowImage} >
+
           <Text style={styles.imageButtonText}>See Brochure</Text>
         </TouchableOpacity>
-        : null}
-      {props.media.length > 0 & showImage == true ?
-        <TouchableOpacity
-          style={styles.imageButton}
-          onPress={handleShowImage} >
+      ) : null}
+      {(props.media.length > 0) & (showImage == true) ? (
+        <TouchableOpacity style={styles.imageButton} onPress={handleShowImage}>
           <Text style={styles.imageButtonText}>Hide Brochure</Text>
         </TouchableOpacity>
-        : null}
+      ) : null}
       <View>
-        {showImage == true ?
-          <Image
-            style={styles.image}
-            source={{ uri: props.media[0].path }}
-          /> : null}
+        {showImage == true ? (
+          <Image style={styles.image} source={{uri: props.media[0].path}} />
+        ) : null}
       </View>
-
     </View>
   );
 };
@@ -100,15 +91,15 @@ const styles = StyleSheet.create({
   contactContainer: {
     marginVertical: spacing.base,
     borderBottomWidth: 0.3,
-    borderColor: colors.gray900
+    borderColor: colors.gray900,
   },
   contactCard: {
     flexDirection: 'row',
-    paddingBottom: spacing.small
+    paddingBottom: spacing.small,
   },
   label: {
     fontWeight: typography.fwSemiBold,
-    paddingRight: spacing.smaller
+    paddingRight: spacing.smaller,
   },
   description: {
     fontSize: typography.fs3,

@@ -1,5 +1,7 @@
+//Hambuger Menu to trigger the side nav bar
+
 import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {typography} from '../styles';
 

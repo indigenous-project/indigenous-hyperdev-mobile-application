@@ -21,7 +21,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../testImages/locationIcon.png')}
+          source={require('../asserts/locationIcon.png')}
         />
         <View>
           <Text style={styles.location} onPress={handleGoLink}>
@@ -32,7 +32,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../testImages/timeIcon.png')}
+          source={require('../asserts/timeIcon.png')}
         />
         <View>
           <Text style={styles.time}>{`Start: ${formatDateByTime(
@@ -46,7 +46,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../testImages/priceIcon.png')}
+          source={require('../asserts/priceIcon.png')}
         />
         <View>
           <Text style={styles.price}>

@@ -1,38 +1,26 @@
-//LoginScreen module
+//Register screen module
 
 // import packages
-import React, { createRef, useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  Keyboard,
-} from 'react-native';
-import { userCurrent, userSignIn, userSignUp } from '../../api/auth/auth.api';
-import { themes, colors, typography, spacing } from '../../styles';
+import React, {createRef, useState, useEffect} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {View, StyleSheet, ScrollView, Alert, Keyboard} from 'react-native';
+import {userSignUp} from '../../api/auth/auth.api';
+import {themes, colors, typography, spacing} from '../../styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {
-  Form,
-  Item,
-  Input,
-  Label,
-  Button,
-  Text,
-} from 'native-base';
-import { RadioButton } from 'react-native-paper';
+import {Form, Item, Input, Label, Button, Text} from 'native-base';
+import {RadioButton} from 'react-native-paper';
 import MessageModal from '../../components/MessageModal';
 import Loader from '../../components/Loader';
-import { useAsyncStorage } from '../../hooks/useAsyncStorage';
+import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
+//////////////////////////////////////////////////////////////
 
-//function return
-function RegisterScreen({ navigation }) {
-  // declaring a variable for themes
-  const theme = themes.light;
-
+//Define function Register screen
+//User can register an account to log in the app
+//User should fill out all fields, there are 2-3 optional fields
+//When user sign up an account successfully, then navigate to login screen to login the account
+function RegisterScreen({navigation}) {
   //use state for showing message modal registration
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   //use state store username email
@@ -57,84 +45,93 @@ function RegisterScreen({ navigation }) {
   const passwordInputRef = createRef();
   const passwordConfirmInputRef = createRef();
 
-  useEffect(() => { }, [userName]);
+  useEffect(() => {}, [userName]); // Reload page when userName change
 
   const handleRegister = () => {
     if (!firstName) {
-      Alert.alert('Registration', 'Please fill First Name');
+      Alert.alert('Registration', 'Please fill First Name'); // show message if first name input field missing
       return;
     }
     if (!userEmail) {
-      Alert.alert('Registration', 'Please fill Email');
+      Alert.alert('Registration', 'Please fill Email'); // show message if email input field missing
       return;
     }
 
     if (!userPassword) {
-      Alert.alert('Registration', 'Please fill password');
+      Alert.alert('Registration', 'Please fill password'); // show message if password input field missing
       return;
     }
     if (!lastName) {
-      Alert.alert('Registration', 'Please fill Last Name');
+      Alert.alert('Registration', 'Please fill Last Name'); // show message if last name input field missing
       return;
     }
     if (!passwordConfirm) {
-      Alert.alert('Registration', 'Please confirm password');
+      Alert.alert('Registration', 'Please confirm password'); // show message if confirm password input field missing
       return;
     }
-    setLoading(true);
+    setLoading(true); // Enable loader
+    // Make a body object to get data from inputs field
     const data = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: userEmail.trim(),
-      gender: userGender.trim(),
-      age: userAge.trim(),
-      type: userType.trim(),
     };
+    userAge ? (data.age = userAge.trim()) : null;
+    userGender ? (data.gender = userGender.trim()) : null;
+    userType ? (data.type = userType.trim()) : null;
+    // Check if password and confirm password input is match
     if (passwordConfirm.trim() == userPassword.trim()) {
-      data.password = userPassword.trim();
+      data.password = userPassword.trim(); // Pass password value into data object
+      // Call API user sign up an account
       userSignUp(data)
         .then((response) => {
-          console.log(response);
           if (response) {
-            setUserName(userEmail);
-            setLoading(false);
-            setIsRegistraionSuccess(true);
-            navigation.navigate('Login');
+            setUserName(userEmail); // Store email
+            setLoading(false); // hide loader
+            setIsRegistraionSuccess(true); // Show the message if user register successfully
+            navigation.navigate('Login'); // Then navigate to Login Page
           }
         })
         .catch((err) => {
-          setLoading(false);
+          setLoading(false); // Hide loader
           for (let key in err.errors[0]) {
             if (key === 'message' || key === 'description' || key === 'title') {
               Alert.alert('Registration', err.errors[0][key]);
               break;
             }
           }
-        }); // show error)
+        }); // show error
     } else {
-      setLoading(false);
-      Alert.alert('Registration', 'Password not match');
+      setLoading(false); // Hide loader
+      Alert.alert('Registration', 'Password not match'); // Show alert if password is not match with confirm password
     }
   };
 
+  //Render elements
   return (
-    <SafeAreaView style={styles.safeArea} edges={['right', 'left', 'bottom', 'top']}>
+    <SafeAreaView
+      style={styles.safeArea}
+      edges={['right', 'left', 'bottom', 'top']}>
+      {/* Apply custom status bar : light content */}
       <FocusedStatusBar barStyle="light-content" />
+      {/* Message Modal */}
       <MessageModal
         showing={isRegistraionSuccess}
         message="Registration Successful!"
       />
+      {/* Loader component */}
       <Loader loading={loading} />
       <ScrollView>
         <Text style={styles.title}>Join The Community</Text>
         <Text style={styles.subTtile}>Get full access today</Text>
         <Form>
+          {/* First Name input field */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>First Name</Label>
             <Input
               style={styles.input}
               value={firstName}
-              onChangeText={setfirstName}
+              onChangeText={setfirstName} //update value of input
               autoCapitalize="sentences"
               returnKeyType="next"
               ref={firstNameInputRef}
@@ -144,13 +141,13 @@ function RegisterScreen({ navigation }) {
               blurOnSubmit={false}
             />
           </Item>
-
+          {/* Last Name input field */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>Last Name</Label>
             <Input
               style={styles.input}
               value={lastName}
-              onChangeText={setLastName}
+              onChangeText={setLastName} //update value of input
               autoCapitalize="sentences"
               returnKeyType="next"
               ref={lastNameInputRef}
@@ -160,13 +157,13 @@ function RegisterScreen({ navigation }) {
               blurOnSubmit={false}
             />
           </Item>
-
+          {/* Email input field */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>Email</Label>
             <Input
               style={styles.input}
               value={userEmail}
-              onChangeText={setUserEmail}
+              onChangeText={setUserEmail} //update value of input
               autoCapitalize="none"
               keyboardType="email-address"
               returnKeyType="next"
@@ -177,7 +174,7 @@ function RegisterScreen({ navigation }) {
               }
             />
           </Item>
-
+          {/* Password input field */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>Password</Label>
             <Input
@@ -195,7 +192,7 @@ function RegisterScreen({ navigation }) {
               }
             />
           </Item>
-
+          {/* Confirm password input field */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>Confirm Password</Label>
             <Input
@@ -209,7 +206,7 @@ function RegisterScreen({ navigation }) {
               secureTextEntry={true}
             />
           </Item>
-
+          {/* Age input field: Optional */}
           <Item style={styles.item} floatingLabel>
             <Label style={styles.label}>Age (Optional)</Label>
             <Input
@@ -225,6 +222,7 @@ function RegisterScreen({ navigation }) {
               blurOnSubmit={false}
             />
           </Item>
+          {/* Gender input dropdown picker: Optional */}
           <DropDownPicker
             items={[
               {
@@ -249,14 +247,16 @@ function RegisterScreen({ navigation }) {
             itemStyle={{
               justifyContent: 'flex-start',
             }}
-            dropDownStyle={{ backgroundColor: colors.gray100 }}
-            onChangeItem={(item) => setUserGender(item.value)}
+            dropDownStyle={{backgroundColor: colors.gray100}}
+            onChangeItem={(item) => setUserGender(item.value)} // update new value for userGender state
           />
+
+          {/* Type of user input radio buttons*/}
           <View style={styles.radioButtonGroup}>
             <RadioButton.Group
-              onValueChange={(newValue) => setUserType(newValue)}
+              onValueChange={(newValue) => setUserType(newValue)} // update new value for userType state
               value={userType}>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -278,7 +278,7 @@ function RegisterScreen({ navigation }) {
                       marginLeft: spacing.smallest,
                     }}>
                     Indigenous
-                    </Text>
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -301,7 +301,7 @@ function RegisterScreen({ navigation }) {
                       marginLeft: spacing.smallest,
                     }}>
                     Inuit
-                    </Text>
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -324,7 +324,7 @@ function RegisterScreen({ navigation }) {
                       marginLeft: spacing.smallest,
                     }}>
                     Métis
-                    </Text>
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -347,19 +347,20 @@ function RegisterScreen({ navigation }) {
                       marginLeft: spacing.smallest,
                     }}>
                     None
-                    </Text>
+                  </Text>
                 </View>
               </View>
             </RadioButton.Group>
           </View>
         </Form>
+        {/*Sign up button: Tap to call function Call API regiester an user */}
         <Button style={styles.signUpButton} block onPress={handleRegister}>
           <Text style={styles.signUpButtonText}>Sign Up</Text>
         </Button>
         <Text style={styles.privacyNotice}>
           By Continuing, You Agree To Accept Our Privacy Policy & Terms of
           Service.
-          </Text>
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -369,7 +370,7 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
 
   title: {
@@ -383,7 +384,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwMedium,
     fontSize: typography.fs5,
     marginHorizontal: spacing.base,
-    marginVertical: spacing.smaller
+    marginVertical: spacing.smaller,
   },
 
   label: {
@@ -394,17 +395,17 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.base,
     marginBottom: spacing.smaller,
     backgroundColor: colors.white,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: {width: 2, height: 2},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
   },
   input: {
-    marginHorizontal: spacing.base
+    marginHorizontal: spacing.base,
   },
   genderDropDown: {
     backgroundColor: colors.white,
     borderRadius: 10,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: {width: 2, height: 2},
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     marginHorizontal: spacing.base,
@@ -424,7 +425,7 @@ const styles = StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
     backgroundColor: colors.primary400,
-    marginTop: spacing.largest
+    marginTop: spacing.largest,
   },
   signUpButtonText: {
     alignSelf: 'center',
@@ -441,7 +442,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: spacing.base,
     marginBottom: spacing.largest,
-    width: '70%'
+    width: '70%',
   },
 });
 

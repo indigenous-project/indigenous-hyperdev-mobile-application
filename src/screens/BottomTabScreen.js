@@ -1,39 +1,40 @@
 //BottomTabScreen.js
 
-import React, {useState} from 'react';
+//Import fields
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// Javascript
 import HomeStack from './home/HomeStack';
 import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
 import ServicesStack from './services/ServicesStack';
 import OrganizationStack from './organizations/OrganizationsStack';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {colors, themes, typography} from '../styles';
-import {StyleSheet, Animated, Dimensions} from 'react-native';
+import {themes, typography} from '../styles';
+import {StyleSheet} from 'react-native';
 import BottomItem from '../components/BottomItem';
-import SearchStack from './search/SearchStack';
+//////////////////////////////////////////////////
 
+//Define theme to use themes module light
 const theme = themes.light;
 
+//Define bottom tab navigator
 const Tab = createBottomTabNavigator();
-//const Tab = AnimatedTabBarNavigator();
 
+//Define BottomTabScreen Module
 function BottomTabScreen(props) {
-  // fadeAnim will be used as the value for opacity. Initial Value: 0
-
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: theme.primaryColor,
-        inactiveTintColor: theme.subduedTextColor,
+        activeTintColor: theme.primaryColor, // Set active tab color
+        inactiveTintColor: theme.subduedTextColor, // Set inactive tab color
       }}>
+      {/*Home Tab */}
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
+            /*Use custom tab */
             <BottomItem
               isCurrent={focused}
               iconName="home"
@@ -44,11 +45,13 @@ function BottomTabScreen(props) {
           ),
         }}
       />
+      {/*Discussion Tab */}
       <Tab.Screen
         name="Discussions"
         component={DiscussionsStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
+            /*Use custom tab */
             <BottomItem
               isCurrent={focused}
               iconName="card-bulleted-outline"
@@ -59,11 +62,13 @@ function BottomTabScreen(props) {
           ),
         }}
       />
+      {/*News Tab */}
       <Tab.Screen
         name="News"
         component={NewsStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
+            /*Use custom tab */
             <BottomItem
               isCurrent={focused}
               iconName="newspaper-variant-outline"
@@ -74,11 +79,13 @@ function BottomTabScreen(props) {
           ),
         }}
       />
+      {/*Services Tab */}
       <Tab.Screen
         name="Services"
         component={ServicesStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
+            /*Use custom tab */
             <BottomItem
               isCurrent={focused}
               iconName="calendar-outline"
@@ -89,11 +96,13 @@ function BottomTabScreen(props) {
           ),
         }}
       />
+      {/*Organizations Tab */}
       <Tab.Screen
         name="Organizations"
         component={OrganizationStack}
         options={{
           tabBarIcon: ({focused, size, color}) => (
+            /*Use custom tab */
             <BottomItem
               isCurrent={focused}
               iconName="home-city-outline"
@@ -109,35 +118,3 @@ function BottomTabScreen(props) {
 }
 
 export default BottomTabScreen;
-const styles = StyleSheet.create({
-  //container style
-  tabBarFocused: {
-    // position: 'absolute',
-    // top: 0,
-    // bottom: 0,
-    borderTopWidth: 2,
-    borderTopColor: theme.primaryColor,
-    paddingHorizontal: 15,
-  },
-  tabBar: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    borderTopWidth: 2,
-    paddingHorizontal: 15,
-    borderTopColor: 'white',
-  },
-  icon: {
-    marginVertical: 0,
-    fontSize: typography.fs6,
-  },
-  slider: {
-    height: 4,
-    position: 'absolute',
-    top: 0,
-    left: 10,
-    backgroundColor: themes.light.primaryColor,
-    borderRadius: 10,
-    width: 50,
-  },
-});

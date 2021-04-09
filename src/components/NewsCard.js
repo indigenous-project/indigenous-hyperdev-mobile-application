@@ -1,18 +1,19 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet} from 'react-native';
-import { colors, typography, spacing } from '../styles';
-import { decodeHTML } from '../modules/decode.text';
-import { WebView } from 'react-native-webview';
-
+import {View, Text, Image, StyleSheet} from 'react-native';
+import {colors, typography, spacing} from '../styles';
+import {decodeHTML} from '../modules/decode.text';
+import {WebView} from 'react-native-webview';
 
 //card to display News
 export default function NewsCard(props) {
   const NUM_OF_LINES = 2;
-   // Render element
+  // Render element
   return (
     <View style={styles.newsCard}>
       <View style={styles.newsContent}>
-        <Text numberOfLines={2} style={styles.cardTitle}>{props.title}</Text>
+        <Text numberOfLines={2} style={styles.cardTitle}>
+          {props.title}
+        </Text>
         <Text style={styles.cardDetail}>{props.date}</Text>
         <WebView
           numberOfLines={NUM_OF_LINES}
@@ -26,10 +27,7 @@ export default function NewsCard(props) {
           }}
         />
       </View>
-      <Image
-        style={styles.image}
-        source={require('../testImages/demoPic.png')}
-      />
+      <Image style={styles.image} source={require('../asserts/demoPic.png')} />
     </View>
   );
 }

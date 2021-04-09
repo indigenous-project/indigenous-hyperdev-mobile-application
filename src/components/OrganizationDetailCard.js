@@ -2,12 +2,12 @@
 
 //import packages
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { Text, View } from 'native-base';
-import { typography, spacing, themes, colors } from '../styles';
-import { AirbnbRating } from 'react-native-ratings';
-import { decodeHTML } from '../modules/decode.text';
-import { WebView } from 'react-native-webview';
+import {StyleSheet, Image} from 'react-native';
+import {Text, View} from 'native-base';
+import {typography, spacing, themes, colors} from '../styles';
+import {AirbnbRating} from 'react-native-ratings';
+import {decodeHTML} from '../modules/decode.text';
+import {WebView} from 'react-native-webview';
 
 const OrganizationDetailCard = (props) => {
   //to call the function and store the return value using condition
@@ -17,7 +17,7 @@ const OrganizationDetailCard = (props) => {
   function getRating(reviews) {
     let totalReviews = 0;
     //loop through the reviews
-    reviews.forEach(rev => {
+    reviews.forEach((rev) => {
       //add all the reviews of an organization
       totalReviews += rev.score;
     });
@@ -50,8 +50,8 @@ const OrganizationDetailCard = (props) => {
       <Image
         source={
           imagePath !== undefined
-            ? { uri: getImage(props.image) }
-            : require('../testImages/demoPic.png')
+            ? {uri: getImage(props.image)}
+            : require('../asserts/demoPic.png')
         }
         style={styles.image}
       />
@@ -63,7 +63,7 @@ const OrganizationDetailCard = (props) => {
         </Text>
 
         {/* to display the rating of the organization */}
-        <View style={{ alignSelf: 'flex-start', bottom: 25, right: 2 }}>
+        <View style={{alignSelf: 'flex-start', bottom: 25, right: 2}}>
           <AirbnbRating
             isDisabled={true}
             count={5}
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: spacing.smaller,
   },
-  addressLabel: { fontSize: typography.fs2 },
+  addressLabel: {fontSize: typography.fs2},
   addressTextView: {
     marginLeft: spacing.smaller,
     width: '40%',

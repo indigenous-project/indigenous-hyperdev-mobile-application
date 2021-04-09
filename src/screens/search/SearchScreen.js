@@ -1,3 +1,6 @@
+//Search Screen
+
+//Import field
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableWithoutFeedback, Keyboard} from 'react-native';
@@ -11,7 +14,9 @@ import {useJob} from '../../contexts/jobContext';
 import {useNews} from '../../contexts/newsContext';
 import {useService} from '../../contexts/serviceContext';
 import {useOrganization} from '../../contexts/organizationContext';
+////////////////////////////////////////////////////////////////////////////
 
+//Define function SearchScreen
 function SearchScreen({navigation}) {
   const [search, setSearch] = useState('');
   const [searchDiscussionArray, setSearchDiscussionArray] = useState([]);
@@ -114,7 +119,6 @@ function SearchScreen({navigation}) {
       : setSearchOrganizationArray([]);
   }, [organizations, search]);
 
-  //console.log(searchJobArray);
   if (
     !searchEventArray ||
     !searchDiscussionArray ||
@@ -127,8 +131,6 @@ function SearchScreen({navigation}) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{flex: 1}} edges={['right', 'left', 'bottom']}>
-        {/* <SearchBar placeholder="Search" /> */}
-
         <Header
           searchBar
           iosBarStyle="light-content"

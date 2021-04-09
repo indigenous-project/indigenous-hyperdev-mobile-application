@@ -1,3 +1,5 @@
+//Loader component
+
 // Import React and Component
 import React from 'react';
 import {StyleSheet, View, Modal, ActivityIndicator} from 'react-native';

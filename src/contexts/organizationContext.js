@@ -15,7 +15,9 @@ function OrganizationProvider(props) {
     if (token)
       organizationGetList(token)
         .then(setOrganizations)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, props.isFocused, setOrganizations]);
   return (
     <OrganizationContext.Provider

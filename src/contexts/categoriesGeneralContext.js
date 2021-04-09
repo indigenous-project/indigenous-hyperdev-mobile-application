@@ -15,7 +15,9 @@ function CategoriesGeneralProvider(props) {
     if (token)
       categoriesGetList(token)
         .then((response) => setCategories(response))
-        .catch((err) => Alert.alert(err.errors[0].title));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token]);
   return <CategoriesGeneralContext.Provider value={[categories]} {...props} />;
 }

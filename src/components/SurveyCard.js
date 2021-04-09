@@ -2,7 +2,14 @@
 
 // Import Packages
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import {colors, typography, spacing} from '../styles';
 
 //card to display New Survey Available
@@ -10,10 +17,7 @@ export default function SurveyCard(props) {
   // Render element
   return (
     <View style={styles.newSurvey}>
-      <Image
-        style={styles.image}
-        source={require('../testImages/demoPic.png')}
-      />
+      <Image style={styles.image} source={require('../asserts/demoPic.png')} />
       <View style={styles.surveyTitle}>
         <Text numberOfLines={2} style={styles.surveyText}>
           {props.title}

@@ -1,7 +1,7 @@
 //Create Discussion module
 
 // import packages
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import {
   Text,
@@ -17,23 +17,24 @@ import {
   Pressable,
 } from 'react-native';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { colors, themes, typography, spacing } from '../styles';
-import { discussionAdd } from '../api/discussions/discussions.api';
-import { useCurrentUser } from '../contexts/currentUserContext';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {colors, themes, typography, spacing} from '../styles';
+import {discussionAdd} from '../api/discussions/discussions.api';
+import {useCurrentUser} from '../contexts/currentUserContext';
 import Loader from './Loader';
 import MessageModal from './MessageModal';
 
-import { Chip } from 'react-native-paper';
+import {Chip} from 'react-native-paper';
 import CategoriesList from '../components/CategoriesList';
-import { mediaAddImage } from '../api/medias/media.api';
+import {mediaAddImage} from '../api/medias/media.api';
 
-import { s3Storage } from '../api/aws/s3Strorage';
+import {s3Storage} from '../api/aws/s3Strorage';
 
-//function return
+//function create a discussion:
+//User can create a new discussion
+//User fill the topic title, description , add an image, add a category for a new discussion.
+//The new discussion must be approved by admin before publishing.
 function CreateDiscussion(props) {
-  const theme = themes.light;
-  //const [token, setToken] = useSecureStorage('userToken', '');
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [discussionDescription, setDiscussionDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -116,7 +117,6 @@ function CreateDiscussion(props) {
         })
         .catch((err) => {
           setLoading(false); // hide loader
-          console.log(err);
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
     }
@@ -197,7 +197,7 @@ function CreateDiscussion(props) {
                 onClose={() => setImageInfo(null)}>
                 <Text
                   numberOfLines={1}
-                  style={{ flex: 1, textDecorationLine: 'underline' }}>
+                  style={{flex: 1, textDecorationLine: 'underline'}}>
                   {imageInfo.fileName}
                 </Text>
               </Chip>
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: {width: 3, height: 3},
     shadowColor: colors.gray900,
     shadowOpacity: 0.3,
     borderRadius: 100,

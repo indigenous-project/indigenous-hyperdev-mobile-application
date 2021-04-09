@@ -15,7 +15,9 @@ function ServiceProvider(props) {
     if (token)
       serviceGetList(token)
         .then(setServices, setServices)
-        .catch((err) => Alert.alert(err.errors[0]));
+        .catch((err) =>
+          Alert.alert(err.errors[0].title, err.errors[0].description),
+        );
   }, [token, props.isFocused]);
   return <ServiceContext.Provider value={[services, setServices]} {...props} />;
 }

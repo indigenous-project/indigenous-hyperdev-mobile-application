@@ -7,7 +7,7 @@ import {spacing, colors, typography} from '../styles';
 import {Thumbnail} from 'native-base';
 
 //card to display Survey list
-const SurveyListCard = props => {
+const SurveyListCard = (props) => {
   // Render element
   return (
     <View style={styles.cardsContainer}>
@@ -17,7 +17,7 @@ const SurveyListCard = props => {
             style={{borderRadius: 10}}
             square
             large
-            source={require('../testImages/demoPic.png')}></Thumbnail>
+            source={require('../asserts/demoPic.png')}></Thumbnail>
         </View>
 
         <View style={{width: 250, marginRight: 20}}>
