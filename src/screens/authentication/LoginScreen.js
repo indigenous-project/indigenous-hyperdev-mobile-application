@@ -41,7 +41,6 @@ function LoginScreen({navigation}) {
   const passwordInputRef = createRef();
   //use Hook check network info
   const netInfo = useNetInfo();
-  console.log(netInfo.isConnected);
 
   //Use Effect:  Verify current
   useEffect(() => {
