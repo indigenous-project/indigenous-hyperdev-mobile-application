@@ -12,6 +12,7 @@ const ServiceDetailCard = (props) => {
   return (
     <View>
       <View style={styles.content}>
+        {/* Service title and provider name */}
         <View style={styles.titleContainer}>
           <View>
             <Text style={styles.mainHeading}>{props.name}</Text>
@@ -27,6 +28,7 @@ const ServiceDetailCard = (props) => {
         ) : null}
       </View>
 
+      {/* Contact information of service provider */}
       <View style={styles.contactContainer}>
         <View style={styles.contactCard}>
           <Text style={styles.label}>Email:</Text>
@@ -38,10 +40,16 @@ const ServiceDetailCard = (props) => {
         </View>
       </View>
 
+      {/* description of service */}
       <Text style={styles.description}>{props.description}</Text>
 
-      {(props.media.length > 0) & (showImage == false) ? (
-        <TouchableOpacity style={styles.imageButton} onPress={handleShowImage}>
+
+      {/* if there is media attached to service it will display on button Click */}
+      {props.media.length > 0 & showImage == false ?
+        <TouchableOpacity
+          style={styles.imageButton}
+          onPress={handleShowImage} >
+
           <Text style={styles.imageButtonText}>See Brochure</Text>
         </TouchableOpacity>
       ) : null}

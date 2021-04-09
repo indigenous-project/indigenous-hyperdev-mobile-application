@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { colors, typography, spacing } from '../styles';
 
 //card to display category button
