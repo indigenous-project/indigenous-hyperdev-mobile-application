@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: typography.fs3,
     fontWeight: typography.fwMedium,
-    textAlign: 'center',
     lineHeight: typography.lh3,
     padding: spacing.base,
   },
