@@ -105,7 +105,7 @@ npx react-native run-ios
  - Connect your device to computer by using cable.
  - Choose your project and device to run.
  - Click Play button to build and run the app in your device.
- - *Note: The app only run in online mode since it is supported offline mode right now.
+ - *Note: The app only run in ***online mode*** since it is not supported offline mode right now.
 ```
 ![Indigenous Bridge Application](src/asserts/home.jpg)
 
