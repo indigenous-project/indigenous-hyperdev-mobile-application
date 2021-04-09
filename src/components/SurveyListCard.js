@@ -7,7 +7,18 @@ import {spacing, colors, typography} from '../styles';
 import {Thumbnail} from 'native-base';
 
 //card to display Survey list
-const SurveyListCard = (props) => {
+const SurveyListCard = props => {
+  //to call the function and store the return value using condition
+  let imagePath = props.image !== undefined ? getImage(props.image) : undefined;
+
+  //to get the image path of survey
+  function getImage(image) {
+    let path;
+    path = image.path;
+    //return the path of the image
+    return path;
+  }
+
   // Render element
   return (
     <View style={styles.cardsContainer}>
@@ -17,7 +28,11 @@ const SurveyListCard = (props) => {
             style={{borderRadius: 10}}
             square
             large
-            source={require('../asserts/demoPic.png')}></Thumbnail>
+            source={
+              imagePath !== undefined
+                ? {uri: imagePath}
+                : require('../asserts/demoPic.png')
+            }></Thumbnail>
         </View>
 
         <View style={{width: 250, marginRight: 20}}>

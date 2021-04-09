@@ -180,7 +180,10 @@ function NewsScreen({navigation}) {
               title={filterSurveys[0].title}
               key={filterSurveys[0]._id}
               link={filterSurveys[0].link}
+              image={filterSurveys[0].medias}
+              
             />
+            
           </View>
         ) : null}
 
@@ -206,6 +209,7 @@ function NewsScreen({navigation}) {
                     title={post.title}
                     date={formatDate(post.lastModifiedDate)}
                     details={post.description}
+                    image={post.medias}
                   />
                 </TouchableOpacity>
               ))

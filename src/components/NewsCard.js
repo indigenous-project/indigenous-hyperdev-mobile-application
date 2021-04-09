@@ -7,6 +7,22 @@ import {WebView} from 'react-native-webview';
 //card to display News
 export default function NewsCard(props) {
   const NUM_OF_LINES = 2;
+
+  //to call the function and store the return value using condition
+  let imagePath = props.image ? getImage(props.image) : undefined;
+
+  //to get the image path of news
+  function getImage(image) {
+    let path;
+    //loop through the image array
+    image.forEach(img => {
+      //get the path of the image
+      path = img.path;
+    });
+    //return the path of the image
+    return path;
+  }
+
   // Render element
   return (
     <View style={styles.newsCard}>
@@ -27,7 +43,14 @@ export default function NewsCard(props) {
           }}
         />
       </View>
-      <Image style={styles.image} source={require('../asserts/demoPic.png')} />
+      <Image
+        style={styles.image}
+        source={
+          imagePath !== undefined
+            ? {uri: getImage(props.image)}
+            : require('../asserts/demoPic.png')
+        }
+      />
     </View>
   );
 }

@@ -43,7 +43,7 @@ const SurveysListScreen = () => {
               }}
               key={survey._id}>
               <SurveyListCard
-                media={survey.medias}
+                image={survey.medias}
                 title={survey.title}
                 startDate={formatDateByMonth(survey.startDate)}
                 endDate={formatDateByMonth(survey.endDate)}
