@@ -13,6 +13,7 @@ import {
   Pressable,
   Alert,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
@@ -43,7 +44,7 @@ const options = [
 function DiscussionScreen({navigation}) {
   const theme = themes.light;
   const isFocused = useIsFocused();
-  const [filterDiscussion, setFilterDiscussion] = useState(null);
+  const [filterDiscussion, setFilterDiscussion] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [reloadData, setReloadData] = useState(reloadData);
   const [modalVisible, setModalVisible] = useState(false);
@@ -248,10 +249,10 @@ function DiscussionScreen({navigation}) {
           ) : (
             <View
               style={{
-                justifyContent: 'center',
+                justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '100%',
-                height: 100,
+                height: Dimensions.get('window').width,
               }}>
               <Text style={{marginTop: 10, textAlign: 'center'}}>
                 There is no Discussion
