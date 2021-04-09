@@ -224,28 +224,40 @@ function DiscussionScreen({navigation}) {
             />
           }
           horizontal={false}>
-          {filterDiscussion
-            ? filterDiscussion.map((discussion) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Discussion Detail', {
-                      discussionId: discussion._id,
-                      token: token,
-                    })
-                  }
-                  key={discussion._id}>
-                  <DiscussionCard
-                    title={discussion.title}
-                    nameAndDate={`${discussion.owner.firstName} ${
-                      discussion.owner.lastName
-                    } Posted ${formatDate(discussion.createdAt)}`}
-                    description={discussion.description}
-                    categories={discussion.categories}
-                    replies={discussion.replies}
-                  />
-                </TouchableOpacity>
-              ))
-            : null}
+          {filterDiscussion.length > 0 ? (
+            filterDiscussion.map((discussion) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Discussion Detail', {
+                    discussionId: discussion._id,
+                    token: token,
+                  })
+                }
+                key={discussion._id}>
+                <DiscussionCard
+                  title={discussion.title}
+                  nameAndDate={`${discussion.owner.firstName} ${
+                    discussion.owner.lastName
+                  } Posted ${formatDate(discussion.createdAt)}`}
+                  description={discussion.description}
+                  categories={discussion.categories}
+                  replies={discussion.replies}
+                />
+              </TouchableOpacity>
+            ))
+          ) : (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: 100,
+              }}>
+              <Text style={{marginTop: 10, textAlign: 'center'}}>
+                There is no Discussion
+              </Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
