@@ -43,13 +43,9 @@ const ServiceDetailCard = (props) => {
       {/* description of service */}
       <Text style={styles.description}>{props.description}</Text>
 
-
       {/* if there is media attached to service it will display on button Click */}
-      {props.media.length > 0 & showImage == false ?
-        <TouchableOpacity
-          style={styles.imageButton}
-          onPress={handleShowImage} >
-
+      {(props.media.length > 0) & (showImage == false) ? (
+        <TouchableOpacity style={styles.imageButton} onPress={handleShowImage}>
           <Text style={styles.imageButtonText}>See Brochure</Text>
         </TouchableOpacity>
       ) : null}
