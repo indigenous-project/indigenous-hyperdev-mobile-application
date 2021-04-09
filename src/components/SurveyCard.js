@@ -14,10 +14,28 @@ import {colors, typography, spacing} from '../styles';
 
 //card to display New Survey Available
 export default function SurveyCard(props) {
+  //to call the function and store the return value using condition
+  let imagePath = props.image !== undefined ? getImage(props.image) : undefined;
+
+  //to get the image path of survey
+  function getImage(image) {
+    let path;
+    path = image.path;
+    //return the path of the image
+    return path;
+  }
+
   // Render element
   return (
     <View style={styles.newSurvey}>
-      <Image style={styles.image} source={require('../asserts/demoPic.png')} />
+      <Image
+        style={styles.image}
+        source={
+          imagePath !== undefined
+            ? {uri: imagePath}
+            : require('../asserts/demoPic.png')
+        }
+      />
       <View style={styles.surveyTitle}>
         <Text numberOfLines={2} style={styles.surveyText}>
           {props.title}
