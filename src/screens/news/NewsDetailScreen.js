@@ -1,20 +1,20 @@
 // News Detail Screen
 
 // Import Packages
-import {Image, StyleSheet, View, Alert} from 'react-native';
-import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, Button} from 'native-base';
-import {postGetDetail} from '../../api/news/news.api';
-import {formatDate} from '../../modules/date.format';
-import {decodeHTML} from '../../modules/decode.text';
-import {WebView} from 'react-native-webview';
-import {colors, spacing, themes, typography} from '../../styles';
+import { Image, StyleSheet, View, Alert } from 'react-native';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, Button } from 'native-base';
+import { postGetDetail } from '../../api/news/news.api';
+import { formatDate } from '../../modules/date.format';
+import { decodeHTML } from '../../modules/decode.text';
+import { WebView } from 'react-native-webview';
+import { colors, spacing, themes, typography } from '../../styles';
 import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
 import NewsShareHeader from '../../components/NewsShareHeader';
 
 // function return
-function NewsDetailScreen({route, navigation}) {
+function NewsDetailScreen({ route, navigation }) {
   // State and useState region
   const [posts, setPosts] = useState(null);
   const token = route.params.token;
@@ -38,9 +38,9 @@ function NewsDetailScreen({route, navigation}) {
   useLayoutEffect(() => {
     posts
       ? navigation.setOptions({
-          // headerTitle: posts.title,
-          headerRight: () => <NewsShareHeader shareData={posts} />,
-        })
+        // headerTitle: posts.title,
+        headerRight: () => <NewsShareHeader shareData={posts} />,
+      })
       : null;
   }, [navigation, posts]);
   // End useEffectRegion
@@ -50,15 +50,15 @@ function NewsDetailScreen({route, navigation}) {
   // Render element
   return (
     <SafeAreaView style={styles.container} edges={['right', 'left']}>
-      <View style={{marginBottom: spacing.small}}>
+      <View style={{ marginBottom: spacing.small }}>
         <Text style={styles.title}>{posts.title}</Text>
         <Text style={styles.date}>{formatDate(posts.lastModifiedDate)}</Text>
 
         {/* Extracting the data from the news array and displaying the required elements */}
-        {posts.medias.path ? (
+        {posts.medias ? (
           <Image
             source={{
-              uri: posts.medias.path,
+              uri: posts.medias[0].path,
             }}
             style={styles.image}
           />
@@ -110,9 +110,8 @@ const styles = StyleSheet.create({
     color: colors.gray900,
   },
   image: {
+    marginVertical: spacing.small,
     height: 150,
-    width: 340,
-    flex: 1,
   },
   // Styling for AskQuestion Button
   buttonsGroup: {
