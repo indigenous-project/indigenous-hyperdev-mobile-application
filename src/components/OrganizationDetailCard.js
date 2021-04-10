@@ -79,9 +79,7 @@ const OrganizationDetailCard = (props) => {
             style={styles.desc}
             originWhitelist={['*']}
             source={{
-              html: `<section style="font-size:40">${decodeHTML(
-                props.decs,
-              )}</section>`,
+              html: decodeHTML(props.decs),
             }}
           />
         ) : null}
@@ -121,7 +119,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.small,
   },
   desc: {
-    fontWeight: typography.fwMedium,
     marginTop: spacing.smallest,
     minHeight: 100,
   },
