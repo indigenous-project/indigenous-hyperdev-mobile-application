@@ -113,8 +113,8 @@ npx react-native run-ios
  - Connect your device to computer by using cable.
  - Choose your project and device to run.
  - To run the app in Release version, Go the edit **Scheme**, uncheck *debug executable*, choose *Release* in **Build configuration**.
- ![Edit Scheme](src/asserts/EditScheme.jpg)
- ![Build configuration](src/asserts/release.jpg)
+ ![Edit Scheme](src/asserts/EditScheme.png)
+ ![Build configuration](src/asserts/release.png)
  - Click **Play** button to build and run the app in your device.
  - *Note: The app only run in **online mode** since it is not supported offline mode right now.
 
