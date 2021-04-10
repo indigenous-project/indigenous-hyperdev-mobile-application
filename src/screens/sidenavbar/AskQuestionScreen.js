@@ -95,6 +95,7 @@ function AskQuestionScreen({navigation}) {
     <SafeAreaView
       style={styles.safeArea}
       edges={['right', 'top', 'left', 'bottom']}>
+      <FocusedStatusBar barStyle="dark-content" />
       <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
         <View style={styles.headerContainer}>
           {/*Back button in header */}

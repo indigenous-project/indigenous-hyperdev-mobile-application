@@ -101,6 +101,8 @@ function DiscussionDetail({navigate, route}) {
             <Image
               style={styles.image}
               source={{uri: discussion.medias[0].path}}
+              accessible
+              accessibilityLabel="discussion"
             />
           ) : null}
         </View>

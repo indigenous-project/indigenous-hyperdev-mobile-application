@@ -137,7 +137,12 @@ function EventDetail({navigation, route}) {
       <Loader loading={loading} />
       {event ? (
         <ScrollView>
-          <Image style={styles.image} source={{uri: event.medias[0].path}} />
+          <Image
+            style={styles.image}
+            source={{uri: event.medias[0].path}}
+            accessible
+            accessibilityLabel="event"
+          />
           <EventInfo event={event} />
           <View style={styles.container}>
             <View style={{minHeight: 250}}>

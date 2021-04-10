@@ -1,13 +1,20 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../styles';
+import {View, Text, Image, StyleSheet} from 'react-native';
+import {colors, typography, spacing} from '../styles';
 
 //card to display upcoming events
 export default function EventCard(props) {
   return (
     <View style={styles.eventCard}>
-      <Image style={styles.image} source={{ uri: props.image }} />
-      <Text numberOfLines={1} style={styles.cardTitle}>{props.name}</Text>
+      <Image
+        style={styles.image}
+        source={{uri: props.image}}
+        accessible={true}
+        accessibilityLabel="event"
+      />
+      <Text numberOfLines={1} style={styles.cardTitle}>
+        {props.name}
+      </Text>
       <Text style={styles.cardSubTitle}>{props.date}</Text>
       <Text style={styles.cardDetail}>{props.status}</Text>
     </View>
@@ -32,7 +39,6 @@ const styles = StyleSheet.create({
     fontWeight: typography.fwBold,
     paddingBottom: spacing.smaller,
     paddingHorizontal: spacing.smaller,
-
   },
   cardSubTitle: {
     fontWeight: typography.fwMedium,
@@ -45,7 +51,7 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.smaller,
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 100,
     borderTopLeftRadius: spacing.small,
     borderTopRightRadius: spacing.small,

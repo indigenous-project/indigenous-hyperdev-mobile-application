@@ -35,6 +35,8 @@ export default function SurveyCard(props) {
             ? {uri: imagePath}
             : require('../asserts/demoPic.png')
         }
+        accessible
+        accessibilityLabel="survey"
       />
       <View style={styles.surveyTitle}>
         <Text numberOfLines={2} style={styles.surveyText}>
