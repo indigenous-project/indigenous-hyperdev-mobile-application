@@ -8,8 +8,7 @@ import DiscussionsStack from './discussions/DiscussionsStack';
 import NewsStack from './news/NewsStack';
 import ServicesStack from './services/ServicesStack';
 import OrganizationStack from './organizations/OrganizationsStack';
-import {themes, typography} from '../styles';
-import {StyleSheet} from 'react-native';
+import {themes} from '../styles';
 import BottomItem from '../components/BottomItem';
 //////////////////////////////////////////////////
 

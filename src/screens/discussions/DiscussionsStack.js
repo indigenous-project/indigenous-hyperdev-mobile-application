@@ -1,7 +1,7 @@
 //DiscussionsStack module
 
 // import packages
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import DiscussionScreen from './DiscussionScreen';
@@ -13,7 +13,6 @@ import {useIsFocused} from '@react-navigation/native';
 import RightHeaderButton from '../../components/RightHeaderButton';
 
 import DisclaimerScreen from '../sidenavbar/DisclaimerScreen';
-import {useEffect} from 'react/cjs/react.development';
 import SearchStack from '../search/SearchStack';
 
 const theme = themes.light;

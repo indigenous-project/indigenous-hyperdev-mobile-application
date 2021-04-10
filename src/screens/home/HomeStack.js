@@ -12,7 +12,6 @@ import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import ServiceDetailScreen from '../services/ServiceDetailScreen';
 import SearchStack from '../search/SearchStack';
-import {useEffect} from 'react/cjs/react.development';
 
 //Define Home stack navigator
 const Home = createStackNavigator();
