@@ -99,16 +99,27 @@ npx react-native start
 ```
 npx react-native run-ios
 ```
-8. Run application in a physical device
+8. Run application in a physical device for **Debug mode**(optional)
 ```
  - Open project workspace in ios folder by xcode.
  - Connect your device to computer by using cable.
  - Choose your project and device to run.
  - Click Play button to build and run the app in your device.
- - *Note: The app only run in ***online mode*** since it is not supported offline mode right now.
+ - *Note: The app only run in **online mode** since it is not supported offline mode right now.
 ```
+## 6. Setting up Xcode to run the app in Release mode:
+
+ - Open project workspace in ios folder by xcode.
+ - Connect your device to computer by using cable.
+ - Choose your project and device to run.
+ - To run the app in Release version, Go the edit **Scheme**, uncheck *debug executable*, choose *Release* in **Build configuration**.
+ ![Edit Scheme](src/asserts/EditScheme.png)
+ ![Build configuration](src/asserts/release.png)
+ - Click **Play** button to build and run the app in your device.
+ - *Note: The app only run in **online mode** since it is not supported offline mode right now.
+
 ![Indigenous Bridge Application](src/asserts/home.jpg)
 
-## 6. Testing and Fix bugs:
+## 7. Testing and Fix bugs:
 
 HyperDev has run the phrase 1 of testing the application. We create a list of bugs in [here](https://docs.google.com/spreadsheets/d/1d0rzOqYTUg8lmaQJNggO1QVCdsouy4Kd5lyFv1D2ack/edit#gid=0). Next, we will fix verified bugs and do the phrase 2 of testing.

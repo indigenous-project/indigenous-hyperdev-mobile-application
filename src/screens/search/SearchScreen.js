@@ -1,14 +1,14 @@
 //Search Screen
 
 //Import field
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {themes, colors} from '../../styles';
 import SearchList from '../../components/SearchList';
 import {Header, Item, Input, Icon, Left, Button} from 'native-base';
 import {useDiscussion} from '../../contexts/discussionContext';
-import {useEffect} from 'react/cjs/react.development';
+
 import {useEvent} from '../../contexts/eventContext';
 import {useJob} from '../../contexts/jobContext';
 import {useNews} from '../../contexts/newsContext';

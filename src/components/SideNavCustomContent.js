@@ -1,13 +1,13 @@
 //SideNavStack module
 
 // import packages
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {userLogout} from '../api/auth/auth.api';
 import {removeAsyncStorage, useAsyncStorage} from '../hooks/useAsyncStorage';
 import Loader from './Loader';
-import {useState} from 'react/cjs/react.development';
+
 import {deleteItemAsync} from 'expo-secure-store';
 
 import {
