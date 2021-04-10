@@ -15,7 +15,7 @@ export default function NewsCard(props) {
   function getImage(image) {
     let path;
     //loop through the image array
-    image.forEach(img => {
+    image.forEach((img) => {
       //get the path of the image
       path = img.path;
     });
@@ -50,6 +50,8 @@ export default function NewsCard(props) {
             ? {uri: getImage(props.image)}
             : require('../asserts/demoPic.png')
         }
+        accessible
+        accessibilityLabel="news"
       />
     </View>
   );

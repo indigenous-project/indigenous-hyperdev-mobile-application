@@ -54,6 +54,8 @@ const OrganizationDetailCard = (props) => {
             : require('../asserts/demoPic.png')
         }
         style={styles.image}
+        accessible
+        accessibilityLabel="organization"
       />
 
       {/* to display the title of the organization */}
