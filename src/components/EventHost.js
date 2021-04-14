@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   cardContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: spacing.large,
+    paddingLeft: spacing.small,
   },
   hostIcon: {
     width: 60,

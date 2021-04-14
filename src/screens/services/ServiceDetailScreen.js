@@ -9,6 +9,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { spacing, colors, typography } from '../../styles';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 import ServiceDetailCard from '../../components/ServiceDetailCard';
 
 const ServiceDetailScreen = ({ route }) => {
@@ -29,6 +30,7 @@ const ServiceDetailScreen = ({ route }) => {
     if (!serviceId) return null;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }} edges={['right', 'left']}>
+            <FocusedStatusBar barStyle="dark-content" />
             <ScrollView style={styles.container}>
                 {/* ServiceDetailCard Component */}
                 <ServiceDetailCard

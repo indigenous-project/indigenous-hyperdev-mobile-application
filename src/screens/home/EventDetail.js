@@ -1,9 +1,9 @@
 //Event Detail module
 
 // import packages
-import React, {useState, useEffect, useLayoutEffect} from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import {
   View,
@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import EventHost from '../../components/EventHost';
 import EventInfo from '../../components/EventInfo';
-import {colors, themes, typography, spacing} from '../../styles';
+import { colors, themes, typography, spacing } from '../../styles';
 import {
   eventGetDetail,
   eventGoing,
@@ -24,18 +24,18 @@ import {
   eventInterested,
   eventInterestedRemove,
 } from '../../api/events/events.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {decodeHTML} from '../../modules/decode.text';
-import {WebView} from 'react-native-webview';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { decodeHTML } from '../../modules/decode.text';
+import { WebView } from 'react-native-webview';
 import Loader from '../../components/Loader';
 import ShareHeader from '../../components/ShareHeader';
-import {useIsFocused} from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 
 //function Event Detail
 //User can view an event in detail
 //User can react going or interested to an event.
 //User can share an event.
-function EventDetail({navigation, route}) {
+function EventDetail({ navigation, route }) {
   const theme = themes.light;
   const isFocused = useIsFocused();
   const [event, setEvent] = useState(null);
@@ -125,27 +125,27 @@ function EventDetail({navigation, route}) {
   useLayoutEffect(() => {
     event
       ? navigation.setOptions({
-          headerTitle: event.title,
-          headerRight: () => <ShareHeader shareData={event} />,
-        })
+        headerTitle: event.title,
+        headerRight: () => <ShareHeader shareData={event} />,
+      })
       : null;
   }, [navigation, event]);
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
-      <FocusedStatusBar barStyle="light-content" />
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
+      <FocusedStatusBar barStyle="dark-content" />
       <Loader loading={loading} />
       {event ? (
         <ScrollView>
           <Image
             style={styles.image}
-            source={{uri: event.medias[0].path}}
+            source={{ uri: event.medias[0].path }}
             accessible
             accessibilityLabel="event"
           />
           <EventInfo event={event} />
           <View style={styles.container}>
-            <View style={{minHeight: 250}}>
+            <View style={{ minHeight: 250 }}>
               <WebView
                 scrollEnabled={true}
                 originWhitelist={['*']}
@@ -157,7 +157,7 @@ function EventDetail({navigation, route}) {
           </View>
           {event.hosts.length > 0 ? (
             <View style={styles.container}>
-              <Text style={styles.heading}>Hosts</Text>
+              <Text style={styles.heading}>Host</Text>
               {event.hosts.map((host) => (
                 <EventHost
                   key={host._id}

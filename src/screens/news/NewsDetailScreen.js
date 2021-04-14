@@ -3,6 +3,7 @@
 // Import Packages
 import { Image, StyleSheet, View, Alert } from 'react-native';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button } from 'native-base';
 import { postGetDetail } from '../../api/news/news.api';
@@ -50,6 +51,7 @@ function NewsDetailScreen({ route, navigation }) {
   // Render element
   return (
     <SafeAreaView style={styles.container} edges={['right', 'left']}>
+      <FocusedStatusBar barStyle="dark-content" />
       <View style={{ marginBottom: spacing.small }}>
         <Text style={styles.title}>{posts.title}</Text>
         <Text style={styles.date}>{formatDate(posts.lastModifiedDate)}</Text>

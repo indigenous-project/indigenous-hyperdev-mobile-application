@@ -1,34 +1,35 @@
 // Job Detail Screen
 
 // Import statements
-import React, {useLayoutEffect} from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, Button} from 'native-base';
-import {decodeHTML} from '../../modules/decode.text';
-import {WebView} from 'react-native-webview';
-import {colors, spacing, typography} from '../../styles';
+import React, { useLayoutEffect } from 'react';
+import { Linking, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { decodeHTML } from '../../modules/decode.text';
+import { WebView } from 'react-native-webview';
+import { colors, spacing, typography } from '../../styles';
 import JobShareHeader from '../../components/JobsShareHeader';
 
 // function and return
-function JobDetailScreen({route, navigation}) {
+function JobDetailScreen({ route, navigation }) {
   const job = route.params.job;
 
   //useLayoutEffect to get title and share button
   useLayoutEffect(() => {
     job
       ? navigation.setOptions({
-          // headerTitle: job.title,
-          headerRight: () => <JobShareHeader shareData={job} />,
-        })
+        // headerTitle: job.title,
+        headerRight: () => <JobShareHeader shareData={job} />,
+      })
       : null;
   }, [navigation, job]);
 
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: colors.white}}
+      style={{ flex: 1, backgroundColor: colors.white }}
       edges={['right', 'left']}>
       {/* Extracting the data using the route from the job array and displaying the required elements */}
+      <FocusedStatusBar barStyle="dark-content" />
       <View style={styles.headerStyle}>
         <Text style={styles.title}>{job.title}</Text>
         <Text style={styles.subHeading}>{job.subTitle}</Text>
@@ -45,14 +46,14 @@ function JobDetailScreen({route, navigation}) {
       />
       {/* Displaying and logic of Send Email Button */}
       <View style={styles.buttonsGroup}>
-        <Button
+        <TouchableOpacity
           title="Send Email"
           onPress={() => {
             Linking.openURL(`mailto:${job.email}`);
           }}
           style={styles.emailButton}>
           <Text style={styles.emailText}>Send Email</Text>
-        </Button>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -97,10 +98,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     justifyContent: 'space-around',
     paddingHorizontal: spacing.base,
-    paddingTop: spacing.base,
+    paddingTop: spacing.small,
+    bottom: 0
   },
 
   emailButton: {
+    width: '40%',
     borderRadius: 10,
     marginBottom: spacing.small,
     backgroundColor: colors.primary400,

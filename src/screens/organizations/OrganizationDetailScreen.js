@@ -9,10 +9,9 @@ import {
   Linking,
   TouchableOpacity,
   Alert,
-  Modal,
-  Pressable,
+  Text,
+  View
 } from 'react-native';
-import { Text, View } from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import OrganizationDetailCard from '../../components/OrganizationDetailCard';
 import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTimeCard';
@@ -86,7 +85,7 @@ export default function OrganizationDetailScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['right', 'left']}>
-      <FocusedStatusBar barStyle="light-content" />
+      <FocusedStatusBar barStyle="dark-content" />
 
       <ScrollView>
         {/* Component of Organization Detail card */}

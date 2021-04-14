@@ -2,9 +2,9 @@
 
 //import packages
 import React from 'react';
-import {Linking, StyleSheet, Text, View} from 'react-native';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {spacing, themes, typography} from '../styles';
+import { spacing, themes, typography } from '../styles';
 
 const OrganizationDetailsContactCard = (props) => {
   //function to handle when user taps on number that invokes call option
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: themes.light.inverseTextColor,
     marginBottom: spacing.small,
   },
-  icon: {marginRight: spacing.small, bottom: 4},
+  icon: { marginRight: spacing.small, bottom: 4 },
   view: {
     flexDirection: 'row',
     color: themes.light.primaryColor,
@@ -126,23 +126,27 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: typography.fs2,
     textDecorationLine: 'underline',
+    maxWidth: '60%'
   },
   website: {
     marginLeft: 29,
     color: 'blue',
     fontSize: typography.fs2,
     textDecorationLine: 'underline',
+    maxWidth: '60%'
   },
   email: {
     marginLeft: 48,
     color: 'blue',
     fontSize: typography.fs2,
     textDecorationLine: 'underline',
+    maxWidth: '60%'
   },
   facebook: {
     marginLeft: 20,
     color: 'blue',
     fontSize: typography.fs2,
     textDecorationLine: 'underline',
+    maxWidth: '60%'
   },
 });

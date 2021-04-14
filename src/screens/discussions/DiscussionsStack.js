@@ -1,15 +1,15 @@
 //DiscussionsStack module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import DiscussionScreen from './DiscussionScreen';
 import DiscussionDetail from './DiscussionDetail';
-import {themes} from '../../styles';
+import { themes } from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import RightHeaderButton from '../../components/RightHeaderButton';
 
 import DisclaimerScreen from '../sidenavbar/DisclaimerScreen';
@@ -19,7 +19,7 @@ const theme = themes.light;
 const Discussion = createStackNavigator();
 
 //function Dicussion Stack contains: Discussion main screen, Disclaimer Screen, Discussion Detail and Search Stack
-function DiscussionsStack({navigation, route}) {
+function DiscussionsStack({ navigation, route }) {
   const isFocused = useIsFocused();
   const [isRead, setIsRead] = useState(false);
 
@@ -31,7 +31,7 @@ function DiscussionsStack({navigation, route}) {
   return (
     <Discussion.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: theme.primaryColor}, //header background
+        headerStyle: { backgroundColor: theme.primaryColor }, //header background
         headerTintColor: theme.inverseTextColor, // text color
       }}
       initialRouteName="DiscussionsScreen">
@@ -56,19 +56,24 @@ function DiscussionsStack({navigation, route}) {
         <Discussion.Screen
           name="Discussion Desclaimer"
           component={DisclaimerScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       )}
 
       <Discussion.Screen
         name="Discussion Detail"
         component={DiscussionDetail}
-        options={{headerRight: false, title: false}}
+        options={{
+          headerRight: false,
+          title: false,
+          headerStyle: { backgroundColor: themes.light.inverseTextColor },
+          headerTintColor: themes.light.primaryColor,
+        }}
       />
       <Discussion.Screen
         name="SearchStackDiscussion"
         component={SearchStack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Discussion.Navigator>
   );
