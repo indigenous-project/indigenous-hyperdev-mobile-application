@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {colors, typography, spacing} from '../styles';
-import Chips from '../components/Chips';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display Discussion
 export default function ReplyCard(props) {
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
     padding: spacing.smaller,
     backgroundColor: colors.white,
     shadowColor: colors.gray900,
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
     shadowOpacity: 0.2,
     width: '100%',
   },

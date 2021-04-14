@@ -3,7 +3,7 @@
 // Import Packages
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../styles';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display Job News
 export default function JobCard(props) {

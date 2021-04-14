@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { colors, typography, spacing } from '../styles';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display upcoming events
 export default function UpdateCard(props) {

@@ -2,9 +2,9 @@
 
 // import packages
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
-import {spacing, colors, typography} from '../styles';
-import {Thumbnail} from 'native-base';
+import { Text, StyleSheet, View } from 'react-native';
+import { spacing, colors, typography } from '../../styles';
+import { Thumbnail } from 'native-base';
 
 //card to display Survey list
 const SurveyListCard = props => {
@@ -25,17 +25,17 @@ const SurveyListCard = props => {
       <View style={styles.content}>
         <View style={styles.thumbnail}>
           <Thumbnail
-            style={{borderRadius: 10}}
+            style={{ borderRadius: 10 }}
             square
             large
             source={
               imagePath !== undefined
-                ? {uri: imagePath}
-                : require('../asserts/demoPic.png')
+                ? { uri: imagePath }
+                : require('../../asserts/demoPic.png')
             }></Thumbnail>
         </View>
 
-        <View style={{width: 250, marginRight: 20}}>
+        <View style={{ width: 250, marginRight: 20 }}>
           <Text numberOfLines={2} style={styles.cardTitle}>
             {props.title}
           </Text>

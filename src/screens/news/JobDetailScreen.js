@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 import { colors, spacing, typography } from '../../styles';
-import JobShareHeader from '../../components/JobsShareHeader';
+import JobShareHeader from '../../components/NewsComponent/JobsShareHeader';
 
 // function and return
 function JobDetailScreen({ route, navigation }) {

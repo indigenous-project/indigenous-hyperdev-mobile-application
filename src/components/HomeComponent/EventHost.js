@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { colors, typography, spacing } from '../styles';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display host for events
 export default function EventHost(props) {

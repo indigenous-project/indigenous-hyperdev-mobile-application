@@ -2,17 +2,17 @@
 
 // Import Packages
 import React from 'react';
-import {View, TouchableOpacity, Share, Alert} from 'react-native';
+import { View, TouchableOpacity, Share, Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useCurrentUser} from '../contexts/currentUserContext';
-import {formatDate, formatDateByTime} from '../modules/date.format';
-import {typography, themes} from '../styles';
-import {postShare} from '../api/news/news.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { formatDate, formatDateByTime } from '../../modules/date.format';
+import { typography, themes } from '../../styles';
+import { postShare } from '../../api/news/news.api';
 
 //card to display JobShareHeader
 
 // Method region
-const ShareHeader = ({shareData}) => {
+const ShareHeader = ({ shareData }) => {
   const [currentUser, token] = useCurrentUser();
   const shareCountHandle = () => {
     postShare(token, shareData._id)
@@ -48,13 +48,13 @@ const ShareHeader = ({shareData}) => {
 
   // Render element
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={onShare}>
         <MaterialCommunityIcons
           name="export-variant"
           size={typography.fs7}
           color={themes.light.primaryColor}
-          style={{marginRight: 10}}
+          style={{ marginRight: 10 }}
         />
       </TouchableOpacity>
     </View>

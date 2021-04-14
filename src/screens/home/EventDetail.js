@@ -14,8 +14,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import EventHost from '../../components/EventHost';
-import EventInfo from '../../components/EventInfo';
+import EventHost from '../../components/HomeComponent/EventHost';
+import EventInfo from '../../components/HomeComponent/EventInfo';
 import { colors, themes, typography, spacing } from '../../styles';
 import {
   eventGetDetail,

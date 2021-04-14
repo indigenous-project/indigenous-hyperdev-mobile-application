@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, Linking} from 'react-native';
-import {diffTime, formatDate, formatDateByTime} from '../modules/date.format';
-import {colors, typography, spacing} from '../styles';
+import { View, Text, StyleSheet, Image, Linking } from 'react-native';
+import { diffTime, formatDate, formatDateByTime } from '../../modules/date.format';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display host for events
 export default function EventInfo(props) {
@@ -21,7 +21,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../asserts/locationIcon.png')}
+          source={require('../../asserts/locationIcon.png')}
         />
         <View>
           <Text style={styles.location} onPress={handleGoLink}>
@@ -32,7 +32,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../asserts/timeIcon.png')}
+          source={require('../../asserts/timeIcon.png')}
         />
         <View>
           <Text style={styles.time}>{`Start: ${formatDateByTime(
@@ -46,7 +46,7 @@ export default function EventInfo(props) {
       <View style={styles.eventInfo}>
         <Image
           style={styles.infoIcon}
-          source={require('../asserts/priceIcon.png')}
+          source={require('../../asserts/priceIcon.png')}
         />
         <View>
           <Text style={styles.price}>

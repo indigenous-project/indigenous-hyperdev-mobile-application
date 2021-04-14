@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 
 import Chips from '../../components/Chips';
-import ReplyCard from '../../components/ReplyCard';
+import ReplyCard from '../../components/DiscussionComponent/ReplyCard';
 import { colors, themes, typography, spacing } from '../../styles';
 import { discussionGetDetail } from '../../api/discussions/discussions.api';
 import { repliesAdd } from '../../api/replies/replies.api';

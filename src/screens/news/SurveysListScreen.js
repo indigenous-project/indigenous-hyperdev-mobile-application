@@ -7,7 +7,7 @@ import { View, Linking } from 'react-native';
 import { surveyGetList } from '../../api/surveys/surveys.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';
 import { useIsFocused } from '@react-navigation/core';
-import SurveyListCard from '../../components/SurveyListCard';
+import SurveyListCard from '../../components/NewsComponent/SurveyListCard';
 import { formatDateByMonth } from '../../modules/date.format';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
