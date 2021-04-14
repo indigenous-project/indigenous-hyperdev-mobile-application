@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {colors, typography, spacing} from '../styles';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display upcoming events
 export default function EventCard(props) {
@@ -8,7 +8,7 @@ export default function EventCard(props) {
     <View style={styles.eventCard}>
       <Image
         style={styles.image}
-        source={{uri: props.image}}
+        source={{ uri: props.image }}
         accessible={true}
         accessibilityLabel="event"
       />

@@ -2,11 +2,11 @@
 
 //import packages
 import React from 'react';
-import {View, TouchableOpacity, Share, Alert} from 'react-native';
+import { View, TouchableOpacity, Share, Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {typography, themes} from '../styles';
+import { typography, themes } from '../../styles';
 
-const ShareHeader = ({shareData}) => {
+const ShareHeader = ({ shareData }) => {
 
   //function to share content to the reciver when the user clicks on the share button
   const onShare = async () => {
@@ -31,13 +31,13 @@ const ShareHeader = ({shareData}) => {
 
   return (
     // display the share icon button in the header
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={onShare}>
         <MaterialCommunityIcons
           name="export-variant"
           size={typography.fs7}
           color={themes.light.primaryColor}
-          style={{marginRight: 10}}
+          style={{ marginRight: 10 }}
         />
       </TouchableOpacity>
     </View>

@@ -1,14 +1,14 @@
 //OrgnizationListView module
 
 // import packages
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {colors} from '../styles';
+import { colors } from '../../styles';
 import OrganizationsCard from './OrganizationsCard';
 
 export default function OrganizationListViews(props) {
@@ -43,28 +43,28 @@ export default function OrganizationListViews(props) {
       {/* to get each array from organization using map function  */}
       {data
         ? data.map((organization) => (
-            <TouchableOpacity // navigate to organization detail screen 
-              onPress={() =>
-                navigation.navigate('Organization Detail', {
-                  organization: organization,
-                  token: props.token
-                })
-              }
-              key={organization._id}>
-                
-              {/*organization card component */}
-              <OrganizationsCard
-                id={organization._id}
-                name={organization.name}
-                reviews={organization.reviews}
-                website={organization.contact.website}
-                location={organization.contact.address}
-                type={organization.category.name}
-                isIndigenous={organization.isIndigenous}
-                image={organization.medias}
-              />
-            </TouchableOpacity>
-          ))
+          <TouchableOpacity // navigate to organization detail screen 
+            onPress={() =>
+              navigation.navigate('Organization Detail', {
+                organization: organization,
+                token: props.token
+              })
+            }
+            key={organization._id}>
+
+            {/*organization card component */}
+            <OrganizationsCard
+              id={organization._id}
+              name={organization.name}
+              reviews={organization.reviews}
+              website={organization.contact.website}
+              location={organization.contact.address}
+              type={organization.category.name}
+              isIndigenous={organization.isIndigenous}
+              image={organization.medias}
+            />
+          </TouchableOpacity>
+        ))
         : null}
     </ScrollView>
   );
@@ -72,5 +72,5 @@ export default function OrganizationListViews(props) {
 
 const styles = StyleSheet.create({
   //styling for the scrollView
-  scrollView: {marginTop: 50},
+  scrollView: { marginTop: 50 },
 });

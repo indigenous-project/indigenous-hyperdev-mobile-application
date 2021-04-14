@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { spacing, colors, typography } from '../../styles';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import ServiceDetailCard from '../../components/ServiceDetailCard';
+import ServiceDetailCard from '../../components/ServiceComponent/ServiceDetailCard';
 
 const ServiceDetailScreen = ({ route }) => {
     const token = route.params.token;

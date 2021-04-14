@@ -3,12 +3,12 @@
 // import packages
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { spacing, colors, typography } from '../styles';
-import { none } from '../styles/spacing';
+import { spacing, colors, typography } from '../../styles';
+import { none } from '../../styles/spacing';
 
 //card to display Job List
 const JobListCard = props => {
-   // Render element
+  // Render element
   return (
     <View style={styles.cardsContainer}>
       <Text numberOfLines={1} style={styles.cardTitle}>{props.title}</Text>

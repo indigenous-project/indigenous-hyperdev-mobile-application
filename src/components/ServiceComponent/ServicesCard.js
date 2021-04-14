@@ -2,8 +2,8 @@
 
 // import packages
 import React from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
-import {spacing, colors, themes, typography} from '../styles';
+import { Text, StyleSheet, View, Image } from 'react-native';
+import { spacing, colors, themes, typography } from '../../styles';
 
 //card to display service information
 const ServicesCard = (props) => {
@@ -20,7 +20,7 @@ const ServicesCard = (props) => {
         {props.isIndigenous == true ? (
           <Image
             style={styles.indigenousIcon}
-            source={require('../asserts/indigenousIcon.png')}
+            source={require('../../asserts/indigenousIcon.png')}
           />
         ) : null}
       </View>

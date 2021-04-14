@@ -12,7 +12,7 @@ import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 import { colors, spacing, themes, typography } from '../../styles';
 import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
-import NewsShareHeader from '../../components/NewsShareHeader';
+import NewsShareHeader from '../../components/NewsComponent/NewsShareHeader';
 
 // function return
 function NewsDetailScreen({ route, navigation }) {

@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {colors, typography, spacing} from '../styles';
-import {decodeHTML} from '../modules/decode.text';
-import {WebView} from 'react-native-webview';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { colors, typography, spacing } from '../../styles';
+import { decodeHTML } from '../../modules/decode.text';
+import { WebView } from 'react-native-webview';
 
 //card to display News
 export default function NewsCard(props) {
@@ -47,8 +47,8 @@ export default function NewsCard(props) {
         style={styles.image}
         source={
           imagePath !== undefined
-            ? {uri: getImage(props.image)}
-            : require('../asserts/demoPic.png')
+            ? { uri: getImage(props.image) }
+            : require('../../asserts/demoPic.png')
         }
         accessible
         accessibilityLabel="news"

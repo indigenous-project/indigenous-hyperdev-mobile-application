@@ -15,8 +15,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import ServicesCategoryButton from '../../components/ServicesCategoryButton';
-import ServicesCard from '../../components/ServicesCard';
+import ServicesCategoryButton from '../../components/ServiceComponent/ServicesCategoryButton';
+import ServicesCard from '../../components/ServiceComponent/ServicesCard';
 import { themes, spacing, typography, colors } from '../../styles';
 import { serviceGetList } from '../../api/services/services.api';
 import { useCurrentUser } from '../../contexts/currentUserContext';

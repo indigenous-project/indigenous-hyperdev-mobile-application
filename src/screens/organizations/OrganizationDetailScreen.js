@@ -13,10 +13,10 @@ import {
   View
 } from 'react-native';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import OrganizationDetailCard from '../../components/OrganizationDetailCard';
-import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTimeCard';
-import OrganizationDetailsContactCard from '../../components/OrganizationDetailsContactCard';
-import OrganizationShareHeader from '../../components/OrganizationShareHeader';
+import OrganizationDetailCard from '../../components/OrganizationComponent/OrganizationDetailCard';
+import OrganizationDetailsTimeCard from '../../components/OrganizationComponent/OrganizationDetailsTimeCard';
+import OrganizationDetailsContactCard from '../../components/OrganizationComponent/OrganizationDetailsContactCard';
+import OrganizationShareHeader from '../../components/OrganizationComponent/OrganizationShareHeader';
 import { colors, spacing, typography } from '../../styles';
 import { AirbnbRating } from 'react-native-ratings';
 import { organizationReview } from '../../api/organizations/organizations.api';

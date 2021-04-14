@@ -7,7 +7,7 @@ import FocusedStatusBar from '../../components/FocusedStatusBar';
 import { useIsFocused } from '@react-navigation/core';
 import { useCurrentUser } from '../../contexts/currentUserContext';
 import { jobGetList } from '../../api/jobs/jobs.api';
-import JobListCard from '../../components/JobListCard';
+import JobListCard from '../../components/NewsComponent/JobListCard';
 
 // function return
 const JobListScreen = ({ navigation }) => {

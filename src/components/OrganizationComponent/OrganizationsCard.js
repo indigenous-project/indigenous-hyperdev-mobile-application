@@ -2,12 +2,12 @@
 
 // import packages
 import React from 'react';
-import {Card, CardItem, Text, Body, Right, View} from 'native-base';
-import {Image, Linking, StyleSheet} from 'react-native';
-import {colors, spacing, themes, typography} from '../styles';
+import { Card, CardItem, Text, Body, Right, View } from 'native-base';
+import { Image, Linking, StyleSheet } from 'react-native';
+import { colors, spacing, themes, typography } from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Hyperlink from 'react-native-hyperlink';
-import {AirbnbRating} from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
 
 function OrganizationsCard(props) {
   //to call the function and store the return value using condition
@@ -48,8 +48,8 @@ function OrganizationsCard(props) {
   function handleGoLink() {
     props.location !== undefined
       ? Linking.openURL(
-          `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
-        )
+        `https://maps.google.com/?q=${props.location.split(',')[0].trim()}`,
+      )
       : null;
   }
   return (
@@ -60,8 +60,8 @@ function OrganizationsCard(props) {
         <Image
           source={
             imagePath !== undefined
-              ? {uri: getImage(props.image)}
-              : require('../asserts/demoPic.png')
+              ? { uri: getImage(props.image) }
+              : require('../../asserts/demoPic.png')
           }
           style={styles.cardImage}
           accessible
@@ -93,7 +93,7 @@ function OrganizationsCard(props) {
           </View>
 
           {/* to display the website of the organization */}
-          <View style={{flexDirection: 'row', maxWidth: '70%'}}>
+          <View style={{ flexDirection: 'row', maxWidth: '70%' }}>
             <MaterialCommunityIcons
               name="earth"
               size={22}
@@ -102,7 +102,7 @@ function OrganizationsCard(props) {
             />
             <Hyperlink
               linkDefault={true}
-              linkStyle={{textDecorationLine: 'underline'}}>
+              linkStyle={{ textDecorationLine: 'underline' }}>
               <Text numberOfLines={1} style={styles.website}>
                 {props.website !== undefined
                   ? props.website.split('https://www.')
@@ -123,7 +123,7 @@ function OrganizationsCard(props) {
             {props.isIndigenous == true ? (
               <Image
                 style={styles.isIndigenousIcon}
-                source={require('../asserts/indigenousIcon.png')}
+                source={require('../../asserts/indigenousIcon.png')}
               />
             ) : null}
             {/* to display the category of orgainzation */}
@@ -137,7 +137,7 @@ function OrganizationsCard(props) {
             </Text>
 
             {/* to display the location of orgainzation */}
-            <View style={{flexDirection: 'row', maxWidth: '100%'}}>
+            <View style={{ flexDirection: 'row', maxWidth: '100%' }}>
               <MaterialCommunityIcons
                 name="map-marker"
                 size={22}
@@ -168,31 +168,31 @@ const styles = StyleSheet.create({
     marginBottom: spacing.small,
     borderRadius: spacing.small,
   },
-  border: {borderRadius: typography.fs3},
+  border: { borderRadius: typography.fs3 },
   cardImage: {
     height: 100,
     flex: spacing.hairline,
     borderTopLeftRadius: typography.fs3,
     borderTopRightRadius: typography.fs3,
   },
-  typeAndLocationPosition: {marginTop: 18},
-  typeAndLocationPositionWithIcon: {marginTop: 0},
+  typeAndLocationPosition: { marginTop: 18 },
+  typeAndLocationPositionWithIcon: { marginTop: 0 },
   name: {
     width: '150%',
     color: themes.light.primaryColor,
     fontWeight: typography.fwMedium,
     marginBottom: spacing.smallest,
   },
-  ratingView: {alignSelf: 'flex-start', bottom: 24, right: 2, height: 26},
+  ratingView: { alignSelf: 'flex-start', bottom: 24, right: 2, height: 26 },
   ratingViewWithIcon: {
     alignSelf: 'flex-start',
     bottom: 24,
     right: 2,
     height: 29,
   },
-  markerIcon: {color: colors.primary900, marginRight: 5},
-  earthIcon: {color: colors.primary900, marginRight: 5, bottom: 4},
-  website: {fontSize: typography.fs2},
+  markerIcon: { color: colors.primary900, marginRight: 5 },
+  earthIcon: { color: colors.primary900, marginRight: 5, bottom: 4 },
+  website: { fontSize: typography.fs2 },
   location: {
     alignSelf: 'flex-end',
     fontSize: typography.fs2,

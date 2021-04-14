@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import {colors, typography, spacing} from '../styles';
+import { colors, typography, spacing } from '../../styles';
 
 //card to display New Survey Available
 export default function SurveyCard(props) {
@@ -32,8 +32,8 @@ export default function SurveyCard(props) {
         style={styles.image}
         source={
           imagePath !== undefined
-            ? {uri: imagePath}
-            : require('../asserts/demoPic.png')
+            ? { uri: imagePath }
+            : require('../../asserts/demoPic.png')
         }
         accessible
         accessibilityLabel="survey"

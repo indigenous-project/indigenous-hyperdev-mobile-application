@@ -4,7 +4,7 @@
 import React from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { spacing, themes, typography } from '../styles';
+import { spacing, themes, typography } from '../../styles';
 
 const OrganizationDetailsContactCard = (props) => {
   //function to handle when user taps on number that invokes call option

@@ -18,17 +18,17 @@ import {
 } from 'react-native';
 
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { colors, themes, typography, spacing } from '../styles';
-import { discussionAdd } from '../api/discussions/discussions.api';
-import { useCurrentUser } from '../contexts/currentUserContext';
-import Loader from './Loader';
-import MessageModal from './MessageModal';
+import { colors, themes, typography, spacing } from '../../styles';
+import { discussionAdd } from '../../api/discussions/discussions.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import Loader from '../Loader';
+import MessageModal from '../MessageModal';
 
 import { Chip } from 'react-native-paper';
-import CategoriesList from '../components/CategoriesList';
-import { mediaAddImage } from '../api/medias/media.api';
+import CategoriesList from '../CategoriesList';
+import { mediaAddImage } from '../../api/medias/media.api';
 
-import { s3Storage } from '../api/aws/s3Strorage';
+import { s3Storage } from '../../api/aws/s3Strorage';
 
 //function create a discussion:
 //User can create a new discussion

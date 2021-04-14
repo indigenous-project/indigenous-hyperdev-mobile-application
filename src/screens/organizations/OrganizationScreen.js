@@ -1,23 +1,23 @@
 //OrganizationScreen module
 
 // import packages and files
-import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {spacing, themes} from '../../styles';
-import {View} from 'native-base';
-import {useIsFocused} from '@react-navigation/core';
+import React, { useEffect, useState } from 'react';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { spacing, themes } from '../../styles';
+import { View } from 'native-base';
+import { useIsFocused } from '@react-navigation/core';
 import SwitchSelector from 'react-native-switch-selector';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import OrganizationListViews from '../../components/OrganizationListViews';
-import OrganizationChips from '../../components/OrganizationChips';
-import MapViews from '../../components/MapViews';
-import {organizationGetList} from '../../api/organizations/organizations.api';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {useOrganization} from '../../contexts/organizationContext';
+import OrganizationListViews from '../../components/OrganizationComponent/OrganizationListViews';
+import OrganizationChips from '../../components/OrganizationComponent/OrganizationChips';
+import MapViews from '../../components/OrganizationComponent/MapViews';
+import { organizationGetList } from '../../api/organizations/organizations.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { useOrganization } from '../../contexts/organizationContext';
 
 //function return
-function OrganizationScreen({navigation}) {
+function OrganizationScreen({ navigation }) {
   const [stateSelector, setStateSelector] = useState(null); // to set the value for the view in swtich selector
   const [currentUser, token] = useCurrentUser(); // to get the token of the user
   const [organizations, setOrganizations] = useOrganization(); // to get the organization data from the database
@@ -25,8 +25,8 @@ function OrganizationScreen({navigation}) {
 
   //options for switch selectors
   const options = [
-    {label: 'List', value: 1},
-    {label: 'Map', value: 2},
+    { label: 'List', value: 1 },
+    { label: 'Map', value: 2 },
   ];
 
   //useEffect to load organization list
@@ -52,7 +52,7 @@ function OrganizationScreen({navigation}) {
 
       {/* Chips */}
       <ScrollView
-        style={{paddingVertical: 10}}
+        style={{ paddingVertical: 10 }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
         {/* OrgainzationChips component */}
@@ -106,7 +106,7 @@ function OrganizationScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {flex: spacing.hairline, paddingHorizontal: spacing.base},
+  safeArea: { flex: spacing.hairline, paddingHorizontal: spacing.base },
   // Custom Switch Selectors Style
   switchView: {
     width: '50%',

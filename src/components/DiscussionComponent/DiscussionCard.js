@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography, spacing, themes } from '../styles';
+import { colors, typography, spacing, themes } from '../../styles';
 
-import Chips from '../components/Chips';
+import Chips from '../Chips';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //card to display Discussion

@@ -2,11 +2,11 @@
 
 // import packages
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {spacing, themes} from '../styles';
-import {useNavigation} from '@react-navigation/native';
+import { spacing, themes } from '../../styles';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MapViews(props) {
   const navigation = useNavigation();
@@ -94,7 +94,7 @@ export default function MapViews(props) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {flex: spacing.hairline},
+  safeArea: { flex: spacing.hairline },
   // styling for the map
   container: {
     ...StyleSheet.absoluteFillObject,

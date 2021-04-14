@@ -1,10 +1,10 @@
 //OrganizationChips module
 
 // import packages
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Chip} from 'react-native-paper';
-import {colors, spacing, themes, typography} from '../styles';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Chip } from 'react-native-paper';
+import { colors, spacing, themes, typography } from '../../styles';
 
 const OrganizationChips = (props) => {
   //to change the style after selection

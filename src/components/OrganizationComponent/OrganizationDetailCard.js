@@ -4,9 +4,9 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from 'native-base';
-import { typography, spacing, themes, colors } from '../styles';
+import { typography, spacing, themes, colors } from '../../styles';
 import { AirbnbRating } from 'react-native-ratings';
-import { decodeHTML } from '../modules/decode.text';
+import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 
 const OrganizationDetailCard = (props) => {
@@ -51,7 +51,7 @@ const OrganizationDetailCard = (props) => {
         source={
           imagePath !== undefined
             ? { uri: getImage(props.image) }
-            : require('../asserts/demoPic.png')
+            : require('../../asserts/demoPic.png')
         }
         style={styles.image}
         accessible

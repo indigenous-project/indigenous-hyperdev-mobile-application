@@ -2,14 +2,14 @@
 
 // Import Packages
 import React from 'react';
-import {View, TouchableOpacity, Share, Alert} from 'react-native';
+import { View, TouchableOpacity, Share, Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {typography, themes} from '../styles';
+import { typography, themes } from '../../styles';
 
 //card to display JobShareHeader
 
 // Method region
-const ShareHeader = ({shareData}) => {
+const ShareHeader = ({ shareData }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -33,13 +33,13 @@ const ShareHeader = ({shareData}) => {
 
   // Render element
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={onShare}>
         <MaterialCommunityIcons
           name="export-variant"
           size={typography.fs7}
           color={themes.light.primaryColor}
-          style={{marginRight: 10}}
+          style={{ marginRight: 10 }}
         />
       </TouchableOpacity>
     </View>

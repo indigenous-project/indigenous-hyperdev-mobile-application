@@ -1,16 +1,16 @@
 //HomeScreen module
 
 // import packages
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {categoriesGetList} from '../../api/categories/categories.api';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { categoriesGetList } from '../../api/categories/categories.api';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import EventCard from '../../components/EventCard';
-import UpdateCard from '../../components/UpdateCard';
-import ServicesCard from '../../components/ServicesCard';
-import {serviceGetList} from '../../api/services/services.api';
-import ServicesCategoryButton from '../../components/ServicesCategoryButton';
+import EventCard from '../../components/HomeComponent/EventCard';
+import UpdateCard from '../../components/HomeComponent/UpdateCard';
+import ServicesCard from '../../components/ServiceComponent/ServicesCard';
+import { serviceGetList } from '../../api/services/services.api';
+import ServicesCategoryButton from '../../components/ServiceComponent/ServicesCategoryButton';
 import {
   View,
   ScrollView,
@@ -22,12 +22,12 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import {colors, typography, spacing} from '../../styles';
-import {useCurrentUser} from '../../contexts/currentUserContext';
-import {eventGetList} from '../../api/events/events.api';
-import {latestUpdateGet} from '../../api/latestUpdate/latestUpdate.api';
-import {useIsFocused} from '@react-navigation/core';
-import {useEvent} from '../../contexts/eventContext';
+import { colors, typography, spacing } from '../../styles';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { eventGetList } from '../../api/events/events.api';
+import { latestUpdateGet } from '../../api/latestUpdate/latestUpdate.api';
+import { useIsFocused } from '@react-navigation/core';
+import { useEvent } from '../../contexts/eventContext';
 // End import region
 
 //function HomeScreen:
@@ -35,7 +35,7 @@ import {useEvent} from '../../contexts/eventContext';
 //User can view the latest updated info
 //User can view the popular services
 //User can navigate to Search Screen.
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   // State and useState region
 
   const isFocused = useIsFocused();
@@ -66,10 +66,10 @@ function HomeScreen({navigation}) {
   // function format date: Example Jan 30th, 2021
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
-    const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
-    const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
-    const weekday = new Intl.DateTimeFormat('en', {weekday: 'long'}).format(
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+    const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+    const weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(
       date,
     );
 
@@ -125,7 +125,7 @@ function HomeScreen({navigation}) {
 
   // Render element
   return (
-    <SafeAreaView style={{flex: 1}} edges={['right', 'left']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['right', 'left']}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -145,19 +145,19 @@ function HomeScreen({navigation}) {
               showsHorizontalScrollIndicator={false}>
               {events
                 ? events.map((event) => (
-                    <TouchableOpacity
-                      key={event._id}
-                      onPress={() =>
-                        navigation.navigate('EventDetail', {eventId: event._id})
-                      }>
-                      <EventCard
-                        image={event.medias[0].path}
-                        name={event.title}
-                        date={formatDate(event.date)}
-                        status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
-                      />
-                    </TouchableOpacity>
-                  ))
+                  <TouchableOpacity
+                    key={event._id}
+                    onPress={() =>
+                      navigation.navigate('EventDetail', { eventId: event._id })
+                    }>
+                    <EventCard
+                      image={event.medias[0].path}
+                      name={event.title}
+                      date={formatDate(event.date)}
+                      status={`${event.interestedUsers.length} Interested | ${event.goingUsers.length} Going`}
+                    />
+                  </TouchableOpacity>
+                ))
                 : null}
             </ScrollView>
           </View>
@@ -180,18 +180,18 @@ function HomeScreen({navigation}) {
           <View style={styles.popularServices}>
             {categories
               ? categories.slice(1, 4).map((category) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelectedServiceCategory(category);
-                      setModalVisible(true);
-                    }}
-                    key={category._id}>
-                    <ServicesCategoryButton
-                      icon={category.icon}
-                      name={category.name}
-                    />
-                  </TouchableOpacity>
-                ))
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedServiceCategory(category);
+                    setModalVisible(true);
+                  }}
+                  key={category._id}>
+                  <ServicesCategoryButton
+                    icon={category.icon}
+                    name={category.name}
+                  />
+                </TouchableOpacity>
+              ))
               : null}
           </View>
         </View>
@@ -222,7 +222,7 @@ function HomeScreen({navigation}) {
               </Pressable>
             </View>
 
-            <View style={{padding: spacing.base}}>
+            <View style={{ padding: spacing.base }}>
               <Text style={styles.heading}>Services and Programs</Text>
               {services
                 .filter((service) => {
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     alignItems: 'center',
-    shadowOffset: {width: 3, height: 3},
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: colors.gray900,
     shadowOpacity: 0.2,
     borderRadius: 100,

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import {colors, spacing, themes, typography} from '../styles';
+import React, { useState } from 'react';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { colors, spacing, themes, typography } from '../../styles';
 
 const ServiceDetailCard = (props) => {
   const [showImage, setShowImage] = useState(false);
@@ -23,7 +23,7 @@ const ServiceDetailCard = (props) => {
         {props.isIndigenous == true ? (
           <Image
             style={styles.indigenousIcon}
-            source={require('../asserts/indigenousIcon.png')}
+            source={require('../../asserts/indigenousIcon.png')}
           />
         ) : null}
       </View>
@@ -56,7 +56,7 @@ const ServiceDetailCard = (props) => {
       ) : null}
       <View>
         {showImage == true ? (
-          <Image style={styles.image} source={{uri: props.media[0].path}} />
+          <Image style={styles.image} source={{ uri: props.media[0].path }} />
         ) : null}
       </View>
     </View>
