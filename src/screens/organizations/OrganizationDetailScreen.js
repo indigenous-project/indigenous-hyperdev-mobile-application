@@ -67,7 +67,7 @@ export default function OrganizationDetailScreen({ navigation, route }) {
   const handleRateButton = (rate) => {
     Alert.alert(
       `Ratings`,
-      `You want to rate your experience by ${rate}?`,
+      `You want to give ${rate} out of 5 stars?`,
       [
         {
           text: 'Cancel',

@@ -124,7 +124,7 @@ function ServiceScreen({ navigation }) {
       </View>
 
       {/* last opened template */}
-      {storeLastOpen ?
+      {storeLastOpen.length > 0 ?
         <View style={styles.lastOpenedcontainer}>
           <Text style={styles.heading}>Last Opened</Text>
           <ScrollView style={{ paddingHorizontal: spacing.smallest }}>

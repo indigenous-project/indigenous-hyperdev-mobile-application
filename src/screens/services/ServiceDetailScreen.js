@@ -23,7 +23,7 @@ const ServiceDetailScreen = ({ route }) => {
 
     //function handle when user tap on link that navigate to phone app
     const handlePhoneLink = () => {
-        Linking.openURL(`tel:${serviceId.contact.contactPhone}`);
+        Linking.openURL(`tel:${serviceId.contact.phone}`);
     };
 
     //return serviceDetails by selected service
