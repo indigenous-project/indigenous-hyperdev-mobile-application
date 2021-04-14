@@ -28,7 +28,7 @@ import { useCurrentUser } from '../../contexts/currentUserContext';
 import { decodeHTML } from '../../modules/decode.text';
 import { WebView } from 'react-native-webview';
 import Loader from '../../components/Loader';
-import ShareHeader from '../../components/ShareHeader';
+import ShareHeader from '../../components/HomeComponent/ShareHeader';
 import { useIsFocused } from '@react-navigation/core';
 
 //function Event Detail

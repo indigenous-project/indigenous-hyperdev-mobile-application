@@ -25,7 +25,7 @@ import Loader from '../Loader';
 import MessageModal from '../MessageModal';
 
 import { Chip } from 'react-native-paper';
-import CategoriesList from '../CategoriesList';
+import CategoriesList from './CategoriesList';
 import { mediaAddImage } from '../../api/medias/media.api';
 
 import { s3Storage } from '../../api/aws/s3Strorage';

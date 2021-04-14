@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../styles'
+import { colors, typography, spacing } from '../../styles'
 
 //custome chips for displaying categories
 export default function EventCard(props) {

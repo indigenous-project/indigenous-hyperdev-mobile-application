@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Share, Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { eventShare } from '../api/events/events.api';
-import { useCurrentUser } from '../contexts/currentUserContext';
-import { formatDate, formatDateByTime } from '../modules/date.format';
-import { typography, themes } from '../styles';
+import { eventShare } from '../../api/events/events.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { formatDate, formatDateByTime } from '../../modules/date.format';
+import { typography, themes } from '../../styles';
 
 const ShareHeader = ({ shareData }) => {
   const [currentUser, token] = useCurrentUser();
