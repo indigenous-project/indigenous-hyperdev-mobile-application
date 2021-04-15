@@ -2,9 +2,9 @@
 
 // import packages and files
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
+import {Alert, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {spacing, themes} from '../../styles';
+import {colors, spacing, themes} from '../../styles';
 import {View} from 'native-base';
 import {useIsFocused} from '@react-navigation/core';
 import SwitchSelector from 'react-native-switch-selector';
@@ -22,12 +22,26 @@ function OrganizationScreen({navigation}) {
   const [currentUser, token] = useCurrentUser(); // to get the token of the user
   const [organizations, setOrganizations] = useOrganization(); // to get the organization data from the database
   const isFocused = useIsFocused();
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadData, setReloadData] = useState(reloadData);
 
   //options for switch selectors
   const options = [
     {label: 'List', value: 1},
     {label: 'Map', value: 2},
   ];
+
+  //handle on refresh
+  const onRefresh = () => {
+    setRefreshing(true); // enable refresh indicator
+    setReloadData(!reloadData); // change the reloadData to re-render new organization
+    wait(1500).then(() => setRefreshing(false)); // hide refresh indicator
+  };
+
+  // wait time for refresh
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
 
   //useEffect to load organization list
   useEffect(() => {
@@ -42,7 +56,7 @@ function OrganizationScreen({navigation}) {
         .catch((err) => {
           Alert.alert(err.errors[0].title, err.errors[0].description);
         });
-  }, [token, isFocused, stateSelector, setOrganizations]);
+  }, [token, isFocused, reloadData, stateSelector]);
 
   if (!organizations) return null;
 
@@ -51,17 +65,16 @@ function OrganizationScreen({navigation}) {
       <FocusedStatusBar barStyle="light-content" />
 
       {/* Chips */}
-      <ScrollView
-        style={{paddingVertical: 10}}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}>
-        {/* OrgainzationChips component */}
-        <OrganizationChips category="Categories" />
-        <OrganizationChips category="Indigenous" />
-        <OrganizationChips category="Top-Rated" />
-        <OrganizationChips category="Distance" />
-        <OrganizationChips category="Open-Now" />
-      </ScrollView>
+      <View style={{paddingTop: 10}}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {/* OrgainzationChips component */}
+          <OrganizationChips category="Categories" />
+          <OrganizationChips category="Indigenous" />
+          <OrganizationChips category="Top-Rated" />
+          <OrganizationChips category="Distance" />
+          <OrganizationChips category="Open-Now" />
+        </ScrollView>
+      </View>
 
       {/* Custom Switch Selectors */}
       <View style={styles.switchView}>
@@ -88,15 +101,25 @@ function OrganizationScreen({navigation}) {
             }
           }}
         />
-        {/*Display the oraganizations in list view/map view */}
       </View>
+
+      {/*Display the oraganizations in list view/map view */}
       {stateSelector == 1 ? (
-        // ListView component
-        <OrganizationListViews
-          organizationList={organizations}
-          navigationProps={navigation}
-          token={token}
-        />
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.primary900}
+            />
+          }>
+          {/*ListView component */}
+          <OrganizationListViews
+            organizationList={organizations}
+            navigationProps={navigation}
+            token={token}
+          />
+        </ScrollView>
       ) : stateSelector == 2 ? (
         // MapView component
         <MapViews organizationList={organizations} />
@@ -111,8 +134,7 @@ const styles = StyleSheet.create({
   switchView: {
     width: '50%',
     alignSelf: 'center',
-    position: 'absolute',
-    marginTop: 60,
+    marginVertical: 20,
   },
 });
 export default OrganizationScreen;
