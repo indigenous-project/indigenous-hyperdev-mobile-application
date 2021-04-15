@@ -64,7 +64,7 @@ function OrganizationsCard(props) {
               : require('../asserts/demoPic.png')
           }
           style={styles.cardImage}
-          accessible
+          accessible = {true}
           accessibilityLabel="organization"
         />
       </CardItem>
