@@ -1,7 +1,7 @@
 //OrganizationDetail Screen
 
 //import packages
-import React, { useLayoutEffect, useState } from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,25 +9,23 @@ import {
   Linking,
   TouchableOpacity,
   Alert,
-  Modal,
-  Pressable,
 } from 'react-native';
-import { Text, View } from 'native-base';
+import {Text, View} from 'native-base';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
 import OrganizationDetailCard from '../../components/OrganizationDetailCard';
 import OrganizationDetailsTimeCard from '../../components/OrganizationDetailsTimeCard';
 import OrganizationDetailsContactCard from '../../components/OrganizationDetailsContactCard';
 import OrganizationShareHeader from '../../components/OrganizationShareHeader';
-import { colors, spacing, typography } from '../../styles';
-import { AirbnbRating } from 'react-native-ratings';
-import { organizationReview } from '../../api/organizations/organizations.api';
+import {colors, spacing, typography} from '../../styles';
+import {AirbnbRating} from 'react-native-ratings';
+import {organizationReview} from '../../api/organizations/organizations.api';
 
-export default function OrganizationDetailScreen({ navigation, route }) {
+export default function OrganizationDetailScreen({navigation, route}) {
   //to get the organization detail
   const organization = route.params.organization;
   const organizationId = route.params.organization._id;
   const token = route.params.token;
-  const [rating, setRating] = useState(null);
+
   //function to handle when user taps on number that invoke call option
   function handlePhone() {
     Linking.openURL(`tel:${organization.contact.phone}`);
@@ -45,18 +43,19 @@ export default function OrganizationDetailScreen({ navigation, route }) {
   useLayoutEffect(() => {
     organization
       ? navigation.setOptions({
-        headerRight: () => (
-          <OrganizationShareHeader shareData={organization} />
-        ),
-      })
+          headerRight: () => (
+            <OrganizationShareHeader shareData={organization} />
+          ),
+        })
       : null;
   }, [navigation, organization]);
 
   //to handle the rate button when the user clicks the button after rating
-  const handleRate = () => {
-    if (rating && organizationId) {
+
+  const handleRate = (rate) => {
+    if (rate && organizationId) {
       //send request the ratings to the api
-      organizationReview(token, { reviews: [{ score: rating }] }, organizationId)
+      organizationReview(token, {reviews: [{score: rate}]}, organizationId)
         .then(() => {
           Alert.alert('Rating successfull');
         })
@@ -66,22 +65,20 @@ export default function OrganizationDetailScreen({ navigation, route }) {
 
   //function handle asking to confirm user want to rate the organization or not
   const handleRateButton = (rate) => {
-    Alert.alert(
-      `Ratings`,
-      `You want to rate your experience by ${rate}?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
+    Alert.alert(`Ratings`, `You want to rate your experience by ${rate}?`, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          if (rate) {
+            handleRate(rate);
+          }
         },
-        {
-          text: 'OK',
-          onPress: () => {
-            handleRate()
-          },
-        },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
@@ -116,12 +113,10 @@ export default function OrganizationDetailScreen({ navigation, route }) {
             size={25}
             defaultRating={0}
             onFinishRating={(rate) => {
-              setRating(rate)
-              handleRateButton(rate)
+              handleRateButton(rate);
             }}
           />
         </View>
-
       </ScrollView>
 
       {/* buttons */}
@@ -136,7 +131,6 @@ export default function OrganizationDetailScreen({ navigation, route }) {
           <Text style={styles.buttonText}>Get Direction</Text>
         </TouchableOpacity>
       </View>
-
     </SafeAreaView>
   );
 }
@@ -149,13 +143,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     padding: spacing.base,
-    marginBottom: spacing.base
+    marginBottom: spacing.base,
   },
   heading: {
     color: colors.primary900,
     fontWeight: typography.fwBold,
     fontSize: typography.fs3,
-    marginBottom: spacing.small
+    marginBottom: spacing.small,
   },
   buttonsGroup: {
     flexDirection: 'row',
