@@ -2,11 +2,11 @@
 
 // import packages
 import React, { useState } from 'react';
-import CategoryButton from '../components/CategoryButton';
+import CategoryButton from './CategoryButton';
 import { StyleSheet, View, FlatList } from 'react-native';
 
-import { colors, themes, spacing } from '../styles';
-import { useCategoryGeneral } from '../contexts/categoriesGeneralContext';
+import { colors, themes, spacing } from '../../styles';
+import { useCategoryGeneral } from '../../contexts/categoriesGeneralContext';
 
 //function return
 function CategoriesList(props) {

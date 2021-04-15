@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, TouchableOpacity, Share, Alert} from 'react-native';
+import { View, TouchableOpacity, Share, Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {eventShare} from '../api/events/events.api';
-import {useCurrentUser} from '../contexts/currentUserContext';
-import {formatDate, formatDateByTime} from '../modules/date.format';
-import {typography} from '../styles';
+import { eventShare } from '../../api/events/events.api';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { formatDate, formatDateByTime } from '../../modules/date.format';
+import { typography, themes } from '../../styles';
 
-const ShareHeader = ({shareData}) => {
+const ShareHeader = ({ shareData }) => {
   const [currentUser, token] = useCurrentUser();
   const shareCountHandle = () => {
     eventShare(token, shareData._id)
@@ -20,9 +20,8 @@ const ShareHeader = ({shareData}) => {
       const result = await Share.share({
         message: `Join the event ${shareData.title}.\nDate: ${formatDate(
           shareData.date,
-        )}.\nTime: ${formatDateByTime(shareData.startTime)}.\nLocation: ${
-          shareData.location
-        }`,
+        )}.\nTime: ${formatDateByTime(shareData.startTime)}.\nLocation: ${shareData.location
+          }`,
         url: shareData.medias[0].path,
       });
       if (result.action === Share.sharedAction) {
@@ -44,13 +43,13 @@ const ShareHeader = ({shareData}) => {
   };
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={onShare}>
         <MaterialCommunityIcons
           name="export-variant"
           size={typography.fs7}
-          color="white"
-          style={{marginRight: 5}}
+          color={themes.light.primaryColor}
+          style={{ marginRight: 10 }}
         />
       </TouchableOpacity>
     </View>

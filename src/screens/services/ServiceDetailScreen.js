@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import { spacing, colors, typography } from '../../styles';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
+import ServiceShareHeader from '../../components/ServiceComponent/ServiceShareHeader';
 import ServiceDetailCard from '../../components/ServiceComponent/ServiceDetailCard';
 
-const ServiceDetailScreen = ({ route }) => {
+const ServiceDetailScreen = ({ route, navigation }) => {
     const token = route.params.token;
     const serviceId = route.params.name;
 
@@ -25,6 +26,16 @@ const ServiceDetailScreen = ({ route }) => {
     const handlePhoneLink = () => {
         Linking.openURL(`tel:${serviceId.contact.phone}`);
     };
+
+    //useLayoutEffect to get title and share button
+    useLayoutEffect(() => {
+        serviceId
+            ? navigation.setOptions({
+                // headerTitle: job.title,
+                headerRight: () => <ServiceShareHeader shareData={serviceId} />,
+            })
+            : null;
+    }, [navigation, serviceId]);
 
     //return serviceDetails by selected service
     if (!serviceId) return null;

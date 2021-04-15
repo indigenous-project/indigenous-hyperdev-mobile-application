@@ -19,7 +19,7 @@ import {
   Alert,
 } from 'react-native';
 
-import Chips from '../../components/Chips';
+import Chips from '../../components/DiscussionComponent/Chips';
 import ReplyCard from '../../components/DiscussionComponent/ReplyCard';
 import { colors, themes, typography, spacing } from '../../styles';
 import { discussionGetDetail } from '../../api/discussions/discussions.api';
