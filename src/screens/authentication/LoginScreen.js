@@ -22,6 +22,7 @@ import {useAsyncStorage} from '../../hooks/useAsyncStorage';
 import {useSecureStorage} from '../../hooks/useSecureStorage';
 import {deleteItemAsync} from 'expo-secure-store';
 import {useNetInfo} from '@react-native-community/netinfo';
+import FocusedStatusBar from '../../components/FocusedStatusBar';
 ////////////////////////////////////////////////////
 
 //Define function LoginScreen:
@@ -112,6 +113,7 @@ function LoginScreen({navigation}) {
         style={styles.safeArea}
         edges={['right', 'left', 'top', 'bottom']}>
         {/*Use Loader*/}
+        <FocusedStatusBar barStyle="dark-content" />
         <Loader loading={loading} />
 
         <Text style={styles.welcome}>Welcome!</Text>
@@ -121,7 +123,7 @@ function LoginScreen({navigation}) {
           <View>
             <Form>
               {/*Email input field floating label*/}
-              <Item style={styles.item} floatingLabel>
+              <Item style={styles.item}>
                 <Label style={styles.label}>Email</Label>
                 <Input
                   style={styles.input}
@@ -137,7 +139,7 @@ function LoginScreen({navigation}) {
                 />
               </Item>
               {/*Password input field floating label*/}
-              <Item style={styles.item} floatingLabel>
+              <Item style={styles.item}>
                 <Label style={styles.label}>Password</Label>
                 <Input
                   style={styles.input}

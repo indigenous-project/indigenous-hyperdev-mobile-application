@@ -12,6 +12,7 @@ import {themes} from '../../styles';
 import HambugerMenuHeader from '../../components/HambugerMenuHeader';
 import RightHeaderButton from '../../components/RightHeaderButton';
 import SearchStack from '../search/SearchStack';
+import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
 
 const News = createStackNavigator();
 const theme = themes.light;
@@ -86,6 +87,12 @@ function NewsStack({navigation}) {
       <News.Screen
         name="SearchStackNews"
         component={SearchStack}
+        options={{headerShown: false}}
+      />
+
+      <News.Screen
+        name="AskQuestion"
+        component={AskQuestionScreen}
         options={{headerShown: false}}
       />
     </News.Navigator>
