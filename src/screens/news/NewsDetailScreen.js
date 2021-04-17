@@ -1,21 +1,21 @@
 // News Detail Screen
 
 // Import Packages
-import { Image, StyleSheet, View, Alert } from 'react-native';
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import {Image, StyleSheet, View, Alert} from 'react-native';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import FocusedStatusBar from '../../components/FocusedStatusBar';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, Button } from 'native-base';
-import { postGetDetail } from '../../api/news/news.api';
-import { formatDate } from '../../modules/date.format';
-import { decodeHTML } from '../../modules/decode.text';
-import { WebView } from 'react-native-webview';
-import { colors, spacing, themes, typography } from '../../styles';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Text, Button} from 'native-base';
+import {postGetDetail} from '../../api/news/news.api';
+import {formatDate} from '../../modules/date.format';
+import {decodeHTML} from '../../modules/decode.text';
+import {WebView} from 'react-native-webview';
+import {colors, spacing, themes, typography} from '../../styles';
 import AskQuestionScreen from '../sidenavbar/AskQuestionScreen';
 import NewsShareHeader from '../../components/NewsComponent/NewsShareHeader';
 
 // function return
-function NewsDetailScreen({ route, navigation }) {
+function NewsDetailScreen({route, navigation}) {
   // State and useState region
   const [posts, setPosts] = useState(null);
   const token = route.params.token;
@@ -26,11 +26,11 @@ function NewsDetailScreen({ route, navigation }) {
   // fetching data
   useEffect(() => {
     postGetDetail(token, postId)
-      .then(response => {
+      .then((response) => {
         setPosts(response);
       })
 
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err.errors[0].title, err.errors[0].description);
       });
   }, [token, postId]);
@@ -39,9 +39,9 @@ function NewsDetailScreen({ route, navigation }) {
   useLayoutEffect(() => {
     posts
       ? navigation.setOptions({
-        // headerTitle: posts.title,
-        headerRight: () => <NewsShareHeader shareData={posts} />,
-      })
+          // headerTitle: posts.title,
+          headerRight: () => <NewsShareHeader shareData={posts} />,
+        })
       : null;
   }, [navigation, posts]);
   // End useEffectRegion
@@ -52,7 +52,7 @@ function NewsDetailScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['right', 'left']}>
       <FocusedStatusBar barStyle="dark-content" />
-      <View style={{ marginBottom: spacing.small }}>
+      <View style={{marginBottom: spacing.small}}>
         <Text style={styles.title}>{posts.title}</Text>
         <Text style={styles.date}>{formatDate(posts.lastModifiedDate)}</Text>
 
@@ -79,7 +79,7 @@ function NewsDetailScreen({ route, navigation }) {
       <View style={styles.buttonsGroup}>
         <Button
           title="Ask Question"
-          onPress={() => navigation.navigate(AskQuestionScreen)}
+          onPress={() => navigation.navigate('AskQuestionScreen')}
           style={styles.askQuestionButton}
           block>
           <Text style={styles.askQuestionText}>Ask Question</Text>
