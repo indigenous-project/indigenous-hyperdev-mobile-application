@@ -45,7 +45,6 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-      <StatusBar barStyle="light-content" />
     </SafeAreaProvider>
   );
 };
