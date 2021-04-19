@@ -101,7 +101,7 @@ function DisclaimerScreen(props) {
             PURPOSE, OR NON-INFRINGEMENT.” If you have any questions about this
             Discussion Board Legal Disclaimer, the practices of this App or your
             dealings with this App, you can contact the NBIFC directly at
-            705-472-2810 .
+            705-472-2811 .
           </Text>
         </View>
       </ScrollView>
